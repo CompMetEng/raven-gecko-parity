@@ -154,8 +154,18 @@ rxn	enzymes	substrate	kcat	log10_sd	source	detail	ec_code	note
 | `detail` | no | `key=value` pairs, e.g. `wc=0; origin=2` |
 | `ec_code`, `note` | no | EC number used; free text, reference |
 
-At least one of `rxn` and `enzymes` is filled; gatherers fill both.
-Unknown columns are kept when reading and writing.
+At least one of `rxn` and `enzymes` is filled; gatherers fill both, and
+leave out `model.ec` rows without enzymes. Unknown columns are kept when
+reading.
+
+- The file is UTF-8 with LF line endings, rows sorted by `rxn`, `enzymes`,
+  `substrate` and `source`, so a rebuilt model writes the same rows.
+- Readers ignore a byte-order mark, accept CRLF, skip `#` and blank lines
+  anywhere, and unwrap fields that a spreadsheet wrapped in quotes.
+- Numbers must be plain decimals (`12`, `0.5`, `1e-05`); other text, such
+  as `5,5`, reads as missing.
+- The parameters header is compact JSON with sorted keys, whole numbers
+  without a decimal point.
 
 ### 4.2 Matching to a model
 
@@ -171,6 +181,10 @@ light models:
 4. Partial enzyme-set matches (at least half) are reported, not applied,
    as `applyCustomKcats` does today.
 5. Rows that match nothing are reported, never dropped silently.
+6. Rows whose kcat is missing, not a number, or not above 0 are reported
+   as invalid and not applied.
+
+Reports give the line of the file.
 
 ### 4.3 Writing
 
@@ -180,8 +194,13 @@ light models:
 - `saveKcatSource(model, kcatList, name)` writes any kcat list; the stable
   key is derived from the model (`ec.rxns` → base reaction,
   `ec.rxnEnzMat` → enzyme set).
-- Writing never touches a file whose header says `source: custom` or
-  `kind: curated`.
+- Writing never touches `custom.tsv` or a file whose header says
+  `source: custom` or `kind: curated` (in any case). The `kcatsFrom<Source>`
+  functions check this, and the file name, before they gather.
+- With `ecRxns` and the default file name, the file is replaced by the
+  subset; a warning says so.
+- The new functions take name-value options only, so a misspelled option
+  is an error.
 
 ## 5. Gathering
 
@@ -189,9 +208,9 @@ light models:
 
 | MATLAB | Python | Gathers | Runs | Options |
 |---|---|---|---|---|
-| `kcatsFromBrenda` | `kcats_from_brenda` | Fuzzy BRENDA matching (engine: `fuzzyKcatMatching`) | Locally, on the BRENDA asset | `aggregation` (`max`, `median`, `p75`), `forceWClvl`, `ecRxns` |
+| `kcatsFromBrenda` | `kcats_from_brenda` | Fuzzy BRENDA matching (engine: `fuzzyKcatMatching`) | Locally, on the BRENDA asset | `aggregation` (`max`, `median`; `p75` once the BRENDA asset has it), `forceWClvl`, `ecRxns` |
 | `kcatsFromDLKcat` | `kcats_from_dlkcat` | DLKcat (engines: `writeDLKcatInput`, `runDLKcat`, `readDLKcatOutput`) | Docker image | `run` (rerun DLKcat, otherwise reuse its existing output), `ecRxns` |
-| `kcatsFromOKP` | `kcats_from_okp` | OpenKineticsPredictor (engines: the submit, fetch and read functions) | Web service with a job queue | `method` (one or several, one file each, `okp_<method>.tsv`), `wait`, `useStored` |
+| `kcatsFromOKP` | `kcats_from_okp` | OpenKineticsPredictor (engines: the submit, fetch and read functions) | Web service with a job queue | `method` (one per call, file `okp_<method>.tsv`; each method keeps its own job and result in `data/OKP_job_<method>.txt` and `data/OKP_output_<method>.csv`), `wait`, `resubmit`, `useStored` |
 | `kcatsFromECTree` | `kcats_from_ec_tree` | EC tree estimate from the BRENDA measurement file | Locally | `k` (shrinkage, default 5) |
 | `kcatsFromHomologs` | `kcats_from_homologs` | Identity-weighted homolog mean | MMseqs2 | identity and coverage limits, number of homologs |
 
