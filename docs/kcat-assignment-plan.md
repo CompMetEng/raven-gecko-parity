@@ -468,6 +468,7 @@ parity scenarios pass.
 | K4 | BRENDA measurement files, sequences, substrate dictionary, combination parameters in the BRENDA asset; `kcatsFromECTree` and `kcatsFromHomologs` (MMseqs2); the `combine` stage; presets `ec_tree_homologs`, `ec_tree`, `combined_all`; validation on the benchmark's development split and an ecYeastGEM build; template default switched | toolbox-assets, geckopy, GECKO | K2 |
 | L1 | `ec.source` format and parser (section 9) | GECKO, geckopy | — |
 | L2 | Change log (section 10) | GECKO, geckopy | L1 |
+| U1 | `upgradeGECKOproject` / `geckopy upgrade` and `upgradeEcModel` (O6) | GECKO, geckopy | K3, GECKO#486 |
 
 T1 and L1 can start at once; L1 and L2 ship independently of the kcat work.
 
@@ -478,7 +479,7 @@ T1 and L1 can start at once; L1 and L2 ship independently of the kcat work.
 - **O3.** Substrate keys for homologs: settled by shipping
   `brenda_substrates.tsv`; geckopy may also compute InChIKeys from SMILES.
 - **O4.** Deprecation wrappers stay until GECKO 5.0 (proposed).
-- **O6.** Upgrading older projects (proposed, phase U1 after K3):
+- **O6.** Upgrading older projects (decided 2026-10-16, phase U1 after K3):
   `upgradeGECKOproject(projectPath)` / `geckopy upgrade` brings a GECKO 3
   or earlier GECKO 4 project to the current layout. It is a dry run by
   default, moves originals to `legacy/<date>/` instead of overwriting,
@@ -493,4 +494,4 @@ T1 and L1 can start at once; L1 and L2 ship independently of the kcat work.
     for);
   - saved ecModels: the protein pool and usage reactions turned forward
     (GECKO PR #419), and later the `ec.source` format (`upgradeEcModel`).
-  Undecided: the name, and whether saved models are upgraded.
+  Saved models are upgraded too.
