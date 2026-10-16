@@ -327,9 +327,9 @@ option chosen is in bold; `kcat-assignment-plan.md` builds on them.
 | C4. Bookkeeping | registry TSV · **self-describing files, tracked in git** · a JSON file per kcat file · a list in the TOML · none |
 | C5. Order of sources | **`model_adapter.toml`** · a recipe TSV · registry columns · the user's script · named presets only |
 | C6. Choosing a value | first source wins · trust weights · combine by uncertainty · fixed rule (max, median) · **stages of these, with presets** |
-| C7. Gatherers | unchanged plus a save function · each gatherer writes its file · **one dispatcher, plus a save function for special cases** |
+| C7. Gatherers | unchanged plus a save function · **one function per source, `kcatsFrom<Source>`, writing its file, plus a save function for special cases** · one dispatcher (chosen first, then dropped: each source runs differently and has its own options) |
 | C8. Custom kcats | separate step (today) · **a curated source** · an override applied last |
-| C9. Entry point | functions per step · dispatcher · gather then decide · **one call plus the building blocks** |
+| C9. Entry point | functions per step · dispatcher · gather then decide · **one call plus the building blocks**: `updateKcatSources` gathers what the configuration needs, `collectKcats` decides, `assignKcats` applies |
 
 Complete plans that were weighed:
 

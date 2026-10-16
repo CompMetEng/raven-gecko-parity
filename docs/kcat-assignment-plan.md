@@ -23,7 +23,8 @@ configuration is `model_adapter.toml`, shared by both tools
 | Bookkeeping (C4) | Self-describing files: `#` header lines with source, generator, parameters and data version. Files are tracked in git, so hand edits show in diffs. No registry file |
 | Order of sources (C5) | `[kcat_assignment]` in `model_adapter.toml` |
 | Choosing a value (C6) | Stages: `select` (first source wins, with the BRENDA quality tiers), `combine` (weighted by uncertainty), `fill` (isozymes, standard kcat). Named presets for common orders |
-| Gatherers (C7) | One dispatcher, `gatherKcats(model, source, ...)`, writes the source file; `saveKcatSource` writes any kcat list (hand-made, special cases) |
+| Gatherers (C7) | One function per source, `kcatsFrom<Source>` (`kcatsFromBrenda`, `kcatsFromDLKcat`, `kcatsFromOKP`, `kcatsFromECTree`, `kcatsFromHomologs`), each with its own options; each writes its source file by default. `saveKcatSource` writes any other kcat list. `updateKcatSources` gathers what the configuration needs |
+| Combining (C9) | `collectKcats` decides per reaction from the source files without changing the model; `assignKcats` applies its decisions |
 | Custom kcats (C8) | An ordinary curated source, `data/kcats/custom.tsv`, placed in the order |
 | Entry point (C9) | `assignKcats(model)`; the building blocks stay callable |
 | Default preset | `gecko_median` in the project template now; `ec_tree_homologs` once the BRENDA measurement files are released |
@@ -36,7 +37,7 @@ configuration is `model_adapter.toml`, shared by both tools
 | Layer | What | Where | Who writes it |
 |---|---|---|---|
 | Reference data | BRENDA kcats, specific activities, molecular weights, per-measurement table, sequences, substrate dictionary, combination parameters; DLKcat model files | `CompMetEng/toolbox-assets` release assets, cached locally | Maintainers, with geckopy's `brenda-refresh` |
-| Project kcat files | The kcats gathered for one model, one file per source, plus curated `custom.tsv` | `data/kcats/` in the project, in git | `gatherKcats`, `saveKcatSource`, and people (custom) |
+| Project kcat files | The kcats gathered for one model, one file per source, plus curated `custom.tsv` | `data/kcats/` in the project, in git | `kcatsFrom<Source>`, `updateKcatSources`, `saveKcatSource`, and people (custom) |
 
 ## 3. Reference data in toolbox-assets
 
@@ -135,7 +136,7 @@ from the taxonomy asset, so no separate asset is needed.
 
 ```
 # source: brenda
-# generator: gatherKcats (GECKO 4.x) | gather_kcats (geckopy 4.x)
+# generator: kcatsFromBrenda (GECKO 4.x)
 # parameters: {"aggregation": "median", "max_wildcard_level": 3}
 # data: brenda-2026.1-1
 # created: 2026-10-15T12:00:00Z
@@ -173,31 +174,64 @@ light models:
 
 ### 4.3 Writing
 
-- `gatherKcats(model, source, ...)` gathers and writes
-  `data/kcats/<source>.tsv` (the `saveAs` option names another file),
-  and returns the kcat list.
+- Each `kcatsFrom<Source>` function writes `data/kcats/<source>.tsv`
+  by default (the `saveAs` option names another file, `save` false writes
+  nothing) and returns the kcat list.
 - `saveKcatSource(model, kcatList, name)` writes any kcat list; the stable
   key is derived from the model (`ec.rxns` → base reaction,
   `ec.rxnEnzMat` → enzyme set).
 - Writing never touches a file whose header says `source: custom` or
   `kind: curated`.
 
-## 5. `gatherKcats`
+## 5. Gathering
 
-One function per tool with the source as its first argument:
+### 5.1 One function per source
 
-| Source | Gathers | Options |
-|---|---|---|
-| `brenda` | Fuzzy BRENDA matching (today's `fuzzyKcatMatching`) | `aggregation` (`max`, `median`, `p75`), wildcard and origin limits |
-| `dlkcat` | DLKcat through Docker (today's `writeDLKcatInput`, `runDLKcat`, `readDLKcatOutput`) | `overwrite` |
-| `okp` | OpenKineticsPredictor (today's submit, fetch and read functions) | `method` (one or several, one file each), `use_stored` |
-| `ec_tree` | EC tree estimate from the BRENDA measurement file | `k` (shrinkage, default 5) |
-| `homologs` | Identity-weighted homolog mean through MMseqs2 | identity and coverage limits, number of homologs |
+| MATLAB | Python | Gathers | Runs | Options |
+|---|---|---|---|---|
+| `kcatsFromBrenda` | `kcats_from_brenda` | Fuzzy BRENDA matching (engine: `fuzzyKcatMatching`) | Locally, on the BRENDA asset | `aggregation` (`max`, `median`, `p75`), `forceWClvl`, `ecRxns` |
+| `kcatsFromDLKcat` | `kcats_from_dlkcat` | DLKcat (engines: `writeDLKcatInput`, `runDLKcat`, `readDLKcatOutput`) | Docker image | `run` (rerun DLKcat, otherwise reuse its existing output), `ecRxns` |
+| `kcatsFromOKP` | `kcats_from_okp` | OpenKineticsPredictor (engines: the submit, fetch and read functions) | Web service with a job queue | `method` (one or several, one file each, `okp_<method>.tsv`), `wait`, `useStored` |
+| `kcatsFromECTree` | `kcats_from_ec_tree` | EC tree estimate from the BRENDA measurement file | Locally | `k` (shrinkage, default 5) |
+| `kcatsFromHomologs` | `kcats_from_homologs` | Identity-weighted homolog mean | MMseqs2 | identity and coverage limits, number of homologs |
 
-- Its help lists every source with its options; an option a source does
-  not take is an error.
-- Today's public gatherers stay as deprecated wrappers until GECKO 5.0
-  (O4).
+- Each checks its own requirements first (Docker, API key, MMseqs2, the
+  BRENDA asset) and says what is missing.
+- Each writes its file by default and returns the kcat list.
+- Multi-step sources are one call that can be repeated: `kcatsFromDLKcat`
+  writes the input, runs the image and reads the output; `kcatsFromOKP`
+  submits a job when there is none and writes the file once the job is
+  done, otherwise it reports that the job is still running.
+- Today's gatherers remain as the engines, and stay public as deprecated
+  names until GECKO 5.0 (O4).
+
+### 5.2 `updateKcatSources`
+
+`updateKcatSources(model)` / `update_kcat_sources(model)` gathers what the
+configuration needs, and nothing else:
+
+1. it lists the sources that the configured preset or stages use;
+2. it checks the requirements of all of them and reports every problem
+   at once;
+3. it runs `kcatsFrom<Source>` for each source without a file, or whose
+   file header records other options or an older data version than the
+   configuration;
+4. it skips current files and never touches `custom.tsv`;
+5. it reports what is still pending (an OKP job).
+
+Per-source options go in the TOML:
+
+```toml
+[kcat_sources.brenda]
+aggregation = "median"
+
+[kcat_sources.okp]
+methods = ["CataPro"]
+```
+
+A preset sets these as well; explicit `[kcat_sources.*]` values override
+it. `updateKcatSources` does not assign: gathering can take hours, so it
+stays a separate call from `assignKcats`.
 
 ## 6. Assignment configuration
 
@@ -238,21 +272,32 @@ Presets:
 `isozymes` and `standard` apply after every preset. A level correction
 (fitting σ) is a separate step, not part of assignment.
 
-## 7. `assignKcats`
+## 7. Deciding and assigning
 
-`model = assignKcats(model)` / `assign_kcats(model)`:
+### 7.1 `collectKcats`
+
+`[decisions, report] = collectKcats(model)` / `collect_kcats(model)`
+decides one kcat per `model.ec` row without changing the model:
 
 1. reads `[kcat_assignment]` from the adapter;
 2. loads the source files the stages name and maps them to `model.ec`
    (section 4.2); a missing file is an error that names the
-   `gatherKcats` call that makes it;
+   `kcatsFrom<Source>` call that makes it;
 3. runs the stages, then the isozyme fill and the standard kcat;
-4. writes `ec.kcat` and `ec.source`, and appends curated notes to
+4. returns per `model.ec` row the value, the stage and the source that
+   decided it, the number of competing candidates and their spread, and
+   the unmatched and partial rows of every file;
+5. writes `output/<model>_kcatDecisions.tsv`.
+
+### 7.2 `assignKcats`
+
+`model = assignKcats(model)` / `assign_kcats(model)` calls `collectKcats`
+and then:
+
+1. writes `ec.kcat` and `ec.source`, and appends curated notes to
    `ec.notes`;
-5. records one summary entry in the change log (E1);
-6. writes `output/<model>_kcatDecisions.tsv`: per `model.ec` row the
-   stage, source, value, number of competing candidates and their spread;
-7. runs `applyKcatConstraints`.
+2. records one summary entry in the change log (E1);
+3. runs `applyKcatConstraints`.
 
 `mergeKcats`, `assignKcatValues`, `getKcatAcrossIsozymes` and
 `getStandardKcat` stay callable on their own.
@@ -417,10 +462,10 @@ parity scenarios pass.
 |---|---|---|---|
 | T1 | Transfer raven-data to `CompMetEng/toolbox-assets` (done); `fetchToolboxAsset` (RAVEN#764) and its SHA-256 check; manifest-v2 | toolbox-assets, RAVEN, raven-toolbox | — |
 | T2 | BRENDA asset (screened and corrected, grouped files only), DLKcat asset and the CompMetEng DLKcat image with its build workflow; GECKO and geckopy load from the assets and run the new image; BRENDA files and git LFS removed from the repositories | toolbox-assets, geckopy (`brenda-refresh`), GECKO | T1 |
-| K1 | Project kcat files: format, `saveKcatSource`, `loadKcatSource` with matching; `gatherKcats` for `brenda`, `dlkcat`, `okp`; deprecated wrappers | GECKO, geckopy | T2 |
-| K2 | `[kcat_assignment]` in the TOML schema and `adapterParameters.tsv`; `assignKcats`; presets `gecko_classic` and `gecko_median`; decision report; tutorials switched | GECKO, geckopy | K1 |
+| K1 | Project kcat files: format, `getEcRxnKeys`, `saveKcatSource`, `readKcatSource`, `loadKcatSource` with matching; `kcatsFromBrenda`, `kcatsFromDLKcat`, `kcatsFromOKP` | GECKO, geckopy | — (uses the BRENDA files GECKO and geckopy ship until T2) |
+| K2 | `[kcat_assignment]` and `[kcat_sources.*]` in the TOML schema and `adapterParameters.tsv`; `collectKcats`, `assignKcats`, `updateKcatSources`; presets `gecko_classic` and `gecko_median`; decision report; tutorials switched | GECKO, geckopy | K1, GECKO#486 |
 | K3 | Custom kcats as a source, `convertCustomKcats` | GECKO, geckopy | K1 |
-| K4 | BRENDA measurement files, sequences, substrate dictionary, combination parameters in the BRENDA asset; `gatherKcats` for `ec_tree` and `homologs` (MMseqs2); the `combine` stage; presets `ec_tree_homologs`, `ec_tree`, `combined_all`; validation on the benchmark's development split and an ecYeastGEM build; template default switched | toolbox-assets, geckopy, GECKO | K2 |
+| K4 | BRENDA measurement files, sequences, substrate dictionary, combination parameters in the BRENDA asset; `kcatsFromECTree` and `kcatsFromHomologs` (MMseqs2); the `combine` stage; presets `ec_tree_homologs`, `ec_tree`, `combined_all`; validation on the benchmark's development split and an ecYeastGEM build; template default switched | toolbox-assets, geckopy, GECKO | K2 |
 | L1 | `ec.source` format and parser (section 9) | GECKO, geckopy | — |
 | L2 | Change log (section 10) | GECKO, geckopy | L1 |
 
@@ -433,3 +478,19 @@ T1 and L1 can start at once; L1 and L2 ship independently of the kcat work.
 - **O3.** Substrate keys for homologs: settled by shipping
   `brenda_substrates.tsv`; geckopy may also compute InChIKeys from SMILES.
 - **O4.** Deprecation wrappers stay until GECKO 5.0 (proposed).
+- **O6.** Upgrading older projects (proposed, phase U1 after K3):
+  `upgradeGECKOproject(projectPath)` / `geckopy upgrade` brings a GECKO 3
+  or earlier GECKO 4 project to the current layout. It is a dry run by
+  default, moves originals to `legacy/<date>/` instead of overwriting,
+  records `project_format` in the TOML so it can run again safely, and
+  reports script lines that call renamed functions without editing them.
+  Steps:
+  - adapter class → `model_adapter.toml` (`convertAdapterToToml`, MATLAB
+    only);
+  - `customKcats.tsv` → `data/kcats/custom.tsv` (`convertCustomKcats`);
+  - stored DLKcat and OKP output → source files (`kcatsFromDLKcat`,
+    `kcatsFromOKP` without rerunning; needs the ecModel they were made
+    for);
+  - saved ecModels: the protein pool and usage reactions turned forward
+    (GECKO PR #419), and later the `ec.source` format (`upgradeEcModel`).
+  Undecided: the name, and whether saved models are upgraded.
