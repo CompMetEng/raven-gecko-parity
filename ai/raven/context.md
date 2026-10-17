@@ -1,6 +1,6 @@
 # RAVEN (MATLAB)
 
-Integration branch `develop3`; pull requests target it. The Python implementation is
+Integration branch `develop`; pull requests target it. The Python implementation is
 raven-toolbox, and the ledger is `ledgers/raven.yml` in raven-gecko-parity.
 
 ## Layout
@@ -27,7 +27,7 @@ raven-toolbox, and the ledger is `ledgers/raven.yml` in raven-gecko-parity.
   `manipulation/setParam.m`.
 - Essential arguments are positional; optional arguments are parsed with `parseRAVENargs`.
 - Errors use `error('RAVEN:<id>', ...)` and native `warning`; `dispEM` does not exist on
-  `develop3`.
+  `develop`.
 - Function names are camelCase. CI runs MATLAB R2024b; do not use functions newer than that.
 - Branches are named `fix/...` or `feat/...`. Commit subjects use semantic prefixes.
 - `CHANGELOG.md` has one `##` heading per version with its release date, and `###` topic

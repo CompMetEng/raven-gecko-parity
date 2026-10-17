@@ -11,7 +11,7 @@ watching brief), and by where the work lands:
 
 * **→ raven-docs** — the dual-language documentation site
   ([edkerk/raven-docs](https://github.com/edkerk/raven-docs), MkDocs + Material on Read the
-  Docs; RAVEN and raven-toolbox are git submodules, tracking `develop3` and `develop`).
+  Docs; RAVEN and raven-toolbox are git submodules, both tracking `develop`).
   User-facing prose belongs there so it is online and covers both languages. Its
   `DESIGN.md` is the source of intent — read it before writing pages, and record decisions
   in its decisions log.
@@ -25,7 +25,7 @@ section* of ~40–95-line chapter pages, not a single page.
 
 Background references in this repo: [migration.md](https://raven-docs.readthedocs.io/en/latest/raven3-vs-raven-toolbox/) (function-by-function port
 status), [matlab_raven_backports.md](matlab_raven_backports.md) (MATLAB ↔ Python differences
-record), [improvements.md](https://github.com/SysBioChalmers/raven-toolbox/blob/develop/IMPROVEMENTS.md) (design decisions + proposed improvements).
+record), [improvements.md](https://github.com/CompMetEng/raven-toolbox/blob/develop/IMPROVEMENTS.md) (design decisions + proposed improvements).
 The review-backlog doc (`known_issues.md`, sections A–F) was dropped once fully closed — see
 `CHANGELOG.md`'s "Quality sweep" entries for that history.
 
@@ -88,7 +88,7 @@ instead of from the source, so the fix has to be structural, not just a correcti
 * **P1 — Keep the source-of-truth split clear.** raven-docs carries the user-facing pages;
   this repo keeps [migration.md](https://raven-docs.readthedocs.io/en/latest/raven3-vs-raven-toolbox/) (port decisions),
   [matlab_raven_backports.md](matlab_raven_backports.md) (upstream port plans) and
-  [improvements.md](https://github.com/SysBioChalmers/raven-toolbox/blob/develop/IMPROVEMENTS.md) (rationale) as the maintainer record the pages are
+  [improvements.md](https://github.com/CompMetEng/raven-toolbox/blob/develop/IMPROVEMENTS.md) (rationale) as the maintainer record the pages are
   derived from. Cross-link both ways; do not duplicate prose.
 
 ## 2. Cross-language equivalence tests (→ raven-toolbox)
@@ -273,8 +273,8 @@ five-times-validated path from a thin wrapper.
 ## 5. Housekeeping
 
 * **P1 — Land or close the open PRs**:
-  [#75](https://github.com/SysBioChalmers/raven-toolbox/pull/75) (assignment ablation
-  benchmark) and [#85](https://github.com/SysBioChalmers/raven-toolbox/pull/85) (opt-in
+  [#75](https://github.com/CompMetEng/raven-toolbox/pull/75) (assignment ablation
+  benchmark) and [#85](https://github.com/CompMetEng/raven-toolbox/pull/85) (opt-in
   deterministic ftINIT extraction, still draft).
 * **P1 — Post-0.3.0 doc debt**: restore the documentation that PR #53 removed, and land the
   unmerged empirical parameter-default results.

@@ -7,11 +7,11 @@ in CPLEX). This fixes the three flaws that made an earlier quick emulation a str
 MILP can and cannot support.
 
 * Drivers:
-  * [`scripts/run_carvefungi_cplex.py`](https://github.com/SysBioChalmers/raven-toolbox/blob/develop/scripts/run_carvefungi_cplex.py)
+  * [`scripts/run_carvefungi_cplex.py`](https://github.com/CompMetEng/raven-toolbox/blob/develop/scripts/run_carvefungi_cplex.py)
     — runs CarveFungi's **own** `minmax_reduction` (CPLEX), unmodified; the definitive comparison.
-  * [`scripts/benchmark_carvefungi_milp.py`](https://github.com/SysBioChalmers/raven-toolbox/blob/develop/scripts/benchmark_carvefungi_milp.py)
+  * [`scripts/benchmark_carvefungi_milp.py`](https://github.com/CompMetEng/raven-toolbox/blob/develop/scripts/benchmark_carvefungi_milp.py)
     — an independent Gurobi re-implementation, used to study the formulation (tighter indicator coupling).
-  * [`scripts/analyse_carvefungi_transports.py`](https://github.com/SysBioChalmers/raven-toolbox/blob/develop/scripts/analyse_carvefungi_transports.py)
+  * [`scripts/analyse_carvefungi_transports.py`](https://github.com/CompMetEng/raven-toolbox/blob/develop/scripts/analyse_carvefungi_transports.py)
     — the transport-fidelity investigation below (curated match, functional impact, connectivity).
 * CarveFungi: [github.com/SandraCastilloPriego/CarveFungi](https://github.com/SandraCastilloPriego/CarveFungi),
   bioRxiv [2023.08.23.554328](https://doi.org/10.1101/2023.08.23.554328).
@@ -110,7 +110,7 @@ cytosol↔mito (27), cytosol↔extracellular (20, mostly sugar/polyol export), c
 cytosol↔peroxisome (7). The cargo includes textbook shuttles — citrate, (S)-malate, oxaloacetate,
 2-oxoglutarate (the malate–aspartate and citrate shuttles), plus trehalose/fructose/mannose export.
 Three checks ask whether dropping them is an improvement. Driver:
-[`scripts/analyse_carvefungi_transports.py`](https://github.com/SysBioChalmers/raven-toolbox/blob/develop/scripts/analyse_carvefungi_transports.py).
+[`scripts/analyse_carvefungi_transports.py`](https://github.com/CompMetEng/raven-toolbox/blob/develop/scripts/analyse_carvefungi_transports.py).
 
 **1. The reduction is *not selective.*** Match each carved transport (metabolite + compartment pair)
 against the curated, literature-backed yeast-GEM transportome. If the cut were "smart", dropped

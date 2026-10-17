@@ -4,14 +4,14 @@ This repository is one of five that are developed together:
 
 | Repository | Language | Integration branch | Role |
 |---|---|---|---|
-| SysBioChalmers/RAVEN | MATLAB | `develop3` | Genome-scale model reconstruction and analysis |
-| SysBioChalmers/raven-toolbox | Python | `develop` | Python implementation of RAVEN |
-| SysBioChalmers/GECKO | MATLAB | `develop4` | Enzyme-constrained models, built on RAVEN |
-| SysBioChalmers/geckopy | Python | `main` | Python implementation of GECKO, built on raven-toolbox |
-| SysBioChalmers/raven-gecko-parity | Python | `develop` | Parity ledgers and behaviour scenarios for both pairs |
+| CompMetEng/RAVEN | MATLAB | `develop` | Genome-scale model reconstruction and analysis |
+| CompMetEng/raven-toolbox | Python | `develop` | Python implementation of RAVEN |
+| CompMetEng/GECKO | MATLAB | `develop` | Enzyme-constrained models, built on RAVEN |
+| CompMetEng/geckopy | Python | `main` | Python implementation of GECKO, built on raven-toolbox |
+| CompMetEng/raven-gecko-parity | Python | `develop` | Parity ledgers and behaviour scenarios for both pairs |
 
-The default branch of RAVEN and GECKO is `main`, which holds releases. Pull requests target
-the integration branch in the table.
+RAVEN and GECKO keep releases on `main`. Pull requests target the integration branch in the
+table. RAVEN 2.x and GECKO 3.x remain in the SysBioChalmers repositories.
 
 ## Rules for every change
 

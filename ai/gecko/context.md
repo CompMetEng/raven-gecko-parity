@@ -1,7 +1,7 @@
 # GECKO (MATLAB)
 
-Integration branch `develop4`; pull requests target it. GECKO runs on top of RAVEN
-`develop3` and ships no copy of it. The Python implementation is geckopy, and the ledger is
+Integration branch `develop`; pull requests target it. GECKO runs on top of RAVEN
+`develop` and ships no copy of it. The Python implementation is geckopy, and the ledger is
 `ledgers/gecko.yml` in raven-gecko-parity.
 
 ## Layout
@@ -25,7 +25,7 @@ Integration branch `develop4`; pull requests target it. GECKO runs on top of RAV
 - Help text is NumPy style with `Parameters`, `Name-Value Arguments`, `Returns`,
   `Examples` and `See also` sections. See `src/change_model/applyKcatConstraints.m`.
 - Optional arguments are parsed with `parseGECKOargs`, positional or name-value.
-- A RAVEN function that GECKO calls must exist on RAVEN `develop3`. When RAVEN renames or
+- A RAVEN function that GECKO calls must exist on RAVEN `develop`. When RAVEN renames or
   removes a function, GECKO's calls to it break without a compile-time error.
 - Function names are camelCase. CI runs MATLAB R2024b.
 - Branches are named `{chore,doc,feat,fix,refactor,style}/<name>`. Commit subjects use

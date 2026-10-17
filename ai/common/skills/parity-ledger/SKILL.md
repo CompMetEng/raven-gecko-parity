@@ -6,7 +6,7 @@ description: How to check and update the RAVEN and GECKO parity ledgers in raven
 # Parity ledger
 
 Each pair has one ledger in
-[raven-gecko-parity](https://github.com/SysBioChalmers/raven-gecko-parity):
+[raven-gecko-parity](https://github.com/CompMetEng/raven-gecko-parity):
 
 | Pair | Ledger |
 |---|---|
@@ -60,7 +60,7 @@ pull request in the code repository.
 ```bash
 parity check              # validate both ledgers against the four checkouts
 parity sync               # add rows for newly public functions
-parity mirror --since develop3..HEAD
+parity mirror --since develop..HEAD
 parity scenarios          # list scenarios and the rows they cover
 parity refs               # the branch compared for each repository
 ```

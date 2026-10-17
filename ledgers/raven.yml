@@ -18,8 +18,8 @@
 
 version: 1
 pair: raven
-matlab: SysBioChalmers/RAVEN
-python: SysBioChalmers/raven-toolbox
+matlab: CompMetEng/RAVEN
+python: CompMetEng/raven-toolbox
 
 entries:
   - matlab: addExchangeRxns
@@ -91,7 +91,7 @@ entries:
   - matlab: applyCondition
     python: raven_toolbox.conditions.apply_condition
     status: parity
-    issue: SysBioChalmers/raven-gecko-parity#65
+    issue: CompMetEng/raven-gecko-parity#65
     scenarios:
       - apply_condition_smallyeast
     notes: 'Both docstrings describe the same schema, down to the same worked examples. prelude.reset_exchanges
@@ -143,7 +143,7 @@ entries:
       throwaway exchange, check find_blocked_reactions) is reused directly by two later ports that needed
       the exact same mechanism for their own single real caller rather than as a standalone entry point:
       find_leak_metabolite (SysBioChalmers/RAVEN#44) and gap_report''s own private canExchange
-      reimplementation (SysBioChalmers/raven-gecko-parity#36).'
+      reimplementation (CompMetEng/raven-gecko-parity#36).'
   - matlab: canProduce
     status: via-dependency
     reason: 'Deprecated wrapper (SysBioChalmers/RAVEN#732) forwarding to canExchange(model,''produce'',...); see
@@ -209,7 +209,7 @@ entries:
   - matlab: checkProduction
     status: subsumed
     reason: 'Corrected from an earlier via-dependency row: closer reading (while porting gapReport,
-      SysBioChalmers/raven-gecko-parity#36) found it actually computes a greedy minimal-connection
+      CompMetEng/raven-gecko-parity#36) found it actually computes a greedy minimal-connection
       set-cover over metabolite producibility --- not something analyse_topology/find_blocked_reactions
       already does. Its only real caller in RAVEN is gapReport, so it is reimplemented as a private helper
       inside raven_toolbox.gapfilling.gap_report rather than given a standalone Python entry point.'
@@ -262,7 +262,7 @@ entries:
       multi-metabolite one-sided reaction (e.g. 2 A + 3 B =>) was closed only when its magnitudes happened to sum
       to exactly 1 by coincidence --- and even then, both sides'' construction of the closed state accounted for
       only the first of its several metabolites. Fixed together in SysBioChalmers/RAVEN#734 and
-      SysBioChalmers/raven-toolbox#136. smallYeast''s own eight reactions are unaffected by the rule change ---
+      CompMetEng/raven-toolbox#136. smallYeast''s own eight reactions are unaffected by the rule change ---
       verified directly against smallYeast.yml on both sides, same eight reactions, same growth-drop numbers ---
       since every one of them was already a plain single-metabolite, unit-coefficient exchange with nothing for
       the old rule to miss or mishandle; the scenario''s two independently-restated rule checks were updated to
@@ -284,7 +284,7 @@ entries:
       sort explicitly). Replaces the earlier followChanged/follow_changed pairing: RAVEN removed
       followChanged in favour of this and moved its metabolite filter here as metaboliteList
       (SysBioChalmers/RAVEN#737), and raven-toolbox replaced follow_changed with this port
-      (SysBioChalmers/raven-toolbox#138). TWO DELIBERATE DIVERGENCES, both presentation rather than
+      (CompMetEng/raven-toolbox#138). TWO DELIBERATE DIVERGENCES, both presentation rather than
       computation: (1) compare_fluxes returns a DataFrame and no printed table, so RAVEN''s nMax and
       verbose have no counterpart -- the same choice already recorded for compare_models and fseof.
       (2) An unmatched metabolite name is a warning in MATLAB and a missing_metabolites list on the
@@ -303,7 +303,7 @@ entries:
       - compare_multiple_models_smallyeast
     notes: 'from migration.md. Tidy DataFrames (reactions / mets / genes / subsystems presence + pairwise
       Jaccard + optional check_tasks pass/fail), plus, as of SysBioChalmers/RAVEN#741 merging
-      compareRxnsGenesMetsComps into this function and SysBioChalmers/raven-toolbox#139 following on the
+      compareRxnsGenesMetsComps into this function and CompMetEng/raven-toolbox#139 following on the
       Python side, ec_codes / metabolite_names / equations / equations_no_compartments presence --- the
       part of this comparison that still works when two models do not share an id convention. Plotting
       and tSNE/MDS are one-liners in seaborn/scikit-learn; intentionally not in the function, and
@@ -687,7 +687,7 @@ entries:
       from a string sort of the stripped ids, not an integer sort, so a prefix mixing widths
       (r_9 alongside r_10) can disagree with what a numeric sort would give -- not fixed here, since
       the point of a parity port is matching the real behaviour rather than improving on it. Verified
-      against real RAVEN output (SysBioChalmers/raven-toolbox#126) for five cases: no existing match,
+      against real RAVEN output (CompMetEng/raven-toolbox#126) for five cases: no existing match,
       a normal increment, a wider explicit num_length, the mixed-width quirk, and a non-numeric
       suffix -- all byte-identical. add_transport_reactions and batch_curate_from_tsv keep their own
       narrower inline id logic rather than being refactored onto this; this is an additive,
@@ -701,7 +701,7 @@ entries:
   - matlab: getAllSubGraphs
     status: subsumed
     reason: 'Corrected from an earlier via-dependency row: closer reading (while porting gapReport,
-      SysBioChalmers/raven-gecko-parity#36) found it is plain connected-components over the metabolite
+      CompMetEng/raven-gecko-parity#36) found it is plain connected-components over the metabolite
       graph (two metabolites connected if they share a reaction) --- unrelated to analyse_topology''s BFS
       producibility reachability or find_blocked_reactions. Its only real caller in RAVEN is gapReport, so
       it is reimplemented as a private helper inside raven_toolbox.gapfilling.gap_report rather than given
@@ -757,7 +757,7 @@ entries:
       the scenario was run against that PR''s branch directly rather than develop3 --- re-verify
       once #742 lands (the fix is a one-line sign flip, `mA(I)>mB(I)` to `mB(I)>mA(I)`, so a
       re-verification is not expected to find anything new). No callers besides analyzeSampling in
-      RAVEN (SysBioChalmers/raven-gecko-parity#41, which cannot be usefully ported without this),
+      RAVEN (CompMetEng/raven-gecko-parity#41, which cannot be usefully ported without this),
       but kept as its own public entry point since it is independently documented and useful on its
       own, unlike e.g. canExchange.'
   - matlab: getGeneData
@@ -922,7 +922,7 @@ entries:
       wrong). Before SysBioChalmers/RAVEN#743 (merged), RAVEN never divided by the resolving
       reaction''s own coefficient for the metabolite being solved for, so any reaction where that
       coefficient was not +-1 got an incorrectly scaled formula; found while porting, fixed upstream and
-      in raven_toolbox (SysBioChalmers/raven-toolbox#145, merged). The scenario''s A -> 2 D reaction
+      in raven_toolbox (CompMetEng/raven-toolbox#145, merged). The scenario''s A -> 2 D reaction
       exercises exactly that case and MATCHes on both sides post-fix.'
   - matlab: haveFlux
     status: via-dependency
@@ -1381,7 +1381,7 @@ entries:
     notes: 'Was paired with remove_dead_end_reactions, which is one of simplifyModel''s modes rather than its
       counterpart; simplify_model is the umbrella entry point mirroring the same boolean-flag interface, and the
       per-mode functions are subsumed rows below it. Formerly diverged when deleteInaccessible ran *alone*
-      (SysBioChalmers/raven-gecko-parity#69): RAVEN reads dead ends off the sign pattern of S with reversible
+      (CompMetEng/raven-gecko-parity#69): RAVEN reads dead ends off the sign pattern of S with reversible
       reactions counted both ways and bounds otherwise ignored, while the Python side additionally consulted the
       bounds, so a reaction locked at zero flux was not counted as a producer there. Fixed in raven-toolbox to
       match RAVEN''s bounds-blind check; the scenario''s dead_end_alone checkpoint covers it running alone, not
@@ -1493,7 +1493,7 @@ entries:
       deliberate divergence from cobra''s own writer, which always includes it; nothing on either read side
       needs the key present. sort_ids=true previously diverged on compartments (write_yaml_model rebuilt it
       as a plain dict rather than an OrderedDict, dropping the !!omap tag readYAMLmodel.m keys its parsing
-      on) --- fixed in SysBioChalmers/raven-toolbox#124.'
+      on) --- fixed in CompMetEng/raven-toolbox#124.'
   - python: raven_toolbox.analysis.CompareFluxesResult
     status: python-only
     reason: 'Result type. Wraps compare_fluxes'' changed-reaction DataFrame, the three id lists,
@@ -1689,24 +1689,24 @@ entries:
     reason: The enzyme-constrained payload geckopy writes into the shared YAML schema.
   - python: raven_toolbox.localization.annotate_proteome
     status: matlab-pending
-    issue: SysBioChalmers/raven-gecko-parity#20
+    issue: CompMetEng/raven-gecko-parity#20
     notes: 'Runs a predictor over a whole proteome; the loaders carry the parity rows. Part of the
       transporter-evidence subsystem, decided in issue #20 to be worth porting eventually --- not queued as
       near-term work, just no longer marked as deliberately excluded.'
   - python: raven_toolbox.localization.annotate_transporters
     status: matlab-pending
-    issue: SysBioChalmers/raven-gecko-parity#20
+    issue: CompMetEng/raven-gecko-parity#20
     notes: 'Transport-protein annotation, the entry point of the transport-evidence subsystem. No RAVEN
       counterpart; todo.md lists it among the Python-only subsystems worth documenting, but it is a
       capability MATLAB could gain. Tracked as a whole, with the rest of the subsystem, in issue #20.'
   - python: raven_toolbox.localization.apply_assignment
     status: matlab-pending
-    issue: SysBioChalmers/raven-gecko-parity#20
+    issue: CompMetEng/raven-gecko-parity#20
     notes: 'Materialises an AssignmentProposal; RAVEN''s predictLocalization always applies in place. Part
       of the transporter-evidence subsystem, decided in issue #20 to be worth porting eventually.'
   - python: raven_toolbox.localization.apply_localization
     status: matlab-pending
-    issue: SysBioChalmers/raven-gecko-parity#20
+    issue: CompMetEng/raven-gecko-parity#20
     notes: 'Materialises a LocalizationProposal; RAVEN always applies in place. Part of the
       transporter-evidence subsystem, decided in issue #20 to be worth porting eventually.'
   - python: raven_toolbox.localization.AssignmentProposal
@@ -1715,12 +1715,12 @@ entries:
       has no MATLAB counterpart by design.
   - python: raven_toolbox.localization.combine_scores
     status: matlab-pending
-    issue: SysBioChalmers/raven-gecko-parity#20
+    issue: CompMetEng/raven-gecko-parity#20
     notes: 'Merges evidence from several predictors, which RAVEN''s single-source parseScores never needs.
       Part of the transporter-evidence subsystem, decided in issue #20 to be worth porting eventually.'
   - python: raven_toolbox.localization.curation_priority
     status: matlab-pending
-    issue: SysBioChalmers/raven-gecko-parity#20
+    issue: CompMetEng/raven-gecko-parity#20
     notes: Ranks genes by how much a curation decision would change the placement. No RAVEN counterpart.
   - python: raven_toolbox.localization.DEEPLOC_COMPARTMENT_TRUST
     status: python-only
@@ -1728,17 +1728,17 @@ entries:
       equivalent.
   - python: raven_toolbox.localization.default_metabolite_chebi
     status: matlab-pending
-    issue: SysBioChalmers/raven-gecko-parity#20
+    issue: CompMetEng/raven-gecko-parity#20
     notes: 'Default ChEBI lookup behind the transport-evidence scoring. Part of the transporter-evidence
       subsystem, decided in issue #20 to be worth porting eventually.'
   - python: raven_toolbox.localization.default_substrate_of
     status: matlab-pending
-    issue: SysBioChalmers/raven-gecko-parity#20
+    issue: CompMetEng/raven-gecko-parity#20
     notes: 'Default substrate lookup behind the transport-evidence scoring. Part of the transporter-evidence
       subsystem, decided in issue #20 to be worth porting eventually.'
   - python: raven_toolbox.localization.evidence_aware_transport_cost
     status: matlab-pending
-    issue: SysBioChalmers/raven-gecko-parity#20
+    issue: CompMetEng/raven-gecko-parity#20
     notes: 'Evidence-weighted transport cost used by assign_compartments. Pairs with annotate_transporters;
       back-port alongside it. Tracked as a whole, with the rest of the subsystem, in issue #20.'
   - python: raven_toolbox.localization.fetch_protein_sequences
@@ -1749,12 +1749,12 @@ entries:
     reason: Parsed-data type. RAVEN passes structs and parallel cell arrays instead.
   - python: raven_toolbox.localization.load_compartments
     status: matlab-pending
-    issue: SysBioChalmers/raven-gecko-parity#20
+    issue: CompMetEng/raven-gecko-parity#20
     notes: COMPARTMENTS (jensenlab.org) evidence loader --- a source RAVEN has no adapter for. migration.md
       marks it '(new)'.
   - python: raven_toolbox.localization.load_mulocdeep
     status: matlab-pending
-    issue: SysBioChalmers/raven-gecko-parity#20
+    issue: CompMetEng/raven-gecko-parity#20
     notes: MULocDeep evidence loader --- a predictor RAVEN's parseScores has no adapter for. migration.md
       marks it '(new)'.
   - python: raven_toolbox.localization.load_uniprot
@@ -1780,7 +1780,7 @@ entries:
       has no MATLAB counterpart by design.
   - python: raven_toolbox.localization.relocate_reactions
     status: matlab-pending
-    issue: SysBioChalmers/raven-gecko-parity#20
+    issue: CompMetEng/raven-gecko-parity#20
     notes: Moves reactions between compartments given an accepted proposal. No RAVEN counterpart.
   - python: raven_toolbox.localization.RelocationResult
     status: python-only
@@ -1798,7 +1798,7 @@ entries:
     reason: Parsed-data type. RAVEN passes structs and parallel cell arrays instead.
   - python: raven_toolbox.localization.triage_localization
     status: matlab-pending
-    issue: SysBioChalmers/raven-gecko-parity#20
+    issue: CompMetEng/raven-gecko-parity#20
     notes: Turns a certification report into a reviewable triage list. No RAVEN counterpart.
   - python: raven_toolbox.manipulation.constrain_reversible_reactions
     status: subsumed

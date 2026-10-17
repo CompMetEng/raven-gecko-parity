@@ -18,8 +18,8 @@
 
 version: 1
 pair: gecko
-matlab: SysBioChalmers/GECKO
-python: SysBioChalmers/geckopy
+matlab: CompMetEng/GECKO
+python: CompMetEng/geckopy
 
 entries:
   - matlab: adapterTemplate
@@ -237,8 +237,8 @@ entries:
     notes: '[Py] thin wrapper over raven_toolbox.analysis.fseof; selection is regression-based.
       The two ecModel-specific divergences from raven-gecko-parity#74 are fixed: ec_fseof anchors the
       enforced-flux floor to the production target''s flux at biomass-optimum via fseof''s new min_target
-      (SysBioChalmers/raven-toolbox#147), matching ecFSEOF.m''s iniTarget, and restricts targets/scan to
-      gene-associated, non-"standard" reactions (SysBioChalmers/geckopy#50), matching ecFSEOF.m''s search
+      (CompMetEng/raven-toolbox#147), matching ecFSEOF.m''s iniTarget, and restricts targets/scan to
+      gene-associated, non-"standard" reactions (CompMetEng/geckopy#50), matching ecFSEOF.m''s search
       space. The selection criterion itself remains an accepted divergence --- MATLAB requires strict
       monotonicity across every step plus a top-quartile-by-slope cut, raven-toolbox uses a
       correlation+slope regression threshold (its own IMPROVEMENTS notes FS1-FS4) --- the same divergence
@@ -362,7 +362,7 @@ entries:
       toward a subsystem''s >=threshold eligibility, so they can no longer take different branches
       (subsystem-specific vs. global fallback) for the same input; and geckopy''s _fill_zero_kcats now
       treats a NaN kcat as unset too, matching MATLAB''s isnan check in fillZeroKcat
-      (SysBioChalmers/geckopy#49).'
+      (CompMetEng/geckopy#49).'
   - matlab: getSubsetEcModel
     python: geckopy.get_subset_ec_model
     status: parity
@@ -461,9 +461,9 @@ entries:
       - kcat_chain_ectestgem
     notes: 'Kept as a deliberate divergence in defaults (raven-gecko-parity#76): an unrecognised substrate
       name is still fatal in
-      [readDLKcatOutput](https://github.com/SysBioChalmers/GECKO/blob/develop4/src/gather_kcats/readDLKcatOutput.m#L1)
+      [readDLKcatOutput](https://github.com/CompMetEng/GECKO/blob/develop/src/gather_kcats/readDLKcatOutput.m#L1)
       (aborts the whole read), while
-      [read_dlkcat_output](https://github.com/SysBioChalmers/geckopy/blob/main/src/geckopy/gather_kcats/read_dlkcat_output.py#L32)
+      [read_dlkcat_output](https://github.com/CompMetEng/geckopy/blob/main/src/geckopy/gather_kcats/read_dlkcat_output.py#L32)
       drops just that row by default -- but now accepts strict=True to opt into MATLAB''s fail-fast behavior
       (geckopy#44), and reports the non-numeric-kcat and unrecognised-substrate drop counts separately rather
       than conflating them. Substrate-name matching against model.metNames is case-insensitive on both
@@ -533,13 +533,13 @@ entries:
     status: parity
     scenarios:
       - model_edits_ectestgem
-    notes: 'Formerly diverged on two points (SysBioChalmers/raven-gecko-parity#77): ec.source label, and
+    notes: 'Formerly diverged on two points (CompMetEng/raven-gecko-parity#77): ec.source label, and
       whether a per-isozyme kcat list is accepted for an unsuffixed base name. Fixed in geckopy#47:
       set_kcat_for_reactions now writes ec.source = ''setKcatForReactions'', matching
-      [setKcatForReactions](https://github.com/SysBioChalmers/GECKO/blob/develop4/src/change_model/setKcatForReactions.m#L1)''s
+      [setKcatForReactions](https://github.com/CompMetEng/GECKO/blob/develop/src/change_model/setKcatForReactions.m#L1)''s
       actual assignment (its docstring said ''from setKcatForReactions'', fixed separately in GECKO#474
       to match the real behavior); and
-      [set_kcat_for_reactions](https://github.com/SysBioChalmers/geckopy/blob/main/src/geckopy/ec_model/pipeline/set_kcat.py#L23)
+      [set_kcat_for_reactions](https://github.com/CompMetEng/geckopy/blob/main/src/geckopy/ec_model/pipeline/set_kcat.py#L23)
       now accepts a per-isozyme kcat list for an unsuffixed base name, assigning positionally in ec.rxns
       order to match MATLAB exactly (the ordering reliance is real but documented as fragile on both
       sides; passing suffixed ids explicitly remains the safer alternative). geckopy''s own per-input-id

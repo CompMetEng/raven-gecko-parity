@@ -72,8 +72,8 @@ jobs:
       - run: pip install -e .
 
       # parity.toml is the single source of truth for which branch each side is
-      # compared at --- RAVEN's default branch is `main`, but the ledger describes
-      # `develop3`. RAVEN's own repo/ref is resolved unconditionally: the gecko entry
+      # compared at, independent of each repo's default branch. RAVEN's own repo/ref
+      # is resolved unconditionally: the gecko entry
       # needs it as a MATLAB-path and geckopy-install dependency even though it is not
       # the pair under test there.
       - id: refs

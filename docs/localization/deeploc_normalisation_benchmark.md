@@ -5,7 +5,7 @@ each gene's best compartment to 1.0 change a compartment assignment's agreement 
 yeast-GEM? Run on the **entire** model. Short answer: **no — it is accuracy-neutral**, so
 normalisation stays the default and `normalise=False` is an opt-in.
 
-* Driver: [`scripts/benchmark_deeploc_normalisation.py`](https://github.com/SysBioChalmers/raven-toolbox/blob/develop/scripts/benchmark_deeploc_normalisation.py)
+* Driver: [`scripts/benchmark_deeploc_normalisation.py`](https://github.com/CompMetEng/raven-toolbox/blob/develop/scripts/benchmark_deeploc_normalisation.py)
 * Model: `yeast-GEM.xml` — 4102 reactions, 1143 genes, 14 compartments (perfect DeepLoc-gene
   coverage: the input FASTA was prepared from this model).
 * Scores: the three committed yeast DeepLoc 2.1 CSVs (`data/deeploc/yeast-GEM_deeploc_00{1,2,3}.csv`),
@@ -18,9 +18,9 @@ normalisation stays the default and `normalise=False` is an opt-in.
 The established flatten benchmark (see the
 [yeast localization benchmark](yeast_localization_benchmark.md)), on the full model: flatten
 yeast-GEM to one compartment with
-[`merge_compartments`](https://github.com/SysBioChalmers/raven-toolbox/blob/develop/src/raven_toolbox/manipulation/compartments.py)
+[`merge_compartments`](https://github.com/CompMetEng/raven-toolbox/blob/develop/src/raven_toolbox/manipulation/compartments.py)
 so the MILP cannot lean on metabolite topology, then ask
-[`predict_localization`](https://github.com/SysBioChalmers/raven-toolbox/blob/develop/src/raven_toolbox/localization/predict.py)
+[`predict_localization`](https://github.com/CompMetEng/raven-toolbox/blob/develop/src/raven_toolbox/localization/predict.py)
 to re-place every non-boundary single-compartment GPR'd reaction (**truth set: 2207 reactions**)
 from the DeepLoc score table.
 
@@ -168,7 +168,7 @@ reproduce.
 **Decision:** keep per-gene normalisation the **default** (`parseScores` convention, comparable
 multi-source scales); expose `load_deeploc(normalise=False)` as an **opt-in** for callers who want
 DeepLoc's calibrated magnitudes — e.g. the confidence signal
-[`triage_localization`](https://github.com/SysBioChalmers/raven-toolbox/blob/develop/docs/guide/localization.md) consumes, or to avoid hand-tuning the transport
+[`triage_localization`](https://github.com/CompMetEng/raven-toolbox/blob/develop/docs/guide/localization.md) consumes, or to avoid hand-tuning the transport
 scale. Flipping the default is not justified by this benchmark.
 
 ## Reproducing

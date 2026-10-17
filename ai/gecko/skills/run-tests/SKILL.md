@@ -1,11 +1,11 @@
 ---
 name: run-tests
-description: Run GECKO's MATLAB unit tests headless with RAVEN develop3 on the path. Use before reporting a GECKO change as working.
+description: Run GECKO's MATLAB unit tests headless with RAVEN develop on the path. Use before reporting a GECKO change as working.
 ---
 
 # Running GECKO tests
 
-GECKO needs a RAVEN `develop3` checkout on the path before `GECKOInstaller.install` runs.
+GECKO needs a RAVEN `develop` checkout on the path before `GECKOInstaller.install` runs.
 RAVEN goes on the path first, so GECKO's own functions take precedence where the two define
 the same name.
 
@@ -13,7 +13,7 @@ the same name.
 matlab -batch "restoredefaultpath; addpath(genpath('<raven-checkout>')); cd('<gecko-checkout>'); GECKOInstaller.install; setRavenSolver('glpk'); cd('test/unit_tests'); r = runtests('geckoCoreFunctionTests'); disp(table(r))"
 ```
 
-- CI uses the same sequence: it checks out RAVEN `develop3`, runs `GECKOInstaller.install`,
+- CI uses the same sequence: it checks out RAVEN `develop`, runs `GECKOInstaller.install`,
   selects GLPK and runs `geckoCoreFunctionTests`.
 - `restoredefaultpath` removes other RAVEN or GECKO checkouts from the saved path; without
   it, a different checkout can shadow the one under test.

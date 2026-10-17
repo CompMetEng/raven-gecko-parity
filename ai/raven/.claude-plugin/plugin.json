@@ -1,9 +1,9 @@
 {
   "name": "raven",
   "version": "0.1.0",
-  "description": "RAVEN (MATLAB, develop3): code conventions and running the test suite.",
+  "description": "RAVEN (MATLAB, develop): code conventions and running the test suite.",
   "author": {
-    "name": "SysBioChalmers"
+    "name": "CompMetEng"
   },
-  "repository": "https://github.com/SysBioChalmers/raven-gecko-parity"
+  "repository": "https://github.com/CompMetEng/raven-gecko-parity"
 }

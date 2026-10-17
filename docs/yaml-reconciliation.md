@@ -5,7 +5,7 @@ Both sides read the same model and both round trips are lossless, but `writeYAML
 `write_yaml_model` do not produce the same file. This is what the difference is made of, which
 way it should be resolved, and in what order.
 
-Tracked as [SysBioChalmers/raven-gecko-parity#6](https://github.com/SysBioChalmers/raven-gecko-parity/issues/6).
+Tracked as [CompMetEng/raven-gecko-parity#6](https://github.com/CompMetEng/raven-gecko-parity/issues/6).
 
 ## Status: resolved (Tiers 1 and 2), Tier 3 outstanding
 
@@ -55,7 +55,7 @@ above did not actually hold for every field --- re-verifying it directly (rather
 this record) found the two writers still disagreed on `metaData` field order, on whether
 `defaultLB`/`defaultUB` were emitted at all, and on whether a singleton MIRIAM annotation
 collapsed to a bare scalar. Fixed in
-[SysBioChalmers/raven-toolbox#106](https://github.com/SysBioChalmers/raven-toolbox/pull/106); *that*
+[CompMetEng/raven-toolbox#106](https://github.com/CompMetEng/raven-toolbox/pull/106); *that*
 fix is what a same-model byte-identity check (same SHA256) now confirms, on both `smallYeast.yml`
 and a fixture built to exercise the fields above. Separately, two reader-side bugs in
 `readYAMLmodel.m` were found and fixed

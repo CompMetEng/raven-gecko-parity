@@ -45,7 +45,7 @@ target checkbox. Keep the template's checkbox and put the bullets above in its l
   corrupts inline code. Edit body files with a file editor, not with a PowerShell string
   replacement.
 - Link to source in the four code repositories with the integration branch in the URL
-  (`blob/develop3/...`, `blob/develop4/...`, `blob/develop/...`, `blob/main/...`), never a
+  (`blob/develop/...` or `blob/main/...`), never a
   commit SHA.
 - Cross-repository references use the `owner/repo#number` form, for example
-  `SysBioChalmers/geckopy#12`.
+  `CompMetEng/geckopy#12`.

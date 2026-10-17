@@ -24,7 +24,7 @@ matlab -batch "restoredefaultpath; addpath(genpath('<checkout>')); cd('<checkout
   `addpath('C:\gurobi1302\win64\matlab')`) and select it with `setRavenSolver('gurobi')`.
   A skipped test is not a passing test; report skips.
 - For a change that is meant to preserve behaviour, run the same classes on a clean
-  checkout of `develop3` and compare the two results.
+  checkout of `develop` and compare the two results.
 
 ## Test fixtures
 

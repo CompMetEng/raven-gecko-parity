@@ -1,8 +1,8 @@
 {
   "name": "raven-gecko",
   "owner": {
-    "name": "SysBioChalmers",
-    "url": "https://github.com/SysBioChalmers"
+    "name": "CompMetEng",
+    "url": "https://github.com/CompMetEng"
   },
   "description": "Development conventions for RAVEN, GECKO, raven-toolbox, geckopy and raven-gecko-parity.",
   "plugins": [
@@ -14,12 +14,12 @@
     {
       "name": "raven",
       "source": "./ai/raven",
-      "description": "RAVEN (MATLAB, develop3): code conventions and running the test suite."
+      "description": "RAVEN (MATLAB, develop): code conventions and running the test suite."
     },
     {
       "name": "gecko",
       "source": "./ai/gecko",
-      "description": "GECKO (MATLAB, develop4): code conventions and running the test suite with RAVEN on the path."
+      "description": "GECKO (MATLAB, develop): code conventions and running the test suite with RAVEN on the path."
     },
     {
       "name": "raven-toolbox",
