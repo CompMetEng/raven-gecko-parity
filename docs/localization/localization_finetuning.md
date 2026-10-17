@@ -5,7 +5,7 @@ predictions (`data/deeploc/yeast-GEM_deeploc_*.csv`). Three hyperparameters the 
 data determines directly: the mitochondrial membrane-routing cut, the confidence gate, and the
 triage per-compartment trust table.
 
-* Driver: [`scripts/finetune_localization_yeast.py`](https://github.com/SysBioChalmers/raven-toolbox/blob/develop/scripts/finetune_localization_yeast.py)
+* Driver: [`scripts/finetune_localization_yeast.py`](https://github.com/CompMetEng/raven-toolbox/blob/develop/scripts/finetune_localization_yeast.py)
   (`--organism 559292` adds the UniProt corroboration column).
 * Model `yeastGEM_develop`, 1143 slow-model predictions, 2207 single-compartment GPR reactions.
 * **Overfitting guard:** yeast-GEM's curation carries ~10% noise (two curated sources agree only
@@ -99,7 +99,7 @@ The slow model reshuffles the trust order versus the earlier fast values: **mito
 vacuole 0.14 → 0.36, and `mm` becomes trustworthy (0 → 0.86) now that the validated split reaches it.
 Golgi drops 0.23 → 0.01 (the slow model rarely calls Golgi correctly). This refreshed table is
 applied as the default in
-[`raven_toolbox.localization.triage`](https://github.com/SysBioChalmers/raven-toolbox/blob/develop/src/raven_toolbox/localization/triage.py).
+[`raven_toolbox.localization.triage`](https://github.com/CompMetEng/raven-toolbox/blob/develop/src/raven_toolbox/localization/triage.py).
 
 ## Applied
 

@@ -8,7 +8,7 @@ compartments are DeepLoc2-sourced). Plant proteins are under-represented in Deep
 human/animal-heavy training, making this a *stringent* generalisation test — and it is the only model
 here that exercises the **chloroplast/plastid**, the organelle yeast-GEM has no analogue for.
 
-* Driver: [`scripts/benchmark_deeploc.py`](https://github.com/SysBioChalmers/raven-toolbox/blob/develop/scripts/benchmark_deeploc.py) `--species aracore`
+* Driver: [`scripts/benchmark_deeploc.py`](https://github.com/CompMetEng/raven-toolbox/blob/develop/scripts/benchmark_deeploc.py) `--species aracore`
 * Model: AraCore v2.0 (Arnold & Nikoloski, *Plant Physiol.* 2014,
   [doi:10.1104/pp.114.235358](https://doi.org/10.1104/pp.114.235358)) — 585 reactions, 706 genes,
   compartments `h` Chloroplast, `l` Lumen, `c` Cytosol, `m` Mitochondrion, `i` IntermembraneSpace,

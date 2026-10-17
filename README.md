@@ -4,8 +4,8 @@ Keeps the MATLAB and Python implementations of RAVEN and GECKO honest about thei
 
 | MATLAB | Python | Ledger |
 |---|---|---|
-| [SysBioChalmers/RAVEN](https://github.com/SysBioChalmers/RAVEN) | [SysBioChalmers/raven-toolbox](https://github.com/SysBioChalmers/raven-toolbox) | [`ledgers/raven.yml`](ledgers/raven.yml) |
-| [SysBioChalmers/GECKO](https://github.com/SysBioChalmers/GECKO) | [SysBioChalmers/geckopy](https://github.com/SysBioChalmers/geckopy) | [`ledgers/gecko.yml`](ledgers/gecko.yml) |
+| [CompMetEng/RAVEN](https://github.com/CompMetEng/RAVEN) | [CompMetEng/raven-toolbox](https://github.com/CompMetEng/raven-toolbox) | [`ledgers/raven.yml`](ledgers/raven.yml) |
+| [CompMetEng/GECKO](https://github.com/CompMetEng/GECKO) | [CompMetEng/geckopy](https://github.com/CompMetEng/geckopy) | [`ledgers/gecko.yml`](ledgers/gecko.yml) |
 
 Development happens mostly on the Python side; MATLAB should keep up, except where a
 difference is deliberate. That policy only works if "deliberate" is written down somewhere a
@@ -197,7 +197,7 @@ and `enzyme_usage_ectestgem` confirmed one more: `reportEnzymeUsage`'s `topAbsUs
 always pads to the requested row count with a placeholder for any enzyme that carries no flux,
 where `report_enzyme_usage`'s equivalent table just leaves that enzyme out, so the two can
 return a different number of rows for the same request
-([raven-gecko-parity#18](https://github.com/SysBioChalmers/raven-gecko-parity/issues/18)).
+([raven-gecko-parity#18](https://github.com/CompMetEng/raven-gecko-parity/issues/18)).
 `ec_fva_ectestgem` confirmed one more, already documented in geckopy's own source before this
 scenario existed: on ecTestGEM's one isozyme-split reaction, MATLAB's `ecFVA` reduces each
 split variant's own bound independently across every canonical reaction's LP solve and then
@@ -235,11 +235,11 @@ finds one target, geckopy finds six. `molecular_weight_sequences`: eighteen sequ
 chosen to isolate one variable each, and all eighteen differ --- the two mass tables agree on
 the twenty standard residues but not on `X` or `B`, and the two functions disagree on
 case-sensitivity and on what an empty sequence is worth
-([raven-gecko-parity#11](https://github.com/SysBioChalmers/raven-gecko-parity/issues/11)).
+([raven-gecko-parity#11](https://github.com/CompMetEng/raven-gecko-parity/issues/11)).
 `ec_model_io_ectestgem`: a save/load round trip agrees on every field, on both sides, but the
 written *file* does not lay out the same way --- the same divergence already tracked for
 RAVEN's plain-GEM writers
-([raven-gecko-parity#6](https://github.com/SysBioChalmers/raven-gecko-parity/issues/6)), one
+([raven-gecko-parity#6](https://github.com/CompMetEng/raven-gecko-parity/issues/6)), one
 layer down. All thirteen above run on ecTestGEM, GECKO's own 7-reaction unit-test model; one more,
 `ec_model_full_yeastgem`, runs the same `makeEcModel` + BRENDA kcat-assignment pipeline on the
 real yeast-GEM model (4102 conventional reactions) instead, in its own weekly workflow
@@ -261,7 +261,7 @@ that avoid false differences.
 
 Large downloadable data --- KEGG reference tables and HMM libraries, and the
 BLAST+/DIAMOND/HMMER binaries both toolboxes shell out to --- lives outside either code
-repo, in [`raven-data`](https://github.com/SysBioChalmers/raven-data) releases, described
+repo, in [`toolbox-assets`](https://github.com/CompMetEng/toolbox-assets) releases, described
 by one manifest both sides read.
 
 The convention for hosting, versioning and publishing them is
@@ -270,7 +270,7 @@ than one toolbox reads the same files. The other two halves live where the work 
 what an end user downloads and how to control it is on
 [raven-docs](https://raven-docs.readthedocs.io/en/latest/installation/data-and-binaries/),
 and building the KEGG artefacts and binary bundles is in
-[raven-toolbox's contributing guide](https://github.com/SysBioChalmers/raven-toolbox/blob/develop/CONTRIBUTING.md),
+[raven-toolbox's contributing guide](https://github.com/CompMetEng/raven-toolbox/blob/develop/CONTRIBUTING.md),
 since that repository implements the pipeline.
 
 ## raven-toolbox development records
@@ -325,16 +325,15 @@ parity refs
 ```
 
 ```
-gecko    matlab  SysBioChalmers/GECKO@develop4
-gecko    python  SysBioChalmers/geckopy@main
-raven    matlab  SysBioChalmers/RAVEN@develop3
-raven    python  SysBioChalmers/raven-toolbox@develop
+gecko    matlab  CompMetEng/GECKO@develop
+gecko    python  CompMetEng/geckopy@main
+raven    matlab  CompMetEng/RAVEN@develop
+raven    python  CompMetEng/raven-toolbox@develop
 ```
 
-None of the four defaults to its integration branch --- RAVEN's default is `main` and GECKO's
-is `main`, while the ledgers describe `develop3` and `develop4`. A workflow that takes
-defaults compares a release branch against a development one and reports the normal backlog
-as drift.
+The ledgers describe these branches, so the workflows check out these refs and not each
+repository's default branch. A workflow that compared a release branch against a
+development one would report the normal backlog as drift.
 
 ## Status
 

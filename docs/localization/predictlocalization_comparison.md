@@ -10,8 +10,8 @@ seed, wall-clock budget) while raven-toolbox's `assign_compartments` solves it t
 global optimum** by MILP. This is the controlled head-to-head: same model, same scores, same default
 compartment.
 
-* Driver: [`scripts/compare_predictlocalization.py`](https://github.com/SysBioChalmers/raven-toolbox/blob/develop/scripts/compare_predictlocalization.py)
-  (`--prep`/`--score`) + [`scripts/run_predictlocalization.m`](https://github.com/SysBioChalmers/raven-toolbox/blob/develop/scripts/run_predictlocalization.m) (the actual RAVEN function, MATLAB R2024b).
+* Driver: [`scripts/compare_predictlocalization.py`](https://github.com/CompMetEng/raven-toolbox/blob/develop/scripts/compare_predictlocalization.py)
+  (`--prep`/`--score`) + [`scripts/run_predictlocalization.m`](https://github.com/CompMetEng/raven-toolbox/blob/develop/scripts/run_predictlocalization.m) (the actual RAVEN function, MATLAB R2024b).
 * Model: yeast-GEM; scores: the slow DeepLoc 2.1 run, normalised, mapped to yeast compartment ids
   (identical to the MILP's input). 1143 genes.
 * Metric: **gene-level** agreement with curated yeast-GEM (a gene is correct if its assigned

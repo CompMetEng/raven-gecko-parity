@@ -6,7 +6,7 @@ training, so high agreement is expected and proves little on its own (pair it wi
 real value here is methodological: Human-GEM's own gene localisations are **partly DeepLoc-derived**,
 so a naive benchmark grades DeepLoc against itself.
 
-* Driver: [`scripts/benchmark_deeploc_humangem.py`](https://github.com/SysBioChalmers/raven-toolbox/blob/develop/scripts/benchmark_deeploc_humangem.py)
+* Driver: [`scripts/benchmark_deeploc_humangem.py`](https://github.com/CompMetEng/raven-toolbox/blob/develop/scripts/benchmark_deeploc_humangem.py)
 * Model: Human-GEM v2.0.0 (Robinson *et al.*, *Sci. Signal.* 2020,
   [doi:10.1126/scisignal.aaz1482](https://doi.org/10.1126/scisignal.aaz1482)). Gene-level: the truth
   is each gene's annotated location set in `model/genes.tsv` (`compartments`), with provenance in

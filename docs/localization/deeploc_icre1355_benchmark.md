@@ -6,7 +6,7 @@ A second independent non-yeast eukaryote, and the **most training-distant**: the
 DeepLoc 2 (no circularity) but is an **auto-generated** model (`iCre1355_auto.xml`), so its curation
 is noisier than the hand-curated yeast-GEM / AraCore — read the numbers with that in mind.
 
-* Driver: [`scripts/benchmark_deeploc.py`](https://github.com/SysBioChalmers/raven-toolbox/blob/develop/scripts/benchmark_deeploc.py) `--species icre1355`
+* Driver: [`scripts/benchmark_deeploc.py`](https://github.com/CompMetEng/raven-toolbox/blob/develop/scripts/benchmark_deeploc.py) `--species icre1355`
 * Model: iCre1355 (Imam *et al.*, *Plant J.* 2015,
   [doi:10.1111/tpj.13059](https://doi.org/10.1111/tpj.13059)) — 2394 reactions, compartments `c`
   Cytosol, `h` Chloroplast, `m` Mitochondria, `x` Glyoxysome, `n` Nucleus, `g` Golgi, `e`

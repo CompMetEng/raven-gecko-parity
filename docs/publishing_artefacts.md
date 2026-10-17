@@ -11,7 +11,7 @@ Two other halves of this material live where the work does:
 - What an end user downloads, where it is cached and how to control it is on
   [raven-docs](https://raven-docs.readthedocs.io/en/latest/installation/data-and-binaries/).
 - Building the KEGG artefacts and the binary bundles is in
-  [raven-toolbox's contributing guide](https://github.com/SysBioChalmers/raven-toolbox/blob/develop/CONTRIBUTING.md),
+  [raven-toolbox's contributing guide](https://github.com/CompMetEng/raven-toolbox/blob/develop/CONTRIBUTING.md),
   since raven-toolbox implements that pipeline.
 
 ## The shape of it
@@ -22,7 +22,7 @@ language-agnostic **manifest** that every consumer reads. Every file carries a
 SHA256, so a consumer verifies what it downloaded rather than trusting it.
 
 For RAVEN and raven-toolbox that repository is
-[`SysBioChalmers/raven-data`](https://github.com/SysBioChalmers/raven-data),
+[`CompMetEng/toolbox-assets`](https://github.com/CompMetEng/toolbox-assets),
 holding the KEGG reference data, the prebuilt HMM libraries, and the
 BLAST+/DIAMOND/HMMER binaries. They are not attached to either code repository's
 own releases.
@@ -73,7 +73,7 @@ the snapshot tag.
 ```
 
 The schema is
-[`data/manifest.schema.json`](https://github.com/SysBioChalmers/raven-toolbox/blob/develop/data/manifest.schema.json),
+[`data/manifest.schema.json`](https://github.com/CompMetEng/raven-toolbox/blob/develop/data/manifest.schema.json),
 with a worked example alongside it.
 
 Because the entries are just URLs, where a given file is hosted is a per-file
@@ -125,7 +125,7 @@ python scripts/publish_to_raven_data.py release --tag kegg118 --dir <kegg-out-di
 # 3. UPDATE the manifest, computing each URL, SHA256 and size from the uploads
 python scripts/make_registry_snippet.py manifest --target data --dataset kegg \
     --version kegg118 --dir <kegg-out-dir> --manifest data/manifest.json \
-    --base-url https://github.com/SysBioChalmers/raven-data/releases/download/kegg118
+    --base-url https://github.com/CompMetEng/toolbox-assets/releases/download/kegg118
 
 # 4. SYNC the baked registries from the manifest
 python scripts/make_registry_snippet.py sync

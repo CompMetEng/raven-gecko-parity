@@ -140,7 +140,7 @@ draft, they suit different situations, and no current guide covers the second at
    calibration). Second, because it carries an infrastructure dependency the homology route
    does not: the KEGG artefacts have to be fetched, so the tutorial has to say clearly what
    is downloaded, how large it is, and what can be skipped. The existing artefact/manifest
-   tooling and [maintaining_kegg_data.md](https://github.com/SysBioChalmers/raven-gecko-parity/blob/main/docs/maintaining_kegg_data.md) (raven-gecko-parity) are the
+   tooling and [maintaining_kegg_data.md](https://github.com/CompMetEng/raven-gecko-parity/blob/develop/docs/maintaining_kegg_data.md) (raven-gecko-parity) are the
    starting point.
 
 Then, in order:
@@ -171,7 +171,7 @@ that CI executes.
 * API pages and docstrings for the subsystems that have neither (`confidence`, `biomass`,
   `conditions`, `curation`, `annotation`, `manifest`, `data`, `binaries`) — thin docstrings
   here render as thin pages on the site.
-* Resolve the open 💡 proposals in [improvements.md](https://github.com/SysBioChalmers/raven-toolbox/blob/develop/IMPROVEMENTS.md): implement or formally
+* Resolve the open 💡 proposals in [improvements.md](https://github.com/CompMetEng/raven-toolbox/blob/develop/IMPROVEMENTS.md): implement or formally
   drop.
 * A stability policy: what counts as public API, the deprecation window, and how `notes` /
   `annotation` key names are versioned.
@@ -183,8 +183,8 @@ the API surface is one we are willing to freeze.
 
 Not phased — these run alongside:
 
-* Land or close the open PRs ([#75](https://github.com/SysBioChalmers/raven-toolbox/pull/75),
-  [#85](https://github.com/SysBioChalmers/raven-toolbox/pull/85)).
+* Land or close the open PRs ([#75](https://github.com/CompMetEng/raven-toolbox/pull/75),
+  [#85](https://github.com/CompMetEng/raven-toolbox/pull/85)).
 * Triage the 14 untracked scripts in `scripts/` — several are the cross-language drivers
   phase 2 needs.
 * Track the upstream optlang/HiGHS and GLPK blockers.

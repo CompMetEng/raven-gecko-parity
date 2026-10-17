@@ -2,7 +2,7 @@
 
 **Status: the three facets are shipped.** The data model, the notes round-trip (YAML + SBML), and the
 `localization`, `equation` and `gene_association` scorers live in
-[`raven_toolbox/confidence.py`](https://github.com/SysBioChalmers/raven-toolbox/blob/develop/src/raven_toolbox/confidence.py) (tests in `tests/test_confidence.py`).
+[`raven_toolbox/confidence.py`](https://github.com/CompMetEng/raven-toolbox/blob/develop/src/raven_toolbox/confidence.py) (tests in `tests/test_confidence.py`).
 The facet set is **closed** — see [§10](#10-what-is-left) for the remaining work.
 
 Every reaction carries a small structured record scoring how well-supported each of its **facets** is,

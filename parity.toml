@@ -10,14 +10,14 @@
 ledger = "ledgers/raven.yml"
 
 [pairs.raven.matlab]
-repo = "SysBioChalmers/RAVEN"
-ref = "develop3"
+repo = "CompMetEng/RAVEN"
+ref = "develop"
 path = "../RAVEN"
 # Directories that hold no public API: vendored code, tests, tutorials, installers, docs.
 exclude = ["software", "testing", "tutorial", "installation", "doc", "docs", "external"]
 
 [pairs.raven.python]
-repo = "SysBioChalmers/raven-toolbox"
+repo = "CompMetEng/raven-toolbox"
 ref = "develop"
 path = "../raven-toolbox"
 package = "raven_toolbox"
@@ -27,8 +27,8 @@ src = "src"
 ledger = "ledgers/gecko.yml"
 
 [pairs.gecko.matlab]
-repo = "SysBioChalmers/GECKO"
-ref = "develop4"
+repo = "CompMetEng/GECKO"
+ref = "develop"
 path = "../GECKO"
 exclude = ["test", "tutorials", "doc", "docs"]
 # GECKO is built on RAVEN --- importModel, the model struct itself, getExchangeRxns ---
@@ -39,7 +39,7 @@ exclude = ["test", "tutorials", "doc", "docs"]
 setup = "addpath(genpath('{raven_matlab}')); addpath(genpath('{path}'))"
 
 [pairs.gecko.python]
-repo = "SysBioChalmers/geckopy"
+repo = "CompMetEng/geckopy"
 ref = "main"
 path = "../geckopy"
 package = "geckopy"

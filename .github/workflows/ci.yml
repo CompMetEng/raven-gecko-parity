@@ -31,30 +31,29 @@ jobs:
       - run: pip install -e .
 
       # The ledgers are written against specific branches, not whatever each repo
-      # happens to call its default. RAVEN's default is `main` while the ledger
-      # describes `develop3`, so taking defaults would compare a release branch
-      # against a development one and report the backlog as drift.
+      # happens to call its default. parity.toml names the branch for each repo, so
+      # a change of a repo's default branch does not change what is compared.
       - id: refs
         run: parity refs --format shell >> "$GITHUB_OUTPUT"
 
       - uses: actions/checkout@v7
         with:
-          repository: SysBioChalmers/RAVEN
+          repository: CompMetEng/RAVEN
           ref: ${{ steps.refs.outputs.raven_matlab_ref }}
           path: repos/RAVEN
       - uses: actions/checkout@v7
         with:
-          repository: SysBioChalmers/raven-toolbox
+          repository: CompMetEng/raven-toolbox
           ref: ${{ steps.refs.outputs.raven_python_ref }}
           path: repos/raven-toolbox
       - uses: actions/checkout@v7
         with:
-          repository: SysBioChalmers/GECKO
+          repository: CompMetEng/GECKO
           ref: ${{ steps.refs.outputs.gecko_matlab_ref }}
           path: repos/GECKO
       - uses: actions/checkout@v7
         with:
-          repository: SysBioChalmers/geckopy
+          repository: CompMetEng/geckopy
           ref: ${{ steps.refs.outputs.gecko_python_ref }}
           path: repos/geckopy
 

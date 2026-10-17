@@ -58,7 +58,7 @@ Each target repository commits `.claude/settings.json`:
     "raven-gecko": {
       "source": {
         "source": "github",
-        "repo": "SysBioChalmers/raven-gecko-parity"
+        "repo": "CompMetEng/raven-gecko-parity"
       }
     }
   },
