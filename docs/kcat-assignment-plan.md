@@ -27,7 +27,7 @@ configuration is `model_adapter.toml`, shared by both tools
 | Combining (C9) | `collectKcats` decides per reaction from the source files without changing the model; `assignKcats` applies its decisions |
 | Custom kcats (C8) | An ordinary curated source, `data/kcats/custom.tsv`, placed in the order |
 | Entry point (C9) | `assignKcats(model)`; the building blocks stay callable |
-| Default preset | `gecko_median` now, in the project template and when `[kcat_assignment]` is left out; `ec_tree_homologs` once the BRENDA measurement files are released |
+| Default preset | `brenda_ec_tree`, in the project template and when `[kcat_assignment]` is left out |
 | Reference data | Release assets in `CompMetEng/toolbox-assets`, which raven-data becomes (transferred and renamed, M1). All BRENDA files form one asset release; the DLKcat files form another |
 | One-way rule | Source files feed `model.ec.kcat`; nothing in the model is written back to them |
 | Tracking | Change log next to the model and the `ec.source` format (sections 9 and 10, unchanged from the previous plan) |
@@ -283,9 +283,9 @@ Presets:
 | Preset | Stages | Status |
 |---|---|---|
 | `gecko_classic` | custom → BRENDA top (no EC wildcard, origin 1–6) → DLKcat → BRENDA bottom, aggregation `max` | Reproduces today's tutorial |
-| `gecko_median` | custom → BRENDA top (no EC wildcard, origin 1–4) → DLKcat → BRENDA bottom (EC wildcards, and specific activities, origin 5–6), aggregation `median` | Default now |
-| `ec_tree_homologs` | custom → combine(EC tree, homologs) | Default after the BRENDA measurement release |
-| `ec_tree` | custom → EC tree | Without MMseqs2 |
+| `brenda_ec_tree` | custom → BRENDA median at origin 1 (organism and substrate, no EC wildcard) → EC tree → DLKcat (reactions without an EC number) | Default |
+| `gecko_median` | custom → BRENDA top (no EC wildcard, origin 1–4) → DLKcat → BRENDA bottom (EC wildcards, and specific activities, origin 5–6), aggregation `median` | |
+| `ec_tree_homologs` | custom → combine(EC tree, homologs) | Option (K4b); with BRENDA-only measurements the homologs add −0.002 (−0.020 to +0.015) over the EC tree |
 | `combined_all` | custom → combine(EC tree, homologs, all OKP methods) | For single kcat values, not recommended for models |
 
 The order of `gecko_median` follows the benchmark (development split, K1:
