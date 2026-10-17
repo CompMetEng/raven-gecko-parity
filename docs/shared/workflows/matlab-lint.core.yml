@@ -1,0 +1,44 @@
+name: Lint
+
+on: [pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  checkcode:
+    name: Code Analyzer
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: matlab-actions/setup-matlab@v3
+        with:
+          release: R2024b
+
+      - name: Run the Code Analyzer
+        uses: matlab-actions/run-command@v3
+        env:
+          MLM_LICENSE_TOKEN: ${{ secrets.MATLAB_BATCH_TOKEN }}
+        with:
+          command: |
+            excludeDirs = {{EXCLUDE_DIRS}};
+            allFiles = dir(fullfile(pwd, '**', '*.m'));
+            keep = true(numel(allFiles), 1);
+            for i = 1:numel(allFiles)
+                relPath = erase(fullfile(allFiles(i).folder, allFiles(i).name), [pwd filesep]);
+                parts = strsplit(relPath, filesep);
+                if ~isempty(intersect(parts, excludeDirs))
+                    keep(i) = false;
+                end
+            end
+            files = fullfile({allFiles(keep).folder}, {allFiles(keep).name});
+            issues = codeIssues(files);
+            errorRows = issues.Issues(issues.Issues.Severity == "error", :);
+            if height(errorRows) > 0
+                disp(errorRows(:, {'Severity', 'Description', 'FullFilename', 'LineStart'}));
+                error('%d Code Analyzer error(s) found.', height(errorRows));
+            end
+            fprintf('Code Analyzer: no errors (%d file(s) scanned, %d issue(s) total).\n', ...
+                numel(files), height(issues.Issues));

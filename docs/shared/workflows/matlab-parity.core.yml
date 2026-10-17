@@ -1,0 +1,58 @@
+name: Parity
+
+# Cross-checks the functions this PR touches against the raven-gecko-parity ledger, and
+# comments the result on the PR, the same thing the local pre-push hook tells a maintainer
+# who has raven-gecko-parity checked out, given here to anyone without any local setup at all.
+
+on: [pull_request]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  parity-mirror:
+    name: Cross-implementation parity
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Checkout the Python sibling
+        uses: actions/checkout@v7
+        with:
+          repository: {{SIBLING_REPO}}
+          ref: {{SIBLING_REF}}
+          path: .sibling
+
+      - name: Checkout raven-gecko-parity
+        uses: actions/checkout@v7
+        with:
+          repository: CompMetEng/raven-gecko-parity
+          ref: develop
+          path: .parity
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install the parity CLI
+        run: pip install -e ./.parity
+
+      - name: Run the mirror check
+        env:
+          PARITY_CONFIG: ${{ github.workspace }}/.parity/parity.toml
+          PARITY_{{PAIR_UPPER}}_MATLAB_PATH: ${{ github.workspace }}
+          PARITY_{{PAIR_UPPER}}_PYTHON_PATH: ${{ github.workspace }}/.sibling
+        run: |
+          base="origin/${{ github.event.pull_request.base.ref }}"
+          parity mirror --pair {{PAIR}} --side matlab --since "$base..HEAD" | tee parity-comment.md
+
+      - name: Comment on the PR
+        uses: marocchino/sticky-pull-request-comment@v3
+        with:
+          header: Cross-implementation parity
+          path: parity-comment.md

@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: GitHub Discussions
+    url: https://github.com/{{FULL_REPO}}/discussions
+    about: Questions and support are better suited to Discussions than an issue.

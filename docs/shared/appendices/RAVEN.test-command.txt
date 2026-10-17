@@ -1,0 +1,19 @@
+            root = pwd;
+            addpath(genpath(root));
+            resultsDir = fullfile(root, 'test-results');
+            if ~isfolder(resultsDir); mkdir(resultsDir); end
+            import matlab.unittest.TestRunner
+            import matlab.unittest.plugins.XMLPlugin
+            cd(fullfile('testing', 'function_tests'));
+            files = string({dir('*.m').name});
+            files(files == "RavenTestCase.m") = [];
+            files(files == "tBinaries.m") = []; % run separately by the binary-tests job (Linux + macOS)
+            suite = testsuite(cellstr(files));
+            % Detailed output prints "Running <class>/<test>" before each test
+            % so that, if a test hangs on the runner, the last such line names
+            % the culprit.
+            runner = TestRunner.withTextOutput('OutputDetail', ...
+                matlab.unittest.Verbosity.Detailed);
+            runner.addPlugin(XMLPlugin.producingJUnitFormat( ...
+                fullfile(resultsDir, 'results.xml')));
+            run(runner, suite);

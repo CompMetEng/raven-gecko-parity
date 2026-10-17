@@ -1,0 +1,8 @@
+      # RAVEN develop holds RAVEN 3, which GECKO 4 is developed against; RAVEN
+      # main holds the RAVEN release.
+      - name: Checkout RAVEN
+        uses: actions/checkout@v7
+        with:
+          repository: CompMetEng/RAVEN
+          ref: develop
+          path: RAVEN

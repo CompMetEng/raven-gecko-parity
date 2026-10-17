@@ -1,0 +1,4 @@
+- Operating system: <!-- Windows/Mac/Linux, with version -->
+- Python version: <!-- e.g. 3.12 -->
+- geckopy version: <!-- `pip show geckopy` -->
+- Solver: <!-- Gurobi (with version) / GLPK / COBRA / etc. -->

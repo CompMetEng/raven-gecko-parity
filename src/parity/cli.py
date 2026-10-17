@@ -4,6 +4,8 @@
     parity sync               add ledger rows for anything newly public
     parity report             render the Markdown parity document
     parity mirror             what does my current change mean for the other side?
+    parity docs render        compose CONTRIBUTING.md/AGENTS.md into each sibling
+    parity docs check         report which sibling repos have stale or missing docs
     parity scenarios          list the cross-implementation scenarios
     parity refs               print the branch each repo is compared at
     parity run                run one scenario against one implementation
@@ -21,6 +23,7 @@ import sys
 from pathlib import Path
 
 from parity.config import Config, ConfigError, Pair, load_config
+from parity.docs import DocsError
 from parity.inventory import build_inventory
 from parity.ledger import LedgerError, load_ledger, save_ledger
 from parity.scenarios import (
@@ -138,6 +141,28 @@ def _resolve_repo(config: Config, args: argparse.Namespace) -> tuple[Pair, str]:
         f"{here} is not inside any repo configured in parity.toml --- "
         "pass --pair and --side, or run from inside one of the four repos"
     )
+
+
+def cmd_docs_render(args: argparse.Namespace, config: Config) -> int:
+    from parity import docs
+
+    written = docs.render(config, args.pair)
+    for target, paths in written:
+        for filename, path in paths.items():
+            print(f"{target.pair}/{target.side} ({target.repo}): wrote {filename} -> {path}")
+    return 0
+
+
+def cmd_docs_check(args: argparse.Namespace, config: Config) -> int:
+    from parity import docs
+
+    drift = docs.check(config, args.pair)
+    if not drift:
+        print("all sibling docs match the rendered output")
+        return 0
+    for item in drift:
+        print(f"{item.target.pair}/{item.target.side} ({item.target.repo}): {item.filename} is {item.status}")
+    return 1
 
 
 def cmd_refs(args: argparse.Namespace, config: Config) -> int:
@@ -296,6 +321,17 @@ def build_parser() -> argparse.ArgumentParser:
     )
     mirror_cmd.set_defaults(func=cmd_mirror)
 
+    docs_cmd = sub.add_parser("docs", help="compose CONTRIBUTING.md/AGENTS.md for the sibling repos")
+    docs_sub = docs_cmd.add_subparsers(dest="docs_command", required=True)
+
+    docs_render = docs_sub.add_parser("render", help="write the composed docs into each sibling checkout")
+    docs_render.add_argument("--pair", help="only this pair (default: all)")
+    docs_render.set_defaults(func=cmd_docs_render)
+
+    docs_check = docs_sub.add_parser("check", help="report which sibling docs are missing or stale")
+    docs_check.add_argument("--pair", help="only this pair (default: all)")
+    docs_check.set_defaults(func=cmd_docs_check)
+
     refs = sub.add_parser("refs", help="print the branch each repo is compared at")
     refs.add_argument("--pair", help="only this pair")
     refs.add_argument("--format", choices=("text", "shell"), default="text",
@@ -352,7 +388,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         config = load_config(Path(configured) if configured else None)
         return args.func(args, config)
-    except (ConfigError, LedgerError, ScenarioError, FileNotFoundError) as exc:
+    except (ConfigError, DocsError, LedgerError, ScenarioError, FileNotFoundError) as exc:
         print(f"parity: {exc}", file=sys.stderr)
         return 2
 

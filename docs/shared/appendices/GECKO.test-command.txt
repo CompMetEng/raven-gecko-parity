@@ -1,0 +1,15 @@
+            root = pwd;
+            addpath(genpath(fullfile(root, 'RAVEN')));
+            GECKOInstaller.install;
+            setRavenSolver('glpk');
+            resultsDir = fullfile(root, 'test-results');
+            if ~isfolder(resultsDir); mkdir(resultsDir); end
+            import matlab.unittest.TestRunner
+            import matlab.unittest.plugins.XMLPlugin
+            cd(fullfile(root, 'test', 'unit_tests'));
+            suite = testsuite('geckoCoreFunctionTests');
+            runner = TestRunner.withTextOutput('OutputDetail', ...
+                matlab.unittest.Verbosity.Detailed);
+            runner.addPlugin(XMLPlugin.producingJUnitFormat( ...
+                fullfile(resultsDir, 'results.xml')));
+            run(runner, suite);
