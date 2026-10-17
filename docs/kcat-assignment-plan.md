@@ -27,7 +27,7 @@ configuration is `model_adapter.toml`, shared by both tools
 | Combining (C9) | `collectKcats` decides per reaction from the source files without changing the model; `assignKcats` applies its decisions |
 | Custom kcats (C8) | An ordinary curated source, `data/kcats/custom.tsv`, placed in the order |
 | Entry point (C9) | `assignKcats(model)`; the building blocks stay callable |
-| Default preset | `gecko_median` in the project template now; `ec_tree_homologs` once the BRENDA measurement files are released |
+| Default preset | `gecko_median` now, in the project template and when `[kcat_assignment]` is left out; `ec_tree_homologs` once the BRENDA measurement files are released |
 | Reference data | Release assets in `CompMetEng/toolbox-assets`, which raven-data becomes (transferred and renamed, M1). All BRENDA files form one asset release; the DLKcat files form another |
 | One-way rule | Source files feed `model.ec.kcat`; nothing in the model is written back to them |
 | Tracking | Change log next to the model and the `ec.source` format (sections 9 and 10, unchanged from the previous plan) |
@@ -266,7 +266,7 @@ standard = true             # standard kcat for the rest
 [[kcat_assignment.stage]]
 action = "select"           # first listed source with a value wins, per reaction
 sources = ["custom", "database_top", "dlkcat", "database_bottom"]
-top_origin_limit = 6
+top_origin_limit = 4
 bottom_origin_limit = 6
 wildcard_limit = 3
 ```
@@ -282,11 +282,43 @@ Presets:
 
 | Preset | Stages | Status |
 |---|---|---|
-| `gecko_classic` | custom → BRENDA exact/top → DLKcat → BRENDA bottom, aggregation `max` | Reproduces today's tutorial |
-| `gecko_median` | The same with aggregation `median` | Template default now |
+| `gecko_classic` | custom → BRENDA top (no EC wildcard, origin 1–6) → DLKcat → BRENDA bottom, aggregation `max` | Reproduces today's tutorial |
+| `gecko_median` | custom → BRENDA top (no EC wildcard, origin 1–4) → DLKcat → BRENDA bottom (EC wildcards, and specific activities, origin 5–6), aggregation `median` | Default now |
 | `ec_tree_homologs` | custom → combine(EC tree, homologs) | Default after the BRENDA measurement release |
 | `ec_tree` | custom → EC tree | Without MMseqs2 |
 | `combined_all` | custom → combine(EC tree, homologs, all OKP methods) | For single kcat values, not recommended for models |
+
+The order of `gecko_median` follows the benchmark (development split, K1:
+the enzyme's own measurements and those of sequences at ≥ 95% identity
+hidden), which compared each BRENDA tier with the other sources on the same
+enzyme–substrate pairs (error in mean absolute log10 difference, BRENDA
+median minus DLKcat, 95% cluster-bootstrap interval):
+
+| BRENDA tier | Pairs | BRENDA median − DLKcat | BRENDA maximum − median |
+|---|---|---|---|
+| origin 1: organism, substrate | 214 | −0.20 (−0.40 to −0.00) | +0.05 (−0.00 to +0.11) |
+| origin 2: other organisms, substrate | 836 | −0.07 (−0.16 to +0.04) | +0.26 (+0.20 to +0.31) |
+| origin 3: organism, any substrate | 39 | −0.18 (−0.66 to +0.40) | +0.24 (+0.06 to +0.44) |
+| origin 4: other organisms, any substrate | 189 | −0.08 (−0.27 to +0.12) | +0.36 (+0.25 to +0.46) |
+| one EC wildcard | 176 | +0.05 (−0.16 to +0.28) | +1.40 (+1.13 to +1.67) |
+
+- DLKcat is not better than the BRENDA median at any origin without
+  wildcards, and only by a non-significant margin with a wildcard; the
+  maximum is worse than the median at every tier, significantly from
+  origin 2 on.
+- Specific-activity matches (origin 5 and 6) were not in the benchmark.
+  They rank below DLKcat on the evidence of
+  [geckopy#58](https://github.com/CompMetEng/geckopy/pull/58), where a
+  specific-activity value converted with a molecular weight from another
+  organism broke tuning in ecYeastGEM.
+- Other predictors do better than DLKcat: KinForm-H beats the BRENDA median
+  at origins 2 and 4 and with a wildcard (−0.27, −0.25, −0.31). They are
+  not in a preset, because models built with predictor values set
+  high-turnover enzymes such as ATP synthase too low.
+- On the yeast tutorial model, `gecko_median` changes 2,680 of 4,842 kcats
+  compared with `gecko_classic` (median −0.52 log10, the median instead of
+  the maximum) and moves 364 reactions from specific activities to DLKcat;
+  maximum growth goes from 0.082 to 0.081 h⁻¹ before tuning.
 
 `isozymes` and `standard` apply after every preset. A level correction
 (fitting σ) is a separate step, not part of assignment.
