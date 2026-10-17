@@ -79,8 +79,9 @@ values too. An old `data/customKcats.tsv` is converted once with
 ## 4. Look at a source (optional)
 
 ```matlab
-[records, meta] = readKcatSource(fullfile(projectPath,'data','kcats','brenda.tsv'));
 [kcatList, report] = loadKcatSource(ecModel, 'brenda');
+report.header        % the '#' lines: source, generator, parameters, data, ...
+report.records       % the rows of the file as read
 report.unmatched     % file rows that fit no reaction of this model
 report.partial       % rows whose enzymes only partly match a reaction
 ```

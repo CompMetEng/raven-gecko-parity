@@ -513,7 +513,7 @@ parity scenarios pass.
 |---|---|---|---|
 | T1 | Transfer raven-data to `CompMetEng/toolbox-assets` (done); `fetchToolboxAsset` (RAVEN#764) and its SHA-256 check; manifest-v2 | toolbox-assets, RAVEN, raven-toolbox | — |
 | T2 | BRENDA asset (screened and corrected, grouped files only), DLKcat asset and the CompMetEng DLKcat image with its build workflow; GECKO and geckopy load from the assets and run the new image; BRENDA files and git LFS removed from the repositories | toolbox-assets, geckopy (`brenda-refresh`), GECKO | T1 |
-| K1 | Project kcat files: format, `getEcRxnKeys`, `saveKcatSource`, `readKcatSource`, `loadKcatSource` with matching; `kcatsFromBrenda`, `kcatsFromDLKcat`, `kcatsFromOKP` | GECKO, geckopy | — (uses the BRENDA files GECKO and geckopy ship until T2) |
+| K1 | Project kcat files: format, `getEcRxnKeys`, `saveKcatSource`, `loadKcatSource` with matching (geckopy also `read_kcat_source`); `kcatsFromBrenda`, `kcatsFromDLKcat`, `kcatsFromOKP` | GECKO, geckopy | — (uses the BRENDA files GECKO and geckopy ship until T2) |
 | K2 | `[kcat_assignment]` and `[kcat_sources.*]` in the TOML schema and `adapterParameters.tsv`; `collectKcats`, `assignKcats`, `updateKcatSources`; presets `gecko_classic` and `gecko_median`; decision report; tutorials switched | GECKO, geckopy | K1, GECKO#486 |
 | K3 | Custom kcats as a source, `convertCustomKcats` | GECKO, geckopy | K1 |
 | K4 | BRENDA measurement files, sequences, substrate dictionary, combination parameters in the BRENDA asset; `kcatsFromECTree` and `kcatsFromHomologs` (MMseqs2); the `combine` stage; presets `ec_tree_homologs`, `ec_tree`, `combined_all`; validation on the benchmark's development split and an ecYeastGEM build; template default switched | toolbox-assets, geckopy, GECKO | K2 |
