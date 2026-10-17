@@ -1,0 +1,4 @@
+- Operating system: <!-- Windows/Mac/Linux, with version -->
+- MATLAB version: <!-- e.g. 2023b -->
+- RAVEN version: <!-- output from `checkInstallation` -->
+- Solver: <!-- Gurobi (with version) / GLPK / COBRA / etc. -->

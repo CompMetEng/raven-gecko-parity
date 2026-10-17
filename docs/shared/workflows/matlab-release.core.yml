@@ -1,0 +1,159 @@
+name: Release
+
+# Cuts a release branch from {{OWN_REF}}, bumps version.txt, and opens the release PR into
+# main for a human to review. On merge, tags the release, publishes it on GitHub using the
+# PR description as the release notes, and opens the sync-back PR back into {{OWN_REF}}.
+#
+# Both PRs are opened with the default GITHUB_TOKEN, and GitHub deliberately does not run a
+# GITHUB_TOKEN-opened PR's tests.yml/lint.yml/parity.yml checks automatically (to prevent
+# recursive workflow runs): they're created in an "approval required" state, sitting behind
+# a banner in the PR's merge box that someone with write access has to click before those
+# checks execute at all. No merge gate depends on that click: an approver who does not
+# notice the banner can approve and merge with no checks having run. Both PR bodies below
+# say so explicitly. The robust fix is a personal access token or GitHub App installation
+# token in place of GITHUB_TOKEN for the `gh pr create`/`git push` calls here, which makes
+# the checks run the same way a normal contributor's PR does. Use this if the manual
+# click proves easy to forget.
+#
+# UNVERIFIED: built from the pattern in SysBioChalmers/yeast-GEM's release.yml, adapted to a
+# toolbox repo with no binary model to export. Nothing in this environment can run a MATLAB
+# GitHub Actions job to exercise it end to end. Treat the first real run as a dry run,
+# watched live, before trusting it for an actual release. It also changes the release
+# process from what CONTRIBUTING.md currently documents (a separate version.txt PR *after*
+# merging to main): here the version bump happens on the release branch, before merge, to
+# keep the whole thing to one reviewed PR. Confirm that this is the intended process
+# before relying on it.
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "New version, e.g. 3.1.2; must not already exist as a tag"
+        required: true
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  # Cut the branch, bump the version, open the PR
+
+  cut:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: {{OWN_REF}}
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Validate the version
+        run: |
+          version="${{ github.event.inputs.version }}"
+          if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::expected a plain semantic version, e.g. 3.1.2, got '$version'"
+            exit 1
+          fi
+          if git rev-parse "v$version" >/dev/null 2>&1; then
+            echo "::error::tag v$version already exists"
+            exit 1
+          fi
+
+      - name: Cut the release branch and bump version.txt
+        run: |
+          version="${{ github.event.inputs.version }}"
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "release/$version"
+          printf '%s' "$version" > version.txt
+          git add version.txt
+          git commit -m "chore: version $version"
+          git push origin "release/$version"
+
+      - name: Open the release pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="${{ github.event.inputs.version }}"
+          body="$(printf 'Automated release build for %s. Fill in the release notes below before approving. This description becomes the GitHub release notes.\n\n**Before reviewing:** this PR was opened with GITHUB_TOKEN, so its checks (tests/lint/parity) are queued but not yet running. Click *Approve workflows to run* in the merge box below first.' \
+            "$version")"
+          gh pr create --base main --head "release/$version" \
+            --title "chore: version $version" \
+            --body "$body"
+
+  # On merge: tag, publish, sync back
+
+  finalize:
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.base.ref == 'main' &&
+      startsWith(github.event.pull_request.head.ref, 'release/')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 0
+
+      # The job-level `if` above only checks a branch-name *prefix*; a stray PR from a
+      # fork or a coincidentally-named local branch ("release/notes-fix", say) merged to
+      # main would match it too. GitHub Actions expressions have no regex match, so the
+      # real check --- is the remainder actually a plain semantic version?) happens here,
+      # in bash, before anything that tags, publishes, or opens another PR.
+      - name: Confirm this is really an automated release branch
+        id: guard
+        run: |
+          version="${{ github.event.pull_request.head.ref }}"
+          version="${version#release/}"
+          if [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "is_release=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "is_release=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::head branch 'release/$version' doesn't end in a plain semantic version, so treating this as an unrelated PR, not a release."
+          fi
+
+      - name: Tag and publish the release
+        if: steps.guard.outputs.is_release == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="${{ github.event.pull_request.head.ref }}"
+          version="${version#release/}"
+          gh release create "v$version" --target main --title "v$version" \
+            --notes "${{ github.event.pull_request.body }}"
+
+      - name: Open the sync-back pull request into {{OWN_REF}}
+        if: steps.guard.outputs.is_release == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="${{ github.event.pull_request.head.ref }}"
+          version="${version#release/}"
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin {{OWN_REF}}
+          git checkout -b "sync/main-to-{{OWN_REF}}-$version" "origin/{{OWN_REF}}"
+          git merge --no-commit --no-ff origin/main
+          # version.txt exists only on main; it names the currently *released* version,
+          # which {{OWN_REF}} has no equivalent concept of. Left staged, this merge would
+          # plant it on {{OWN_REF}} for the first time, immediately stale the moment
+          # {{OWN_REF}} gets its next commit. Unstage it so this merge commit doesn't add it.
+          git rm --cached --ignore-unmatch version.txt
+          git commit -m "chore: merge main into {{OWN_REF}} after v$version"
+          git push origin "sync/main-to-{{OWN_REF}}-$version"
+          body="$(printf 'Brings v%s back into {{OWN_REF}}.\n\n**Before reviewing:** this PR was opened with GITHUB_TOKEN, so its checks are queued but not yet running --- click *Approve workflows to run* in the merge box below first.' \
+            "$version")"
+          gh pr create --base {{OWN_REF}} --head "sync/main-to-{{OWN_REF}}-$version" \
+            --title "chore: sync main into {{OWN_REF}} after v$version" \
+            --body "$body"

@@ -2,16 +2,28 @@
 
 Where the ledger fits into the work you were doing anyway.
 
+This page is for maintainers and for anyone working on a MATLAB/Python pair on purpose. A
+contributor who opens a PR against RAVEN, GECKO, raven-toolbox or geckopy needs nothing from
+this page and installs nothing. The repository's own CI workflow runs `parity mirror` on the
+PR and posts the result as a PR comment. For RAVEN and GECKO that workflow is
+`.github/workflows/parity.yml`, rendered from `docs/shared/workflows/matlab-parity.core.yml`
+in this repository.
+
 ## A bug is reported against MATLAB RAVEN
 
 1. Reproduce and fix it in RAVEN as usual.
-2. Before pushing, ask what it implies:
+2. Push and open the PR. RAVEN's `parity.yml` workflow comments on the PR with what the
+   change implies for raven-toolbox. To see the same answer before pushing, run this inside
+   your RAVEN checkout (it needs `pip install -e ".[dev]"` from this repository once):
 
    ```bash
    parity mirror --since develop..HEAD
    ```
 
-   The `pre-push` hook does this for you.
+   Running `python hooks/install.py` once installs a `pre-push` git hook in each of the four
+   repositories that runs this command on every `git push`, before anything is sent to
+   GitHub. The hook prints information and never blocks the push, unless `PARITY_STRICT=1`
+   is set in your shell.
 3. If the touched function is `parity`, check whether raven-toolbox has the same bug. It
    usually does; the port followed the original closely. Open the sibling issue with the
    RAVEN issue linked, and record it on the ledger row while it is open:
@@ -84,6 +96,29 @@ every session in the four code repositories, and its `parity-ledger` skill has t
 and commands. See [agent-plugins.md](agent-plugins.md) for the plugins and how a repository
 enables them. The purpose is the same as that of the git hooks: the cross-check happens
 without anyone having to remember it.
+
+## Shared documentation and CI workflows
+
+`docs/shared/` in this repository is the single source for each code repository's
+`CONTRIBUTING.md`, `AGENTS.md`, issue and PR templates, and CI workflow files.
+Every generated `AGENTS.md` has a "Cross-implementation parity" section that tells an agent
+to check this ledger before closing a bug or finishing a feature.
+
+To change any of it:
+
+1. Edit the file under `docs/shared/`: a `*.core.*` file for content every repository
+   shares, or an `appendices/<repo>.*` file for one repository's own section.
+2. Render it into the sibling checkouts that `parity.toml` configures:
+
+   ```bash
+   parity docs render
+   ```
+
+   This writes files only on your machine. It does not commit or push.
+3. Review the diff in each sibling checkout and open a PR there.
+
+`parity docs check` lists which sibling files are missing or differ from the current
+rendered output, without writing anything.
 
 ## Writing documentation
 

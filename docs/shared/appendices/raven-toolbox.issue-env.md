@@ -1,0 +1,4 @@
+- Operating system: <!-- Windows/Mac/Linux, with version -->
+- Python version: <!-- e.g. 3.12 -->
+- raven-toolbox version: <!-- `pip show raven-toolbox` -->
+- Solver: <!-- Gurobi (with version) / GLPK / COBRA / etc. -->

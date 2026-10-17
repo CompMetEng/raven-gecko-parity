@@ -1,0 +1,78 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# A push that obsoletes a previous run cancels it.
+concurrency:
+  group: tests-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: pytest (${{ matrix.os }}, py${{ matrix.python }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30  # backstop so a hang cannot burn hours of runner time
+    strategy:
+      fail-fast: false
+      matrix:
+        # Full Python range on Linux; a single Python on macOS/Windows to catch
+        # OS-specific issues at low runner cost.
+        os: [ubuntu-latest]
+        python: ["3.11", "3.12", "3.13"]
+        include:
+          - { os: macos-latest, python: "3.12" }
+          - { os: windows-latest, python: "3.12" }
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - run: pip install --upgrade pip
+
+      - name: Install
+        run: pip install -e ".[{{INSTALL_EXTRAS}}]"
+
+      - name: Run pytest
+        run: pytest -v --durations=20 {{PYTEST_ARGS}} --junitxml=test-results/results.xml
+        env:
+          PYTHONUNBUFFERED: "1"
+
+      - name: Upload JUnit results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: junit-${{ matrix.os }}-py${{ matrix.python }}
+          path: test-results/results.xml
+
+  report:
+    name: Publish test results
+    needs: test
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      pull-requests: write
+    steps:
+      - name: Download every matrix leg's JUnit results
+        uses: actions/download-artifact@v8
+        with:
+          pattern: junit-*
+          path: test-results
+
+      # One comment from every matrix leg's results, not one comment per leg.
+      - name: Publish test results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          check_name: Unit test results
+          comment_mode: always
+          files: "test-results/**/results.xml"
+          # Fail the workflow (and the PR check) when any test fails or errors.
+          action_fail: true

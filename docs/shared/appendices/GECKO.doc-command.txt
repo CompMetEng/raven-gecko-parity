@@ -1,0 +1,6 @@
+            % buildGECKOdoc uses findRAVENroot() to locate RAVEN's own m2html tooling and
+            % findGECKOroot() for this checkout, so both need to be on the MATLAB path.
+            root = pwd;
+            addpath(genpath(fullfile(root, 'RAVEN')));
+            addpath(genpath(root));
+            buildGECKOdoc();

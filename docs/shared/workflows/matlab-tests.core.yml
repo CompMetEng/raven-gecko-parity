@@ -1,0 +1,47 @@
+name: Tests
+
+on: [pull_request]
+
+# Needed for the test-results comment and check run on the PR.
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
+jobs:
+  matlab-tests:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    # Bound the run so a hanging test fails the job in minutes instead of blocking the
+    # runner for hours.
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+{{EXTRA_CHECKOUT}}
+      - name: Set up MATLAB
+        uses: matlab-actions/setup-matlab@v3
+        with:
+          release: R2024b
+
+      - name: Run tests
+        uses: matlab-actions/run-command@v3
+        env:
+          # Batch licensing token for running MATLAB on a GitHub-hosted runner. Request
+          # one from MathWorks and store it as the MATLAB_BATCH_TOKEN repository secret.
+          MLM_LICENSE_TOKEN: ${{ secrets.MATLAB_BATCH_TOKEN }}
+        with:
+          command: |
+{{TEST_COMMAND}}
+
+      - name: Publish test results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          check_name: Unit test results
+          comment_mode: always
+          files: test-results/results.xml
+          # Fail the workflow (and the PR check) when any test fails or errors.
+          action_fail: true
