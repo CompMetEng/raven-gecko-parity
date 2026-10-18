@@ -124,4 +124,4 @@ Custom kcats (`convertCustomKcats`) and the upgrade of GECKO 3 projects (`upgrad
 | S2 | OKP keeps the similarity per prediction (`similarity=` in the detail column); `[kcat_sources.okp] methods`; `okp` source group; `updateKcatSources` submits and collects all methods | GECKO, geckopy | done: CompMetEng/GECKO#11, CompMetEng/geckopy#68 |
 | S3 | `combine` stage; combination parameters for the EC tree and every OKP method fitted on the benchmark; presets `ec_tree_okp` and `okp`; `brenda_ec_tree` with combine(okp) instead of DLKcat; `sd` in `ec.source` and the decisions | kcat-benchmark, GECKO, geckopy | done: CompMetEng/GECKO#11, CompMetEng/geckopy#68 |
 | S4 | Tutorial section "choosing a kcat strategy"; parity tests that each preset gives the same kcats in both tools | GECKO, geckopy | done: CompMetEng/GECKO#11, CompMetEng/geckopy#68 |
-| S5 | Homologs (`kcatsFromHomologs`) as a further combine source | later | later |
+| S5 | Homologs (`kcatsFromHomologs`, DIAMOND) as a further combine source; preset `ec_tree_homologs` | GECKO, geckopy | done: CompMetEng/GECKO#11, CompMetEng/geckopy#68 |
