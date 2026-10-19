@@ -39,7 +39,7 @@ mislead users**:
 
 * It lists Python functions that do not exist: `get_blast`, `get_diamond` (real names
   `run_blast` / `run_diamond`), `fill_gaps` (real names `connect_blocked_reactions`,
-  `fill_gaps_fast_lp`, `fill_gaps_kumar_milp`), `import_model`, `export_model`,
+  `fill_gaps_fast_lp`, `fill_gaps_milp`), `import_model`, `export_model`,
   `import_excel_model`, `export_to_excel_format` (real name `export_to_excel`), `solve_lp`.
 * It states that both toolboxes read and write RAVEN Excel "making models fully portable".
   raven-toolbox exports Excel but **deliberately has no Excel import**.
@@ -202,7 +202,7 @@ what would otherwise have been the one hard blocker.
   | Draft from homology | `getBlast`, `getModelFromHomology`, `contractModel`, `addRxnsGenesMets` | `run_blast`, `get_model_from_homology`, `remove_duplicate_reactions`, `add_reactions_from_model` | ✅ portable (`contractModel` ≠ `remove_duplicate_reactions` exactly — behaviour row) |
   | Biomass composition | `addRxnsGenesMets`, `changeRxns` | `add_reactions_from_model`, `change_reaction_equations` | ✅ portable |
   | Lipid curation (SLIME) | `addLipidReactions`, `addSLIMEreactions`, `scaleLipids` | — | ⏸️ **out of scope** — SLIMEr / hanpo-GEM helpers, not RAVEN core; parallel method work ongoing, so the new tutorial avoids this ground |
-  | Gap-filling | `setParam`, `getExchangeRxns`, `removeReactions`, `fillGaps`, `solveLP`, `printFluxes`, `deleteUnusedGenes` | bounds/objective one-liners, `model.exchanges`, `remove_reactions`, `connect_blocked_reactions` / `fill_gaps_fast_lp` / `fill_gaps_kumar_milp`, `model.optimize`, — , `remove_genes` | ⚠️ portable, but `fillGaps` maps to three functions with different semantics, and `printFluxes` has no equivalent |
+  | Gap-filling | `setParam`, `getExchangeRxns`, `removeReactions`, `fillGaps`, `solveLP`, `printFluxes`, `deleteUnusedGenes` | bounds/objective one-liners, `model.exchanges`, `remove_reactions`, `connect_blocked_reactions` / `fill_gaps_fast_lp` / `fill_gaps_milp`, `model.optimize`, — , `remove_genes` | ⚠️ portable, but `fillGaps` maps to three functions with different semantics, and `printFluxes` has no equivalent |
   | Save and simulate | `model.annotation.*`, `newCommit`, `newRelease`, `solveLP` | YAML `metaData`, `export_for_git`, `model.optimize` | ⚠️ portable; `newCommit`/`newRelease` are hanpo-GEM repo helpers over `exportForGit`, so the Python lane needs its own equivalents |
   | Manual curation | `changeGrRules`, `addRxns`, `addTransport`, `addRxnsGenesMets` | `change_gene_reaction_rules`, `add_reactions_from_equations`, `add_transport_reactions`, `add_reactions_from_model` | ✅ portable |
   | Gap-analysis tip | `canProduce`, `canConsume`, `checkProduction`, `getAllSubGraphs`, `haveFlux` | `analyse_topology` + `cobra.flux_analysis.find_blocked_reactions` | ✅ portable |

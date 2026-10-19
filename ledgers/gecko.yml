@@ -138,6 +138,116 @@ entries:
     status: parity
     notes: 'Sweeps priorPenaltyWeight across seeds, reporting fit vs. cross-seed reproducibility. Matches
       kcat_tuning.evotune.tuning.tune_prior_penalty_weight (geckopy#51).'
+  - matlab: fetchBrendaAsset
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Downloads (once) GECKO's BRENDA files from the toolbox-assets release and returns their folder. geckopy's
+      brenda-refresh CLI builds the files from the BRENDA JSON instead and has no asset fetch yet.
+  - matlab: resolveKcatAggregation
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Settles which BRENDA aggregate (max, median) the kcat sources read. No geckopy counterpart yet.
+  - matlab: assignKcats
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Decides one kcat per reaction from the kcat source files and applies them to the ecModel. Successor to
+      the single-pass DLKcat plus fuzzy-matching flow in geckopy's gather_kcats.
+  - matlab: collectKcats
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Decides one kcat per reaction from the kcat source files in data/kcats, without applying them.
+  - matlab: convertCustomKcats
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Converts a GECKO 3 data/customKcats.tsv into the curated source file data/kcats/custom.tsv. A step of
+      upgradeGECKOproject.
+  - matlab: ecTreeEstimate
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: EC-tree kcat estimates (median log10 kcat of the measurements up the EC tree) for a list of EC numbers.
+  - matlab: extractEnzymeSubstratePairs
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Lists the enzymes and substrates of each model.ec reaction, the input of the DLKcat, OKP and homolog
+      sources.
+  - matlab: getEcRxnKeys
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Build-independent keys of the model.ec reactions, which kcat source files use to identify a reaction
+      across ecModel builds.
+  - matlab: kcatAssignmentConfig
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Reads [kcat_assignment] and [kcat_sources.*] of model_adapter.toml. geckopy's ModelParameters does not
+      validate these tables yet.
+  - matlab: kcatsFromBrenda
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Gathers kcats from BRENDA by fuzzy matching and keeps them as data/kcats/brenda.tsv. Wraps what
+      geckopy.fuzzy_kcat_matching does, plus the source-file output.
+  - matlab: kcatsFromDLKcat
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Predicts kcats with DLKcat and keeps them as data/kcats/dlkcat.tsv. geckopy has run_dlkcat and
+      read_dlkcat_output but no source-file output.
+  - matlab: kcatsFromECTree
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Estimates kcats from the EC tree and keeps them as a source file.
+  - matlab: kcatsFromHomologs
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Estimates kcats from measured homologs (DIAMOND) and keeps them as a source file.
+  - matlab: kcatsFromOKP
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Gathers kcats from OpenKineticsPredictor and keeps them as data/kcats/okp.tsv. geckopy has
+      submit_open_kinetics_predictor and fetch_open_kinetics_predictor but no source-file output.
+  - matlab: loadBrendaMeasurements
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Loads measurements.tsv from the BRENDA database folder of the model adapter.
+  - matlab: loadKcatSource
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Reads a kcat source file and maps its rows to an ecModel.
+  - matlab: saveKcatSource
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Writes a kcatList to a kcat source file of the project.
+  - matlab: updateKcatSources
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Gathers the kcat source files that [kcat_assignment] in model_adapter.toml needs.
+  - matlab: upgradeEcModel
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Brings an ecModel made with GECKO 3 to the GECKO 4 format. Planned in geckopy as upgrade_ec_model.
+  - matlab: upgradeGECKOproject
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Brings a GECKO 3 project to the GECKO 4 layout (dry run by default). Planned in geckopy as `geckopy
+      upgrade` / upgrade_project.
+  - matlab: TomlAdapter
+    status: subsumed
+    reason: geckopy.ModelAdapter.from_folder is already configured by model_adapter.toml. This is the MATLAB class
+      that gives GECKO the same.
+  - matlab: loadAdapterParams
+    status: subsumed
+    reason: Reads model_adapter.toml into the adapter parameters, which geckopy does in ModelAdapter.from_folder
+      (validated by ModelParameters).
+  - matlab: readAdapterToml
+    status: via-dependency
+    reason: MATLAB has no TOML parser, so this reads the subset that adapter files use. Python uses the standard
+      library tomllib.
+  - matlab: writeAdapterToml
+    status: internal
+    reason: Helper of convertAdapterToToml, the inverse of readAdapterToml. geckopy writes its template with `geckopy
+      init`.
+  - matlab: convertAdapterToToml
+    status: matlab-only
+    reason: Converts a GECKO 3 or 4 ModelAdapter class to model_adapter.toml. geckopy adapters have always been TOML,
+      so there is no class to convert.
   - python: geckopy.kcat_tuning.evotune
     status: internal
     reason: Re-exports the evotune subpackage as a namespace on kcat_tuning; not a function of its own.

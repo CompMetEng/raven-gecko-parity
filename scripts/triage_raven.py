@@ -43,7 +43,7 @@ P = "raven_toolbox"
 PAIR: dict[str, tuple[str, str | None]] = {
     # Gap-filling: RAVEN's names lead with the algorithm, Python's with the action.
     "gapFillFastLP": (f"{P}.gapfilling.fill_gaps_fast_lp", "Both are 'LP-based gap-filling (fastGapFill / swiftGapFill)'."),
-    "gapFillMILP": (f"{P}.gapfilling.fill_gaps_kumar_milp", "Objective-based gap-filling under a growth floor (Kumar 2007)."),
+    "gapFillMILP": (f"{P}.gapfilling.fill_gaps_milp", "Objective-based gap-filling under a growth floor (Kumar 2007)."),
     "gapFillTopological": (f"{P}.gapfilling.analyse_topology", "Both are the BFS metabolite-producibility pre-screen."),
     # INIT / ftINIT.
     "INITStepDesc": (f"{P}.init.InitStep", "Describes one step of the ftINIT schedule."),
