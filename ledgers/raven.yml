@@ -630,7 +630,7 @@ entries:
     status: parity
     notes: Both are 'LP-based gap-filling (fastGapFill / swiftGapFill)'.
   - matlab: gapFillMILP
-    python: raven_toolbox.gapfilling.fill_gaps_kumar_milp
+    python: raven_toolbox.gapfilling.fill_gaps_milp
     status: parity
     notes: Objective-based gap-filling under a growth floor (Kumar 2007).
   - matlab: gapFillSwiftCore
@@ -851,7 +851,7 @@ entries:
       default, cannot solve MILPs) for a tie deterministically broken by scores, and an
       infeasible input, both MATCH. Active-set ties under equal scores are not asserted between
       implementations (inherent MILP degeneracy, same caveat as raven_toolbox''s own
-      fill_gaps_kumar_milp).'
+      fill_gaps_milp).'
   - matlab: getModelFromHomology
     python: raven_toolbox.reconstruction.homology.get_model_from_homology
     status: parity
@@ -938,6 +938,12 @@ entries:
     status: via-dependency
     reason: 'cobrapy covers this: cobra.flux_analysis.find_blocked_reactions. Tolerance semantics differ
       slightly.'
+  - matlab: hitsFromSuppOrth
+    python: raven_toolbox.reconstruction.homology.hits_from_supporth
+    status: parity
+    notes: Reads a SuppOrth suppOrth.tsv (consensus orthologs from several predictors) into the hits structure
+      getModelFromHomology takes. MATLAB returns a blastStructure and a suppOrthInfo struct; Python returns the
+      HIT_COLUMNS table. Name-value arguments map to keyword arguments (speciesToModel to species_to_model).
   - matlab: importModel
     status: via-dependency
     reason: 'cobrapy covers this: cobra.io.read_sbml_model.'
@@ -1303,6 +1309,11 @@ entries:
     status: via-dependency
     reason: 'Reaction-knockout strain design; cobrapy dropped its own design module. Use
       https://github.com/klamt-lab/straindesign (or mewpy) instead of an in-house port.'
+  - matlab: runSuppOrth
+    python: raven_toolbox.reconstruction.homology.run_supporth
+    status: parity
+    notes: Runs the external suppOrth command on an organism and template proteomes, then reads the consensus
+      with hitsFromSuppOrth / hits_from_supporth. SuppOrth is not a dependency of either side.
   - matlab: sampleACHR
     status: via-dependency
     reason: 'cobrapy covers this: cobra.sampling.ACHRSampler. flux_sampling_algorithms.md section 8: the Python
@@ -1494,6 +1505,14 @@ entries:
     status: python-only
     reason: 'MATLAB models carry version and date as struct fields (model.version, model.date), so there is
       nothing to wrap. cobra models have no such attributes; raven-toolbox keeps them in model.notes.'
+  - python: raven_toolbox.io.read_matlab_model
+    status: python-only
+    reason: 'MATLAB reads a model .mat file with load. Python needs a reader that turns the RAVEN model struct
+      back into a cobra model (and hands COBRA Toolbox structs to cobra''s own reader).'
+  - python: raven_toolbox.io.write_matlab_model
+    status: python-only
+    reason: 'MATLAB writes a model .mat file with save. Python needs a writer that turns a cobra model into
+      the RAVEN model struct.'
   - python: raven_toolbox.io.set_model_metadata
     status: python-only
     reason: 'Same as get_model_metadata: sets notes["version"] and notes["metaData"] together, which
@@ -1656,7 +1675,7 @@ entries:
     status: python-only
     reason: Result type. RAVEN returns several parallel outputs; raven-toolbox returns one dataclass, so this
       has no MATLAB counterpart by design.
-  - python: raven_toolbox.gapfilling.KumarGapFillResult
+  - python: raven_toolbox.gapfilling.MILPGapFillResult
     status: python-only
     reason: Result type. RAVEN returns several parallel outputs; raven-toolbox returns one dataclass, so this
       has no MATLAB counterpart by design.

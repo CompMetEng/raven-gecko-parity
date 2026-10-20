@@ -80,6 +80,7 @@ entries:
       own port actually runs" --- that port is kcat_tuning.evotune.tuning.cmaes_kcat_tuning (geckopy#51).'
   - matlab: ecStatsFromBrenda
     status: python-pending
+    issue: CompMetEng/raven-gecko-parity#123
     notes: 'Summarises loadBRENDAdata''s output per EC number for reviewKcatAssignment. Its own docstring says
       it is "ported from geckopy''s ec_stats_from_brenda" (gather_kcats/review.py), but that function is not
       re-exported as geckopy public API, and the MATLAB port carries an unresolved TODO: loadBRENDAdata only
@@ -119,6 +120,7 @@ entries:
       kcat_tuning.evotune.tying.isozyme_tie_map rather than one function of its own.
   - matlab: reviewKcatAssignment
     status: python-pending
+    issue: CompMetEng/raven-gecko-parity#123
     notes: 'Flags kcat assignments (largest corrections, biggest outliers) that deserve curator review. Its
       own docstring says it "ports geckopy''s gather_kcats/review.py" (review_assignment), citing the same two
       design choices (rank by leverage, report a parameter once for tied isozymes) --- but review_assignment
@@ -138,6 +140,135 @@ entries:
     status: parity
     notes: 'Sweeps priorPenaltyWeight across seeds, reporting fit vs. cross-seed reproducibility. Matches
       kcat_tuning.evotune.tuning.tune_prior_penalty_weight (geckopy#51).'
+  - matlab: fetchBrendaAsset
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Downloads (once) the BRENDA files of the toolbox-assets release and returns their folder. Implemented as
+      geckopy's databases.fetch_brenda_asset on geckopy develop (geckopy#68), not yet on main, the ref this
+      ledger tracks.
+  - matlab: resolveKcatAggregation
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Settles which BRENDA aggregate the kcat sources read. geckopy develop has no function of this name; the
+      choice is made where the sources are read.
+  - matlab: assignKcats
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Decides one kcat per reaction from the kcat source files and applies them to the ecModel. Implemented as
+      geckopy's assign_kcats on geckopy develop (geckopy#68), not yet on main, the ref this ledger tracks.
+  - matlab: collectKcats
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Decides one kcat per reaction from the kcat source files in data/kcats, without applying them.
+      Implemented as geckopy's collect_kcats on geckopy develop (geckopy#68), not yet on main, the ref this
+      ledger tracks.
+  - matlab: convertCustomKcats
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Converts a GECKO 3 data/customKcats.tsv into the curated source file data/kcats/custom.tsv. Implemented
+      as geckopy's convert_custom_kcats on geckopy develop (geckopy#68), not yet on main, the ref this ledger
+      tracks.
+  - matlab: ecTreeEstimate
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: EC-tree kcat estimates for a list of EC numbers, from the median log10 kcat of the measurements up the
+      tree. Implemented as geckopy's ECTree.estimate (gather_kcats/ec_tree.py) on geckopy develop (geckopy#68),
+      not yet on main, the ref this ledger tracks.
+  - matlab: extractEnzymeSubstratePairs
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Lists the enzymes and substrates of each model.ec reaction, the input of the DLKcat, OKP and homolog
+      sources. Implemented as geckopy's extract_enzyme_substrate_pairs (gather_kcats/write_dlkcat_input.py) on
+      geckopy develop (geckopy#68), not yet on main, the ref this ledger tracks.
+  - matlab: getEcRxnKeys
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Build-independent keys of the model.ec reactions, which kcat source files use to identify a reaction.
+      Implemented as geckopy's ec_rxn_keys (gather_kcats/kcat_sources.py) on geckopy develop (geckopy#68), not
+      yet on main, the ref this ledger tracks.
+  - matlab: kcatAssignmentConfig
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Reads [kcat_assignment] and [kcat_sources.*] of model_adapter.toml. Implemented as geckopy's
+      kcat_assignment_config on geckopy develop (geckopy#68), not yet on main, the ref this ledger tracks.
+  - matlab: kcatsFromBrenda
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Gathers kcats from BRENDA by fuzzy matching and keeps them as a source file. Implemented as geckopy's
+      kcats_from_brenda on geckopy develop (geckopy#68), not yet on main, the ref this ledger tracks.
+  - matlab: kcatsFromDLKcat
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Predicts kcats with DLKcat and keeps them as a source file. Implemented as geckopy's kcats_from_dlkcat on
+      geckopy develop (geckopy#68), not yet on main, the ref this ledger tracks.
+  - matlab: kcatsFromECTree
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Estimates kcats from the EC tree and keeps them as a source file. Implemented as geckopy's
+      kcats_from_ec_tree on geckopy develop (geckopy#68), not yet on main, the ref this ledger tracks.
+  - matlab: kcatsFromHomologs
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Estimates kcats from measured homologs (DIAMOND) and keeps them as a source file. Implemented as
+      geckopy's kcats_from_homologs on geckopy develop (geckopy#68), not yet on main, the ref this ledger
+      tracks.
+  - matlab: kcatsFromOKP
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Gathers kcats from OpenKineticsPredictor and keeps them as a source file. Implemented as geckopy's
+      kcats_from_okp on geckopy develop (geckopy#68), not yet on main, the ref this ledger tracks.
+  - matlab: loadBrendaMeasurements
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Loads measurements.tsv from the BRENDA database folder. Implemented as geckopy's
+      databases.load_brenda_measurements on geckopy develop (geckopy#68), not yet on main, the ref this ledger
+      tracks.
+  - matlab: loadKcatSource
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Reads a kcat source file and maps its rows to an ecModel. Implemented as geckopy's load_kcat_source on
+      geckopy develop (geckopy#68), not yet on main, the ref this ledger tracks.
+  - matlab: saveKcatSource
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Writes a kcatList to a kcat source file of the project. Implemented as geckopy's save_kcat_source on
+      geckopy develop (geckopy#68), not yet on main, the ref this ledger tracks.
+  - matlab: updateKcatSources
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Gathers the kcat source files that [kcat_assignment] in model_adapter.toml needs. Implemented as
+      geckopy's update_kcat_sources on geckopy develop (geckopy#68), not yet on main, the ref this ledger
+      tracks.
+  - matlab: upgradeEcModel
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Brings an ecModel made with GECKO 3 to the GECKO 4 format. Implemented as geckopy's upgrade_ec_model on
+      geckopy develop (geckopy#68), not yet on main, the ref this ledger tracks.
+  - matlab: upgradeGECKOproject
+    status: python-pending
+    issue: CompMetEng/geckopy#68
+    notes: Brings a GECKO 3 project to the GECKO 4 layout (dry run by default). Implemented as geckopy's
+      upgrade_project on geckopy develop (geckopy#68), not yet on main, the ref this ledger tracks.
+  - matlab: TomlAdapter
+    status: subsumed
+    reason: geckopy.ModelAdapter.from_folder is already configured by model_adapter.toml. This is the MATLAB class
+      that gives GECKO the same.
+  - matlab: loadAdapterParams
+    status: subsumed
+    reason: Reads model_adapter.toml into the adapter parameters, which geckopy does in ModelAdapter.from_folder
+      (validated by ModelParameters).
+  - matlab: readAdapterToml
+    status: via-dependency
+    reason: MATLAB has no TOML parser, so this reads the subset that adapter files use. Python uses the standard
+      library tomllib.
+  - matlab: writeAdapterToml
+    status: internal
+    reason: Helper of convertAdapterToToml, the inverse of readAdapterToml. geckopy writes its template with `geckopy
+      init`.
+  - matlab: convertAdapterToToml
+    status: matlab-only
+    reason: Converts a GECKO 3 or 4 ModelAdapter class to model_adapter.toml. geckopy adapters have always been TOML,
+      so there is no class to convert.
   - python: geckopy.kcat_tuning.evotune
     status: internal
     reason: Re-exports the evotune subpackage as a namespace on kcat_tuning; not a function of its own.

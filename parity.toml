@@ -14,7 +14,7 @@ repo = "CompMetEng/RAVEN"
 ref = "develop"
 path = "../RAVEN"
 # Directories that hold no public API: vendored code, tests, tutorials, installers, docs.
-exclude = ["software", "testing", "tutorial", "installation", "doc", "docs", "external"]
+exclude = ["software", "testing", "tests", "tutorial", "tutorials", "installation", "doc", "docs", "external"]
 
 [pairs.raven.python]
 repo = "CompMetEng/raven-toolbox"
