@@ -10,7 +10,7 @@ entries:
   - groupRxnScores
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # The eight boundary reactions, used by the second merge checkpoint. Real
   # ftINIT runs protect reactions for the same reason --- a merge across an

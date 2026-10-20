@@ -11,7 +11,7 @@ entries:
 
 inputs:
   # The same bytes on both sides, read out of the RAVEN checkout.
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
 # Three checkpoints, so a difference is located rather than merely observed:
 #

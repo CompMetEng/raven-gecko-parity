@@ -10,7 +10,7 @@ entries:
   - removeLowScoreGenes
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # PGI's real rule (a single gene) is replaced with a synthetic one built
   # from changeGrRules / change_gene_reaction_rules --- already

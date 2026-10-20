@@ -16,8 +16,8 @@ inputs:
   # so that unification is exercised too. 53 + 54 reactions in, and none of
   # them deduplicated --- mergeModels adds reactions without checking, which is
   # the documented behaviour on both sides.
-  first: "{matlab_repo}/tutorial/smallYeast.yml"
-  second: "{matlab_repo}/tutorial/smallYeastBad.yml"
+  first: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
+  second: "{matlab_repo}/tutorials/data/models/smallYeastBad.yml"
 
   # The id of the second model, needed to state the expected rename suffix
   # without either side reading it out of its own model struct. Declared here

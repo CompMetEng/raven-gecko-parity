@@ -10,7 +10,7 @@ entries:
   - setParam
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # setParam's other six modes (lb, ub, eq, obj, rev, unc) are cobra
   # one-liners on the Python side --- reaction.bounds, model.objective,

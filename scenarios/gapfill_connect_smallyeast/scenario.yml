@@ -13,7 +13,7 @@ inputs:
   # Draft and template are both smallYeast --- the draft with reactions taken
   # out, the template intact --- so the minimum repair is exactly the set that
   # was removed, and both sides read the same file for each role.
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # smallYeast ships its uptake reactions shut (lb = ub = 0), and a draft with
   # no nutrients has almost every reaction blocked for a reason that has

@@ -10,7 +10,7 @@ entries:
   - diffModels
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # Model B is model A with one deliberate edit per category diffModels
   # checks, built with functions this suite has already cross-validated

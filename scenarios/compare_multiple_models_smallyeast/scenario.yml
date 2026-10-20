@@ -9,7 +9,7 @@ entries:
   - compareMultipleModels
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # Three models built from the same base by removal and (one) addition, so
   # the union of reactions is known exactly and every presence pattern ---

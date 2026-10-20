@@ -16,7 +16,7 @@ inputs:
   # between them. 53 reactions, 18 of them reversible, 17 with an isozyme
   # rule --- small enough to read a difference off the diff, large enough that
   # a difference has somewhere to appear.
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
 # What this fixture does *not* exercise, so nobody reads a pass as more than
 # it is:

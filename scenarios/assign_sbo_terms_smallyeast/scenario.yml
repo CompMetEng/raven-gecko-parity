@@ -11,7 +11,7 @@ entries:
   - assignSBOterms
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # Neither side's default biomassRxnName/ngamRxnName ("biomass
   # pseudoreaction" / "non-growth associated maintenance reaction") match

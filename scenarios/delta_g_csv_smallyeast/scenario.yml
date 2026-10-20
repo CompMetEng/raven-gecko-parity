@@ -10,7 +10,7 @@ entries:
   - loadDeltaGCSV
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # Both files use "Var1"/"Var2" headers --- MATLAB's own array2table
   # default column names, and raven_toolbox's own stated default, chosen

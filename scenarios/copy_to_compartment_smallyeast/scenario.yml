@@ -9,7 +9,7 @@ entries:
   - copyToComps
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # The first three steps of glycolysis. Between them they touch six
   # metabolites, two of which (ATP and ADP) appear in more than one of the

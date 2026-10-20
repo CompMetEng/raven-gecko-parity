@@ -10,7 +10,7 @@ entries:
   - compareFluxes
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
   cutoff: 0.5
   metabolite_list:
     - ATP
