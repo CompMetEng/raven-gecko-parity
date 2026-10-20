@@ -20,6 +20,9 @@ def _two_source_model() -> cobra.Model:
 
 def run(ctx):
     inputs = ctx["inputs"]
+    # Set before any model is built: a cobra model takes its solver from the
+    # configuration at construction time.
+    cobra.Configuration().solver = str(inputs["python_solver"])
     to_minimize = inputs["to_minimize"]
     scores = inputs["scores"]
 
