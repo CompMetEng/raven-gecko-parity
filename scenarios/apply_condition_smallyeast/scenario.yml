@@ -11,7 +11,7 @@ entries:
   - applyCondition
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # The one condition key this scenario exercises. "out" specifically,
   # rather than a bare `true`: it is the value both docstrings use as

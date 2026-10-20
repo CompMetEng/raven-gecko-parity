@@ -10,7 +10,7 @@ entries:
   - removeMets
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # ATP is used by twelve reactions with several other metabolites each, so
   # removing it strips one row from twelve stoichiometries without emptying

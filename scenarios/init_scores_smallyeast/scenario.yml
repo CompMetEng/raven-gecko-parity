@@ -9,14 +9,14 @@ entries:
   - scoreModel
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # RAVEN's own expression fixture, read by both sides out of the RAVEN
   # checkout. It ships as the input to tutorial3 (reporter metabolites), so the
   # values are p-values rather than RNA-seq counts --- which does not matter
   # here: what is being compared is the transform, and 60 of smallYeast's 61
   # genes appear in it, spread over four orders of magnitude.
-  expression: "{matlab_repo}/tutorial/expression.txt"
+  expression: "{matlab_repo}/tutorials/data/omics/expression.txt"
 
   # The reference level every gene is compared against. Chosen so that both
   # clamps are exercised: at 0.1, fifteen genes land on the -5 floor and nine

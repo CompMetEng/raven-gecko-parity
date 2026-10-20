@@ -15,7 +15,7 @@ inputs:
   # three reactions that exist only to move things between them --- so the
   # merge has grouping, coefficient summing and cancellation to do rather than
   # just relabelling.
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # RAVEN's deleteRxnsWithOneMet, stated because the two sides default it
   # differently (false in RAVEN, true in the Python signature) and because

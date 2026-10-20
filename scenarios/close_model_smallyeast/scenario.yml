@@ -10,7 +10,7 @@ entries:
   - closeModel
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # smallYeast ships every carbon/oxygen source shut (lb=ub=0); closing an
   # already-closed exchange proves nothing. Opened here so there is a

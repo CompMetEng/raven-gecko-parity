@@ -10,7 +10,7 @@ entries:
   - addRxns
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # Where a metabolite that has to be created goes. Optional on both sides when
   # every token resolves to an existing metabolite, and required by both the

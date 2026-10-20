@@ -9,7 +9,7 @@ entries:
   - changeGrRules
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # Overwritten outright. PGI has a single-gene GPR; the new one replaces it
   # completely and creates two genes neither model has.

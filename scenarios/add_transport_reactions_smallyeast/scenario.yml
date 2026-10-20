@@ -10,7 +10,7 @@ entries:
   - addTransport
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
   from_compartment: c
   to_compartment: m
 

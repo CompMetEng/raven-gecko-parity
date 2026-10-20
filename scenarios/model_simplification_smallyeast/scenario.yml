@@ -9,7 +9,7 @@ entries:
   - simplifyModel
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # Removed before the third checkpoint. PGI and ZWF are the only two ways out
   # of glucose 6-phosphate, so taking both out strands central metabolism and

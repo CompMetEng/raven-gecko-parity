@@ -9,7 +9,7 @@ entries:
   - addRxnsGenesMets
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # The oxidative pentose phosphate pathway. Removed from the draft *with*
   # their now-unused metabolites and genes, so that adding them back has to

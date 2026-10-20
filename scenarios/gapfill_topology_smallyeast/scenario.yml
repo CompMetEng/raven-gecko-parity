@@ -13,7 +13,7 @@ inputs:
   # database is intact smallYeast --- so the reactions that would repair the
   # gaps are exactly the ones removed, and both sides read the same file for
   # each role.
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # PGI and ZWF are the only two ways out of glucose 6-phosphate in this model:
   # glycolysis and the oxidative pentose phosphate pathway. Removing both

@@ -10,7 +10,7 @@ entries:
   - changeRxns
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # Two reactions changed in one call, each exercising something the other
   # does not:

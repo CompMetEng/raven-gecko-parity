@@ -27,7 +27,7 @@ entries:
   - getElementalBalance          # ledger rows this scenario validates
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
   zero_tolerance: 1.0e-9
 
 tolerance:

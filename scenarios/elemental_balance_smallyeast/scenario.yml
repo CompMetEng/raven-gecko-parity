@@ -17,7 +17,7 @@ entries:
 # Both sides read the same file out of the RAVEN checkout rather than a vendored copy,
 # so the fixture cannot drift between the two.
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # What counts as a non-zero element residual. MATLAB's matrix arithmetic leaves ~1e-15
   # dust on elements that cancel exactly, so without a shared, declared epsilon the two

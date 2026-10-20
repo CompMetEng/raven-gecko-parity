@@ -10,7 +10,7 @@ entries:
   - walkFluxes
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
   start_rxn: ATPX
   cutoff: 1.0e-8
   max_per_met: 8

@@ -10,7 +10,7 @@ entries:
   - checkModelStruct
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # Four edits, each engineered from functions this suite has already
   # cross-validated (change_reaction_equations / changeRxns,

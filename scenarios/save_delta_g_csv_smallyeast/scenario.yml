@@ -9,7 +9,7 @@ entries:
   - saveDeltaGCSV
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # Same three-way split as delta_g_csv_smallyeast's read direction, this
   # time as values to stamp onto the model before writing rather than CSV

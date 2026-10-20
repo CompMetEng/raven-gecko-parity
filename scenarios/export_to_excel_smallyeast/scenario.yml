@@ -9,7 +9,7 @@ entries:
   - exportToExcelFormat
 
 inputs:
-  model: "{matlab_repo}/tutorial/smallYeast.yml"
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
 
   # PGI, FBA: reversible, bounds exactly (-1000, 1000) --- both default,
   # both hidden by RAVEN. HXK: irreversible, bounds exactly (0, 1000) ---
