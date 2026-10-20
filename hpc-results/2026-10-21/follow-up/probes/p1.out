@@ -1,0 +1,52 @@
+--- (a) before replaceMets
+mets: a|b|x|d
+rxns: r1|r2|unrelated1|unrelated2
+S=
+    -1     0     0     0
+     0    -1     0     0
+     1     1     0     0
+     0     0    -1    -1
+--- (b) after replaceMets(model,oxygen,o2)
+mets: a|x|d
+rxns: r1|unrelated1
+S=
+    -1     0
+     1     0
+     0    -1
+--- (c) by hand: repMetIds = {b}, idxDelete = 2
+--- (c) after deletion step, before contractModel
+mets: a|x|d
+rxns: r1|r2|unrelated1|unrelated2
+S=
+    -1    -1     0     0
+     1     1     0     0
+     0     0    -1    -1
+repIdx (as in replaceMets last lines) = zeros(0,1)  (isempty=1)
+x before extra column:
+    -1     1     0     1
+    -1     1     0     1
+     0     0    -1     1
+     0     0    -1     1
+repIdx empty: contractModel(model,'mets',[]) takes the no-restriction branch (p.mets empty)
+unique rows: I=[1 3] J=[1 1 2 2]
+--- contractModel(model,mets,repIdx)
+mets: a|x|d
+rxns: r1|unrelated1
+S=
+    -1     0
+     1     0
+     0    -1
+--- (d) contractModel(model) without mets
+mets: a|x|d
+rxns: r1|unrelated1
+S=
+    -1     0
+     1     0
+     0    -1
+--- contractModel(model,mets,idx of surviving a)
+mets: a|x|d
+rxns: r1|unrelated1|unrelated2
+S=
+    -1     0     0
+     1     0     0
+     0    -1    -1

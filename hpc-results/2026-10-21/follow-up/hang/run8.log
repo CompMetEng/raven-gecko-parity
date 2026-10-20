@@ -1,0 +1,139 @@
+scenario: add_reactions_from_model_smallyeast  host: vera-r05-04  start: 2026-10-20T21:52:06Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+add_reactions_from_model_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/hang-8/python/add_reactions_from_model_smallyeast.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+add_reactions_from_model_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/hang-8/python/add_reactions_from_model_smallyeast.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+add_reactions_from_model_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/hang-8/python/add_reactions_from_model_smallyeast.seed2.json
+parity: MATLAB run of add_reactions_from_model_smallyeast failed (exit -9):
+The following reactions were already present in the model and will not be added:
+
+
+The following metabolites were already present in the model and will not be added:
+alpha-D-glucose 6-phosphate[c]
+CO2[c]
+D-ribulose 5-phosphate[c]
+NADP(+)[c]
+NADPH[c]
+
+The following metabolites will be added to the model:
+6-O-phosphono-D-glucono-1,5-lactone[c]
+6-phospho-D-gluconate[c]
+
+Number of metabolites added to the model:
+2
+
+New genes added to the model:
+YCR073W-A
+YGR248W
+YGR256W
+YHR163W
+YHR183W
+YNL241C
+YNR034W
+
+Number of reactions added to the model:
+3
+The following reactions were already present in the model and will not be added:
+
+
+The following metabolites were already present in the model and will not be added:
+alpha-D-glucose 6-phosphate[c]
+CO2[c]
+D-ribulose 5-phosphate[c]
+NADP(+)[c]
+NADPH[c]
+
+The following metabolites will be added to the model:
+6-O-phosphono-D-glucono-1,5-lactone[c]
+6-phospho-D-gluconate[c]
+
+Number of metabolites added to the model:
+2
+
+Number of reactions added to the model:
+3
+add_reactions_from_model_smallyeast [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/raven-gecko-parity/scenarios/add_reactions_from_model_smallyeast/.matlab_result.json
+Could not create on-disk crash report: failed opening file: No such file or directory: iostream error
+
+--------------------------------------------------------------------------------
+          Segmentation violation detected at 2026-10-21 00:00:07 +0200
+--------------------------------------------------------------------------------
+
+Configuration:
+  Crash Decoding           : Disabled - No sandbox or build area path
+  Crash Mode               : continue (default)
+  Default Encoding         : UTF-8
+  Deployed                 : false
+  GNU C Library            : 2.34 stable
+  Graphics Driver          : Uninitialized software 
+  Graphics card 1          : 0x1a03 ( 0x1a03 ) 0x2000 Version 0.0.0.0 (0-0-0)
+  Java Version             : Java 1.8.0_202-b08 with Oracle Corporation Java HotSpot(TM) 64-Bit Server VM mixed mode
+  MATLAB Architecture      : glnxa64
+  MATLAB Entitlement ID    : 1210969
+  MATLAB Root              : /apps/Common/software/MATLAB/2024b
+  MATLAB Version           : 24.2.0.2712019 (R2024b)
+  OpenGL                   : software
+  Operating System         : Linux 5.14.0-687.41.1.el9_8.x86_64 #1 SMP PREEMPT_DYNAMIC Thu Aug 20 15:28:10 UTC 2026 x86_64
+  Process ID               : 2715536
+  Processor ID             : x86 Family 25 Model 17 Stepping 1, AuthenticAMD
+  Session Key              : 72b7c5df-d806-4c50-8d1f-5ff146147049
+  Window System            : The X.Org Foundation (12014000), display :1.0
+
+Fault Count: 1
+
+
+Abnormal termination:
+Segmentation violation
+
+Current Thread: 'MATLAB' id 23352750973248
+
+Register State (from fault):
+  RAX = fffffffffffffffc  RBX = 0000000000000000
+  RCX = 0000153d4388854a  RDX = 0000000000000000
+  RSP = 00007ffd047bd620  RBP = 0000000000000000
+  RSI = 0000000000000189  RDI = 0000000001eaddb8
+
+   R8 = 0000000000000000   R9 = 00000000ffffffff
+  R10 = 0000000000000000  R11 = 0000000000000246
+  R12 = 0000000000000000  R13 = 0000000001eaddb8
+  R14 = 00007ffd047bd680  R15 = 0000000000000000
+
+  RIP = 0000153d4388854a  EFL = 0000000000000246
+
+   CS = 0033   FS = 0000   GS = 0000
+
+Stack Trace (from fault):
+[  0] 0x0000153d4388854a                                   /lib64/libc.so.6+00558410
+[  1] 0x0000153d4388ab32                                   /lib64/libc.so.6+00568114 pthread_cond_wait+00000306
+[  2] 0x0000153d4362720b /apps/Common/software/MATLAB/2024b/bin/glnxa64/libmwboost_thread.so.1.81.0+00070155
+[  3] 0x0000153d43621184 /apps/Common/software/MATLAB/2024b/bin/glnxa64/libmwboost_thread.so.1.81.0+00045444 _ZN7mwboost6thread13join_noexceptEv+00000084
+[  4] 0x0000153d3a89032c /apps/Common/software/MATLAB/2024b/bin/glnxa64/libmwmcr.so+00791340
+[  5] 0x0000153d3a8908dd /apps/Common/software/MATLAB/2024b/bin/glnxa64/libmwmcr.so+00792797
+[  6] 0x0000153d3a890a73 /apps/Common/software/MATLAB/2024b/bin/glnxa64/libmwmcr.so+00793203 _Z12mcr_run_mainRKN7mwboost9function0IiEEbb+00000163
+[  7] 0x0000153d3ab11082 /apps/Common/software/MATLAB/2024b/bin/glnxa64/libmwMVMLocal.so+00635010
+[  8] 0x0000153d446b0b9d /apps/Common/software/MATLAB/2024b/bin/glnxa64/libmwmvm.so+03292061 _ZN3mvm6detail11SessionImpl7runMainERKN7mwboost9function1IiRKSt6vectorINSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEESaISA_EEEESE_+00000189
+[  9] 0x0000153d446b1340 /apps/Common/software/MATLAB/2024b/bin/glnxa64/libmwmvm.so+03294016 _ZN3mvm6detail11SessionImpl16runMatlabDesktopEv+00000672
+[ 10] 0x0000153d4460dde9 /apps/Common/software/MATLAB/2024b/bin/glnxa64/libmwmvm.so+02625001 _ZN3mvm14ProcessSession16runMatlabDesktopEv+00000153
+[ 11] 0x000000000040df4b /apps/Common/software/MATLAB/2024b/bin/glnxa64/MATLAB+00057163
+[ 12] 0x0000153d4382a610                                   /lib64/libc.so.6+00173584
+[ 13] 0x0000153d4382a6c0                                   /lib64/libc.so.6+00173760 __libc_start_main+00000128
+[ 14] 0x000000000040e81a /apps/Common/software/MATLAB/2024b/bin/glnxa64/MATLAB+00059418
+
+
+
+
+MATLAB is exiting because of fatal error
+MATLAB FAILED
+--- python seed 0 vs seed 1
+scenario: add_reactions_from_model_smallyeast  (python vs python)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: add_reactions_from_model_smallyeast  (python vs python)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+end: 2026-10-20T22:00:08Z  status: ERROR

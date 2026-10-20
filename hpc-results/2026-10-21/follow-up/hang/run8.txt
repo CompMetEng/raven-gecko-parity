@@ -1,0 +1,32 @@
+run 8 on vera-r05-04 start 21:52:06  node load: 12.50 10.65 9.71
+HANG: still running after 8 min
+    PID     ELAPSED %CPU COMMAND
+2715536       07:48  3.4 /apps/Common/software/MATLAB/2024b/bin/glnxa64/MATLAB -batch addpath('/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/raven-gecko-parity/matlab'); addpath(genpath('/cep
+2489473    03:36:41  1.6 claude
+2014330  1-03:04:29  1.2 /opt/TurboVNC/bin/Xvnc :1 -desktop TurboVNC: vera-r05-04:1 (eduardk) -auth /cephyr/users/eduardk/Vera/.Xauthority -geometry 800x600 -depth 24 -rfbauth vnc.passwd -x509cert /ce
+2025071  1-02:59:36  1.1 claude
+2031418  1-02:52:27  0.7 claude
+2014415  1-03:04:27  0.4 xfwm4
+2015134  1-03:04:11  0.3 /usr/bin/xfce4-terminal
+top - 00:00:07 up 8 days,  4:23,  0 users,  load average: 12.94, 12.22, 10.85
+Threads:  60 total,   0 running,  60 sleeping,   0 stopped,   0 zombie
+%Cpu(s): 17.7 us,  0.4 sy,  0.0 ni, 81.7 id,  0.0 wa,  0.1 hi,  0.1 si,  0.0 st
+MiB Mem : 773203.6 total, 652039.1 free,  65948.5 used,  61072.7 buff/cache
+MiB Swap:      0.0 total,      0.0 free,      0.0 used. 707255.1 avail Mem 
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+2715536 eduardk   20   0 9151768   1.6g 399588 S   0.0   0.2   0:00.89 MATLAB
+2715619 eduardk   20   0 9151768   1.6g 399588 S   0.0   0.2   0:00.28 MCR Mai+
+2715625 eduardk   20   0 9151768   1.6g 399588 S   0.0   0.2   0:00.00 Catapul+
+2715626 eduardk   20   0 9151768   1.6g 399588 S   0.0   0.2   0:00.00 Catapul+
+2715627 eduardk   20   0 9151768   1.6g 399588 S   0.0   0.2   0:00.00 Catapul+
+2715628 eduardk   20   0 9151768   1.6g 399588 S   0.0   0.2   0:00.00 Catapul+
+2715629 eduardk   20   0 9151768   1.6g 399588 S   0.0   0.2   0:00.00 Catapul+
+2715630 eduardk   20   0 9151768   1.6g 399588 S   0.0   0.2   0:00.00 Catapul+
+2715631 eduardk   20   0 9151768   1.6g 399588 S   0.0   0.2   0:00.00 Catapul+
+2715632 eduardk   20   0 9151768   1.6g 399588 S   0.0   0.2   0:00.00 Catapul+
+2715633 eduardk   20   0 9151768   1.6g 399588 S   0.0   0.2   0:00.00 Catapul+
+2715634 eduardk   20   0 9151768   1.6g 399588 S   0.0   0.2   0:00.00 Catapul+
+2715635 eduardk   20   0 9151768   1.6g 399588 S   0.0   0.2   0:00.00 Catapul+
+add_reactions_from_model_smallyeast ERROR
+end 22:00:29 status: ERROR
