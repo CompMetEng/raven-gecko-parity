@@ -1,0 +1,102 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "constrained": {
+      "blocked_reactions": [
+        "PGI"
+      ],
+      "n_genes_after": 58,
+      "n_genes_before": 61,
+      "n_metabolites_after": 52,
+      "n_metabolites_before": 52,
+      "n_reactions_after": 53,
+      "n_reactions_before": 53,
+      "reactions": [
+        {
+          "clauses": [],
+          "lower_bound": 0.0,
+          "present": true,
+          "reaction": "PGI",
+          "upper_bound": 0.0
+        },
+        {
+          "clauses": [
+            [
+              "YMR205C"
+            ]
+          ],
+          "lower_bound": 0.0,
+          "present": true,
+          "reaction": "PFK",
+          "upper_bound": 1000.0
+        },
+        {
+          "clauses": [
+            [
+              "YCL040W"
+            ],
+            [
+              "YGL253W"
+            ]
+          ],
+          "lower_bound": 0.0,
+          "present": true,
+          "reaction": "HXK",
+          "upper_bound": 1000.0
+        }
+      ],
+      "removed_reactions": []
+    },
+    "removed": {
+      "blocked_reactions": [
+        "PGI"
+      ],
+      "n_genes_after": 58,
+      "n_genes_before": 61,
+      "n_metabolites_after": 52,
+      "n_metabolites_before": 52,
+      "n_reactions_after": 52,
+      "n_reactions_before": 53,
+      "reactions": [
+        {
+          "clauses": [],
+          "lower_bound": 0.0,
+          "present": false,
+          "reaction": "PGI",
+          "upper_bound": 0.0
+        },
+        {
+          "clauses": [
+            [
+              "YMR205C"
+            ]
+          ],
+          "lower_bound": 0.0,
+          "present": true,
+          "reaction": "PFK",
+          "upper_bound": 1000.0
+        },
+        {
+          "clauses": [
+            [
+              "YCL040W"
+            ],
+            [
+              "YGL253W"
+            ]
+          ],
+          "lower_bound": 0.0,
+          "present": true,
+          "reaction": "HXK",
+          "upper_bound": 1000.0
+        }
+      ],
+      "removed_reactions": [
+        "PGI"
+      ]
+    }
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "remove_genes_smallyeast"
+}

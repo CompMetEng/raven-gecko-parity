@@ -1,0 +1,7 @@
+Name,Passed,Failed,Incomplete,Duration
+tAnnotation/editMiriamAddsAnnotation,1,0,0,0.828581
+tAnnotation/editMiriamRemovesAnnotation,1,0,0,0.017787
+tAnnotation/extractMiriamReturnsNames,1,0,0,0.021579
+tAnnotation/assignSBOtermsRuns,1,0,0,0.042314
+tAnnotation/deltaGCsvRoundTrip,1,0,0,1.867994
+tAnnotation/loadDeltaGCsvStoresValuesLiterally,1,0,0,1.861545

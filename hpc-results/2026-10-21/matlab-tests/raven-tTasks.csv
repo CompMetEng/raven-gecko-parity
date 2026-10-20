@@ -1,0 +1,5 @@
+Name,Passed,Failed,Incomplete,Duration
+tTasks/checkTasksSucceedsOnFullModel,1,0,0,0.776485
+tTasks/checkTasksFailsWithoutKeyReaction,1,0,0,0.050509
+tTasks/parseTaskListReturnsStruct,1,0,0,0.224918
+tTasks/parseTaskListMatchesExpected,1,0,0,2.776604

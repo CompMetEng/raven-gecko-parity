@@ -1,0 +1,32 @@
+scenario: save_delta_g_csv_smallyeast  host: vera-r05-04  start: 2026-10-20T20:34:23Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+save_delta_g_csv_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/save_delta_g_csv_smallyeast.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+save_delta_g_csv_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/save_delta_g_csv_smallyeast.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+save_delta_g_csv_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/save_delta_g_csv_smallyeast.seed2.json
+save_delta_g_csv_smallyeast [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/matlab/save_delta_g_csv_smallyeast.json
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: save_delta_g_csv_smallyeast  (python vs matlab)
+tolerance: rel=0 abs=1e-09
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: save_delta_g_csv_smallyeast  (python vs matlab)
+tolerance: rel=0 abs=1e-09
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: save_delta_g_csv_smallyeast  (python vs matlab)
+tolerance: rel=0 abs=1e-09
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: save_delta_g_csv_smallyeast  (python vs python)
+tolerance: rel=0 abs=1e-09
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: save_delta_g_csv_smallyeast  (python vs python)
+tolerance: rel=0 abs=1e-09
+result:   MATCH
+end: 2026-10-20T20:34:55Z  status: MATCH

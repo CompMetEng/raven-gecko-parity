@@ -1,0 +1,277 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "expanded_any_direction": {
+      "groups": [
+        {
+          "members": [
+            "ACS_EXP_1",
+            "ACS_EXP_2"
+          ]
+        },
+        {
+          "members": [
+            "ADH1_EXP_1",
+            "ADH1_EXP_2",
+            "ADH1_EXP_3"
+          ]
+        },
+        {
+          "members": [
+            "CIT_EXP_1",
+            "CIT_EXP_2"
+          ]
+        },
+        {
+          "members": [
+            "DAR_EXP_1",
+            "DAR_EXP_2"
+          ]
+        },
+        {
+          "members": [
+            "ENO_EXP_1",
+            "ENO_EXP_2"
+          ]
+        },
+        {
+          "members": [
+            "FRDS2",
+            "SDH"
+          ]
+        },
+        {
+          "members": [
+            "GLD_EXP_1",
+            "GLD_EXP_2",
+            "GLD_EXP_3"
+          ]
+        },
+        {
+          "members": [
+            "GND_EXP_1",
+            "GND_EXP_2"
+          ]
+        },
+        {
+          "members": [
+            "GPM_EXP_1",
+            "GPM_EXP_2",
+            "GPM_EXP_3"
+          ]
+        },
+        {
+          "members": [
+            "GPP_EXP_1",
+            "GPP_EXP_2"
+          ]
+        },
+        {
+          "members": [
+            "HXK_EXP_1",
+            "HXK_EXP_2",
+            "HXK_EXP_3"
+          ]
+        },
+        {
+          "members": [
+            "LSC1LSC2_EXP_1",
+            "LSC1LSC2_EXP_2"
+          ]
+        },
+        {
+          "members": [
+            "PDC_EXP_1",
+            "PDC_EXP_2",
+            "PDC_EXP_3"
+          ]
+        },
+        {
+          "members": [
+            "PFK_EXP_1",
+            "PFK_EXP_2"
+          ]
+        },
+        {
+          "members": [
+            "PGL_EXP_1",
+            "PGL_EXP_2",
+            "PGL_EXP_3",
+            "PGL_EXP_4"
+          ]
+        },
+        {
+          "members": [
+            "PYC_EXP_1",
+            "PYC_EXP_2"
+          ]
+        },
+        {
+          "members": [
+            "TKI1TKI2a_EXP_1",
+            "TKI1TKI2a_EXP_2"
+          ]
+        },
+        {
+          "members": [
+            "TKI1TKI2b_EXP_1",
+            "TKI1TKI2b_EXP_2"
+          ]
+        },
+        {
+          "members": [
+            "ethIN",
+            "ethOUT"
+          ]
+        }
+      ],
+      "n_duplicate_reactions": 45,
+      "n_groups": 19,
+      "n_reactions": 77
+    },
+    "expanded_same_direction": {
+      "groups": [
+        {
+          "members": [
+            "ACS_EXP_1",
+            "ACS_EXP_2"
+          ]
+        },
+        {
+          "members": [
+            "ADH1_EXP_1",
+            "ADH1_EXP_2",
+            "ADH1_EXP_3"
+          ]
+        },
+        {
+          "members": [
+            "CIT_EXP_1",
+            "CIT_EXP_2"
+          ]
+        },
+        {
+          "members": [
+            "DAR_EXP_1",
+            "DAR_EXP_2"
+          ]
+        },
+        {
+          "members": [
+            "ENO_EXP_1",
+            "ENO_EXP_2"
+          ]
+        },
+        {
+          "members": [
+            "GLD_EXP_1",
+            "GLD_EXP_2",
+            "GLD_EXP_3"
+          ]
+        },
+        {
+          "members": [
+            "GND_EXP_1",
+            "GND_EXP_2"
+          ]
+        },
+        {
+          "members": [
+            "GPM_EXP_1",
+            "GPM_EXP_2",
+            "GPM_EXP_3"
+          ]
+        },
+        {
+          "members": [
+            "GPP_EXP_1",
+            "GPP_EXP_2"
+          ]
+        },
+        {
+          "members": [
+            "HXK_EXP_1",
+            "HXK_EXP_2",
+            "HXK_EXP_3"
+          ]
+        },
+        {
+          "members": [
+            "LSC1LSC2_EXP_1",
+            "LSC1LSC2_EXP_2"
+          ]
+        },
+        {
+          "members": [
+            "PDC_EXP_1",
+            "PDC_EXP_2",
+            "PDC_EXP_3"
+          ]
+        },
+        {
+          "members": [
+            "PFK_EXP_1",
+            "PFK_EXP_2"
+          ]
+        },
+        {
+          "members": [
+            "PGL_EXP_1",
+            "PGL_EXP_2",
+            "PGL_EXP_3",
+            "PGL_EXP_4"
+          ]
+        },
+        {
+          "members": [
+            "PYC_EXP_1",
+            "PYC_EXP_2"
+          ]
+        },
+        {
+          "members": [
+            "TKI1TKI2a_EXP_1",
+            "TKI1TKI2a_EXP_2"
+          ]
+        },
+        {
+          "members": [
+            "TKI1TKI2b_EXP_1",
+            "TKI1TKI2b_EXP_2"
+          ]
+        }
+      ],
+      "n_duplicate_reactions": 41,
+      "n_groups": 17,
+      "n_reactions": 77
+    },
+    "plain_any_direction": {
+      "groups": [
+        {
+          "members": [
+            "FRDS2",
+            "SDH"
+          ]
+        },
+        {
+          "members": [
+            "ethIN",
+            "ethOUT"
+          ]
+        }
+      ],
+      "n_duplicate_reactions": 4,
+      "n_groups": 2,
+      "n_reactions": 53
+    },
+    "plain_same_direction": {
+      "groups": [],
+      "n_duplicate_reactions": 0,
+      "n_groups": 0,
+      "n_reactions": 53
+    }
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "duplicate_reactions_smallyeast"
+}

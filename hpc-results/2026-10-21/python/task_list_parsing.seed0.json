@@ -1,0 +1,110 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "n_tasks": 2,
+    "tasks": [
+      {
+        "changed": [
+          {
+            "lb": 56.2,
+            "reaction": "ATP[a] + H2O[a] => ADP[a] + Pi[a] + H+[a]",
+            "ub": 60.0
+          }
+        ],
+        "comments": "Messed up reaction",
+        "description": "Aerobic rephosphorylation of ATP from glucose",
+        "equations": [
+          {
+            "equation": "ATP[c] + H2O[c] => ADP[c] + Pi[c] + H+[c]",
+            "lb": 30.2,
+            "ub": 30.6
+          }
+        ],
+        "id": "ER",
+        "inputs": [
+          {
+            "lb": 23.6,
+            "metabolite": "O2[s]",
+            "ub": 23.8
+          },
+          {
+            "lb": 23.6,
+            "metabolite": "glucose[s]",
+            "ub": 23.8
+          }
+        ],
+        "outputs": [
+          {
+            "lb": 26.1,
+            "metabolite": "H2O[s]",
+            "ub": 26.2
+          },
+          {
+            "lb": 26.1,
+            "metabolite": "CO2[s]",
+            "ub": 26.2
+          }
+        ],
+        "print_fluxes": true,
+        "should_fail": true
+      },
+      {
+        "changed": [],
+        "comments": "",
+        "description": "ATP de novo synthesis",
+        "equations": [
+          {
+            "equation": "ATP[c] + H2O[c] <=> ADP[c] + Pi[c] + H+[c]",
+            "lb": -1000.0,
+            "ub": 1000.0
+          }
+        ],
+        "id": "BS",
+        "inputs": [
+          {
+            "lb": 0.0,
+            "metabolite": "O2[s]",
+            "ub": 1000.0
+          },
+          {
+            "lb": 0.0,
+            "metabolite": "glucose[s]",
+            "ub": 1000.0
+          },
+          {
+            "lb": 0.0,
+            "metabolite": "NH3[s]",
+            "ub": 1000.0
+          },
+          {
+            "lb": 0.0,
+            "metabolite": "Pi[s]",
+            "ub": 1000.0
+          }
+        ],
+        "outputs": [
+          {
+            "lb": 0.0,
+            "metabolite": "H2O[s]",
+            "ub": 1.1
+          },
+          {
+            "lb": 0.0,
+            "metabolite": "CO2[s]",
+            "ub": 1.1
+          },
+          {
+            "lb": 1.0,
+            "metabolite": "ATP[c]",
+            "ub": 1.3
+          }
+        ],
+        "print_fluxes": false,
+        "should_fail": false
+      }
+    ]
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "task_list_parsing"
+}

@@ -1,0 +1,41 @@
+scenario: enzyme_usage_ectestgem  host: vera-r05-04  start: 2026-10-20T20:30:23Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10518193/tmpseqe5boj.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+enzyme_usage_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/enzyme_usage_ectestgem.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10518193/tmpygmubcls.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+enzyme_usage_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/enzyme_usage_ectestgem.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10518193/tmpfpbbitqb.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+enzyme_usage_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/enzyme_usage_ectestgem.seed2.json
+enzyme_usage_ectestgem [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/matlab/enzyme_usage_ectestgem.json
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: enzyme_usage_ectestgem  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: enzyme_usage_ectestgem  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: enzyme_usage_ectestgem  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: enzyme_usage_ectestgem  (python vs python)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: enzyme_usage_ectestgem  (python vs python)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+end: 2026-10-20T20:30:58Z  status: MATCH

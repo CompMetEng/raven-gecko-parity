@@ -1,0 +1,11 @@
+Name,Passed,Failed,Incomplete,Duration
+tComparison/compareMultipleModelsRuns,1,0,0,1.361653
+tComparison/compareMultipleModelsReportsIdentityOverlap,1,0,0,0.101704
+tComparison/diffModelsEqualToItself,1,0,0,0.09397
+tComparison/diffModelsDetectsDroppedReaction,1,0,0,0.053339
+tComparison/diffModelsDetectsBoundDifference,1,0,0,0.033479
+tComparison/diffModelsStoichWithinToleranceIsEqual,1,0,0,0.020656
+tComparison/diffModelsStoichOutsideToleranceIsNotEqual,1,0,0,0.017273
+tComparison/diffModelsGrRuleIsOrderInsensitive,1,0,0,0.070956
+tComparison/diffModelsGrRuleLogicalChangeIsDetected,1,0,0,0.047936
+tComparison/diffModelsTruncatesPerCategory,1,0,0,1.881482

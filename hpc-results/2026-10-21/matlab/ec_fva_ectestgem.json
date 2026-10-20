@@ -1,0 +1,45 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "fva": [
+      {
+        "max_flux": 7199.999999999999,
+        "min_flux": 0,
+        "reaction": "R1"
+      },
+      {
+        "max_flux": 3272.727272727273,
+        "min_flux": -6000,
+        "reaction": "R2"
+      },
+      {
+        "max_flux": 1440,
+        "min_flux": 0,
+        "reaction": "R3"
+      },
+      {
+        "max_flux": 7199.999999999999,
+        "min_flux": 0,
+        "reaction": "R4"
+      },
+      {
+        "max_flux": 7200,
+        "min_flux": 0,
+        "reaction": "R5"
+      },
+      {
+        "max_flux": 0,
+        "min_flux": -7199.999999999999,
+        "reaction": "S1"
+      },
+      {
+        "max_flux": 7199.999999999999,
+        "min_flux": 0,
+        "reaction": "S2"
+      }
+    ]
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "ec_fva_ectestgem"
+}

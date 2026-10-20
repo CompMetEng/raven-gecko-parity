@@ -1,0 +1,7 @@
+Name,Passed,Failed,Incomplete,Duration
+tCuration/curateModelFromTablesKeepsSupersetReaction,1,0,0,1.144352
+tCuration/curateModelFromTablesOverwritesExactDuplicate,1,0,0,0.067566
+tCuration/curateModelFromTablesReadsMetColumnsByHeader,1,0,0,0.065401
+tCuration/curateModelFromTablesWritesExistingRxnFields,1,0,0,0.082486
+tCuration/curateModelFromTablesWritesExistingGeneFields,1,0,0,0.023137
+tCuration/curateModelFromTablesRequiresKeyColumns,1,0,0,1.833198

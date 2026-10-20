@@ -1,0 +1,49 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "n_passed": 6,
+    "n_should_fail": 2,
+    "n_tasks": 6,
+    "tasks": [
+      {
+        "description": "Aerobic growth on glucose",
+        "id": "GLC_AER",
+        "passed": true,
+        "should_fail": false
+      },
+      {
+        "description": "Anaerobic growth on glucose",
+        "id": "GLC_ANA",
+        "passed": true,
+        "should_fail": false
+      },
+      {
+        "description": "ATP regeneration from glucose",
+        "id": "ATP_GLC",
+        "passed": true,
+        "should_fail": false
+      },
+      {
+        "description": "Growth with no carbon source",
+        "id": "NO_CARBON",
+        "passed": true,
+        "should_fail": true
+      },
+      {
+        "description": "Growth on ethanol as sole carbon source",
+        "id": "ETH_AER",
+        "passed": true,
+        "should_fail": true
+      },
+      {
+        "description": "Aerobic growth on glucose with CO2 as the only outlet",
+        "id": "GLC_AER_TIGHT",
+        "passed": true,
+        "should_fail": false
+      }
+    ]
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "task_checking_smallyeast"
+}

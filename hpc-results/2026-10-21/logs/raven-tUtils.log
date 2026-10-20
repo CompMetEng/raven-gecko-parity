@@ -1,0 +1,34 @@
+GUROBI_ON_PATH=/apps/Arch/software/Gurobi/13.0.1-GCCcore-14.3.0/matlab/gurobi.mexa64
+GUROBI_OK=1
+Running tUtils
+.[Warning: tUtilsDeprecationNamed is deprecated and will be removed in the next
+major release. Use findLeakMetabolite(model,'produce',...) instead.] 
+[> In deprecationWarning (line 33)
+In tUtils/deprecationWarningNamesTheReplacement (line 21)]
+..[Warning: tUtilsLegacyNamed is the legacy implementation and remains supported,
+but ftINIT is the recommended method for new work. Silence this with
+warning('off','RAVEN:legacyMethod').] 
+[> In legacyMethodNotice (line 42)
+In tUtils/legacyMethodNoticePromisesNoRemoval (line 42)]
+....... .....
+================================================================================
+tUtils/parallelWorkersRAVENTrueNoPCTReturnsZero was filtered.
+    Test Diagnostic: Parallel Computing Toolbox present; skipping no-PCT path.
+================================================================================
+.
+================================================================================
+tUtils/parallelWorkersRAVENTruePCTReturnsInf was filtered.
+    Test Diagnostic: Parallel Computing Toolbox not present; skipping PCT path.
+================================================================================
+.... ........
+Done tUtils
+__________
+
+Failure Summary:
+
+     Name                                             Failed  Incomplete  Reason(s)
+    ==============================================================================================
+     tUtils/parallelWorkersRAVENTrueNoPCTReturnsZero              X       Filtered by assumption.
+    ----------------------------------------------------------------------------------------------
+     tUtils/parallelWorkersRAVENTruePCTReturnsInf                 X       Filtered by assumption.
+SUMMARY passed=26 failed=0 incomplete=2 total=28

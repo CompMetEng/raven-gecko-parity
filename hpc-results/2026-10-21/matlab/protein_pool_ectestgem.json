@@ -1,0 +1,166 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "enzyme_concs": {
+      "full": {
+        "concs": [
+          {
+            "conc": 0.7292388,
+            "enzyme": "P1",
+            "has_conc": true
+          },
+          {
+            "conc": 0.03692241,
+            "enzyme": "P2",
+            "has_conc": true
+          },
+          {
+            "conc": 0.318175,
+            "enzyme": "P3",
+            "has_conc": true
+          },
+          {
+            "conc": 5.1959184,
+            "enzyme": "P4",
+            "has_conc": true
+          },
+          {
+            "conc": 0.15647268,
+            "enzyme": "P5",
+            "has_conc": true
+          }
+        ],
+        "constrained": [
+          {
+            "enzyme": "P1",
+            "upper_bound": 0.7292388
+          },
+          {
+            "enzyme": "P2",
+            "upper_bound": 0.03692241
+          },
+          {
+            "enzyme": "P3",
+            "upper_bound": 0.318175
+          },
+          {
+            "enzyme": "P4",
+            "upper_bound": 5.1959184
+          },
+          {
+            "enzyme": "P5",
+            "upper_bound": 0.15647268
+          }
+        ]
+      },
+      "partial": {
+        "concs": [
+          {
+            "conc": 0.7292388,
+            "enzyme": "P1",
+            "has_conc": true
+          },
+          {
+            "conc": 0.03692241,
+            "enzyme": "P2",
+            "has_conc": true
+          },
+          {
+            "conc": 0,
+            "enzyme": "P3",
+            "has_conc": false
+          },
+          {
+            "conc": 5.1959184,
+            "enzyme": "P4",
+            "has_conc": true
+          },
+          {
+            "conc": 0,
+            "enzyme": "P5",
+            "has_conc": false
+          }
+        ],
+        "concs_survive_removal": true,
+        "constrained": [
+          {
+            "enzyme": "P1",
+            "upper_bound": 0.7292388
+          },
+          {
+            "enzyme": "P2",
+            "upper_bound": 0.03692241
+          },
+          {
+            "enzyme": "P3",
+            "upper_bound": 1000
+          },
+          {
+            "enzyme": "P4",
+            "upper_bound": 5.1959184
+          },
+          {
+            "enzyme": "P5",
+            "upper_bound": 1000
+          }
+        ],
+        "removed": [
+          {
+            "enzyme": "P1",
+            "upper_bound": 1000
+          },
+          {
+            "enzyme": "P2",
+            "upper_bound": 1000
+          },
+          {
+            "enzyme": "P3",
+            "upper_bound": 1000
+          },
+          {
+            "enzyme": "P4",
+            "upper_bound": 1000
+          },
+          {
+            "enzyme": "P5",
+            "upper_bound": 1000
+          }
+        ]
+      }
+    },
+    "f_factor": {
+      "default": 1,
+      "subset": 0.1627245885696052
+    },
+    "light_constrain_raises": true,
+    "pool_size": {
+      "full": {
+        "default": 1000,
+        "override": 5000
+      },
+      "light": {
+        "default": 1000,
+        "override": 5000
+      }
+    },
+    "prot_data": {
+      "abundances": [
+        0.7292388,
+        0.03692241,
+        0.318175,
+        5.1959184,
+        0.15647268
+      ],
+      "uniprot_ids": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5"
+      ]
+    }
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "protein_pool_ectestgem"
+}

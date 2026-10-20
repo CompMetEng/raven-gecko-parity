@@ -1,0 +1,53 @@
+scenario: replace_metabolite_toy  host: vera-r05-04  start: 2026-10-20T20:34:10Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+replace_metabolite_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/replace_metabolite_toy.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+replace_metabolite_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/replace_metabolite_toy.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+replace_metabolite_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/replace_metabolite_toy.seed2.json
+replace_metabolite_toy [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/matlab/replace_metabolite_toy.json
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: replace_metabolite_toy  (python vs matlab)
+tolerance: rel=1e-12 abs=1e-15
+
+1 difference(s):
+  results.name_based.reactions.unrelated2
+      present on the left only
+      left=[{'coefficient': -1, 'metabolite': 'd'}]  right=None
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 0)
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: replace_metabolite_toy  (python vs matlab)
+tolerance: rel=1e-12 abs=1e-15
+
+1 difference(s):
+  results.name_based.reactions.unrelated2
+      present on the left only
+      left=[{'coefficient': -1, 'metabolite': 'd'}]  right=None
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 1)
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: replace_metabolite_toy  (python vs matlab)
+tolerance: rel=1e-12 abs=1e-15
+
+1 difference(s):
+  results.name_based.reactions.unrelated2
+      present on the left only
+      left=[{'coefficient': -1, 'metabolite': 'd'}]  right=None
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 2)
+--- python seed 0 vs seed 1
+scenario: replace_metabolite_toy  (python vs python)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: replace_metabolite_toy  (python vs python)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+end: 2026-10-20T20:34:45Z  status: DIFFER

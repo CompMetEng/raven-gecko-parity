@@ -1,0 +1,76 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "flexibilize": {
+      "base_growth": 2.2532065919999997,
+      "final_growth": 2.4937500000000004,
+      "flexed": [
+        {
+          "flex_conc": 0.17317708333333337,
+          "frequence": 1,
+          "old_conc": 0.15647268,
+          "protein": "P5",
+          "ratio_incr": 1.1067560377526184
+        }
+      ]
+    },
+    "flux_data": {
+      "loose": {
+        "R5": {
+          "lb": 0.0,
+          "ub": 0.41
+        },
+        "S1": {
+          "lb": -10.0,
+          "ub": 0.0
+        },
+        "S2": {
+          "lb": 0.0,
+          "ub": 8.0
+        }
+      },
+      "parsed": {
+        "conds": [
+          "cond1"
+        ],
+        "exch_fluxes": [
+          [
+            -10.0,
+            8.0
+          ]
+        ],
+        "exch_mets": [
+          "e1",
+          "e2"
+        ],
+        "exch_rxn_ids": [
+          "S1",
+          "S2"
+        ],
+        "gr_rate": [
+          0.41
+        ],
+        "p_tot": [
+          0.45
+        ]
+      },
+      "pct": {
+        "R5": {
+          "lb": 0.0,
+          "ub": 0.41
+        },
+        "S1": {
+          "lb": -10.5,
+          "ub": -9.5
+        },
+        "S2": {
+          "lb": 7.6,
+          "ub": 8.4
+        }
+      }
+    }
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "flexibilize_concs_ectestgem"
+}

@@ -1,0 +1,19 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "b_formula": "CH4",
+    "c_formula": "CH4",
+    "could_not_guess": [
+      "Orphan"
+    ],
+    "d_formula": "C0.5H2",
+    "guessed_for": [
+      "B",
+      "C",
+      "D"
+    ]
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "guess_composition_toy"
+}

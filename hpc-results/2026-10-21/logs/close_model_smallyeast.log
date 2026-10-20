@@ -1,0 +1,41 @@
+scenario: close_model_smallyeast  host: vera-r06-02  start: 2026-10-20T20:29:08Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10518174/tmpw569xgwj.lp
+Reading time = 0.00 seconds
+: 52 rows, 106 columns, 406 nonzeros
+close_model_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/close_model_smallyeast.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10518174/tmpfiw0nuox.lp
+Reading time = 0.00 seconds
+: 52 rows, 106 columns, 406 nonzeros
+close_model_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/close_model_smallyeast.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10518174/tmpoxrzvapt.lp
+Reading time = 0.00 seconds
+: 52 rows, 106 columns, 406 nonzeros
+close_model_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/close_model_smallyeast.seed2.json
+close_model_smallyeast [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/matlab/close_model_smallyeast.json
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: close_model_smallyeast  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: close_model_smallyeast  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: close_model_smallyeast  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: close_model_smallyeast  (python vs python)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: close_model_smallyeast  (python vs python)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+end: 2026-10-20T20:29:51Z  status: MATCH

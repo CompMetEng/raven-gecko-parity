@@ -1,0 +1,20 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "enforced_levels": [
+      0.0,
+      259.2,
+      518.4,
+      777.5999999999999,
+      1036.8,
+      1296.0
+    ],
+    "targets": [
+      "R3",
+      "R5"
+    ]
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "ec_fseof_ectestgem"
+}

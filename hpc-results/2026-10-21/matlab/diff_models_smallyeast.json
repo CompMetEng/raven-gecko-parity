@@ -1,0 +1,26 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "modified": {
+      "equal": false,
+      "genes_only_in_a": [],
+      "genes_only_in_b": [
+        "YSWAP1"
+      ],
+      "n_differences": 10,
+      "reactions_only_in_a": [
+        "ATPX"
+      ],
+      "reactions_only_in_b": [
+        "PROBE_RXN"
+      ]
+    },
+    "self": {
+      "equal": true,
+      "n_differences": 0
+    }
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "diff_models_smallyeast"
+}

@@ -1,0 +1,48 @@
+scenario: ec_model_full_yeastgem  host: vera-r06-02  start: 2026-10-20T20:28:15Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10518159/tmp1mbzlsxj.lp
+Reading time = 0.01 seconds
+: 2748 rows, 8204 columns, 30898 nonzeros
+fill_eccodes_from_gem: skipped 36 invalid EC string(s): '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119'
+parity: Expected BRENDA file not found: /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/GECKO/databases/kcat.tsv
+PYTHON FAILED (seed 0)
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10518159/tmp_mhf_44a.lp
+Reading time = 0.01 seconds
+: 2748 rows, 8204 columns, 30898 nonzeros
+fill_eccodes_from_gem: skipped 36 invalid EC string(s): '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119'
+parity: Expected BRENDA file not found: /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/GECKO/databases/kcat.tsv
+PYTHON FAILED (seed 1)
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10518159/tmptr9m7tz0.lp
+Reading time = 0.01 seconds
+: 2748 rows, 8204 columns, 30898 nonzeros
+fill_eccodes_from_gem: skipped 36 invalid EC string(s): '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119', '1.1.1.n12;4.2.1.119'
+parity: Expected BRENDA file not found: /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/GECKO/databases/kcat.tsv
+PYTHON FAILED (seed 2)
+parity: MATLAB run of ec_model_full_yeastgem failed (exit 1):
+NOTE: This is GECKO 4, which is not fully backward-compatible
+with GECKO 3. 
+See https://gecko-docs.readthedocs.io/en/latest/gecko3-to-gecko4.html
+for what 
+changed and how to stay on GECKO 3 (v3.2.5) if needed.
+{Error using YeastGEMAdapterParity
+The specified superclass 'YeastGEMAdapter' contains a parse error, cannot be
+found on MATLAB's search path, or is shadowed by another file with the same
+name.
+
+Error in ModelAdapterManager.getAdapter (line 61)
+            adapter = feval(adapterClassName);
+                      ^^^^^^^^^^^^^^^^^^^^^^^
+Error in ec_model_full_yeastgem (line 14)
+adapter = ModelAdapterManager.getAdapter(ctx.inputs.adapter_matlab);
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Error in parity_run (line 53)
+results = entry(ctx);
+          ^^^^^^^^^^
+}
+MATLAB FAILED
+end: 2026-10-20T20:31:17Z  status: ERROR

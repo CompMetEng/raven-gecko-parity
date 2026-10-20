@@ -1,0 +1,7 @@
+Name,Passed,Failed,Incomplete,Duration
+tGenomeData/getGeneDataReadsEukaryote,1,0,0,1.22384
+tGenomeData/getGeneDataReadsProkaryote,1,0,0,0.147183
+tGenomeData/getGeneDataWritesNoFileByDefault,1,0,0,0.014443
+tGenomeData/processProteinFastaFileRenamesHeaders,1,0,0,0.102336
+tGenomeData/renameModelGenesRenamesGenesAndGrRules,1,0,0,0.108273
+tGenomeData/downloadGenomeDataDownloads,1,0,0,2.815757

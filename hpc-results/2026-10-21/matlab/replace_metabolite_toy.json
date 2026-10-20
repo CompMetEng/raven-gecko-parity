@@ -1,0 +1,71 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "identifiers_based": {
+      "metabolites": [
+        {
+          "compartment": "c",
+          "id": "b",
+          "name": "o2"
+        },
+        {
+          "compartment": "c",
+          "id": "x",
+          "name": "x"
+        }
+      ],
+      "reactions": {
+        "r1": [
+          {
+            "coefficient": -1,
+            "metabolite": "b"
+          },
+          {
+            "coefficient": 1,
+            "metabolite": "x"
+          }
+        ]
+      }
+    },
+    "name_based": {
+      "metabolites": [
+        {
+          "compartment": "c",
+          "id": "a",
+          "name": "o2"
+        },
+        {
+          "compartment": "c",
+          "id": "d",
+          "name": "d"
+        },
+        {
+          "compartment": "c",
+          "id": "x",
+          "name": "x"
+        }
+      ],
+      "reactions": {
+        "r1": [
+          {
+            "coefficient": -1,
+            "metabolite": "a"
+          },
+          {
+            "coefficient": 1,
+            "metabolite": "x"
+          }
+        ],
+        "unrelated1": [
+          {
+            "coefficient": -1,
+            "metabolite": "d"
+          }
+        ]
+      }
+    }
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "replace_metabolite_toy"
+}

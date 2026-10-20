@@ -1,0 +1,11 @@
+collected: 2026-10-20T21:18:36Z on vera-r05-04
+RAVEN 79a7d8c8aab1a38e0ab14cede277d497a14e6f9c develop dirty=0
+GECKO 52e46f7281a1af3586e8e9d7040b5186f5a4ac80 develop dirty=0
+raven-toolbox 4128e2ab9a4247dd3b33990c2a81659f8e09cb47 develop dirty=0
+geckopy 277b74a3cbdf6f15bf92a5429f3a208ce4d18162 main dirty=0
+raven-gecko-parity dfe5c7a98aac146b586c3e20cabf25df72fac446 doc/hpc-handover dirty=0
+     62 "runtime": "matlab 2024b"
+    189 "runtime": "python 3.14.2"
+gurobipy: (13, 0, 3)
+cobra: 0.32.1
+raven_toolbox: /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/raven-toolbox/src/raven_toolbox/__init__.py

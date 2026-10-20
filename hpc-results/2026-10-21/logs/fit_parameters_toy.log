@@ -1,0 +1,347 @@
+scenario: fit_parameters_toy  host: vera-r06-02  start: 2026-10-20T20:30:42Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10518196/tmp6xe8jypy.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp6qr8g5zy.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp00pvuu34.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpj4wwjxyt.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmplmg85vci.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpkt3sl_hh.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp7bubohsr.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp7jcd2_qs.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpgzjpshzi.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpiw4mjk1a.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpa3qks12_.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpzsrbtjsa.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp2uzk1fvf.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpwklnbhw8.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpdw603i80.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpw5gferf4.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp9_rztdnz.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpg22btn2c.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp6o93024e.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmprm_sh08f.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp9xsip6ih.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp02r4dc1k.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp_1rs2y1o.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpqk06rnzi.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp074e08mj.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpm0m_ndkc.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpbe6w8y01.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmprt_5i2dm.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpzccb17fv.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpet1pussx.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpzup2o5uv.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpxe0lz9ti.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp_hdl9gpc.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpzef66v11.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpxp9okgif.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+fit_parameters_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/fit_parameters_toy.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10518196/tmp9sbhbfpf.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmplc9pdmo5.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpaio35s61.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp5rvxqrvd.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpir3slzlw.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpy8ras7mb.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpc6tha8zm.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp3fa6y83w.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp10bcfath.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpeg65neph.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpb2dw8wms.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpe46gxepc.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpv4f_dgz2.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpsatjtahw.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp9cpip563.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp5vz_vj4x.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpu7c2icv7.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpvgldm68r.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpdx1udy47.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp_ujj9t55.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp7hreu9ti.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpq9fveyw5.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmposzovofu.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpk8qcx99q.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpwn0l3p0h.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpzrocnmu0.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp0kt_ua71.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpemcx7dlf.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpxpvo7x8e.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp1_cmdwd3.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpfpb7h2ba.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpzbuvppxj.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpk1m53hfk.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpgert0qcb.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpd2co1ieb.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+fit_parameters_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/fit_parameters_toy.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10518196/tmp4scpp1x8.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp4bhje_95.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp9z5gw1i3.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpw7phxzjj.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp9xtbc4h9.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpqjfubv2h.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp8xrs9ap9.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmptzzeumfl.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpgpg2ozq8.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpog6hculk.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp7ydbn_ga.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpu0gad_86.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpvf0rxi0f.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpvj29b0ib.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp10v2dina.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp4kzxkgk2.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpvk3nrxm_.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpiz3j3n5p.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpo8699ztf.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpb7u1cvbm.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpcxs38nv2.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpszca156k.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpza645d4j.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpcri4oh0m.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpsoqhi42y.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp8h9y265k.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpw686343z.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmprsmu59e0.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp2kiiqavv.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpd_lgghnd.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpy6ckwrva.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp9w38nxjf.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpw2kh2h8o.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmp9lqqspzl.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10518196/tmpbdnu6hyg.lp
+Reading time = 0.00 seconds
+: 3 rows, 10 columns, 14 nonzeros
+fit_parameters_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/fit_parameters_toy.seed2.json
+fit_parameters_toy [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/matlab/fit_parameters_toy.json
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: fit_parameters_toy  (python vs matlab)
+tolerance: rel=0.0001 abs=0.0001
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: fit_parameters_toy  (python vs matlab)
+tolerance: rel=0.0001 abs=0.0001
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: fit_parameters_toy  (python vs matlab)
+tolerance: rel=0.0001 abs=0.0001
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: fit_parameters_toy  (python vs python)
+tolerance: rel=0.0001 abs=0.0001
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: fit_parameters_toy  (python vs python)
+tolerance: rel=0.0001 abs=0.0001
+result:   MATCH
+end: 2026-10-20T20:31:20Z  status: MATCH

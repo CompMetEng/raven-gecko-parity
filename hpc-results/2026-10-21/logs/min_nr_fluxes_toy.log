@@ -1,0 +1,34 @@
+scenario: min_nr_fluxes_toy  host: vera-r05-04  start: 2026-10-20T20:32:42Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+min_nr_fluxes_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/min_nr_fluxes_toy.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+min_nr_fluxes_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/min_nr_fluxes_toy.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+min_nr_fluxes_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/min_nr_fluxes_toy.seed2.json
+parity: MATLAB run of min_nr_fluxes_toy failed (exit 1):
+
+{Error using setRavenSolver (line 47)
+SCIP not found. RAVEN only provides the precompiled SCIP MEX binary for
+Windows. Instructions on how to compile the SCIP MEX file are found at
+https://github.com/scipopt/MatlabSCIPInterface
+
+Error in min_nr_fluxes_toy (line 12)
+setRavenSolver('scip');
+^^^^^^^^^^^^^^^^^^^^^^
+Error in parity_run (line 53)
+results = entry(ctx);
+          ^^^^^^^^^^
+}
+MATLAB FAILED
+--- python seed 0 vs seed 1
+scenario: min_nr_fluxes_toy  (python vs python)
+tolerance: rel=1e-09 abs=1e-09
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: min_nr_fluxes_toy  (python vs python)
+tolerance: rel=1e-09 abs=1e-09
+result:   MATCH
+end: 2026-10-20T20:33:48Z  status: ERROR

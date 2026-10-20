@@ -1,0 +1,67 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "closed_reactions": [
+      {
+        "max_flux": 0.0,
+        "min_flux": 0.0,
+        "reaction": "acOUT"
+      },
+      {
+        "max_flux": 0.0,
+        "min_flux": 0.0,
+        "reaction": "biomassOUT"
+      },
+      {
+        "max_flux": 0.0,
+        "min_flux": 0.0,
+        "reaction": "co2OUT"
+      },
+      {
+        "max_flux": 0.0,
+        "min_flux": 0.0,
+        "reaction": "ethIN"
+      },
+      {
+        "max_flux": 0.0,
+        "min_flux": 0.0,
+        "reaction": "ethOUT"
+      },
+      {
+        "max_flux": 0.0,
+        "min_flux": 0.0,
+        "reaction": "glcIN"
+      },
+      {
+        "max_flux": 0.0,
+        "min_flux": 0.0,
+        "reaction": "glyOUT"
+      },
+      {
+        "max_flux": 0.0,
+        "min_flux": 0.0,
+        "reaction": "o2IN"
+      }
+    ],
+    "control_max_after": 0.0,
+    "control_max_before": 10.0,
+    "control_min_after": 0.0,
+    "control_min_before": 0.0,
+    "control_reaction": "PGI",
+    "growth_after": 0.0,
+    "growth_before": 1.2215435868961677,
+    "unit_exchange_reactions": [
+      "acOUT",
+      "biomassOUT",
+      "co2OUT",
+      "ethIN",
+      "ethOUT",
+      "glcIN",
+      "glyOUT",
+      "o2IN"
+    ]
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "close_model_smallyeast"
+}

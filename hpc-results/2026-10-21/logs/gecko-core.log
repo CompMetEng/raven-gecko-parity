@@ -1,0 +1,359 @@
+GUROBI_ON_PATH=/apps/Arch/software/Gurobi/13.0.1-GCCcore-14.3.0/matlab/gurobi.mexa64
+GUROBI_OK=1
+[Warning: Unable to save path to file
+'/apps/Common/software/MATLAB/2024b/toolbox/local/pathdef.m'. You can save your
+path to a different location by calling SAVEPATH with an input argument that
+specifies the full path. For MATLAB to use that path in future sessions, save
+the path to 'pathdef.m' in your MATLAB startup folder.] 
+[> In savepath (line 204)
+In GECKOInstaller.install (line 30)
+In job (line 19)
+In run (line 112)] 
+GECKO version 4.0.0b1 installed
+Running adapterTomlTests
+.....NOTE: This is GECKO 4, which is not fully backward-compatible
+with GECKO 3. 
+See https://gecko-docs.readthedocs.io/en/latest/gecko3-to-gecko4.html
+for what 
+changed and how to stay on GECKO 3 (v3.2.5) if needed.
+Wrote /local/tmp.10518161/tpa144b5e5_f92a_418a_8077_30a90ebef76e/model_adapter.toml.
+TestGEMAdapter overrides methods that a TOML file cannot hold: 
+getBrendaDBFolder, getPhylDistStructPath, getSpontaneousReactions.
+Set [spontaneous] for getSpontaneousReactions, [matlab] function names for
+makeModelAnaerobic and changeProteinBiomass, or keep the class and let its
+constructor call loadAdapterParams.
+Wrote /local/tmp.10518161/tpe0ea86e0_59b2_4776_aab3_059139f14ee1/model_adapter.toml.
+Kept for GECKO only, under [matlab.params]: c_UptakeExp
+LegacyFixtureAdapter overrides methods that a TOML file cannot hold: 
+getSpontaneousReactions.
+Set [spontaneous] for getSpontaneousReactions, [matlab] function names for
+makeModelAnaerobic and changeProteinBiomass, or keep the class and let its
+constructor call loadAdapterParams.
+...
+Done adapterTomlTests
+__________
+
+Running combineTests
+        source           status              note        
+    _______________    ___________    ___________________
+
+    {'custom'     }    {'skipped'}    {'curated by hand'}
+    {'okp_catapro'}    {'missing'}    {0x0 char         }
+    {'okp_unikp'  }    {'missing'}    {0x0 char         }
+
+No kcat source file 
+/local/tmp.10518161/tpe6eae7ee_faa3_407a_a6e2_589f9eb1ab47/data/kcats/custom.tsv
+; it is left out. updateKcatSources gathers it.
+WARNING: No subSystem-specific kcat values can be calculatedKcats decided for 8 of 8 reactions.
+.No kcat source file 
+/local/tmp.10518161/tp151812e1_7018_4ef4_a314_1afc3a3010ae/data/kcats/custom.tsv
+; it is left out. updateKcatSources gathers it.
+No kcat source file 
+/local/tmp.10518161/tp151812e1_7018_4ef4_a314_1afc3a3010ae/data/kcats/brenda.tsv
+; it is left out. updateKcatSources gathers it.
+No kcat source file 
+/local/tmp.10518161/tp151812e1_7018_4ef4_a314_1afc3a3010ae/data/kcats/homologs.t
+sv; it is left out. updateKcatSources gathers it.
+No kcat source file 
+/local/tmp.10518161/tp151812e1_7018_4ef4_a314_1afc3a3010ae/data/kcats/okp_unikp.
+tsv; it is left out. updateKcatSources gathers it.
+WARNING: No subSystem-specific kcat values can be calculatedKcats decided for 8 of 8 reactions.
+.No kcat source file 
+/local/tmp.10518161/tp7cb0d84a_a7f7_4239_b16e_c9b20eee1148/data/kcats/custom.tsv
+; it is left out. updateKcatSources gathers it.
+No kcat source file 
+/local/tmp.10518161/tp7cb0d84a_a7f7_4239_b16e_c9b20eee1148/data/kcats/brenda.tsv
+; it is left out. updateKcatSources gathers it.
+No kcat source file 
+/local/tmp.10518161/tp7cb0d84a_a7f7_4239_b16e_c9b20eee1148/data/kcats/okp_catapr
+o.tsv; it is left out. updateKcatSources gathers it.
+No kcat source file 
+/local/tmp.10518161/tp7cb0d84a_a7f7_4239_b16e_c9b20eee1148/data/kcats/okp_unikp.
+tsv; it is left out. updateKcatSources gathers it.
+WARNING: No subSystem-specific kcat values can be calculatedKcats decided for 8 of 8 reactions.
+.No kcat source file 
+/local/tmp.10518161/tp0c7b26f5_e662_4ab4_b9f4_07c6463d324e/data/kcats/custom.tsv
+; it is left out. updateKcatSources gathers it.
+.
+Done combineTests
+__________
+
+Running ecTreeTests
+.Downloading kcat.tsv.gz... COMPLETE
+Downloading sa.tsv.gz... COMPLETE
+Downloading mw.tsv.gz... COMPLETE
+Downloading measurements.tsv.gz... COMPLETE
+Downloading kcatCombineParams.tsv... COMPLETE
+.EC-tree kcats for 6 reactions written to /local/tmp.10518161/tpd6ca73ad_1995_4853_8ef2_eff6c7dc5234/data/kcats/ec_tree.tsv
+.            source               status              note        
+    _______________________    ___________    ___________________
+
+    {'custom'             }    {'skipped'}    {'curated by hand'}
+    {'brenda'             }    {'missing'}    {0x0 char         }
+    {'ec_tree'            }    {'missing'}    {0x0 char         }
+    {'okp_catapro'        }    {'missing'}    {0x0 char         }
+    {'okp_dlkcat'         }    {'missing'}    {0x0 char         }
+    {'okp_eitlem'         }    {'missing'}    {0x0 char         }
+    {'okp_kinform_h'      }    {'missing'}    {0x0 char         }
+    {'okp_kinform_l'      }    {'missing'}    {0x0 char         }
+    {'okp_omniesi'        }    {'missing'}    {0x0 char         }
+    {'okp_omniesi_o2denet'}    {'missing'}    {0x0 char         }
+    {'okp_unikp'          }    {'missing'}    {0x0 char         }
+
+BRENDA kcats for 6 reactions written to /local/tmp.10518161/tpaac13a11_7512_4270_9901_962b187bb22e/data/kcats/brenda.tsv
+EC-tree kcats for 6 reactions written to /local/tmp.10518161/tpaac13a11_7512_4270_9901_962b187bb22e/data/kcats/ec_tree.tsv
+No kcat source file 
+/local/tmp.10518161/tpaac13a11_7512_4270_9901_962b187bb22e/data/kcats/okp_catapr
+o.tsv; it is left out. updateKcatSources gathers it.
+No kcat source file 
+/local/tmp.10518161/tpaac13a11_7512_4270_9901_962b187bb22e/data/kcats/okp_dlkcat
+.tsv; it is left out. updateKcatSources gathers it.
+No kcat source file 
+/local/tmp.10518161/tpaac13a11_7512_4270_9901_962b187bb22e/data/kcats/okp_eitlem
+.tsv; it is left out. updateKcatSources gathers it.
+No kcat source file 
+/local/tmp.10518161/tpaac13a11_7512_4270_9901_962b187bb22e/data/kcats/okp_kinfor
+m_h.tsv; it is left out. updateKcatSources gathers it.
+No kcat source file 
+/local/tmp.10518161/tpaac13a11_7512_4270_9901_962b187bb22e/data/kcats/okp_kinfor
+m_l.tsv; it is left out. updateKcatSources gathers it.
+No kcat source file 
+/local/tmp.10518161/tpaac13a11_7512_4270_9901_962b187bb22e/data/kcats/okp_omnies
+i.tsv; it is left out. updateKcatSources gathers it.
+No kcat source file 
+/local/tmp.10518161/tpaac13a11_7512_4270_9901_962b187bb22e/data/kcats/okp_omnies
+i_o2denet.tsv; it is left out. updateKcatSources gathers it.
+No kcat source file 
+/local/tmp.10518161/tpaac13a11_7512_4270_9901_962b187bb22e/data/kcats/okp_unikp.
+tsv; it is left out. updateKcatSources gathers it.
+WARNING: No subSystem-specific kcat values can be calculatedKcats decided for 8 of 8 reactions.
+            source               status              note        
+    _______________________    ___________    ___________________
+
+    {'custom'             }    {'skipped'}    {'curated by hand'}
+    {'brenda'             }    {'current'}    {0x0 char         }
+    {'ec_tree'            }    {'current'}    {0x0 char         }
+    {'okp_catapro'        }    {'missing'}    {0x0 char         }
+    {'okp_dlkcat'         }    {'missing'}    {0x0 char         }
+    {'okp_eitlem'         }    {'missing'}    {0x0 char         }
+    {'okp_kinform_h'      }    {'missing'}    {0x0 char         }
+    {'okp_kinform_l'      }    {'missing'}    {0x0 char         }
+    {'okp_omniesi'        }    {'missing'}    {0x0 char         }
+    {'okp_omniesi_o2denet'}    {'missing'}    {0x0 char         }
+    {'okp_unikp'          }    {'missing'}    {0x0 char         }
+
+EC-tree kcats for 6 reactions written to /local/tmp.10518161/tpaac13a11_7512_4270_9901_962b187bb22e/data/kcats/ec_tree.tsv
+            source                status                       note                 
+    _______________________    ____________    _____________________________________
+
+    {'custom'             }    {'skipped' }    {'curated by hand'                  }
+    {'brenda'             }    {'current' }    {0x0 char                           }
+    {'ec_tree'            }    {'outdated'}    {'k differs from model_adapter.toml'}
+    {'okp_catapro'        }    {'missing' }    {0x0 char                           }
+    {'okp_dlkcat'         }    {'missing' }    {0x0 char                           }
+    {'okp_eitlem'         }    {'missing' }    {0x0 char                           }
+    {'okp_kinform_h'      }    {'missing' }    {0x0 char                           }
+    {'okp_kinform_l'      }    {'missing' }    {0x0 char                           }
+    {'okp_omniesi'        }    {'missing' }    {0x0 char                           }
+    {'okp_omniesi_o2denet'}    {'missing' }    {0x0 char                           }
+    {'okp_unikp'          }    {'missing' }    {0x0 char                           }
+
+.
+Done ecTreeTests
+__________
+
+Running geckoCoreFunctionTests
+.......... .[Warning: mergeDLKcatAndFuzzyKcats is deprecated; use mergeKcats instead. The
+old name will be removed in a future release.] 
+[> In mergeDLKcatAndFuzzyKcats (line 84)
+In geckoCoreFunctionTests>testKcats_tc0011 (line 401)]
+[Warning: mergeDLKcatAndFuzzyKcats is deprecated; use mergeKcats instead. The
+old name will be removed in a future release.] 
+[> In mergeDLKcatAndFuzzyKcats (line 84)
+In geckoCoreFunctionTests>testKcats_tc0011 (line 493)]
+....Model-specific DLKcat input stored at /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/GECKO/test/unit_tests/ecTestGEM/data/DLKcat_input_subset_test.tsv
+..... ...OpenKineticsPredictor input stored at /local/tmp.10518161/tp72ea28a5_e998_478c_89bb_80a7017a518c/data/OKP.csv
+....[Warning: relaxProteomicsGreedy: no more candidates to relax; stopping.] 
+[> In relaxProteomicsGreedy (line 123)
+In geckoCoreFunctionTests>testRelaxProteomicsGreedyExhaustsCandidates_tc0027 (line 1103)]
+... ..Skipped incorrectly formatted EC numbers, rerun getECfromGEM with all outputs to get a list.
+........ ..[Warning: Dropping rows from source(s) not listed in sourcePriority: catapro] 
+[> In mergeKcats (line 200)
+In geckoCoreFunctionTests>testMergeKcatsGeneralizesToNSourcesWithExactTier_tc0041 (line 1552)]
+.[Warning: mergeDLKcatAndFuzzyKcats is deprecated; use mergeKcats instead. The
+old name will be removed in a future release.] 
+[> In mergeDLKcatAndFuzzyKcats (line 84)
+In geckoCoreFunctionTests>testMergeDLKcatAndFuzzyKcatsDelegatesToMergeKcats_tc0042 (line 1599)]
+..WARNING: 1 KEGG-resolved gene(s) had no UniProt accession on the KEGG row; the 
+bare KEGG gene id is used in ec.enzymes instead: G5->G5
+....WARNING: No kcat values are provided in model.ec.kcat, model remains 
+unchanged.
+.
+......[Warning: enzymeUsage is deprecated; use getEnzymeUsage instead. The old name
+will be removed in a future release.] 
+[> In enzymeUsage (line 11)
+In geckoCoreFunctionTests>testDeprecatedAliasesWarnAndForward_tc0055 (line 2018)]
+[Warning: pfbaEnzymes is deprecated; use getPfbaEnzymes instead. The old name
+will be removed in a future release.] 
+[> In pfbaEnzymes (line 11)
+In geckoCoreFunctionTests>testDeprecatedAliasesWarnAndForward_tc0055 (line 2031)]
+[Warning: selectKcatValue is deprecated; use assignKcatValues instead. The old
+name will be removed in a future release.] 
+[> In selectKcatValue (line 11)
+In geckoCoreFunctionTests>testDeprecatedAliasesWarnAndForward_tc0055 (line 2048)]
+[Warning: startGECKOproject is deprecated; use createGECKOproject instead. The
+old name will be removed in a future release.] 
+[> In startGECKOproject (line 11)
+In geckoCoreFunctionTests>testDeprecatedAliasesWarnAndForward_tc0055 (line 2062)]
+[Warning: copyECtoGEM is deprecated; use applyECcodes instead. The old name will
+be removed in a future release.] 
+[> In copyECtoGEM (line 11)
+In geckoCoreFunctionTests>testDeprecatedAliasesWarnAndForward_tc0055 (line 2083)]
+[Warning: addCarbonNum is deprecated; use fillCarbonNum instead. The old name
+will be removed in a future release.] 
+[> In addCarbonNum (line 11)
+In geckoCoreFunctionTests>testDeprecatedAliasesWarnAndForward_tc0055 (line 2093)]
+.... .
+Done geckoCoreFunctionTests
+__________
+
+Running homologsTests
+Homolog kcats for 1 reactions written to /local/tmp.10518161/tpc815989c_a6d2_4b44_95da_abccbf685bf4/data/kcats/homologs.tsv
+...
+Done homologsTests
+__________
+
+Running kcatAssignmentTests
+WARNING: No subSystem-specific kcat values can be calculatedBRENDA kcats for 6 reactions written to /local/tmp.10518161/tp7535a5bd_3ced_465d_b8fb_d5f1bc891ac8/data/kcats/brenda.tsv
+DLKcat kcats for 2 reactions written to /local/tmp.10518161/tp7535a5bd_3ced_465d_b8fb_d5f1bc891ac8/data/kcats/dlkcat.tsv
+WARNING: No subSystem-specific kcat values can be calculatedKcats decided for 8 of 8 reactions.
+.BRENDA kcats for 6 reactions written to /local/tmp.10518161/tpc42d6921_785c_4e14_bbf6_65e1fd8e606c/data/kcats/brenda.tsv
+No kcat source file 
+/local/tmp.10518161/tpc42d6921_785c_4e14_bbf6_65e1fd8e606c/data/kcats/dlkcat.tsv
+; it is left out. updateKcatSources gathers it.
+WARNING: No subSystem-specific kcat values can be calculatedKcats decided for 8 of 8 reactions.
+No kcat source file 
+/local/tmp.10518161/tpc42d6921_785c_4e14_bbf6_65e1fd8e606c/data/kcats/dlkcat.tsv
+; it is left out. updateKcatSources gathers it.
+WARNING: No subSystem-specific kcat values can be calculatedKcats decided for 8 of 8 reactions.
+.BRENDA kcats for 6 reactions written to /local/tmp.10518161/tp84ca4686_4050_45d0_9b14_a8e3656f12c8/data/kcats/brenda.tsv
+DLKcat kcats for 2 reactions written to /local/tmp.10518161/tp84ca4686_4050_45d0_9b14_a8e3656f12c8/data/kcats/dlkcat.tsv
+Kcats decided for 2 of 6 reactions.
+.      source        status              note        
+    __________    ___________    ___________________
+
+    {'custom'}    {'skipped'}    {'curated by hand'}
+    {'brenda'}    {'missing'}    {0x0 char         }
+    {'dlkcat'}    {'missing'}    {0x0 char         }
+
+BRENDA kcats for 6 reactions written to /local/tmp.10518161/tp22a16b47_fc6a_4e7c_9ba4_ceec3397d97f/data/kcats/brenda.tsv
+DLKcat kcats for 2 reactions written to /local/tmp.10518161/tp22a16b47_fc6a_4e7c_9ba4_ceec3397d97f/data/kcats/dlkcat.tsv
+      source         status              note        
+    __________    ____________    ___________________
+
+    {'custom'}    {'skipped' }    {'curated by hand'}
+    {'brenda'}    {'gathered'}    {0x0 char         }
+    {'dlkcat'}    {'gathered'}    {0x0 char         }
+
+      source        status              note        
+    __________    ___________    ___________________
+
+    {'custom'}    {'skipped'}    {'curated by hand'}
+    {'brenda'}    {'current'}    {0x0 char         }
+    {'dlkcat'}    {'current'}    {0x0 char         }
+
+      source         status                            note                      
+    __________    ____________    _______________________________________________
+
+    {'custom'}    {'skipped' }    {'curated by hand'                            }
+    {'brenda'}    {'outdated'}    {'aggregation differs from model_adapter.toml'}
+    {'dlkcat'}    {'current' }    {0x0 char                                     }
+
+.BRENDA kcats for 6 reactions written to /local/tmp.10518161/tpd1e8d75a_aa8f_417e_82ec_b67592b08198/data/kcats/brenda.tsv
+DLKcat kcats for 2 reactions written to /local/tmp.10518161/tpd1e8d75a_aa8f_417e_82ec_b67592b08198/data/kcats/dlkcat.tsv
+WARNING: No subSystem-specific kcat values can be calculatedWARNING: No subSystem-specific kcat values can be calculatedKcats decided for 8 of 8 reactions.
+.
+Done kcatAssignmentTests
+__________
+
+Running kcatSourceTests
+...2 of 4 rows of 
+/local/tmp.10518161/tpf8c9126e_96ff_46cf_9b9a_e14196704cbd/custom.tsv apply to 
+no reaction of this model; see report.unmatched.
+.BRENDA kcats for 6 reactions written to /local/tmp.10518161/tpb7815fec_df68_4bef_ac03_8205fda574ac/data/kcats/brenda.tsv
+DLKcat kcats for 2 reactions written to /local/tmp.10518161/tpb7815fec_df68_4bef_ac03_8205fda574ac/data/kcats/dlkcat.tsv
+.OKP (CataPro) kcats for 1 reactions written to /local/tmp.10518161/tpcdcb34a5_a030_431e_913c_b285b37970c5/data/kcats/okp_catapro.tsv
+.2 of 2 rows of 
+/local/tmp.10518161/tp4b7c6884_099c_456d_ab88_63699aff28ab/data/kcats/inf.tsv 
+have no valid kcat; see report.invalid.
+.1 kcats of reactions without enzymes are not written to /local/tmp.10518161/tp64dac710_c96a_49fe_8fd9_30a25d2ca4ea/brenda.tsv.
+.2 of 7 rows of 
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/GECKO/test/unit_tests/ecT
+estGEM/data/kcatSourceFixture.tsv have no valid kcat; see report.invalid.
+1 of 7 rows of 
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/GECKO/test/unit_tests/ecT
+estGEM/data/kcatSourceFixture.tsv apply to no reaction of this model; see 
+report.unmatched.
+2 of 7 rows of 
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/GECKO/test/unit_tests/ecT
+estGEM/data/kcatSourceFixture.tsv have no valid kcat; see report.invalid.
+1 of 7 rows of 
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/GECKO/test/unit_tests/ecT
+estGEM/data/kcatSourceFixture.tsv apply to no reaction of this model; see 
+report.unmatched.
+.
+Done kcatSourceTests
+__________
+
+Running upgradeTests
+5 custom kcats written to /local/tmp.10518161/tpbbf4d47a_6746_4ac9_b528_a8fb0a41cd1a/data/kcats/custom.tsv.
+.BRENDA kcats for 6 reactions written to /local/tmp.10518161/tp9671af29_2cdb_4259_abca_8572085261e4/data/kcats/brenda.tsv
+No kcat source file 
+/local/tmp.10518161/tp9671af29_2cdb_4259_abca_8572085261e4/data/kcats/dlkcat.tsv
+; it is left out. updateKcatSources gathers it.
+WARNING: No subSystem-specific kcat values can be calculatedKcats decided for 8 of 8 reactions.
+5 custom kcats written to /local/tmp.10518161/tp9671af29_2cdb_4259_abca_8572085261e4/data/kcats/custom.tsv.
+No kcat source file 
+/local/tmp.10518161/tp9671af29_2cdb_4259_abca_8572085261e4/data/kcats/dlkcat.tsv
+; it is left out. updateKcatSources gathers it.
+WARNING: No subSystem-specific kcat values can be calculatedKcats decided for 8 of 8 reactions.
+..           step             status                                                   note                                             
+    __________________    ___________    _____________________________________________________________________________________________
+
+    {'adapter'       }    {'to do'  }    {'TestGEMAdapter.m -> model_adapter.toml'                                                   }
+    {'custom kcats'  }    {'skipped'}    {'data/customKcats.tsv -> data/kcats/custom.tsv; give the ecModel they are for ('ecModel')' }
+    {'predictions'   }    {'skipped'}    {'stored predictions -> data/kcats: dlkcat; give the ecModel they were made for ('ecModel')'}
+    {'saved ecModel' }    {'to do'  }    {'models/ecModel.yml: 6 protein reactions turned forward'                                   }
+    {'project format'}    {'to do'  }    {'project_format = 4 in model_adapter.toml'                                                 }
+    {'script'        }    {'by hand'}    {'run.m:1: enzymeUsage -> getEnzymeUsage'                                                   }
+
+Run upgradeGECKOproject(projectPath, 'dryRun', false) to carry out the steps; originals go to /local/tmp.10518161/tp54c0ce25_99d5_431f_8177_5325eb7bc549/legacy/2026-10-20.
+Wrote /local/tmp.10518161/tp54c0ce25_99d5_431f_8177_5325eb7bc549/model_adapter.toml.
+TestGEMAdapter overrides methods that a TOML file cannot hold: 
+getBrendaDBFolder, getPhylDistStructPath, getSpontaneousReactions.
+Set [spontaneous] for getSpontaneousReactions, [matlab] function names for
+makeModelAnaerobic and changeProteinBiomass, or keep the class and let its
+constructor call loadAdapterParams.
+5 custom kcats written to /local/tmp.10518161/tp54c0ce25_99d5_431f_8177_5325eb7bc549/data/kcats/custom.tsv.
+DLKcat kcats for 2 reactions written to /local/tmp.10518161/tp54c0ce25_99d5_431f_8177_5325eb7bc549/data/kcats/dlkcat.tsv
+           step              status                                             note                                       
+    ___________________    ___________    _________________________________________________________________________________
+
+    {'adapter methods'}    {'by hand'}    {'carry over: getBrendaDBFolder, getPhylDistStructPath, getSpontaneousReactions'}
+    {'adapter'        }    {'done'   }    {'TestGEMAdapter.m -> model_adapter.toml'                                       }
+    {'custom kcats'   }    {'done'   }    {'data/customKcats.tsv -> data/kcats/custom.tsv (5 rows)'                       }
+    {'predictions'    }    {'done'   }    {'stored predictions -> data/kcats: dlkcat'                                     }
+    {'saved ecModel'  }    {'done'   }    {'models/ecModel.yml: 6 protein reactions turned forward'                       }
+    {'project format' }    {'done'   }    {'project_format = 4 in model_adapter.toml'                                     }
+    {'script'         }    {'by hand'}    {'run.m:1: enzymeUsage -> getEnzymeUsage'                                       }
+
+       step         status                          note                   
+    __________    ___________    __________________________________________
+
+    {'script'}    {'by hand'}    {'run.m:1: enzymeUsage -> getEnzymeUsage'}
+
+.
+Done upgradeTests
+__________
+
+SUMMARY passed=98 failed=0 incomplete=0 total=98

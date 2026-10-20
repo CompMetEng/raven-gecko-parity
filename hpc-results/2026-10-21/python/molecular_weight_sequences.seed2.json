@@ -1,0 +1,82 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "sequences": [
+      {
+        "mw": "NaN",
+        "sequence": ""
+      },
+      {
+        "mw": "NaN",
+        "sequence": "007 42"
+      },
+      {
+        "mw": 89.09528,
+        "sequence": "A"
+      },
+      {
+        "mw": 2395.71528,
+        "sequence": "ACDEFGHIKLMNPQRSTVWY"
+      },
+      {
+        "mw": 136.90027999999998,
+        "sequence": "X"
+      },
+      {
+        "mw": 255.78527999999997,
+        "sequence": "XX"
+      },
+      {
+        "mw": 132.61028,
+        "sequence": "B"
+      },
+      {
+        "mw": 131.17528,
+        "sequence": "J"
+      },
+      {
+        "mw": 273.32528,
+        "sequence": "O"
+      },
+      {
+        "mw": 168.05527999999998,
+        "sequence": "U"
+      },
+      {
+        "mw": 146.63528,
+        "sequence": "Z"
+      },
+      {
+        "mw": 302.33527999999995,
+        "sequence": "AaAa"
+      },
+      {
+        "mw": 489.64527999999996,
+        "sequence": "MRA1 L2"
+      },
+      {
+        "mw": 489.64527999999996,
+        "sequence": "MRAL"
+      },
+      {
+        "mw": 479.50527999999997,
+        "sequence": "MNTD"
+      },
+      {
+        "mw": 513.56528,
+        "sequence": "MSYN"
+      },
+      {
+        "mw": 542.6752799999999,
+        "sequence": "MDFM"
+      },
+      {
+        "mw": 537.7152799999999,
+        "sequence": "MLFK"
+      }
+    ]
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "molecular_weight_sequences"
+}

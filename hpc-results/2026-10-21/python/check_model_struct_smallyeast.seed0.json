@@ -1,0 +1,27 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "issues": [
+      {
+        "category": "empty_reaction",
+        "entity": "glyOUT"
+      },
+      {
+        "category": "objective",
+        "entity": ""
+      },
+      {
+        "category": "orphan_gene",
+        "entity": "YBR196C"
+      },
+      {
+        "category": "orphan_metabolite",
+        "entity": "GLY_c"
+      }
+    ],
+    "n_issues": 4
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "check_model_struct_smallyeast"
+}

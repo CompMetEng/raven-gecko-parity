@@ -1,0 +1,34 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "sensitivity_tuning": {
+      "base_growth": 4.498594189315838,
+      "final_growth": 436.3636363636363,
+      "tuned": [
+        {
+          "enzymes": "P4",
+          "new_kcat": 5,
+          "old_kcat": 0.05,
+          "reaction": "R3",
+          "source": "manual"
+        }
+      ]
+    },
+    "sigma_fitter": {
+      "model_pool_ub": 220,
+      "sigma": 0.11
+    },
+    "truncate_values": [
+      0,
+      1.23457,
+      123.457,
+      0.000123,
+      1234570.0,
+      -55.5556,
+      0
+    ]
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "sensitivity_tuning_ectestgem"
+}

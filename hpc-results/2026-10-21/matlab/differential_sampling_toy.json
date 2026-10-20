@@ -1,0 +1,33 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "analyze_sampling": [
+      [
+        0.9866563449774304,
+        0,
+        0.013343655022569623
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0.9866563449774304,
+        0,
+        0.013343655022569623
+      ]
+    ],
+    "flux_z": [
+      1.414213562373095,
+      100,
+      -100,
+      0,
+      0,
+      100
+    ]
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "differential_sampling_toy"
+}

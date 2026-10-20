@@ -1,0 +1,401 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "by_id": {
+      "n_metabolites_after": 50,
+      "n_metabolites_before": 52,
+      "n_reactions": 53,
+      "reactions": [
+        {
+          "n_metabolites_after": 0,
+          "n_metabolites_before": 1,
+          "reaction": "glyOUT",
+          "stoichiometry": []
+        },
+        {
+          "n_metabolites_after": 2,
+          "n_metabolites_before": 3,
+          "reaction": "GPP",
+          "stoichiometry": [
+            {
+              "coefficient": -1,
+              "metabolite": "GP_c"
+            },
+            {
+              "coefficient": 1,
+              "metabolite": "PI_c"
+            }
+          ]
+        },
+        {
+          "n_metabolites_after": 3,
+          "n_metabolites_before": 4,
+          "reaction": "HXK",
+          "stoichiometry": [
+            {
+              "coefficient": 1,
+              "metabolite": "ADP_c"
+            },
+            {
+              "coefficient": 1,
+              "metabolite": "G6P_c"
+            },
+            {
+              "coefficient": -1,
+              "metabolite": "GLC_c"
+            }
+          ]
+        },
+        {
+          "n_metabolites_after": 3,
+          "n_metabolites_before": 4,
+          "reaction": "PFK",
+          "stoichiometry": [
+            {
+              "coefficient": 1,
+              "metabolite": "ADP_c"
+            },
+            {
+              "coefficient": 1,
+              "metabolite": "F16P_c"
+            },
+            {
+              "coefficient": -1,
+              "metabolite": "F6P_c"
+            }
+          ]
+        },
+        {
+          "n_metabolites_after": 3,
+          "n_metabolites_before": 4,
+          "reaction": "PGK",
+          "stoichiometry": [
+            {
+              "coefficient": -1,
+              "metabolite": "ADP_c"
+            },
+            {
+              "coefficient": -1,
+              "metabolite": "P13G_c"
+            },
+            {
+              "coefficient": 1,
+              "metabolite": "P3G_c"
+            }
+          ]
+        },
+        {
+          "n_metabolites_after": 3,
+          "n_metabolites_before": 4,
+          "reaction": "PYK",
+          "stoichiometry": [
+            {
+              "coefficient": -1,
+              "metabolite": "ADP_c"
+            },
+            {
+              "coefficient": -1,
+              "metabolite": "PEP_c"
+            },
+            {
+              "coefficient": 1,
+              "metabolite": "PYR_c"
+            }
+          ]
+        },
+        {
+          "n_metabolites_after": 5,
+          "n_metabolites_before": 6,
+          "reaction": "ACS",
+          "stoichiometry": [
+            {
+              "coefficient": 1,
+              "metabolite": "ACCOA_c"
+            },
+            {
+              "coefficient": -1,
+              "metabolite": "AC_c"
+            },
+            {
+              "coefficient": 2,
+              "metabolite": "ADP_c"
+            },
+            {
+              "coefficient": -1,
+              "metabolite": "COA_c"
+            },
+            {
+              "coefficient": 2,
+              "metabolite": "PI_c"
+            }
+          ]
+        },
+        {
+          "n_metabolites_after": 5,
+          "n_metabolites_before": 6,
+          "reaction": "PYC",
+          "stoichiometry": [
+            {
+              "coefficient": 1,
+              "metabolite": "ADP_c"
+            },
+            {
+              "coefficient": -1,
+              "metabolite": "CO2_c"
+            },
+            {
+              "coefficient": 1,
+              "metabolite": "OAA_m"
+            },
+            {
+              "coefficient": 1,
+              "metabolite": "PI_c"
+            },
+            {
+              "coefficient": -1,
+              "metabolite": "PYR_c"
+            }
+          ]
+        },
+        {
+          "n_metabolites_after": 5,
+          "n_metabolites_before": 6,
+          "reaction": "LSC1LSC2",
+          "stoichiometry": [
+            {
+              "coefficient": -1,
+              "metabolite": "ADP_c"
+            },
+            {
+              "coefficient": 1,
+              "metabolite": "COA_m"
+            },
+            {
+              "coefficient": -1,
+              "metabolite": "PI_c"
+            },
+            {
+              "coefficient": -1,
+              "metabolite": "SUCCOA_m"
+            },
+            {
+              "coefficient": 1,
+              "metabolite": "SUC_m"
+            }
+          ]
+        },
+        {
+          "n_metabolites_after": 4,
+          "n_metabolites_before": 5,
+          "reaction": "PCK",
+          "stoichiometry": [
+            {
+              "coefficient": 1,
+              "metabolite": "ADP_c"
+            },
+            {
+              "coefficient": 1,
+              "metabolite": "CO2_c"
+            },
+            {
+              "coefficient": -1,
+              "metabolite": "OAA_m"
+            },
+            {
+              "coefficient": 1,
+              "metabolite": "PEP_c"
+            }
+          ]
+        },
+        {
+          "n_metabolites_after": 24,
+          "n_metabolites_before": 25,
+          "reaction": "GROWTH",
+          "stoichiometry": [
+            {
+              "coefficient": -24,
+              "metabolite": "ACCOA_c"
+            },
+            {
+              "coefficient": -3,
+              "metabolite": "ACCOA_m"
+            },
+            {
+              "coefficient": 254,
+              "metabolite": "ADP_c"
+            },
+            {
+              "coefficient": -1,
+              "metabolite": "AKG_m"
+            },
+            {
+              "coefficient": 10,
+              "metabolite": "BIOMASS_c"
+            },
+            {
+              "coefficient": 24,
+              "metabolite": "COA_c"
+            },
+            {
+              "coefficient": 3,
+              "metabolite": "COA_m"
+            },
+            {
+              "coefficient": -3,
+              "metabolite": "E4P_c"
+            },
+            {
+              "coefficient": -25,
+              "metabolite": "G6P_c"
+            },
+            {
+              "coefficient": -1,
+              "metabolite": "GP_c"
+            },
+            {
+              "coefficient": 16,
+              "metabolite": "NADH_c"
+            },
+            {
+              "coefficient": 6,
+              "metabolite": "NADH_m"
+            },
+            {
+              "coefficient": -90,
+              "metabolite": "NADPH_c"
+            },
+            {
+              "coefficient": -22,
+              "metabolite": "NADPH_m"
+            },
+            {
+              "coefficient": 90,
+              "metabolite": "NADP_c"
+            },
+            {
+              "coefficient": 22,
+              "metabolite": "NADP_m"
+            },
+            {
+              "coefficient": -16,
+              "metabolite": "NAD_c"
+            },
+            {
+              "coefficient": -6,
+              "metabolite": "NAD_m"
+            },
+            {
+              "coefficient": -10,
+              "metabolite": "OAA_m"
+            },
+            {
+              "coefficient": -6,
+              "metabolite": "P3G_c"
+            },
+            {
+              "coefficient": -6,
+              "metabolite": "PEP_c"
+            },
+            {
+              "coefficient": 298,
+              "metabolite": "PI_c"
+            },
+            {
+              "coefficient": -18,
+              "metabolite": "PYR_c"
+            },
+            {
+              "coefficient": -3,
+              "metabolite": "R5P_c"
+            }
+          ]
+        },
+        {
+          "n_metabolites_after": 5,
+          "n_metabolites_before": 6,
+          "reaction": "NADHX",
+          "stoichiometry": [
+            {
+              "coefficient": -2.4,
+              "metabolite": "ADP_c"
+            },
+            {
+              "coefficient": -2,
+              "metabolite": "NADH_m"
+            },
+            {
+              "coefficient": 2,
+              "metabolite": "NAD_m"
+            },
+            {
+              "coefficient": -1,
+              "metabolite": "O2_c"
+            },
+            {
+              "coefficient": -2.4,
+              "metabolite": "PI_c"
+            }
+          ]
+        },
+        {
+          "n_metabolites_after": 5,
+          "n_metabolites_before": 6,
+          "reaction": "FADHX",
+          "stoichiometry": [
+            {
+              "coefficient": -2.4,
+              "metabolite": "ADP_c"
+            },
+            {
+              "coefficient": -2,
+              "metabolite": "FADH2_m"
+            },
+            {
+              "coefficient": 2,
+              "metabolite": "FAD_m"
+            },
+            {
+              "coefficient": -1,
+              "metabolite": "O2_c"
+            },
+            {
+              "coefficient": -2.4,
+              "metabolite": "PI_c"
+            }
+          ]
+        },
+        {
+          "n_metabolites_after": 2,
+          "n_metabolites_before": 3,
+          "reaction": "ATPX",
+          "stoichiometry": [
+            {
+              "coefficient": 1,
+              "metabolite": "ADP_c"
+            },
+            {
+              "coefficient": 1,
+              "metabolite": "PI_c"
+            }
+          ]
+        }
+      ],
+      "removed_metabolites": [
+        "ATP_c",
+        "GLY_c"
+      ]
+    },
+    "by_name": {
+      "n_metabolites_after": 50,
+      "n_metabolites_before": 52,
+      "n_reactions": 53,
+      "removed_metabolites": [
+        "CO2_c",
+        "CO2_m"
+      ]
+    }
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "remove_metabolites_smallyeast"
+}

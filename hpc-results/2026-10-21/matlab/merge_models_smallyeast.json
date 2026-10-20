@@ -1,0 +1,3893 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "gene_rules": [
+      {
+        "clauses": [
+          [
+            "YLR304C"
+          ]
+        ],
+        "reaction": "ACO"
+      },
+      {
+        "clauses": [
+          [
+            "YLR304C"
+          ]
+        ],
+        "reaction": "ACO_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YAL054C"
+          ],
+          [
+            "YLR153C"
+          ]
+        ],
+        "reaction": "ACS"
+      },
+      {
+        "clauses": [
+          [
+            "YAL054C"
+          ],
+          [
+            "YLR153C"
+          ]
+        ],
+        "reaction": "ACS_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YGL256W"
+          ],
+          [
+            "YMR303C"
+          ],
+          [
+            "YOL086C"
+          ]
+        ],
+        "reaction": "ADH1"
+      },
+      {
+        "clauses": [
+          [
+            "YGL256W"
+          ],
+          [
+            "YMR303C"
+          ],
+          [
+            "YOL086C"
+          ]
+        ],
+        "reaction": "ADH1_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YGL256W"
+          ],
+          [
+            "YMR303C"
+          ],
+          [
+            "YOL086C"
+          ]
+        ],
+        "reaction": "ADH2"
+      },
+      {
+        "clauses": [
+          [
+            "YPL061W"
+          ]
+        ],
+        "reaction": "ALD6"
+      },
+      {
+        "clauses": [
+          [
+            "YPL061W"
+          ]
+        ],
+        "reaction": "ALD6_smallYeastBad"
+      },
+      {
+        "clauses": [],
+        "reaction": "ATPX"
+      },
+      {
+        "clauses": [],
+        "reaction": "ATPX_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YML042W"
+          ]
+        ],
+        "reaction": "CAT2"
+      },
+      {
+        "clauses": [
+          [
+            "YML042W"
+          ]
+        ],
+        "reaction": "CAT2_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YNR001C"
+          ],
+          [
+            "YPR001W"
+          ]
+        ],
+        "reaction": "CIT"
+      },
+      {
+        "clauses": [
+          [
+            "YNR001C"
+          ],
+          [
+            "YPR001W"
+          ]
+        ],
+        "reaction": "CIT_smallYeastBad"
+      },
+      {
+        "clauses": [],
+        "reaction": "CO2TRANS"
+      },
+      {
+        "clauses": [],
+        "reaction": "CO2TRANS_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YDL022W"
+          ],
+          [
+            "YOL059W"
+          ]
+        ],
+        "reaction": "DAR"
+      },
+      {
+        "clauses": [
+          [
+            "YDL022W"
+          ],
+          [
+            "YOL059W"
+          ]
+        ],
+        "reaction": "DAR_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YGR254W"
+          ],
+          [
+            "YHR174W"
+          ]
+        ],
+        "reaction": "ENO"
+      },
+      {
+        "clauses": [
+          [
+            "YGR254W"
+          ],
+          [
+            "YHR174W"
+          ]
+        ],
+        "reaction": "ENO_smallYeastBad"
+      },
+      {
+        "clauses": [],
+        "reaction": "FADHX"
+      },
+      {
+        "clauses": [],
+        "reaction": "FADHX_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YKL060C"
+          ]
+        ],
+        "reaction": "FBA"
+      },
+      {
+        "clauses": [
+          [
+            "YKL060C"
+          ]
+        ],
+        "reaction": "FBA_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YLR377C"
+          ]
+        ],
+        "reaction": "FBP"
+      },
+      {
+        "clauses": [
+          [
+            "YLR377C"
+          ]
+        ],
+        "reaction": "FBP_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YJR051W"
+          ]
+        ],
+        "reaction": "FRDS2"
+      },
+      {
+        "clauses": [
+          [
+            "YJR051W"
+          ]
+        ],
+        "reaction": "FRDS2_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YPL262W"
+          ]
+        ],
+        "reaction": "FUM1"
+      },
+      {
+        "clauses": [
+          [
+            "YPL262W"
+          ]
+        ],
+        "reaction": "FUM1_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YGR192C"
+          ],
+          [
+            "YJL052W"
+          ],
+          [
+            "YJR009C"
+          ]
+        ],
+        "reaction": "GLD"
+      },
+      {
+        "clauses": [
+          [
+            "YGR192C"
+          ],
+          [
+            "YJL052W"
+          ],
+          [
+            "YJR009C"
+          ]
+        ],
+        "reaction": "GLD_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YGR256W"
+          ],
+          [
+            "YHR183W"
+          ]
+        ],
+        "reaction": "GND"
+      },
+      {
+        "clauses": [
+          [
+            "YGR256W"
+          ],
+          [
+            "YHR183W"
+          ]
+        ],
+        "reaction": "GND_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YDL021W"
+          ],
+          [
+            "YKL152C"
+          ],
+          [
+            "YOL056W"
+          ]
+        ],
+        "reaction": "GPM"
+      },
+      {
+        "clauses": [
+          [
+            "YDL021W"
+          ],
+          [
+            "YKL152C"
+          ],
+          [
+            "YOL056W"
+          ]
+        ],
+        "reaction": "GPM_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YER062C"
+          ],
+          [
+            "YIL053W"
+          ]
+        ],
+        "reaction": "GPP"
+      },
+      {
+        "clauses": [
+          [
+            "YER062C"
+          ],
+          [
+            "YIL053W"
+          ]
+        ],
+        "reaction": "GPP_smallYeastBad"
+      },
+      {
+        "clauses": [],
+        "reaction": "GROWTH"
+      },
+      {
+        "clauses": [],
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YCL040W"
+          ],
+          [
+            "YFR053C"
+          ],
+          [
+            "YGL253W"
+          ]
+        ],
+        "reaction": "HXK"
+      },
+      {
+        "clauses": [
+          [
+            "YCL040W"
+          ],
+          [
+            "YFR053C"
+          ],
+          [
+            "YGL253W"
+          ]
+        ],
+        "reaction": "HXK_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YDL066W"
+          ]
+        ],
+        "reaction": "IDP1"
+      },
+      {
+        "clauses": [
+          [
+            "YDL066W"
+          ]
+        ],
+        "reaction": "IDP1_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YIL125W"
+          ]
+        ],
+        "reaction": "KGD1KGD2"
+      },
+      {
+        "clauses": [
+          [
+            "YIL125W"
+          ]
+        ],
+        "reaction": "KGD1KGD2_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YGR244C"
+          ],
+          [
+            "YOR142W"
+          ]
+        ],
+        "reaction": "LSC1LSC2"
+      },
+      {
+        "clauses": [
+          [
+            "YGR244C"
+          ],
+          [
+            "YOR142W"
+          ]
+        ],
+        "reaction": "LSC1LSC2_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YKL029C"
+          ]
+        ],
+        "reaction": "MAE1"
+      },
+      {
+        "clauses": [
+          [
+            "YKL029C"
+          ]
+        ],
+        "reaction": "MAE1_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YKL085W"
+          ]
+        ],
+        "reaction": "MDH1"
+      },
+      {
+        "clauses": [
+          [
+            "YKL085W"
+          ]
+        ],
+        "reaction": "MDH1_smallYeastBad"
+      },
+      {
+        "clauses": [],
+        "reaction": "NADHX"
+      },
+      {
+        "clauses": [],
+        "reaction": "NADHX_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YKR097W"
+          ]
+        ],
+        "reaction": "PCK"
+      },
+      {
+        "clauses": [
+          [
+            "YKR097W"
+          ]
+        ],
+        "reaction": "PCK_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YGR087C"
+          ],
+          [
+            "YLR044C"
+          ],
+          [
+            "YLR134W"
+          ]
+        ],
+        "reaction": "PDC"
+      },
+      {
+        "clauses": [
+          [
+            "YGR087C"
+          ],
+          [
+            "YLR044C"
+          ],
+          [
+            "YLR134W"
+          ]
+        ],
+        "reaction": "PDC_2"
+      },
+      {
+        "clauses": [
+          [
+            "YGR087C"
+          ],
+          [
+            "YLR044C"
+          ],
+          [
+            "YLR134W"
+          ]
+        ],
+        "reaction": "PDC_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YER178W"
+          ]
+        ],
+        "reaction": "PDH"
+      },
+      {
+        "clauses": [
+          [
+            "YER178W"
+          ]
+        ],
+        "reaction": "PDH_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YGR240C"
+          ],
+          [
+            "YMR205C"
+          ]
+        ],
+        "reaction": "PFK"
+      },
+      {
+        "clauses": [
+          [
+            "YGR240C"
+          ],
+          [
+            "YMR205C"
+          ]
+        ],
+        "reaction": "PFK_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YBR196C"
+          ]
+        ],
+        "reaction": "PGI"
+      },
+      {
+        "clauses": [
+          [
+            "YBR196C"
+          ]
+        ],
+        "reaction": "PGI_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YCR012W"
+          ]
+        ],
+        "reaction": "PGK"
+      },
+      {
+        "clauses": [
+          [
+            "YCR012W"
+          ]
+        ],
+        "reaction": "PGK_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YCR073W-A"
+          ],
+          [
+            "YGR248W"
+          ],
+          [
+            "YHR163W"
+          ],
+          [
+            "YNR034W"
+          ]
+        ],
+        "reaction": "PGL"
+      },
+      {
+        "clauses": [
+          [
+            "YCR073W-A"
+          ],
+          [
+            "YGR248W"
+          ],
+          [
+            "YHR163W"
+          ],
+          [
+            "YNR034W"
+          ]
+        ],
+        "reaction": "PGL_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YBR218C"
+          ],
+          [
+            "YGL062W"
+          ]
+        ],
+        "reaction": "PYC"
+      },
+      {
+        "clauses": [
+          [
+            "YBR218C"
+          ],
+          [
+            "YGL062W"
+          ]
+        ],
+        "reaction": "PYC_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YOR347C"
+          ]
+        ],
+        "reaction": "PYK"
+      },
+      {
+        "clauses": [
+          [
+            "YOR347C"
+          ]
+        ],
+        "reaction": "PYK_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YJL121C"
+          ]
+        ],
+        "reaction": "RPE"
+      },
+      {
+        "clauses": [
+          [
+            "YJL121C"
+          ]
+        ],
+        "reaction": "RPE_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YOR095C"
+          ]
+        ],
+        "reaction": "RPI"
+      },
+      {
+        "clauses": [
+          [
+            "YOR095C"
+          ]
+        ],
+        "reaction": "RPI_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YKL141W"
+          ]
+        ],
+        "reaction": "SDH"
+      },
+      {
+        "clauses": [
+          [
+            "YKL141W"
+          ]
+        ],
+        "reaction": "SDH_smallYeastBad"
+      },
+      {
+        "clauses": [],
+        "reaction": "ShuttleX"
+      },
+      {
+        "clauses": [],
+        "reaction": "ShuttleX_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YLR354C"
+          ]
+        ],
+        "reaction": "TAL1"
+      },
+      {
+        "clauses": [
+          [
+            "YLR354C"
+          ]
+        ],
+        "reaction": "TAL1_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YBR117C"
+          ],
+          [
+            "YPR074C"
+          ]
+        ],
+        "reaction": "TKI1TKI2a"
+      },
+      {
+        "clauses": [
+          [
+            "YBR117C"
+          ],
+          [
+            "YPR074C"
+          ]
+        ],
+        "reaction": "TKI1TKI2a_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YBR117C"
+          ],
+          [
+            "YPR074C"
+          ]
+        ],
+        "reaction": "TKI1TKI2b"
+      },
+      {
+        "clauses": [
+          [
+            "YBR117C"
+          ],
+          [
+            "YPR074C"
+          ]
+        ],
+        "reaction": "TKI1TKI2b_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YDR050C"
+          ]
+        ],
+        "reaction": "TPI"
+      },
+      {
+        "clauses": [
+          [
+            "YDR050C"
+          ]
+        ],
+        "reaction": "TPI_smallYeastBad"
+      },
+      {
+        "clauses": [
+          [
+            "YNL241C"
+          ]
+        ],
+        "reaction": "ZWF"
+      },
+      {
+        "clauses": [
+          [
+            "YNL241C"
+          ]
+        ],
+        "reaction": "ZWF_smallYeastBad"
+      },
+      {
+        "clauses": [],
+        "reaction": "acOUT"
+      },
+      {
+        "clauses": [],
+        "reaction": "acOUT_smallYeastBad"
+      },
+      {
+        "clauses": [],
+        "reaction": "biomassOUT"
+      },
+      {
+        "clauses": [],
+        "reaction": "biomassOUT_smallYeastBad"
+      },
+      {
+        "clauses": [],
+        "reaction": "co2OUT"
+      },
+      {
+        "clauses": [],
+        "reaction": "co2OUT_smallYeastBad"
+      },
+      {
+        "clauses": [],
+        "reaction": "ethIN"
+      },
+      {
+        "clauses": [],
+        "reaction": "ethOUT"
+      },
+      {
+        "clauses": [],
+        "reaction": "ethOUT_smallYeastBad"
+      },
+      {
+        "clauses": [],
+        "reaction": "glcIN"
+      },
+      {
+        "clauses": [],
+        "reaction": "glcIN_smallYeastBad"
+      },
+      {
+        "clauses": [],
+        "reaction": "glyOUT"
+      },
+      {
+        "clauses": [],
+        "reaction": "glyOUT_smallYeastBad"
+      },
+      {
+        "clauses": [],
+        "reaction": "o2IN"
+      },
+      {
+        "clauses": [],
+        "reaction": "o2IN_smallYeastBad"
+      }
+    ],
+    "genes": [
+      "YAL054C",
+      "YBR117C",
+      "YBR196C",
+      "YBR218C",
+      "YCL040W",
+      "YCR012W",
+      "YCR073W-A",
+      "YDL021W",
+      "YDL022W",
+      "YDL066W",
+      "YDR050C",
+      "YER062C",
+      "YER178W",
+      "YFR053C",
+      "YGL062W",
+      "YGL253W",
+      "YGL256W",
+      "YGR087C",
+      "YGR192C",
+      "YGR240C",
+      "YGR244C",
+      "YGR248W",
+      "YGR254W",
+      "YGR256W",
+      "YHR163W",
+      "YHR174W",
+      "YHR183W",
+      "YIL053W",
+      "YIL125W",
+      "YJL052W",
+      "YJL121C",
+      "YJR009C",
+      "YJR051W",
+      "YKL029C",
+      "YKL060C",
+      "YKL085W",
+      "YKL141W",
+      "YKL152C",
+      "YKR097W",
+      "YLR044C",
+      "YLR134W",
+      "YLR153C",
+      "YLR304C",
+      "YLR354C",
+      "YLR377C",
+      "YML042W",
+      "YMR205C",
+      "YMR303C",
+      "YNL241C",
+      "YNR001C",
+      "YNR034W",
+      "YOL056W",
+      "YOL059W",
+      "YOL086C",
+      "YOR095C",
+      "YOR142W",
+      "YOR347C",
+      "YPL061W",
+      "YPL262W",
+      "YPR001W",
+      "YPR074C"
+    ],
+    "metabolites": [
+      {
+        "compartment": "c",
+        "id": "ACA_c",
+        "name": "acetaldehyde"
+      },
+      {
+        "compartment": "c",
+        "id": "ACCOA_c",
+        "name": "acetyl-CoA"
+      },
+      {
+        "compartment": "m",
+        "id": "ACCOA_m",
+        "name": "acetyl-CoA"
+      },
+      {
+        "compartment": "c",
+        "id": "AC_c",
+        "name": "acetate"
+      },
+      {
+        "compartment": "c",
+        "id": "ADP_c",
+        "name": "ADP"
+      },
+      {
+        "compartment": "m",
+        "id": "AKG_m",
+        "name": "2-oxoglutarate"
+      },
+      {
+        "compartment": "c",
+        "id": "ATP_c",
+        "name": "ATP"
+      },
+      {
+        "compartment": "c",
+        "id": "BIOMASS_c",
+        "name": "biomass"
+      },
+      {
+        "compartment": "m",
+        "id": "CI_m",
+        "name": "citrate"
+      },
+      {
+        "compartment": "c",
+        "id": "CO2_c",
+        "name": "CO2"
+      },
+      {
+        "compartment": "m",
+        "id": "CO2_m",
+        "name": "CO2"
+      },
+      {
+        "compartment": "c",
+        "id": "COA_c",
+        "name": "coenzyme A"
+      },
+      {
+        "compartment": "m",
+        "id": "COA_m",
+        "name": "coenzyme A"
+      },
+      {
+        "compartment": "c",
+        "id": "DHAP_c",
+        "name": "glycerone phosphate"
+      },
+      {
+        "compartment": "c",
+        "id": "E4P_c",
+        "name": "D-erythrose 4-phosphate"
+      },
+      {
+        "compartment": "c",
+        "id": "ETH_c",
+        "name": "ethanol"
+      },
+      {
+        "compartment": "c",
+        "id": "F16P_c",
+        "name": "beta-D-fructofuranose 1,6-bisphosphate"
+      },
+      {
+        "compartment": "c",
+        "id": "F6P_c",
+        "name": "beta-D-fructofuranose 6-phosphate"
+      },
+      {
+        "compartment": "m",
+        "id": "FADH2_m",
+        "name": "FADH2"
+      },
+      {
+        "compartment": "m",
+        "id": "FAD_m",
+        "name": "FAD"
+      },
+      {
+        "compartment": "m",
+        "id": "FUM_m",
+        "name": "fumarate"
+      },
+      {
+        "compartment": "c",
+        "id": "G15L_c",
+        "name": "6-O-phosphono-D-glucono-1,5-lactone"
+      },
+      {
+        "compartment": "c",
+        "id": "G6P_c",
+        "name": "alpha-D-glucose 6-phosphate"
+      },
+      {
+        "compartment": "c",
+        "id": "GA3P_c",
+        "name": "D-glyceraldehyde 3-phosphate"
+      },
+      {
+        "compartment": "c",
+        "id": "GLC_c",
+        "name": "alpha-D-glucose"
+      },
+      {
+        "compartment": "c",
+        "id": "GLY_c",
+        "name": "glycerol"
+      },
+      {
+        "compartment": "c",
+        "id": "GP_c",
+        "name": "glycerol monophosphate"
+      },
+      {
+        "compartment": "m",
+        "id": "ICI_m",
+        "name": "isocitrate"
+      },
+      {
+        "compartment": "m",
+        "id": "MAL_m",
+        "name": "(S)-malate"
+      },
+      {
+        "compartment": "c",
+        "id": "NADH_c",
+        "name": "NADH"
+      },
+      {
+        "compartment": "m",
+        "id": "NADH_m",
+        "name": "NADH"
+      },
+      {
+        "compartment": "c",
+        "id": "NADPH_c",
+        "name": "NADPH"
+      },
+      {
+        "compartment": "m",
+        "id": "NADPH_m",
+        "name": "NADPH"
+      },
+      {
+        "compartment": "c",
+        "id": "NADP_c",
+        "name": "NADP(+)"
+      },
+      {
+        "compartment": "m",
+        "id": "NADP_m",
+        "name": "NADP(+)"
+      },
+      {
+        "compartment": "c",
+        "id": "NAD_c",
+        "name": "NAD(+)"
+      },
+      {
+        "compartment": "m",
+        "id": "NAD_m",
+        "name": "NAD(+)"
+      },
+      {
+        "compartment": "c",
+        "id": "O2_c",
+        "name": "O2"
+      },
+      {
+        "compartment": "m",
+        "id": "OAA_m",
+        "name": "oxaloacetate"
+      },
+      {
+        "compartment": "c",
+        "id": "P13G_c",
+        "name": "3-phospho-D-glyceroyl phosphate"
+      },
+      {
+        "compartment": "c",
+        "id": "P2G_c",
+        "name": "2-phospho-D-glycerate"
+      },
+      {
+        "compartment": "c",
+        "id": "P3G_c",
+        "name": "3-phospho-D-glycerate"
+      },
+      {
+        "compartment": "c",
+        "id": "P6G_c",
+        "name": "6-phospho-D-gluconate"
+      },
+      {
+        "compartment": "c",
+        "id": "PEP_c",
+        "name": "phosphoenolpyruvate"
+      },
+      {
+        "compartment": "c",
+        "id": "PI_c",
+        "name": "phosphate"
+      },
+      {
+        "compartment": "c",
+        "id": "PYR_c",
+        "name": "pyruvate"
+      },
+      {
+        "compartment": "c",
+        "id": "R5P_c",
+        "name": "D-ribose 5-phosphate"
+      },
+      {
+        "compartment": "c",
+        "id": "RU5P_c",
+        "name": "D-ribulose 5-phosphate"
+      },
+      {
+        "compartment": "c",
+        "id": "S7P_c",
+        "name": "sedoheptulose 7-phosphate"
+      },
+      {
+        "compartment": "m",
+        "id": "SUCCOA_m",
+        "name": "succinyl-CoA"
+      },
+      {
+        "compartment": "m",
+        "id": "SUC_m",
+        "name": "succinate"
+      },
+      {
+        "compartment": "c",
+        "id": "X5P_c",
+        "name": "D-xylulose 5-phosphate"
+      }
+    ],
+    "model_id": "MERGED",
+    "n_genes": 61,
+    "n_metabolites": 52,
+    "n_reactions": 107,
+    "reaction_origins": [
+      {
+        "origin": "smallYeast",
+        "reaction": "ACO"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "ACO_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "ACS"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "ACS_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "ADH1"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "ADH1_smallYeastBad"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "ADH2"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "ALD6"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "ALD6_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "ATPX"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "ATPX_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "CAT2"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "CAT2_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "CIT"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "CIT_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "CO2TRANS"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "CO2TRANS_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "DAR"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "DAR_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "ENO"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "ENO_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "FADHX"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "FADHX_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "FBA"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "FBA_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "FBP"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "FBP_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "FRDS2"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "FRDS2_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "FUM1"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "FUM1_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "GLD"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "GLD_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "GND"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "GND_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "GPM"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "GPM_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "GPP"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "GPP_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "GROWTH"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "HXK"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "HXK_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "IDP1"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "IDP1_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "KGD1KGD2"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "KGD1KGD2_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "LSC1LSC2"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "LSC1LSC2_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "MAE1"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "MAE1_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "MDH1"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "MDH1_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "NADHX"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "NADHX_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "PCK"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "PCK_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "PDC"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "PDC_2"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "PDC_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "PDH"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "PDH_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "PFK"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "PFK_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "PGI"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "PGI_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "PGK"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "PGK_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "PGL"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "PGL_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "PYC"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "PYC_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "PYK"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "PYK_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "RPE"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "RPE_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "RPI"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "RPI_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "SDH"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "SDH_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "ShuttleX"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "ShuttleX_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "TAL1"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "TAL1_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "TKI1TKI2a"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "TKI1TKI2a_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "TKI1TKI2b"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "TKI1TKI2b_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "TPI"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "TPI_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "ZWF"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "ZWF_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "acOUT"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "acOUT_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "biomassOUT"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "biomassOUT_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "co2OUT"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "co2OUT_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "ethIN"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "ethOUT"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "ethOUT_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "glcIN"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "glcIN_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "glyOUT"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "glyOUT_smallYeastBad"
+      },
+      {
+        "origin": "smallYeast",
+        "reaction": "o2IN"
+      },
+      {
+        "origin": "smallYeastBad",
+        "reaction": "o2IN_smallYeastBad"
+      }
+    ],
+    "reactions": [
+      "ACO",
+      "ACO_smallYeastBad",
+      "ACS",
+      "ACS_smallYeastBad",
+      "ADH1",
+      "ADH1_smallYeastBad",
+      "ADH2",
+      "ALD6",
+      "ALD6_smallYeastBad",
+      "ATPX",
+      "ATPX_smallYeastBad",
+      "CAT2",
+      "CAT2_smallYeastBad",
+      "CIT",
+      "CIT_smallYeastBad",
+      "CO2TRANS",
+      "CO2TRANS_smallYeastBad",
+      "DAR",
+      "DAR_smallYeastBad",
+      "ENO",
+      "ENO_smallYeastBad",
+      "FADHX",
+      "FADHX_smallYeastBad",
+      "FBA",
+      "FBA_smallYeastBad",
+      "FBP",
+      "FBP_smallYeastBad",
+      "FRDS2",
+      "FRDS2_smallYeastBad",
+      "FUM1",
+      "FUM1_smallYeastBad",
+      "GLD",
+      "GLD_smallYeastBad",
+      "GND",
+      "GND_smallYeastBad",
+      "GPM",
+      "GPM_smallYeastBad",
+      "GPP",
+      "GPP_smallYeastBad",
+      "GROWTH",
+      "GROWTH_smallYeastBad",
+      "HXK",
+      "HXK_smallYeastBad",
+      "IDP1",
+      "IDP1_smallYeastBad",
+      "KGD1KGD2",
+      "KGD1KGD2_smallYeastBad",
+      "LSC1LSC2",
+      "LSC1LSC2_smallYeastBad",
+      "MAE1",
+      "MAE1_smallYeastBad",
+      "MDH1",
+      "MDH1_smallYeastBad",
+      "NADHX",
+      "NADHX_smallYeastBad",
+      "PCK",
+      "PCK_smallYeastBad",
+      "PDC",
+      "PDC_2",
+      "PDC_smallYeastBad",
+      "PDH",
+      "PDH_smallYeastBad",
+      "PFK",
+      "PFK_smallYeastBad",
+      "PGI",
+      "PGI_smallYeastBad",
+      "PGK",
+      "PGK_smallYeastBad",
+      "PGL",
+      "PGL_smallYeastBad",
+      "PYC",
+      "PYC_smallYeastBad",
+      "PYK",
+      "PYK_smallYeastBad",
+      "RPE",
+      "RPE_smallYeastBad",
+      "RPI",
+      "RPI_smallYeastBad",
+      "SDH",
+      "SDH_smallYeastBad",
+      "ShuttleX",
+      "ShuttleX_smallYeastBad",
+      "TAL1",
+      "TAL1_smallYeastBad",
+      "TKI1TKI2a",
+      "TKI1TKI2a_smallYeastBad",
+      "TKI1TKI2b",
+      "TKI1TKI2b_smallYeastBad",
+      "TPI",
+      "TPI_smallYeastBad",
+      "ZWF",
+      "ZWF_smallYeastBad",
+      "acOUT",
+      "acOUT_smallYeastBad",
+      "biomassOUT",
+      "biomassOUT_smallYeastBad",
+      "co2OUT",
+      "co2OUT_smallYeastBad",
+      "ethIN",
+      "ethOUT",
+      "ethOUT_smallYeastBad",
+      "glcIN",
+      "glcIN_smallYeastBad",
+      "glyOUT",
+      "glyOUT_smallYeastBad",
+      "o2IN",
+      "o2IN_smallYeastBad"
+    ],
+    "renamed_reactions": [
+      "ACO_smallYeastBad",
+      "ACS_smallYeastBad",
+      "ADH1_smallYeastBad",
+      "ALD6_smallYeastBad",
+      "ATPX_smallYeastBad",
+      "CAT2_smallYeastBad",
+      "CIT_smallYeastBad",
+      "CO2TRANS_smallYeastBad",
+      "DAR_smallYeastBad",
+      "ENO_smallYeastBad",
+      "FADHX_smallYeastBad",
+      "FBA_smallYeastBad",
+      "FBP_smallYeastBad",
+      "FRDS2_smallYeastBad",
+      "FUM1_smallYeastBad",
+      "GLD_smallYeastBad",
+      "GND_smallYeastBad",
+      "GPM_smallYeastBad",
+      "GPP_smallYeastBad",
+      "GROWTH_smallYeastBad",
+      "HXK_smallYeastBad",
+      "IDP1_smallYeastBad",
+      "KGD1KGD2_smallYeastBad",
+      "LSC1LSC2_smallYeastBad",
+      "MAE1_smallYeastBad",
+      "MDH1_smallYeastBad",
+      "NADHX_smallYeastBad",
+      "PCK_smallYeastBad",
+      "PDC_smallYeastBad",
+      "PDH_smallYeastBad",
+      "PFK_smallYeastBad",
+      "PGI_smallYeastBad",
+      "PGK_smallYeastBad",
+      "PGL_smallYeastBad",
+      "PYC_smallYeastBad",
+      "PYK_smallYeastBad",
+      "RPE_smallYeastBad",
+      "RPI_smallYeastBad",
+      "SDH_smallYeastBad",
+      "ShuttleX_smallYeastBad",
+      "TAL1_smallYeastBad",
+      "TKI1TKI2a_smallYeastBad",
+      "TKI1TKI2b_smallYeastBad",
+      "TPI_smallYeastBad",
+      "ZWF_smallYeastBad",
+      "acOUT_smallYeastBad",
+      "biomassOUT_smallYeastBad",
+      "co2OUT_smallYeastBad",
+      "ethOUT_smallYeastBad",
+      "glcIN_smallYeastBad",
+      "glyOUT_smallYeastBad",
+      "o2IN_smallYeastBad"
+    ],
+    "stoichiometry": [
+      {
+        "coefficient": -1,
+        "metabolite": "CI_m",
+        "reaction": "ACO"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ICI_m",
+        "reaction": "ACO"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "CI_m",
+        "reaction": "ACO_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ICI_m",
+        "reaction": "ACO_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ACCOA_c",
+        "reaction": "ACS"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "AC_c",
+        "reaction": "ACS"
+      },
+      {
+        "coefficient": 2,
+        "metabolite": "ADP_c",
+        "reaction": "ACS"
+      },
+      {
+        "coefficient": -2,
+        "metabolite": "ATP_c",
+        "reaction": "ACS"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "COA_c",
+        "reaction": "ACS"
+      },
+      {
+        "coefficient": 2,
+        "metabolite": "PI_c",
+        "reaction": "ACS"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ACCOA_c",
+        "reaction": "ACS_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "AC_c",
+        "reaction": "ACS_smallYeastBad"
+      },
+      {
+        "coefficient": 2,
+        "metabolite": "ADP_c",
+        "reaction": "ACS_smallYeastBad"
+      },
+      {
+        "coefficient": -2,
+        "metabolite": "ATP_c",
+        "reaction": "ACS_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "COA_c",
+        "reaction": "ACS_smallYeastBad"
+      },
+      {
+        "coefficient": 2,
+        "metabolite": "PI_c",
+        "reaction": "ACS_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ACA_c",
+        "reaction": "ADH1"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ETH_c",
+        "reaction": "ADH1"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NADH_c",
+        "reaction": "ADH1"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NAD_c",
+        "reaction": "ADH1"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ACA_c",
+        "reaction": "ADH1_smallYeastBad"
+      },
+      {
+        "coefficient": 2,
+        "metabolite": "ETH_c",
+        "reaction": "ADH1_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NADH_c",
+        "reaction": "ADH1_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NAD_c",
+        "reaction": "ADH1_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ACA_c",
+        "reaction": "ADH2"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ETH_c",
+        "reaction": "ADH2"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NADPH_c",
+        "reaction": "ADH2"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NADP_c",
+        "reaction": "ADH2"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ACA_c",
+        "reaction": "ALD6"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "AC_c",
+        "reaction": "ALD6"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NADPH_c",
+        "reaction": "ALD6"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NADP_c",
+        "reaction": "ALD6"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ACA_c",
+        "reaction": "ALD6_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "AC_c",
+        "reaction": "ALD6_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NADPH_c",
+        "reaction": "ALD6_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NADP_c",
+        "reaction": "ALD6_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ADP_c",
+        "reaction": "ATPX"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ATP_c",
+        "reaction": "ATPX"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "PI_c",
+        "reaction": "ATPX"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ADP_c",
+        "reaction": "ATPX_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ATP_c",
+        "reaction": "ATPX_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "PI_c",
+        "reaction": "ATPX_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ACCOA_c",
+        "reaction": "CAT2"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ACCOA_m",
+        "reaction": "CAT2"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "COA_c",
+        "reaction": "CAT2"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "COA_m",
+        "reaction": "CAT2"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ACCOA_c",
+        "reaction": "CAT2_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ACCOA_m",
+        "reaction": "CAT2_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "COA_c",
+        "reaction": "CAT2_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "COA_m",
+        "reaction": "CAT2_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ACCOA_m",
+        "reaction": "CIT"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "CI_m",
+        "reaction": "CIT"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "COA_m",
+        "reaction": "CIT"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "OAA_m",
+        "reaction": "CIT"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ACCOA_m",
+        "reaction": "CIT_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "CI_m",
+        "reaction": "CIT_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "COA_m",
+        "reaction": "CIT_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "OAA_m",
+        "reaction": "CIT_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "CO2_c",
+        "reaction": "CO2TRANS"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "CO2_m",
+        "reaction": "CO2TRANS"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "CO2_c",
+        "reaction": "CO2TRANS_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "CO2_m",
+        "reaction": "CO2TRANS_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "DHAP_c",
+        "reaction": "DAR"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "GP_c",
+        "reaction": "DAR"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NADH_c",
+        "reaction": "DAR"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NAD_c",
+        "reaction": "DAR"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "DHAP_c",
+        "reaction": "DAR_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "GP_c",
+        "reaction": "DAR_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NADH_c",
+        "reaction": "DAR_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NAD_c",
+        "reaction": "DAR_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "P2G_c",
+        "reaction": "ENO"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "PEP_c",
+        "reaction": "ENO"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "P2G_c",
+        "reaction": "ENO_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "PEP_c",
+        "reaction": "ENO_smallYeastBad"
+      },
+      {
+        "coefficient": -2.4,
+        "metabolite": "ADP_c",
+        "reaction": "FADHX"
+      },
+      {
+        "coefficient": 2.4,
+        "metabolite": "ATP_c",
+        "reaction": "FADHX"
+      },
+      {
+        "coefficient": -2,
+        "metabolite": "FADH2_m",
+        "reaction": "FADHX"
+      },
+      {
+        "coefficient": 2,
+        "metabolite": "FAD_m",
+        "reaction": "FADHX"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "O2_c",
+        "reaction": "FADHX"
+      },
+      {
+        "coefficient": -2.4,
+        "metabolite": "PI_c",
+        "reaction": "FADHX"
+      },
+      {
+        "coefficient": -2.4,
+        "metabolite": "ADP_c",
+        "reaction": "FADHX_smallYeastBad"
+      },
+      {
+        "coefficient": 2.4,
+        "metabolite": "ATP_c",
+        "reaction": "FADHX_smallYeastBad"
+      },
+      {
+        "coefficient": -2,
+        "metabolite": "FADH2_m",
+        "reaction": "FADHX_smallYeastBad"
+      },
+      {
+        "coefficient": 2,
+        "metabolite": "FAD_m",
+        "reaction": "FADHX_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "O2_c",
+        "reaction": "FADHX_smallYeastBad"
+      },
+      {
+        "coefficient": -2.4,
+        "metabolite": "PI_c",
+        "reaction": "FADHX_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "DHAP_c",
+        "reaction": "FBA"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "F16P_c",
+        "reaction": "FBA"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "GA3P_c",
+        "reaction": "FBA"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "DHAP_c",
+        "reaction": "FBA_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "F16P_c",
+        "reaction": "FBA_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "GA3P_c",
+        "reaction": "FBA_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "F16P_c",
+        "reaction": "FBP"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "F6P_c",
+        "reaction": "FBP"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "PI_c",
+        "reaction": "FBP"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "F16P_c",
+        "reaction": "FBP_smallYeastBad"
+      },
+      {
+        "coefficient": 2,
+        "metabolite": "F6P_c",
+        "reaction": "FBP_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "PI_c",
+        "reaction": "FBP_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "FADH2_m",
+        "reaction": "FRDS2"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "FAD_m",
+        "reaction": "FRDS2"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "FUM_m",
+        "reaction": "FRDS2"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "SUC_m",
+        "reaction": "FRDS2"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "FADH2_m",
+        "reaction": "FRDS2_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "FAD_m",
+        "reaction": "FRDS2_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "FUM_m",
+        "reaction": "FRDS2_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "SUC_m",
+        "reaction": "FRDS2_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "FUM_m",
+        "reaction": "FUM1"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "MAL_m",
+        "reaction": "FUM1"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "FUM_m",
+        "reaction": "FUM1_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "MAL_m",
+        "reaction": "FUM1_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "GA3P_c",
+        "reaction": "GLD"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NADH_c",
+        "reaction": "GLD"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NAD_c",
+        "reaction": "GLD"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "P13G_c",
+        "reaction": "GLD"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "PI_c",
+        "reaction": "GLD"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "GA3P_c",
+        "reaction": "GLD_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NADH_c",
+        "reaction": "GLD_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NAD_c",
+        "reaction": "GLD_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "P13G_c",
+        "reaction": "GLD_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "PI_c",
+        "reaction": "GLD_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "CO2_c",
+        "reaction": "GND"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NADPH_c",
+        "reaction": "GND"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NADP_c",
+        "reaction": "GND"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "P6G_c",
+        "reaction": "GND"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "RU5P_c",
+        "reaction": "GND"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "CO2_c",
+        "reaction": "GND_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NADPH_c",
+        "reaction": "GND_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NADP_c",
+        "reaction": "GND_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "P6G_c",
+        "reaction": "GND_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "RU5P_c",
+        "reaction": "GND_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "P2G_c",
+        "reaction": "GPM"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "P3G_c",
+        "reaction": "GPM"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "P2G_c",
+        "reaction": "GPM_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "P3G_c",
+        "reaction": "GPM_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "GLY_c",
+        "reaction": "GPP"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "GP_c",
+        "reaction": "GPP"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "PI_c",
+        "reaction": "GPP"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "GLY_c",
+        "reaction": "GPP_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "GP_c",
+        "reaction": "GPP_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "PI_c",
+        "reaction": "GPP_smallYeastBad"
+      },
+      {
+        "coefficient": -24,
+        "metabolite": "ACCOA_c",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": -3,
+        "metabolite": "ACCOA_m",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": 254,
+        "metabolite": "ADP_c",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "AKG_m",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": -254,
+        "metabolite": "ATP_c",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": 10,
+        "metabolite": "BIOMASS_c",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": 24,
+        "metabolite": "COA_c",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": 3,
+        "metabolite": "COA_m",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": -3,
+        "metabolite": "E4P_c",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": -25,
+        "metabolite": "G6P_c",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "GP_c",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": 16,
+        "metabolite": "NADH_c",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": 6,
+        "metabolite": "NADH_m",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": -90,
+        "metabolite": "NADPH_c",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": -22,
+        "metabolite": "NADPH_m",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": 90,
+        "metabolite": "NADP_c",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": 22,
+        "metabolite": "NADP_m",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": -16,
+        "metabolite": "NAD_c",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": -6,
+        "metabolite": "NAD_m",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": -10,
+        "metabolite": "OAA_m",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": -6,
+        "metabolite": "P3G_c",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": -6,
+        "metabolite": "PEP_c",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": 298,
+        "metabolite": "PI_c",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": -18,
+        "metabolite": "PYR_c",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": -3,
+        "metabolite": "R5P_c",
+        "reaction": "GROWTH"
+      },
+      {
+        "coefficient": -24,
+        "metabolite": "ACCOA_c",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": -3,
+        "metabolite": "ACCOA_m",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": 254,
+        "metabolite": "ADP_c",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "AKG_m",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": -254,
+        "metabolite": "ATP_c",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": 10,
+        "metabolite": "BIOMASS_c",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": 24,
+        "metabolite": "COA_c",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": 3,
+        "metabolite": "COA_m",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": -3,
+        "metabolite": "E4P_c",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": -25,
+        "metabolite": "G6P_c",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "GP_c",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": 16,
+        "metabolite": "NADH_c",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": 6,
+        "metabolite": "NADH_m",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": -90,
+        "metabolite": "NADPH_c",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": -22,
+        "metabolite": "NADPH_m",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": 90,
+        "metabolite": "NADP_c",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": 22,
+        "metabolite": "NADP_m",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": -16,
+        "metabolite": "NAD_c",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": -6,
+        "metabolite": "NAD_m",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": -10,
+        "metabolite": "OAA_m",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": -6,
+        "metabolite": "P3G_c",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": -6,
+        "metabolite": "PEP_c",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": 298,
+        "metabolite": "PI_c",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": -18,
+        "metabolite": "PYR_c",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": -3,
+        "metabolite": "R5P_c",
+        "reaction": "GROWTH_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ADP_c",
+        "reaction": "HXK"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ATP_c",
+        "reaction": "HXK"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "G6P_c",
+        "reaction": "HXK"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "GLC_c",
+        "reaction": "HXK"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ADP_c",
+        "reaction": "HXK_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ATP_c",
+        "reaction": "HXK_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "G6P_c",
+        "reaction": "HXK_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "GLC_c",
+        "reaction": "HXK_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "AKG_m",
+        "reaction": "IDP1"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "CO2_m",
+        "reaction": "IDP1"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ICI_m",
+        "reaction": "IDP1"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NADPH_m",
+        "reaction": "IDP1"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NADP_m",
+        "reaction": "IDP1"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "AKG_m",
+        "reaction": "IDP1_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "CO2_m",
+        "reaction": "IDP1_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ICI_m",
+        "reaction": "IDP1_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NADPH_m",
+        "reaction": "IDP1_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NADP_m",
+        "reaction": "IDP1_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "AKG_m",
+        "reaction": "KGD1KGD2"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "CO2_m",
+        "reaction": "KGD1KGD2"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "COA_m",
+        "reaction": "KGD1KGD2"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NADH_m",
+        "reaction": "KGD1KGD2"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NAD_m",
+        "reaction": "KGD1KGD2"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "SUCCOA_m",
+        "reaction": "KGD1KGD2"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "AKG_m",
+        "reaction": "KGD1KGD2_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "CO2_m",
+        "reaction": "KGD1KGD2_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "COA_m",
+        "reaction": "KGD1KGD2_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NADH_m",
+        "reaction": "KGD1KGD2_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NAD_m",
+        "reaction": "KGD1KGD2_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "SUCCOA_m",
+        "reaction": "KGD1KGD2_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ADP_c",
+        "reaction": "LSC1LSC2"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ATP_c",
+        "reaction": "LSC1LSC2"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "COA_m",
+        "reaction": "LSC1LSC2"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "PI_c",
+        "reaction": "LSC1LSC2"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "SUCCOA_m",
+        "reaction": "LSC1LSC2"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "SUC_m",
+        "reaction": "LSC1LSC2"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ADP_c",
+        "reaction": "LSC1LSC2_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ATP_c",
+        "reaction": "LSC1LSC2_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "COA_m",
+        "reaction": "LSC1LSC2_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "PI_c",
+        "reaction": "LSC1LSC2_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "SUCCOA_m",
+        "reaction": "LSC1LSC2_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "SUC_m",
+        "reaction": "LSC1LSC2_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "CO2_c",
+        "reaction": "MAE1"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "MAL_m",
+        "reaction": "MAE1"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NADPH_m",
+        "reaction": "MAE1"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NADP_m",
+        "reaction": "MAE1"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "PYR_c",
+        "reaction": "MAE1"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "CO2_c",
+        "reaction": "MAE1_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "MAL_m",
+        "reaction": "MAE1_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NADPH_m",
+        "reaction": "MAE1_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NADP_m",
+        "reaction": "MAE1_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "PYR_c",
+        "reaction": "MAE1_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "MAL_m",
+        "reaction": "MDH1"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NADH_m",
+        "reaction": "MDH1"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NAD_m",
+        "reaction": "MDH1"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "OAA_m",
+        "reaction": "MDH1"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "MAL_m",
+        "reaction": "MDH1_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NADH_m",
+        "reaction": "MDH1_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NAD_m",
+        "reaction": "MDH1_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "OAA_m",
+        "reaction": "MDH1_smallYeastBad"
+      },
+      {
+        "coefficient": -2.4,
+        "metabolite": "ADP_c",
+        "reaction": "NADHX"
+      },
+      {
+        "coefficient": 2.4,
+        "metabolite": "ATP_c",
+        "reaction": "NADHX"
+      },
+      {
+        "coefficient": -2,
+        "metabolite": "NADH_m",
+        "reaction": "NADHX"
+      },
+      {
+        "coefficient": 2,
+        "metabolite": "NAD_m",
+        "reaction": "NADHX"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "O2_c",
+        "reaction": "NADHX"
+      },
+      {
+        "coefficient": -2.4,
+        "metabolite": "PI_c",
+        "reaction": "NADHX"
+      },
+      {
+        "coefficient": -2.4,
+        "metabolite": "ADP_c",
+        "reaction": "NADHX_smallYeastBad"
+      },
+      {
+        "coefficient": 2.4,
+        "metabolite": "ATP_c",
+        "reaction": "NADHX_smallYeastBad"
+      },
+      {
+        "coefficient": -2,
+        "metabolite": "NADH_m",
+        "reaction": "NADHX_smallYeastBad"
+      },
+      {
+        "coefficient": 2,
+        "metabolite": "NAD_m",
+        "reaction": "NADHX_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "O2_c",
+        "reaction": "NADHX_smallYeastBad"
+      },
+      {
+        "coefficient": -2.4,
+        "metabolite": "PI_c",
+        "reaction": "NADHX_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ADP_c",
+        "reaction": "PCK"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ATP_c",
+        "reaction": "PCK"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "CO2_c",
+        "reaction": "PCK"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "OAA_m",
+        "reaction": "PCK"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "PEP_c",
+        "reaction": "PCK"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ADP_c",
+        "reaction": "PCK_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ATP_c",
+        "reaction": "PCK_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "CO2_c",
+        "reaction": "PCK_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "OAA_m",
+        "reaction": "PCK_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "PEP_c",
+        "reaction": "PCK_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ACA_c",
+        "reaction": "PDC"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "CO2_c",
+        "reaction": "PDC"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "PYR_c",
+        "reaction": "PDC"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ACA_c",
+        "reaction": "PDC_2"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "CO2_c",
+        "reaction": "PDC_2"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "PYR_c",
+        "reaction": "PDC_2"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ACA_c",
+        "reaction": "PDC_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "PYR_c",
+        "reaction": "PDC_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ACCOA_m",
+        "reaction": "PDH"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "CO2_m",
+        "reaction": "PDH"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "COA_m",
+        "reaction": "PDH"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NADH_m",
+        "reaction": "PDH"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NAD_m",
+        "reaction": "PDH"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "PYR_c",
+        "reaction": "PDH"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ACCOA_m",
+        "reaction": "PDH_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "CO2_m",
+        "reaction": "PDH_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "COA_m",
+        "reaction": "PDH_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NADH_m",
+        "reaction": "PDH_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NAD_m",
+        "reaction": "PDH_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "PYR_c",
+        "reaction": "PDH_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ADP_c",
+        "reaction": "PFK"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ATP_c",
+        "reaction": "PFK"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "F16P_c",
+        "reaction": "PFK"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "F6P_c",
+        "reaction": "PFK"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ADP_c",
+        "reaction": "PFK_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ATP_c",
+        "reaction": "PFK_smallYeastBad"
+      },
+      {
+        "coefficient": 2,
+        "metabolite": "F16P_c",
+        "reaction": "PFK_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "F6P_c",
+        "reaction": "PFK_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "F6P_c",
+        "reaction": "PGI"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "G6P_c",
+        "reaction": "PGI"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "F6P_c",
+        "reaction": "PGI_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "G6P_c",
+        "reaction": "PGI_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ADP_c",
+        "reaction": "PGK"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ATP_c",
+        "reaction": "PGK"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "P13G_c",
+        "reaction": "PGK"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "P3G_c",
+        "reaction": "PGK"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ADP_c",
+        "reaction": "PGK_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ATP_c",
+        "reaction": "PGK_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "P13G_c",
+        "reaction": "PGK_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "P3G_c",
+        "reaction": "PGK_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "G15L_c",
+        "reaction": "PGL"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "P6G_c",
+        "reaction": "PGL"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "G15L_c",
+        "reaction": "PGL_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "P6G_c",
+        "reaction": "PGL_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ADP_c",
+        "reaction": "PYC"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ATP_c",
+        "reaction": "PYC"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "CO2_c",
+        "reaction": "PYC"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "OAA_m",
+        "reaction": "PYC"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "PI_c",
+        "reaction": "PYC"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "PYR_c",
+        "reaction": "PYC"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ADP_c",
+        "reaction": "PYC_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ATP_c",
+        "reaction": "PYC_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "CO2_c",
+        "reaction": "PYC_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "OAA_m",
+        "reaction": "PYC_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "PI_c",
+        "reaction": "PYC_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "PYR_c",
+        "reaction": "PYC_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ADP_c",
+        "reaction": "PYK"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ATP_c",
+        "reaction": "PYK"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "PEP_c",
+        "reaction": "PYK"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "PYR_c",
+        "reaction": "PYK"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ADP_c",
+        "reaction": "PYK_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ATP_c",
+        "reaction": "PYK_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "PEP_c",
+        "reaction": "PYK_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "PYR_c",
+        "reaction": "PYK_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "RU5P_c",
+        "reaction": "RPE"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "X5P_c",
+        "reaction": "RPE"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "RU5P_c",
+        "reaction": "RPE_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "X5P_c",
+        "reaction": "RPE_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "R5P_c",
+        "reaction": "RPI"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "RU5P_c",
+        "reaction": "RPI"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "R5P_c",
+        "reaction": "RPI_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "RU5P_c",
+        "reaction": "RPI_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "FADH2_m",
+        "reaction": "SDH"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "FAD_m",
+        "reaction": "SDH"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "FUM_m",
+        "reaction": "SDH"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "SUC_m",
+        "reaction": "SDH"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "FADH2_m",
+        "reaction": "SDH_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "FAD_m",
+        "reaction": "SDH_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "FUM_m",
+        "reaction": "SDH_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "SUC_m",
+        "reaction": "SDH_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NADH_c",
+        "reaction": "ShuttleX"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NADH_m",
+        "reaction": "ShuttleX"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NAD_c",
+        "reaction": "ShuttleX"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NAD_m",
+        "reaction": "ShuttleX"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NADH_c",
+        "reaction": "ShuttleX_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NADH_m",
+        "reaction": "ShuttleX_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NAD_c",
+        "reaction": "ShuttleX_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NAD_m",
+        "reaction": "ShuttleX_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "E4P_c",
+        "reaction": "TAL1"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "F6P_c",
+        "reaction": "TAL1"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "GA3P_c",
+        "reaction": "TAL1"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "S7P_c",
+        "reaction": "TAL1"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "E4P_c",
+        "reaction": "TAL1_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "F6P_c",
+        "reaction": "TAL1_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "GA3P_c",
+        "reaction": "TAL1_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "S7P_c",
+        "reaction": "TAL1_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "GA3P_c",
+        "reaction": "TKI1TKI2a"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "R5P_c",
+        "reaction": "TKI1TKI2a"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "S7P_c",
+        "reaction": "TKI1TKI2a"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "X5P_c",
+        "reaction": "TKI1TKI2a"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "GA3P_c",
+        "reaction": "TKI1TKI2a_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "R5P_c",
+        "reaction": "TKI1TKI2a_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "S7P_c",
+        "reaction": "TKI1TKI2a_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "X5P_c",
+        "reaction": "TKI1TKI2a_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "E4P_c",
+        "reaction": "TKI1TKI2b"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "F6P_c",
+        "reaction": "TKI1TKI2b"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "GA3P_c",
+        "reaction": "TKI1TKI2b"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "X5P_c",
+        "reaction": "TKI1TKI2b"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "E4P_c",
+        "reaction": "TKI1TKI2b_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "F6P_c",
+        "reaction": "TKI1TKI2b_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "GA3P_c",
+        "reaction": "TKI1TKI2b_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "X5P_c",
+        "reaction": "TKI1TKI2b_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "DHAP_c",
+        "reaction": "TPI"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "GA3P_c",
+        "reaction": "TPI"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "DHAP_c",
+        "reaction": "TPI_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "GA3P_c",
+        "reaction": "TPI_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "G15L_c",
+        "reaction": "ZWF"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "G6P_c",
+        "reaction": "ZWF"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NADPH_c",
+        "reaction": "ZWF"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NADP_c",
+        "reaction": "ZWF"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "G15L_c",
+        "reaction": "ZWF_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "G6P_c",
+        "reaction": "ZWF_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "NADPH_c",
+        "reaction": "ZWF_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "NADP_c",
+        "reaction": "ZWF_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "AC_c",
+        "reaction": "acOUT"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "AC_c",
+        "reaction": "acOUT_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "BIOMASS_c",
+        "reaction": "biomassOUT"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "BIOMASS_c",
+        "reaction": "biomassOUT_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "CO2_c",
+        "reaction": "co2OUT"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "CO2_c",
+        "reaction": "co2OUT_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "ETH_c",
+        "reaction": "ethIN"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ETH_c",
+        "reaction": "ethOUT"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "ETH_c",
+        "reaction": "ethOUT_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "GLC_c",
+        "reaction": "glcIN"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "GLC_c",
+        "reaction": "glcIN_smallYeastBad"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "GLY_c",
+        "reaction": "glyOUT"
+      },
+      {
+        "coefficient": -1,
+        "metabolite": "GLY_c",
+        "reaction": "glyOUT_smallYeastBad"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "O2_c",
+        "reaction": "o2IN"
+      },
+      {
+        "coefficient": 1,
+        "metabolite": "O2_c",
+        "reaction": "o2IN_smallYeastBad"
+      }
+    ]
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "merge_models_smallyeast"
+}

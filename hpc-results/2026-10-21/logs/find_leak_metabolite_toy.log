@@ -1,0 +1,80 @@
+scenario: find_leak_metabolite_toy  host: vera-r05-04  start: 2026-10-20T20:30:41Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10518195/tmpwe47p9fh.lp
+Reading time = 0.00 seconds
+: 4 rows, 6 columns, 12 nonzeros
+Read LP format model from file /local/tmp.10518195/tmpn6_yhkme.lp
+Reading time = 0.00 seconds
+: 4 rows, 6 columns, 12 nonzeros
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/util/solver.py:554: UserWarning: Solver status is 'infeasible'.
+  warn(f"Solver status is '{status}'.", UserWarning)
+Read LP format model from file /local/tmp.10518195/tmptm5g5f6p.lp
+Reading time = 0.00 seconds
+: 4 rows, 6 columns, 12 nonzeros
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/util/solver.py:554: UserWarning: Solver status is 'infeasible'.
+  warn(f"Solver status is '{status}'.", UserWarning)
+Read LP format model from file /local/tmp.10518195/tmptnif6byd.lp
+Reading time = 0.00 seconds
+: 4 rows, 6 columns, 12 nonzeros
+find_leak_metabolite_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/find_leak_metabolite_toy.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10518195/tmpzpbsdct6.lp
+Reading time = 0.00 seconds
+: 4 rows, 6 columns, 12 nonzeros
+Read LP format model from file /local/tmp.10518195/tmpry4mz9oc.lp
+Reading time = 0.00 seconds
+: 4 rows, 6 columns, 12 nonzeros
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/util/solver.py:554: UserWarning: Solver status is 'infeasible'.
+  warn(f"Solver status is '{status}'.", UserWarning)
+Read LP format model from file /local/tmp.10518195/tmp2nmipjyk.lp
+Reading time = 0.00 seconds
+: 4 rows, 6 columns, 12 nonzeros
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/util/solver.py:554: UserWarning: Solver status is 'infeasible'.
+  warn(f"Solver status is '{status}'.", UserWarning)
+Read LP format model from file /local/tmp.10518195/tmpwk0c7zxx.lp
+Reading time = 0.00 seconds
+: 4 rows, 6 columns, 12 nonzeros
+find_leak_metabolite_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/find_leak_metabolite_toy.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10518195/tmp3yi7l0qy.lp
+Reading time = 0.00 seconds
+: 4 rows, 6 columns, 12 nonzeros
+Read LP format model from file /local/tmp.10518195/tmpf4tddvw_.lp
+Reading time = 0.00 seconds
+: 4 rows, 6 columns, 12 nonzeros
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/util/solver.py:554: UserWarning: Solver status is 'infeasible'.
+  warn(f"Solver status is '{status}'.", UserWarning)
+Read LP format model from file /local/tmp.10518195/tmpkeazbfal.lp
+Reading time = 0.00 seconds
+: 4 rows, 6 columns, 12 nonzeros
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/util/solver.py:554: UserWarning: Solver status is 'infeasible'.
+  warn(f"Solver status is '{status}'.", UserWarning)
+Read LP format model from file /local/tmp.10518195/tmpx_t470bt.lp
+Reading time = 0.00 seconds
+: 4 rows, 6 columns, 12 nonzeros
+find_leak_metabolite_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/find_leak_metabolite_toy.seed2.json
+find_leak_metabolite_toy [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/matlab/find_leak_metabolite_toy.json
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: find_leak_metabolite_toy  (python vs matlab)
+tolerance: rel=1e-09 abs=1e-09
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: find_leak_metabolite_toy  (python vs matlab)
+tolerance: rel=1e-09 abs=1e-09
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: find_leak_metabolite_toy  (python vs matlab)
+tolerance: rel=1e-09 abs=1e-09
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: find_leak_metabolite_toy  (python vs python)
+tolerance: rel=1e-09 abs=1e-09
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: find_leak_metabolite_toy  (python vs python)
+tolerance: rel=1e-09 abs=1e-09
+result:   MATCH
+end: 2026-10-20T20:31:18Z  status: MATCH

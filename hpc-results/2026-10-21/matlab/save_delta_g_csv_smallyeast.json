@@ -1,0 +1,38 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "met_row_count": 52,
+    "metabolites": [
+      {
+        "entity": "MAL_m",
+        "value": -50.5
+      },
+      {
+        "entity": "AKG_m",
+        "value": 10000000.0
+      },
+      {
+        "entity": "GLC_c",
+        "value": "NaN"
+      }
+    ],
+    "reactions": [
+      {
+        "entity": "PGI",
+        "value": 3.2
+      },
+      {
+        "entity": "HXK",
+        "value": 10000000.0
+      },
+      {
+        "entity": "ACO",
+        "value": "NaN"
+      }
+    ],
+    "rxn_row_count": 53
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "save_delta_g_csv_smallyeast"
+}

@@ -1,0 +1,9 @@
+GUROBI_ON_PATH=/apps/Arch/software/Gurobi/13.0.1-GCCcore-14.3.0/matlab/gurobi.mexa64
+GUROBI_OK=1
+Running tINIT
+.......... .......... ..........
+Done tINIT
+__________
+
+SUMMARY passed=30 failed=0 incomplete=0 total=30
+Parallel pool using the 'Processes' profile is shutting down.

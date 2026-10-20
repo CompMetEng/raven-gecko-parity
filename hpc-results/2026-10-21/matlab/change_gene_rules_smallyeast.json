@@ -1,0 +1,57 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "append": {
+      "created_genes": [
+        "YPROBE3",
+        "YPROBE4"
+      ],
+      "n_genes_after": 63,
+      "n_genes_before": 61,
+      "reactions": [
+        {
+          "clauses": [
+            [
+              "YCL040W"
+            ],
+            [
+              "YFR053C"
+            ],
+            [
+              "YGL253W"
+            ],
+            [
+              "YPROBE3",
+              "YPROBE4"
+            ]
+          ],
+          "reaction": "HXK"
+        }
+      ]
+    },
+    "replace": {
+      "created_genes": [
+        "YPROBE1",
+        "YPROBE2"
+      ],
+      "n_genes_after": 63,
+      "n_genes_before": 61,
+      "reactions": [
+        {
+          "clauses": [
+            [
+              "YPROBE1"
+            ],
+            [
+              "YPROBE2"
+            ]
+          ],
+          "reaction": "PGI"
+        }
+      ]
+    }
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "change_gene_rules_smallyeast"
+}

@@ -1,0 +1,45 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "fva": [
+      {
+        "max_flux": 7199.999999999999,
+        "min_flux": 0.0,
+        "reaction": "R1"
+      },
+      {
+        "max_flux": 3272.7272727272725,
+        "min_flux": -6000.000000000001,
+        "reaction": "R2"
+      },
+      {
+        "max_flux": 1440.0,
+        "min_flux": 0.0,
+        "reaction": "R3"
+      },
+      {
+        "max_flux": 7199.999999999999,
+        "min_flux": 0.0,
+        "reaction": "R4"
+      },
+      {
+        "max_flux": 7200.0,
+        "min_flux": 0.0,
+        "reaction": "R5"
+      },
+      {
+        "max_flux": 0.0,
+        "min_flux": -7199.999999999999,
+        "reaction": "S1"
+      },
+      {
+        "max_flux": 7199.999999999999,
+        "min_flux": 0.0,
+        "reaction": "S2"
+      }
+    ]
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "ec_fva_ectestgem"
+}

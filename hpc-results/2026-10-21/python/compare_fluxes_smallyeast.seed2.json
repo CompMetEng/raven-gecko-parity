@@ -1,0 +1,122 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "filtered": {
+      "changed": [
+        {
+          "abs_delta": 11.0,
+          "flux1": 5.0,
+          "flux2": -6.0,
+          "reaction": "HXK",
+          "rel_change": -2.2,
+          "type": "flip"
+        },
+        {
+          "abs_delta": 8.0,
+          "flux1": 100.0,
+          "flux2": 108.0,
+          "reaction": "ACS",
+          "rel_change": 0.08,
+          "type": ""
+        },
+        {
+          "abs_delta": 5.0,
+          "flux1": 0.0,
+          "flux2": 5.0,
+          "reaction": "PYK",
+          "rel_change": "NaN",
+          "type": "on"
+        },
+        {
+          "abs_delta": 4.0,
+          "flux1": 10.0,
+          "flux2": 14.0,
+          "reaction": "PCK",
+          "rel_change": 0.4,
+          "type": ""
+        },
+        {
+          "abs_delta": 3.0,
+          "flux1": 3.0,
+          "flux2": 0.0,
+          "reaction": "FADHX",
+          "rel_change": -1.0,
+          "type": "off"
+        }
+      ],
+      "flipped": [
+        "HXK"
+      ],
+      "turned_off": [
+        "FADHX"
+      ],
+      "turned_on": [
+        "PYK"
+      ]
+    },
+    "unfiltered": {
+      "changed": [
+        {
+          "abs_delta": 11.0,
+          "flux1": 5.0,
+          "flux2": -6.0,
+          "reaction": "HXK",
+          "rel_change": -2.2,
+          "type": "flip"
+        },
+        {
+          "abs_delta": 8.0,
+          "flux1": 100.0,
+          "flux2": 108.0,
+          "reaction": "ACS",
+          "rel_change": 0.08,
+          "type": ""
+        },
+        {
+          "abs_delta": 5.0,
+          "flux1": 0.0,
+          "flux2": 5.0,
+          "reaction": "PYK",
+          "rel_change": "NaN",
+          "type": "on"
+        },
+        {
+          "abs_delta": 4.0,
+          "flux1": 10.0,
+          "flux2": 14.0,
+          "reaction": "PCK",
+          "rel_change": 0.4,
+          "type": ""
+        },
+        {
+          "abs_delta": 3.0,
+          "flux1": 3.0,
+          "flux2": 0.0,
+          "reaction": "FADHX",
+          "rel_change": -1.0,
+          "type": "off"
+        },
+        {
+          "abs_delta": 2.0,
+          "flux1": 10.0,
+          "flux2": 12.0,
+          "reaction": "TPI",
+          "rel_change": 0.2,
+          "type": ""
+        }
+      ],
+      "flipped": [
+        "HXK"
+      ],
+      "turned_off": [
+        "FADHX"
+      ],
+      "turned_on": [
+        "PYK"
+      ]
+    }
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "compare_fluxes_smallyeast"
+}

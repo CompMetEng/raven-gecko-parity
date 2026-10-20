@@ -1,0 +1,26 @@
+scenario: differential_sampling_toy  host: vera-r06-02  start: 2026-10-20T20:29:33Z  seeds: 0 1 2
+differential_sampling_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/differential_sampling_toy.seed0.json
+differential_sampling_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/differential_sampling_toy.seed1.json
+differential_sampling_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/differential_sampling_toy.seed2.json
+differential_sampling_toy [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/matlab/differential_sampling_toy.json
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: differential_sampling_toy  (python vs matlab)
+tolerance: rel=1e-09 abs=1e-09
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: differential_sampling_toy  (python vs matlab)
+tolerance: rel=1e-09 abs=1e-09
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: differential_sampling_toy  (python vs matlab)
+tolerance: rel=1e-09 abs=1e-09
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: differential_sampling_toy  (python vs python)
+tolerance: rel=1e-09 abs=1e-09
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: differential_sampling_toy  (python vs python)
+tolerance: rel=1e-09 abs=1e-09
+result:   MATCH
+end: 2026-10-20T20:30:03Z  status: MATCH

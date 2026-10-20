@@ -1,0 +1,41 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "min_to_connect": [
+      {
+        "connects": 2,
+        "metabolite": "x"
+      }
+    ],
+    "needed_for_production": {
+      "x": [
+        "x",
+        "y"
+      ],
+      "y": [],
+      "z": []
+    },
+    "no_flux_reactions": [
+      "R3",
+      "R4",
+      "R5"
+    ],
+    "no_flux_reactions_relaxed": [
+      "R3"
+    ],
+    "not_produced_metabolites": [
+      "x",
+      "y",
+      "z"
+    ],
+    "subgraph_sizes": [
+      3,
+      2,
+      2,
+      1
+    ]
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "gap_report_toy"
+}

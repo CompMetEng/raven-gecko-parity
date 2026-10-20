@@ -1,0 +1,8 @@
+GUROBI_ON_PATH=/apps/Arch/software/Gurobi/13.0.1-GCCcore-14.3.0/matlab/gurobi.mexa64
+GUROBI_OK=1
+Running tNamedArgs
+.....
+Done tNamedArgs
+__________
+
+SUMMARY passed=5 failed=0 incomplete=0 total=5

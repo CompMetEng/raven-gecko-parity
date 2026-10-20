@@ -1,0 +1,82 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "changed_reactions": [
+      {
+        "clauses": [
+          [
+            "YCL040W"
+          ],
+          [
+            "YFR053C"
+          ],
+          [
+            "YGL253W"
+          ]
+        ],
+        "lower_bound": 0,
+        "name": "Hexokinase",
+        "objective_coefficient": 0,
+        "reaction": "HXK",
+        "stoichiometry": [
+          [
+            "ADP_c",
+            1
+          ],
+          [
+            "ATP_c",
+            -1
+          ],
+          [
+            "G6P_c",
+            1
+          ],
+          [
+            "GLC_c",
+            -1
+          ],
+          [
+            "PROBE_c",
+            1
+          ]
+        ],
+        "subsystem": "",
+        "upper_bound": 1000
+      },
+      {
+        "clauses": [
+          [
+            "YBR196C"
+          ]
+        ],
+        "lower_bound": -1000,
+        "name": "Glucose-6-phosphate isomerase",
+        "objective_coefficient": 0,
+        "reaction": "PGI",
+        "stoichiometry": [
+          [
+            "G6P_c",
+            1
+          ],
+          [
+            "GLC_c",
+            -1
+          ]
+        ],
+        "subsystem": "",
+        "upper_bound": 1000
+      }
+    ],
+    "created_metabolites": [
+      "PROBE_c"
+    ],
+    "n_metabolites_after": 53,
+    "n_metabolites_before": 52,
+    "n_reactions": 53,
+    "n_untouched_reactions_checked": 51,
+    "unexpectedly_changed_reactions": []
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "change_reaction_equations_smallyeast"
+}

@@ -1,0 +1,42 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "parsed": [
+      {
+        "GenBank_protein": "XP_001698190.2",
+        "GeneID": "5723799",
+        "UniProt": "P12345",
+        "gene_name": "rbcL",
+        "locus_tag": "Cre01.g000001",
+        "old_locus_tag": "CreOld1"
+      },
+      {
+        "GenBank_protein": "WP_000000001.1",
+        "GeneID": "",
+        "UniProt": "",
+        "gene_name": "",
+        "locus_tag": "b0002",
+        "old_locus_tag": ""
+      },
+      {
+        "GenBank_protein": "WP_999.1",
+        "GeneID": "",
+        "UniProt": "",
+        "gene_name": "",
+        "locus_tag": "b0003",
+        "old_locus_tag": ""
+      },
+      {
+        "GenBank_protein": "XP_004.1",
+        "GeneID": "",
+        "UniProt": "",
+        "gene_name": "alpha,beta",
+        "locus_tag": "tag4",
+        "old_locus_tag": ""
+      }
+    ]
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "get_gene_data_fixture"
+}

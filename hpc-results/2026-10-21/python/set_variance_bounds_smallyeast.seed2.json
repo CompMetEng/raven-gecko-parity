@@ -1,0 +1,39 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "broadcast": [
+      {
+        "lower_bound": 19.0,
+        "reaction": "GND",
+        "upper_bound": 21.0
+      },
+      {
+        "lower_bound": 19.0,
+        "reaction": "ZWF",
+        "upper_bound": 21.0
+      }
+    ],
+    "distinct": [
+      {
+        "lower_bound": 12.1875,
+        "reaction": "HXK",
+        "upper_bound": 12.812499999999998
+      },
+      {
+        "lower_bound": -8.5075,
+        "reaction": "PFK",
+        "upper_bound": -8.092500000000001
+      },
+      {
+        "lower_bound": 0.0,
+        "reaction": "PGK",
+        "upper_bound": 0.0
+      }
+    ],
+    "n_untouched_reactions_checked": 48,
+    "unexpectedly_changed_reactions": []
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "set_variance_bounds_smallyeast"
+}

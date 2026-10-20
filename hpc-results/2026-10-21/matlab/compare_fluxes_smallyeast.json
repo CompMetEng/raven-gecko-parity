@@ -1,0 +1,122 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "filtered": {
+      "changed": [
+        {
+          "abs_delta": 11,
+          "flux1": 5,
+          "flux2": -6,
+          "reaction": "HXK",
+          "rel_change": -2.2,
+          "type": "flip"
+        },
+        {
+          "abs_delta": 8,
+          "flux1": 100,
+          "flux2": 108,
+          "reaction": "ACS",
+          "rel_change": 0.08,
+          "type": ""
+        },
+        {
+          "abs_delta": 5,
+          "flux1": 0,
+          "flux2": 5,
+          "reaction": "PYK",
+          "rel_change": "NaN",
+          "type": "on"
+        },
+        {
+          "abs_delta": 4,
+          "flux1": 10,
+          "flux2": 14,
+          "reaction": "PCK",
+          "rel_change": 0.4,
+          "type": ""
+        },
+        {
+          "abs_delta": 3,
+          "flux1": 3,
+          "flux2": 0,
+          "reaction": "FADHX",
+          "rel_change": -1,
+          "type": "off"
+        }
+      ],
+      "flipped": [
+        "HXK"
+      ],
+      "turned_off": [
+        "FADHX"
+      ],
+      "turned_on": [
+        "PYK"
+      ]
+    },
+    "unfiltered": {
+      "changed": [
+        {
+          "abs_delta": 11,
+          "flux1": 5,
+          "flux2": -6,
+          "reaction": "HXK",
+          "rel_change": -2.2,
+          "type": "flip"
+        },
+        {
+          "abs_delta": 8,
+          "flux1": 100,
+          "flux2": 108,
+          "reaction": "ACS",
+          "rel_change": 0.08,
+          "type": ""
+        },
+        {
+          "abs_delta": 5,
+          "flux1": 0,
+          "flux2": 5,
+          "reaction": "PYK",
+          "rel_change": "NaN",
+          "type": "on"
+        },
+        {
+          "abs_delta": 4,
+          "flux1": 10,
+          "flux2": 14,
+          "reaction": "PCK",
+          "rel_change": 0.4,
+          "type": ""
+        },
+        {
+          "abs_delta": 3,
+          "flux1": 3,
+          "flux2": 0,
+          "reaction": "FADHX",
+          "rel_change": -1,
+          "type": "off"
+        },
+        {
+          "abs_delta": 2,
+          "flux1": 10,
+          "flux2": 12,
+          "reaction": "TPI",
+          "rel_change": 0.2,
+          "type": ""
+        }
+      ],
+      "flipped": [
+        "HXK"
+      ],
+      "turned_off": [
+        "FADHX"
+      ],
+      "turned_on": [
+        "PYK"
+      ]
+    }
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "compare_fluxes_smallyeast"
+}

@@ -1,0 +1,1 @@
+PASS passed=1 failed=0 incomplete=0 total=1

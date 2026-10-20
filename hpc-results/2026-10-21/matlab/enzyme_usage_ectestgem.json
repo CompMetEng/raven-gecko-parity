@@ -1,0 +1,92 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "control_coeffs": [
+      {
+        "analysed": false,
+        "coeff": 0,
+        "protein": "P1"
+      },
+      {
+        "analysed": false,
+        "coeff": 0,
+        "protein": "P2"
+      },
+      {
+        "analysed": false,
+        "coeff": 0,
+        "protein": "P3"
+      },
+      {
+        "analysed": true,
+        "coeff": 0,
+        "protein": "P4"
+      },
+      {
+        "analysed": true,
+        "coeff": 14.399999999999999,
+        "protein": "P5"
+      }
+    ],
+    "report": {
+      "high_cap_usage": [
+        {
+          "abs_usage": 0.15647268,
+          "cap_usage": 1,
+          "protein": "P5"
+        }
+      ],
+      "top_abs_usage": [
+        {
+          "abs_usage": 1.6690419199999997,
+          "perc_usage": 0.16690419199999998,
+          "protein": "P4"
+        },
+        {
+          "abs_usage": 0.15647268,
+          "perc_usage": 0.015647268,
+          "protein": "P5"
+        }
+      ],
+      "total_usage_flux": 1000
+    },
+    "usage": {
+      "objective": 2.2532065919999997,
+      "proteins": [
+        {
+          "abs_usage": 0,
+          "cap_usage": 0,
+          "protein": "P1",
+          "ub": 0.7292388
+        },
+        {
+          "abs_usage": 0,
+          "cap_usage": 0,
+          "protein": "P2",
+          "ub": 0.03692241
+        },
+        {
+          "abs_usage": 0,
+          "cap_usage": 0,
+          "protein": "P3",
+          "ub": 0.318175
+        },
+        {
+          "abs_usage": 1.6690419199999997,
+          "cap_usage": 0.32122173435210216,
+          "protein": "P4",
+          "ub": 5.1959184
+        },
+        {
+          "abs_usage": 0.15647268,
+          "cap_usage": 1,
+          "protein": "P5",
+          "ub": 0.15647268
+        }
+      ]
+    }
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "enzyme_usage_ectestgem"
+}

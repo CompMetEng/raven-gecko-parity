@@ -1,0 +1,32 @@
+scenario: assign_sbo_terms_smallyeast  host: vera-r05-04  start: 2026-10-20T20:28:17Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+assign_sbo_terms_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/assign_sbo_terms_smallyeast.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+assign_sbo_terms_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/assign_sbo_terms_smallyeast.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+assign_sbo_terms_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/assign_sbo_terms_smallyeast.seed2.json
+assign_sbo_terms_smallyeast [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/matlab/assign_sbo_terms_smallyeast.json
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: assign_sbo_terms_smallyeast  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: assign_sbo_terms_smallyeast  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: assign_sbo_terms_smallyeast  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: assign_sbo_terms_smallyeast  (python vs python)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: assign_sbo_terms_smallyeast  (python vs python)
+tolerance: rel=0 abs=0
+result:   MATCH
+end: 2026-10-20T20:29:06Z  status: MATCH

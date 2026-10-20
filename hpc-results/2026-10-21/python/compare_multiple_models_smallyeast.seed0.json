@@ -1,0 +1,345 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "model_ids": [
+      "full",
+      "minus_two",
+      "minus_one_plus_one"
+    ],
+    "n_reactions_per_model": {
+      "full": 53,
+      "minus_one_plus_one": 53,
+      "minus_two": 51
+    },
+    "n_reactions_total": 54,
+    "reactions": [
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "ACO"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "ACS"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "ADH1"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "ALD6"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "ATPX"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "CAT2"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "CIT"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "CO2TRANS"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "DAR"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "ENO"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "FADHX"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "FBA"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "FBP"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "FRDS2"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "FUM1"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "GLD"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "GND"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "GPM"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "GPP"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "GROWTH"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 0,
+        "minus_two": 1,
+        "reaction": "HXK"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "IDP1"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "KGD1KGD2"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "LSC1LSC2"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "MAE1"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "MDH1"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "NADHX"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "PCK"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "PDC"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "PDH"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "PFK"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 0,
+        "reaction": "PGI"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "PGK"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "PGL"
+      },
+      {
+        "full": 0,
+        "minus_one_plus_one": 1,
+        "minus_two": 0,
+        "reaction": "PROBE_RXN"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "PYC"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "PYK"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "RPE"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "RPI"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "SDH"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "ShuttleX"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "TAL1"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "TKI1TKI2a"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "TKI1TKI2b"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "TPI"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 0,
+        "reaction": "ZWF"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "acOUT"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "biomassOUT"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "co2OUT"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "ethIN"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "ethOUT"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "glcIN"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "glyOUT"
+      },
+      {
+        "full": 1,
+        "minus_one_plus_one": 1,
+        "minus_two": 1,
+        "reaction": "o2IN"
+      }
+    ]
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "compare_multiple_models_smallyeast"
+}

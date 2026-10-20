@@ -1,0 +1,432 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "metabolite_sbo": [
+      {
+        "metabolite": "ACA_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "ACCOA_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "ACCOA_m",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "AC_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "ADP_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "AKG_m",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "ATP_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "BIOMASS_c",
+        "sbo": "SBO:0000649"
+      },
+      {
+        "metabolite": "CI_m",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "CO2_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "CO2_m",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "COA_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "COA_m",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "DHAP_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "E4P_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "ETH_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "F16P_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "F6P_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "FADH2_m",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "FAD_m",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "FUM_m",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "G15L_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "G6P_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "GA3P_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "GLC_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "GLY_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "GP_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "ICI_m",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "MAL_m",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "NADH_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "NADH_m",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "NADPH_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "NADPH_m",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "NADP_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "NADP_m",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "NAD_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "NAD_m",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "O2_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "OAA_m",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "P13G_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "P2G_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "P3G_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "P6G_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "PEP_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "PI_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "PYR_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "R5P_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "RU5P_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "S7P_c",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "SUCCOA_m",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "SUC_m",
+        "sbo": "SBO:0000247"
+      },
+      {
+        "metabolite": "X5P_c",
+        "sbo": "SBO:0000247"
+      }
+    ],
+    "reaction_sbo": [
+      {
+        "reaction": "ACO",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "ACS",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "ADH1",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "ALD6",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "ATPX",
+        "sbo": "SBO:0000630"
+      },
+      {
+        "reaction": "CAT2",
+        "sbo": "SBO:0000655"
+      },
+      {
+        "reaction": "CIT",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "CO2TRANS",
+        "sbo": "SBO:0000655"
+      },
+      {
+        "reaction": "DAR",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "ENO",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "FADHX",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "FBA",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "FBP",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "FRDS2",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "FUM1",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "GLD",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "GND",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "GPM",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "GPP",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "GROWTH",
+        "sbo": "SBO:0000655"
+      },
+      {
+        "reaction": "HXK",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "IDP1",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "KGD1KGD2",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "LSC1LSC2",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "MAE1",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "MDH1",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "NADHX",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "PCK",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "PDC",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "PDH",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "PFK",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "PGI",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "PGK",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "PGL",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "PYC",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "PYK",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "RPE",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "RPI",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "SDH",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "ShuttleX",
+        "sbo": "SBO:0000655"
+      },
+      {
+        "reaction": "TAL1",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "TKI1TKI2a",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "TKI1TKI2b",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "TPI",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "ZWF",
+        "sbo": "SBO:0000176"
+      },
+      {
+        "reaction": "acOUT",
+        "sbo": "SBO:0000632"
+      },
+      {
+        "reaction": "biomassOUT",
+        "sbo": "SBO:0000629"
+      },
+      {
+        "reaction": "co2OUT",
+        "sbo": "SBO:0000632"
+      },
+      {
+        "reaction": "ethIN",
+        "sbo": "SBO:0000628"
+      },
+      {
+        "reaction": "ethOUT",
+        "sbo": "SBO:0000632"
+      },
+      {
+        "reaction": "glcIN",
+        "sbo": "SBO:0000628"
+      },
+      {
+        "reaction": "glyOUT",
+        "sbo": "SBO:0000632"
+      },
+      {
+        "reaction": "o2IN",
+        "sbo": "SBO:0000628"
+      }
+    ]
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "assign_sbo_terms_smallyeast"
+}

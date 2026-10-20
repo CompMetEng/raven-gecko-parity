@@ -1,0 +1,50 @@
+scenario: copy_to_compartment_smallyeast  host: vera-r06-02  start: 2026-10-20T20:29:09Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10518177/tmpmyq9hx8i.lp
+Reading time = 0.00 seconds
+: 52 rows, 106 columns, 406 nonzeros
+Read LP format model from file /local/tmp.10518177/tmptd5gumoh.lp
+Reading time = 0.00 seconds
+: 52 rows, 106 columns, 406 nonzeros
+copy_to_compartment_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/copy_to_compartment_smallyeast.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10518177/tmpc6plk80m.lp
+Reading time = 0.00 seconds
+: 52 rows, 106 columns, 406 nonzeros
+Read LP format model from file /local/tmp.10518177/tmp5f4t8mh9.lp
+Reading time = 0.00 seconds
+: 52 rows, 106 columns, 406 nonzeros
+copy_to_compartment_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/copy_to_compartment_smallyeast.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10518177/tmp63l5qlcp.lp
+Reading time = 0.00 seconds
+: 52 rows, 106 columns, 406 nonzeros
+Read LP format model from file /local/tmp.10518177/tmpjre2qd2i.lp
+Reading time = 0.00 seconds
+: 52 rows, 106 columns, 406 nonzeros
+copy_to_compartment_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/copy_to_compartment_smallyeast.seed2.json
+copy_to_compartment_smallyeast [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/matlab/copy_to_compartment_smallyeast.json
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: copy_to_compartment_smallyeast  (python vs matlab)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: copy_to_compartment_smallyeast  (python vs matlab)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: copy_to_compartment_smallyeast  (python vs matlab)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: copy_to_compartment_smallyeast  (python vs python)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: copy_to_compartment_smallyeast  (python vs python)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+end: 2026-10-20T20:29:47Z  status: MATCH

@@ -1,0 +1,62 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "currency_blocked_by_default": {
+      "cumulative_fraction": 0.0,
+      "metabolites": [],
+      "reactions": []
+    },
+    "currency_route_when_allowed": {
+      "cumulative_fraction": 1.0,
+      "metabolites": [
+        "atp_c"
+      ],
+      "reactions": [
+        "R1",
+        "R5"
+      ]
+    },
+    "direct_junction": {
+      "cumulative_fraction": 0.7,
+      "metabolites": [
+        "B"
+      ],
+      "reactions": [
+        "R1",
+        "R2a"
+      ]
+    },
+    "max_hops_prunes": {
+      "cumulative_fraction": 0.0,
+      "metabolites": [],
+      "reactions": []
+    },
+    "minority_branch": {
+      "cumulative_fraction": 0.3,
+      "metabolites": [
+        "B",
+        "E"
+      ],
+      "reactions": [
+        "R1",
+        "R2b",
+        "R4"
+      ]
+    },
+    "two_hop_majority": {
+      "cumulative_fraction": 0.7,
+      "metabolites": [
+        "B",
+        "C"
+      ],
+      "reactions": [
+        "R1",
+        "R2a",
+        "R3"
+      ]
+    }
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "trace_flux_path_toy"
+}

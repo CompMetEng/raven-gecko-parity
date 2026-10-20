@@ -1,0 +1,26 @@
+scenario: task_list_parsing  host: vera-r05-04  start: 2026-10-20T20:34:58Z  seeds: 0 1 2
+task_list_parsing [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/task_list_parsing.seed0.json
+task_list_parsing [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/task_list_parsing.seed1.json
+task_list_parsing [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/python/task_list_parsing.seed2.json
+task_list_parsing [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/2026-10-21/matlab/task_list_parsing.json
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: task_list_parsing  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: task_list_parsing  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: task_list_parsing  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: task_list_parsing  (python vs python)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: task_list_parsing  (python vs python)
+tolerance: rel=0 abs=0
+result:   MATCH
+end: 2026-10-20T20:35:36Z  status: MATCH

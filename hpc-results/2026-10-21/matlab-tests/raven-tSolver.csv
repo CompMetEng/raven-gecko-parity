@@ -1,0 +1,12 @@
+Name,Passed,Failed,Incomplete,Duration
+tSolver/setRavenSolverAcceptsGlpk,1,0,0,0.726512
+tSolver/setRavenSolverRejectsUnknown,1,0,0,0.105762
+tSolver/solveLPFindsOptimum,1,0,0,0.345819
+tSolver/solveLPMinimiseFluxes,1,0,0,0.05117
+tSolver/optimizeProbSolvesLP,1,0,0,0.023391
+tSolver/optimizeProbReportsTimeLimit,1,0,0,0.027886
+tSolver/optimizeProbSolvesMILPWithGlpk,1,0,0,0.170447
+tSolver/optimizeProbSolvesMILPWithCobraGlpk,0,0,1,0.789879
+tSolver/getMinimalMediumRunsOnGlpk,1,0,0,0.09488
+tSolver/checkSolutionOnFeasibleProblem,1,0,0,0.01265
+tSolver/splitProbForConditioningReturnsProb,1,0,0,1.475298
