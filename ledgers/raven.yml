@@ -233,7 +233,10 @@ entries:
       False on both check_tasks and find_task_essential_reactions, reproducing RAVEN''s verdict on all six of
       smallYeast''s tasks without callers having to pass it explicitly. checkTasks warns when the model has no
       ''unconstrained'' field, so RAVEN''s task framework assumes models that keep their exchange *metabolites*,
-      which a cobrapy model does not have.'
+      which a cobrapy model does not have.
+      Confirmed on MATLAB (RAVEN 79a7d8c, cluster batch 2026-10-21) - with two metabolites of the same
+      name[comp] RAVEN constrains only the first one and raven-toolbox constrains all of them, so the verdict
+      can differ.'
   - matlab: cleanSheet
     status: subsumed
     reason: Excel cell-cleaning helper; inside io.export_to_excel.
@@ -471,6 +474,8 @@ entries:
     notes: from migration.md. Standard-GEM repo layout (model/<fmt>/…).
       Python also takes version= and date=, stamped into the exported copy; MATLAB models carry
       model.version / model.date as fields, so there it is set before the call.
+      Confirmed on MATLAB (RAVEN 79a7d8c, cluster batch 2026-10-21) - RAVEN's default formats are mat, txt,
+      xlsx, xml and yml and it also writes dependencies.txt. raven-toolbox defaults to yml, xml, mat and xlsx.
   - matlab: exportModel
     status: via-dependency
     reason: 'cobrapy covers this: cobra.io.write_sbml_model.'
@@ -957,6 +962,8 @@ entries:
     scenarios:
       - gpr_dnf_rules
     notes: Direct counterpart; see the standardizeGrRules repair below.
+      Confirmed on MATLAB (RAVEN 79a7d8c, cluster batch 2026-10-21) - both sides accept '&&', '||' and upper
+      case operators. A malformed rule such as 'A and' raises in RAVEN; raven-toolbox warns and returns True.
   - matlab: makeFakeBlastStructure
     python: raven_toolbox.reconstruction.homology.make_ortholog_hits
     status: parity
@@ -1054,7 +1061,12 @@ entries:
     scenarios:
       - task_list_parsing
     notes: 'from migration.md. check_tasks reuses one model across the task list (no per-task model copy) ---
-      at genome scale ~12x faster than the copy-per-task implementation it replaced.'
+      at genome scale ~12x faster than the copy-per-task implementation it replaced.
+      Confirmed on MATLAB (RAVEN 79a7d8c, cluster batch 2026-10-21) - three differences in edge cases. SHOULD
+      FAIL and PRINT FLUX set to 0 count as set in RAVEN (only an empty cell is false), and as false in
+      raven-toolbox. RAVEN keeps empty and padded items of a '';'' list (A;;B gives an empty input, and ''A; B''
+      keeps the leading space), where raven-toolbox strips them. Empty CHANGED LB and UB stay empty in RAVEN
+      and become -1000 and 1000 in raven-toolbox.'
   - matlab: parseYAML
     status: subsumed
     reason: The RAVEN YAML tokeniser; inside io.read_yaml_model.
@@ -1196,7 +1208,11 @@ entries:
       negative-scored member is not stripped down member-by-member, only dropped as a whole alternative when its
       aggregate score (min of its members) loses to a competing alternative. NOT COVERED: an exact tie between
       two all-negative alternatives. RAVEN''s own docstring says the tie-break is random; the Python side
-      documents picking deterministically instead as a deliberate departure.'
+      documents picking deterministically instead as a deliberate departure.
+      Confirmed on MATLAB (RAVEN 79a7d8c, cluster batch 2026-10-21) - RAVEN''s tie-break is not random in
+      practice. It keeps the alphabetically first gene and writes the genes that survive in a rule in
+      alphabetical order, so ''G2 or G1'' with equal scores becomes ''G1''. raven-toolbox keeps the first gene in
+      rule order and keeps the rule order.'
   - matlab: removeMets
     python: raven_toolbox.manipulation.remove_metabolites
     status: parity
@@ -1273,7 +1289,12 @@ entries:
       and fixed while building this scenario: the first implementation passed the pre-merge
       replacement list to the duplicate-cleanup restriction, which went stale (empty) whenever
       the replacement itself was the metabolite merged away, silently skipping cleanup entirely;
-      fixed to track the actual post-merge survivor. MATCH.'
+      fixed to track the actual post-merge survivor. MATCH.
+      Confirmed on MATLAB (RAVEN 79a7d8c, cluster batch 2026-10-21) - NOT replicated exactly. By name RAVEN
+      deletes the replacement''s row and then finds the metabolite to restrict contractModel to by the id of
+      that deleted row, so the restriction is empty and contractModel merges every duplicate reaction in the
+      model, also ones that do not involve the merged metabolite. raven-toolbox restricts the clean-up as
+      described above. A RAVEN bug, so replace_metabolite_toy stays red until RAVEN is fixed.'
   - matlab: reporterMetabolites
     python: raven_toolbox.analysis.reporter_metabolites
     status: parity
@@ -1530,7 +1551,10 @@ entries:
       deliberate divergence from cobra''s own writer, which always includes it; nothing on either read side
       needs the key present. sort_ids=true previously diverged on compartments (write_yaml_model rebuilt it
       as a plain dict rather than an OrderedDict, dropping the !!omap tag readYAMLmodel.m keys its parsing
-      on) --- fixed in CompMetEng/raven-toolbox#124.'
+      on) --- fixed in CompMetEng/raven-toolbox#124.
+      Confirmed on MATLAB (RAVEN 79a7d8c, cluster batch 2026-10-21) - RAVEN writes floats with 15 significant
+      digits (1/3 as 0.333333333333333) and raven-toolbox with full precision. RAVEN refuses a metabolite with
+      an empty name (RAVEN:modelError); raven-toolbox writes the name as an empty string.'
   - python: raven_toolbox.analysis.CompareFluxesResult
     status: python-only
     reason: 'Result type. Wraps compare_fluxes'' changed-reaction DataFrame, the three id lists,
