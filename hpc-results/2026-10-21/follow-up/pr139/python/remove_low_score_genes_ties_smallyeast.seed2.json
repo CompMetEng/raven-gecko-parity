@@ -1,0 +1,52 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "n_genes_after": 59,
+    "n_genes_before": 70,
+    "n_untouched_reactions_checked": 50,
+    "reactions": [
+      {
+        "clauses": [
+          [
+            "H2"
+          ]
+        ],
+        "reaction": "HXK"
+      },
+      {
+        "clauses": [
+          [
+            "C3",
+            "C4"
+          ]
+        ],
+        "reaction": "PFK"
+      },
+      {
+        "clauses": [
+          [
+            "G2"
+          ]
+        ],
+        "reaction": "PGI"
+      }
+    ],
+    "removed_genes": [
+      "C1",
+      "C2",
+      "G1",
+      "H1",
+      "H3",
+      "YBR196C",
+      "YCL040W",
+      "YFR053C",
+      "YGL253W",
+      "YGR240C",
+      "YMR205C"
+    ],
+    "unexpectedly_changed_reactions": []
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "remove_low_score_genes_ties_smallyeast"
+}

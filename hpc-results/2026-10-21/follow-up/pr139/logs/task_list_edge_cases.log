@@ -1,0 +1,26 @@
+scenario: task_list_edge_cases  host: vera-r05-04  start: 2026-10-21T22:34:45Z  seeds: 0 1 2
+task_list_edge_cases [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/pr139/python/task_list_edge_cases.seed0.json
+task_list_edge_cases [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/pr139/python/task_list_edge_cases.seed1.json
+task_list_edge_cases [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/pr139/python/task_list_edge_cases.seed2.json
+task_list_edge_cases [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/pr139/matlab/task_list_edge_cases.json
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: task_list_edge_cases  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: task_list_edge_cases  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: task_list_edge_cases  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: task_list_edge_cases  (python vs python)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: task_list_edge_cases  (python vs python)
+tolerance: rel=0 abs=0
+result:   MATCH
+end: 2026-10-21T22:35:12Z  status: MATCH

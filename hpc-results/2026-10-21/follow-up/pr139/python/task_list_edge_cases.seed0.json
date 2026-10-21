@@ -1,0 +1,118 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "n_tasks": 4,
+    "tasks": [
+      {
+        "changed": [
+          {
+            "lb": "NaN",
+            "reaction": "R1",
+            "ub": 10.0
+          },
+          {
+            "lb": "NaN",
+            "reaction": "R2",
+            "ub": 10.0
+          }
+        ],
+        "comments": "",
+        "description": "flag false, trimmed list, empty bound",
+        "equations": [],
+        "id": "T1",
+        "inputs": [
+          {
+            "lb": 0.0,
+            "metabolite": "A[c]",
+            "ub": 5.0
+          },
+          {
+            "lb": 0.0,
+            "metabolite": "B[c]",
+            "ub": 5.0
+          }
+        ],
+        "outputs": [],
+        "print_fluxes": false,
+        "should_fail": false
+      },
+      {
+        "changed": [
+          {
+            "lb": -5.0,
+            "reaction": "R3",
+            "ub": "NaN"
+          },
+          {
+            "lb": "NaN",
+            "reaction": "R4",
+            "ub": "NaN"
+          }
+        ],
+        "comments": "",
+        "description": "flag yes, leading empty item",
+        "equations": [],
+        "id": "T2",
+        "inputs": [
+          {
+            "lb": 2.0,
+            "metabolite": "C[c]",
+            "ub": 1000.0
+          }
+        ],
+        "outputs": [
+          {
+            "lb": 1.0,
+            "metabolite": "D[c]",
+            "ub": 1000.0
+          }
+        ],
+        "print_fluxes": false,
+        "should_fail": true
+      },
+      {
+        "changed": [],
+        "comments": "a comment",
+        "description": "flags 0 and TRUE",
+        "equations": [],
+        "id": "T3",
+        "inputs": [],
+        "outputs": [
+          {
+            "lb": 0.0,
+            "metabolite": "D[c]",
+            "ub": 1000.0
+          }
+        ],
+        "print_fluxes": true,
+        "should_fail": false
+      },
+      {
+        "changed": [],
+        "comments": "",
+        "description": "flags no and FALSE",
+        "equations": [
+          {
+            "equation": "A[c] <=> B[c]",
+            "lb": -1000.0,
+            "ub": 1000.0
+          }
+        ],
+        "id": "T4",
+        "inputs": [
+          {
+            "lb": 0.0,
+            "metabolite": "E[c]",
+            "ub": 1000.0
+          }
+        ],
+        "outputs": [],
+        "print_fluxes": false,
+        "should_fail": false
+      }
+    ]
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "task_list_edge_cases"
+}

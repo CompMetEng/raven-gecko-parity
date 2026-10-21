@@ -1,0 +1,32 @@
+scenario: yaml_float_digits_smallyeast  host: vera-r05-04  start: 2026-10-21T22:35:12Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+yaml_float_digits_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/pr139/python/yaml_float_digits_smallyeast.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+yaml_float_digits_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/pr139/python/yaml_float_digits_smallyeast.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+yaml_float_digits_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/pr139/python/yaml_float_digits_smallyeast.seed2.json
+yaml_float_digits_smallyeast [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/pr139/matlab/yaml_float_digits_smallyeast.json
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: yaml_float_digits_smallyeast  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: yaml_float_digits_smallyeast  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: yaml_float_digits_smallyeast  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: yaml_float_digits_smallyeast  (python vs python)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: yaml_float_digits_smallyeast  (python vs python)
+tolerance: rel=0 abs=0
+result:   MATCH
+end: 2026-10-21T22:35:42Z  status: MATCH
