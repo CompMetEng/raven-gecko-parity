@@ -1,0 +1,24 @@
+00:44:23.534 parity_run start
+00:44:23.570 context read
+00:44:23.722 before entry
+00:44:23.732 scenario start
+00:44:23.740 checkpoint: readYAMLmodel(1)
+00:44:25.486 checkpoint: removeReactions done
+00:44:25.615 checkpoint: source read
+00:44:25.774 checkpoint: addRxnsGenesMets returned
+00:44:25.776 checkpoint: counts done
+00:44:25.814 with_genes checkpoint returned
+00:44:25.815 checkpoint: readYAMLmodel(1)
+00:44:26.013 checkpoint: removeReactions done
+00:44:26.153 checkpoint: source read
+00:44:26.182 checkpoint: addRxnsGenesMets returned
+00:44:26.183 checkpoint: counts done
+00:44:26.198 without_genes checkpoint returned
+00:44:26.199 after entry
+00:44:26.200 before canonicalize
+00:44:26.217 document built
+00:44:26.220 fopen done
+00:44:26.228 jsonencode done
+00:44:26.229 fwrite done
+00:44:26.230 final fprintf done; leaving parity_run (cleanups next)
+00:44:26.395 finish.m reached (MATLAB exiting)

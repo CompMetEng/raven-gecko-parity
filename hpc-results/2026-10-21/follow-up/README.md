@@ -29,3 +29,21 @@ Ten runs, one job each, one after another: 9 `MATCH` in about 40 s, run 8 hung (
 | P9 `checkTasks` | two metabolites named `A` (reaction on `a2`): `ok=false`, so only the first match is constrained |
 
 Calls changed from the request: P3 uses `m` instead of `e`; P7 passes `prefix` and `path` by name.
+
+## 5. The hang, second round (`hang-hunt/`)
+
+With a trace in `parity_run.m`, `finish.m` and the scenario file (marks with timestamps), the scenario ran 40 times in a row (`sequential-40-summary.txt`) and 8 workers x 15 times at once on one node, each with its own copy of the checkout (`parallel-8x15-summary.txt`): 160 of 160 `MATCH`, no hang. A complete trace takes about 0.4 s from `scenario start` to `finish.m reached` (`example-trace.txt`).
+
+An earlier version of the parallel job had a setup error: the checkout copies had no sibling `RAVEN` folder, so MATLAB stopped at `readYAMLmodel` with an error. In 3 of 79 of those runs the MATLAB process was still alive 4 minutes after `finish.m` had run (`HANG-w*.txt`, `hang-trace-w*.txt`; node load about 20). All threads were waiting on locks or events at 0% CPU. So a MATLAB process can stall while exiting on a busy node. The hang of run 8 matches that picture (output finished, process idle), but it happened in a run that succeeded, so the match is partial. Support: moderate. A time limit per MATLAB attempt with one retry turns such a stall into a clean result.
+
+## 6. `replaceMets` fix (`replaceMets-fix/`)
+
+Patch against RAVEN `79a7d8c` (two files), run on MATLAB R2024b with GLPK:
+
+| Step | Result |
+| --- | --- |
+| A: new tests only, `replaceMets.m` unpatched | `tManipulation` 84 passed, 1 failed, 0 incomplete; `replaceMetsByNameLeavesUnrelatedDuplicatesAlone` fails, the other two new tests pass |
+| B: full patch | 85 passed, 0 failed, 0 incomplete; all three new tests pass |
+| C: `replace_metabolite_toy`, MATLAB against Python seed 0 only | `MATCH` |
+
+Applying needed `git apply --recount --ignore-whitespace`; `=&gt;` in two comments of `duplicateModel` was written as `=>`. Nothing else was changed. The RAVEN clone was restored to `79a7d8c` afterwards. Per-test rows: `tManipulation-A-tests-only.csv`, `tManipulation-B-full-patch.csv`.

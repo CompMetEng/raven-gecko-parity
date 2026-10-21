@@ -1,0 +1,23 @@
+worker 3 iteration 2 HANG on vera-r05-04, load 20.85 18.88 13.65
+matlab pid 2799509
+     18 MCR 0 interpret futex_do_wait 0
+     15 Catapult thread futex_do_wait thread)
+      7 MVM State Queue futex_do_wait State
+      6 GTP_4 futex_do_wait S
+      3 MCR Main thread futex_do_wait Main
+      2 ProductsInit futex_do_wait S
+      2 GTP_1 ep_poll S
+      1 TCPServ~1:31518 ep_poll S
+      1 SupportPackages futex_do_wait S
+      1 MCR 0 interpret __skb_wait_for_more_packets 0
+      1 MatlabPathMeta ep_poll S
+      1 MATLAB futex_do_wait S
+      1 GTP_3 futex_do_wait S
+      1 GTP_1 futex_do_wait S
+      1 FTP_1_0 futex_do_wait S
+      1 ED 0 dispatch t futex_do_wait 0
+      1 Connector[#4] futex_do_wait S
+      1 Connector[#3] futex_do_wait S
+      1 Connector[#2] futex_do_wait S
+      1 Connector[#1] futex_do_wait S
+      1 Catapult thread ep_poll thread)

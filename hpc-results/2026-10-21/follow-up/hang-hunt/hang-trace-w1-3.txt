@@ -1,0 +1,6 @@
+08:15:17.884 parity_run start
+08:15:17.917 context read
+08:15:18.026 before entry
+08:15:18.035 scenario start
+08:15:18.042 checkpoint: readYAMLmodel(1)
+08:15:18.909 finish.m reached (MATLAB exiting)
