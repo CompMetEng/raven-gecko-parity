@@ -41,6 +41,12 @@ def _task_record(task):
 
 def _bounded(triples, name_key):
     return [
-        {name_key: str(name), "lb": float(lb), "ub": float(ub)}
+        {name_key: str(name), "lb": _bound(lb), "ub": _bound(ub)}
         for name, lb, ub in triples
     ]
+
+
+def _bound(value):
+    # An empty CHANGED bound means "leave unchanged": None here, NaN on the
+    # MATLAB side.
+    return float("nan") if value is None else float(value)

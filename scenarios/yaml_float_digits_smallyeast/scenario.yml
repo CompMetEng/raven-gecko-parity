@@ -1,0 +1,40 @@
+id: yaml_float_digits_smallyeast
+pair: raven
+description: >-
+  How the YAML writers print non-integer numbers. Reaction bounds that are not
+  whole numbers are written by both sides with the shortest digits that read
+  back exactly, so 1/3 is 0.3333333333333333 on both.
+
+entries:
+  - writeYAMLmodel
+
+inputs:
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
+
+  # Bounds set directly on three reactions (no setParam, so that preparing the
+  # fixture cannot become the thing under test). Each value is a double that
+  # the two sides must print the same way:
+  #
+  #   PGI  lb 0.1 + 0.2 (0.30000000000000004, needs 17 digits)  ub 1/3
+  #   HXK  lb 1.5e-7 (exponent form, "1.5e-07")                  ub 2.5
+  #   PFK  lb -2/3                                               ub 1e16
+  #        (a whole number at the switch to exponent form: "1e+16")
+  bounds:
+    PGI:
+      lb: 0.30000000000000004
+      ub: 0.3333333333333333
+    HXK:
+      lb: 1.5e-7
+      ub: 2.5
+    PFK:
+      lb: -0.6666666666666666
+      ub: 1.0e+16
+
+# Compared: every line of the written file that holds a lower_bound or
+# upper_bound, in file order. The values come from the decimal strings above
+# on both sides, so they are bit-identical doubles; any difference is in how
+# they are printed.
+
+tolerance:
+  rel: 0.0
+  abs: 0.0
