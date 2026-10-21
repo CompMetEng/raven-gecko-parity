@@ -1,0 +1,6 @@
+	ID 	Description	Should Fail	IN	 in lb 	IN UB	OUT	OUT LB	OUT UB	EQU	EQU LB	EQU UB	changed rxn	CHANGED LB	CHANGED UB	PRINT FLUX	COMMENTS		
+	T1	flag false, trimmed list, empty bound	false	A[c]; B[c];		5							R1; R2		10	0			
+	T2	flag yes, leading empty item	yes	;C[c]	2								R3	-5		No			
+		continuation row of T2					D[c]	1					R4						
+	T3	flags 0 and TRUE	0				D[c]									TRUE	a comment		
+	T4	flags no and FALSE	no	E[c]						A[c] <=> B[c]						FALSE			

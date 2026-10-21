@@ -1,0 +1,33 @@
+id: task_list_edge_cases
+pair: raven
+description: >-
+  Parsing a task list that leans on the format's edge cases: flags written as
+  false, 0, no and FALSE, ';' lists with spaces and empty items, headers in
+  other case or with stray spaces, and empty CHANGED bounds.
+
+entries:
+  - parseTaskList
+
+inputs:
+  # Local fixture, tab-delimited like RAVEN's own. What each task exercises:
+  #
+  #   T1  SHOULD FAIL "false" and PRINT FLUX "0" are both false. IN has
+  #       "A[c]; B[c];": items are trimmed and the trailing empty item is
+  #       dropped. CHANGED LB is empty, so that bound is left unchanged
+  #       (NaN on the MATLAB side, None on the Python side, compared as
+  #       "NaN").
+  #   T2  SHOULD FAIL "yes" is true. IN has a leading empty item. PRINT FLUX
+  #       "No" is false. A continuation row adds an output and a changed
+  #       reaction with both bounds empty.
+  #   T3  SHOULD FAIL "0" is false, PRINT FLUX "TRUE" is true, comments set.
+  #   T4  SHOULD FAIL "no" and PRINT FLUX "FALSE" are false. A reversible
+  #       equation takes its default bounds.
+  #
+  # The header row uses "ID " with a trailing space, " in lb " with spaces and
+  # lower case, and "changed rxn" in lower case: both sides match headers
+  # ignoring case and surrounding whitespace.
+  task_file: tasks.txt
+
+tolerance:
+  rel: 0.0
+  abs: 0.0

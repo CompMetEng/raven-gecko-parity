@@ -233,7 +233,13 @@ entries:
       False on both check_tasks and find_task_essential_reactions, reproducing RAVEN''s verdict on all six of
       smallYeast''s tasks without callers having to pass it explicitly. checkTasks warns when the model has no
       ''unconstrained'' field, so RAVEN''s task framework assumes models that keep their exchange *metabolites*,
-      which a cobrapy model does not have.'
+      which a cobrapy model does not have.
+      Confirmed on MATLAB (RAVEN 79a7d8c, cluster batch 2026-10-21) - with two metabolites of the same
+      name[comp] RAVEN constrains only the first one and raven-toolbox constrains all of them, so the verdict
+      can differ.
+      Not changed, by decision: raven-toolbox keeps constraining all duplicates. Both sides now warn when a
+      task metabolite matches several model metabolites (CompMetEng/RAVEN#11, CompMetEng/raven-toolbox#181), so
+      the difference is visible. RAVEN''s CHANGED bounds that are NaN are skipped, as in raven-toolbox.'
   - matlab: cleanSheet
     status: subsumed
     reason: Excel cell-cleaning helper; inside io.export_to_excel.
@@ -471,6 +477,12 @@ entries:
     notes: from migration.md. Standard-GEM repo layout (model/<fmt>/…).
       Python also takes version= and date=, stamped into the exported copy; MATLAB models carry
       model.version / model.date as fields, so there it is set before the call.
+      Confirmed on MATLAB (RAVEN 79a7d8c, cluster batch 2026-10-21) - RAVEN's default formats are mat, txt,
+      xlsx, xml and yml and it also writes dependencies.txt. raven-toolbox defaults to yml, xml, mat and xlsx.
+      Review 2026-10-21, no change made. Suggestions are a default of all five formats on both sides, lossless
+      txt numbers (RAVEN's %6.2f rounds bounds to two decimals and raven-toolbox's %g keeps six digits), more
+      versions in dependencies.txt on the Python side, an optional read-back check, and a decision on which
+      .mat and .xlsx layout a repository should hold. Until decided, the default formats differ as noted above.
   - matlab: exportModel
     status: via-dependency
     reason: 'cobrapy covers this: cobra.io.write_sbml_model.'
@@ -957,6 +969,10 @@ entries:
     scenarios:
       - gpr_dnf_rules
     notes: Direct counterpart; see the standardizeGrRules repair below.
+      Confirmed on MATLAB (RAVEN 79a7d8c, cluster batch 2026-10-21) - both sides accept '&&', '||' and upper
+      case operators. A malformed rule such as 'A and' raises in RAVEN; raven-toolbox warns and returns True.
+      Aligned by CompMetEng/raven-toolbox#181 (is_dnf now raises ValueError on a malformed rule, as RAVEN
+      does). Blank rules are still True on both sides.
   - matlab: makeFakeBlastStructure
     python: raven_toolbox.reconstruction.homology.make_ortholog_hits
     status: parity
@@ -1053,8 +1069,20 @@ entries:
     status: parity
     scenarios:
       - task_list_parsing
+      - task_list_edge_cases
     notes: 'from migration.md. check_tasks reuses one model across the task list (no per-task model copy) ---
-      at genome scale ~12x faster than the copy-per-task implementation it replaced.'
+      at genome scale ~12x faster than the copy-per-task implementation it replaced.
+      Confirmed on MATLAB (RAVEN 79a7d8c, cluster batch 2026-10-21) - three differences in edge cases. SHOULD
+      FAIL and PRINT FLUX set to 0 count as set in RAVEN (only an empty cell is false), and as false in
+      raven-toolbox. RAVEN keeps empty and padded items of a '';'' list (A;;B gives an empty input, and ''A; B''
+      keeps the leading space), where raven-toolbox strips them. Empty CHANGED LB and UB stay empty in RAVEN
+      and become -1000 and 1000 in raven-toolbox.
+      Aligned by CompMetEng/RAVEN#11 and CompMetEng/raven-toolbox#181: RAVEN now reads 0, false and no (any
+      case) as false, trims the items of a '';'' list and drops empty ones, matches headers ignoring case and
+      whitespace, and stores an empty CHANGED LB or UB as NaN (leave the bound unchanged), which raven-toolbox
+      now does too (None) instead of defaulting to -1000 and 1000. A .xls task list is read by RAVEN only;
+      raven-toolbox raises a clear error. Covered by task_list_edge_cases. Until both are merged the
+      differences above hold.'
   - matlab: parseYAML
     status: subsumed
     reason: The RAVEN YAML tokeniser; inside io.read_yaml_model.
@@ -1191,12 +1219,21 @@ entries:
     status: parity
     scenarios:
       - remove_low_score_genes_smallyeast
+      - remove_low_score_genes_ties_smallyeast
     notes: 'from migration.md. Final gene-prune step of ftINIT. RAVEN''s own docstring example ("G1 or (G2 and G3
       and G4); Negative: G1, G2; New: G2 and G3 and G4") shows the tie-break behaviour: a complex with a
       negative-scored member is not stripped down member-by-member, only dropped as a whole alternative when its
       aggregate score (min of its members) loses to a competing alternative. NOT COVERED: an exact tie between
       two all-negative alternatives. RAVEN''s own docstring says the tie-break is random; the Python side
-      documents picking deterministically instead as a deliberate departure.'
+      documents picking deterministically instead as a deliberate departure.
+      Confirmed on MATLAB (RAVEN 79a7d8c, cluster batch 2026-10-21) - RAVEN''s tie-break is not random in
+      practice. It keeps the alphabetically first gene and writes the genes that survive in a rule in
+      alphabetical order, so ''G2 or G1'' with equal scores becomes ''G1''. raven-toolbox keeps the first gene in
+      rule order and keeps the rule order.
+      Aligned by CompMetEng/RAVEN#11: on a tie RAVEN now keeps the gene listed first in the rule, as
+      raven-toolbox does (tests pinned in CompMetEng/raven-toolbox#181). The tie is covered by
+      remove_low_score_genes_ties_smallyeast, so the NOT COVERED remark above no longer applies once #11 is
+      merged.'
   - matlab: removeMets
     python: raven_toolbox.manipulation.remove_metabolites
     status: parity
@@ -1273,7 +1310,15 @@ entries:
       and fixed while building this scenario: the first implementation passed the pre-merge
       replacement list to the duplicate-cleanup restriction, which went stale (empty) whenever
       the replacement itself was the metabolite merged away, silently skipping cleanup entirely;
-      fixed to track the actual post-merge survivor. MATCH.'
+      fixed to track the actual post-merge survivor. MATCH.
+      Confirmed on MATLAB (RAVEN 79a7d8c, cluster batch 2026-10-21) - NOT replicated exactly. By name RAVEN
+      deletes the replacement''s row and then finds the metabolite to restrict contractModel to by the id of
+      that deleted row, so the restriction is empty and contractModel merges every duplicate reaction in the
+      model, also ones that do not involve the merged metabolite. raven-toolbox restricts the clean-up as
+      described above. A RAVEN bug, so replace_metabolite_toy stays red until RAVEN is fixed.
+      Fixed in RAVEN by CompMetEng/RAVEN#11 (contractModel now restricted to the metabolite that is left;
+      MATLAB R2024b: tManipulation 85/85, replace_metabolite_toy MATCH). Until that is merged the scenario
+      stays red on RAVEN develop.'
   - matlab: reporterMetabolites
     python: raven_toolbox.analysis.reporter_metabolites
     status: parity
@@ -1522,6 +1567,7 @@ entries:
     status: parity
     scenarios:
       - yaml_roundtrip_smallyeast
+      - yaml_float_digits_smallyeast
     notes: 'Byte-identical output on both a minimal model and one exercising every optional field (inchis,
       deltaG, notes, references, confidence_score, rxnFrom, protein, multi-item subsystem, singleton and
       multi-value annotations), including sort_ids=true. A gene-less model writes `genes: []` (matching
@@ -1530,7 +1576,14 @@ entries:
       deliberate divergence from cobra''s own writer, which always includes it; nothing on either read side
       needs the key present. sort_ids=true previously diverged on compartments (write_yaml_model rebuilt it
       as a plain dict rather than an OrderedDict, dropping the !!omap tag readYAMLmodel.m keys its parsing
-      on) --- fixed in CompMetEng/raven-toolbox#124.'
+      on) --- fixed in CompMetEng/raven-toolbox#124.
+      Confirmed on MATLAB (RAVEN 79a7d8c, cluster batch 2026-10-21) - RAVEN writes floats with 15 significant
+      digits (1/3 as 0.333333333333333) and raven-toolbox with full precision. RAVEN refuses a metabolite with
+      an empty name (RAVEN:modelError); raven-toolbox writes the name as an empty string.
+      Aligned by CompMetEng/RAVEN#11 and CompMetEng/raven-toolbox#181: RAVEN writes the shortest digits that
+      read back exactly (1/3 as 0.3333333333333333), as raven-toolbox does, and raven-toolbox warns on a
+      metabolite with an empty name (RAVEN still refuses it). Covered by yaml_float_digits_smallyeast. Until
+      #11 is merged the float difference holds.'
   - python: raven_toolbox.analysis.CompareFluxesResult
     status: python-only
     reason: 'Result type. Wraps compare_fluxes'' changed-reaction DataFrame, the three id lists,

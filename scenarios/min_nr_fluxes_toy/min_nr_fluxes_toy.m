@@ -6,11 +6,14 @@ function results = min_nr_fluxes_toy(ctx)
 % run.py's _two_source_model(). See scenario.yml for why.
 %
 % getMinNrFluxes needs a MILP-capable solver; glpk (RAVEN's default) can't
-% do it and errors outright, so this switches to scip for the duration.
+% do it and errors outright. The scenario names the solver (matlab_solver), so
+% that both sides are demonstrably solving with the same one. The preference is
+% global and the nightly runs several scenarios in one MATLAB session, so
+% whatever was set is put back on the way out.
 
-prevSolver = getpref('RAVEN','solver');
-setRavenSolver('scip');
-cleanup = onCleanup(@() setRavenSolver(prevSolver));
+previousSolver = getpref('RAVEN', 'solver', '');
+restoreSolver = onCleanup(@() restore_solver(previousSolver));
+setRavenSolver(char(ctx.inputs.matlab_solver));
 
 toMinimize = ctx.inputs.to_minimize(:);
 scores = double(ctx.inputs.scores(:));
@@ -59,4 +62,11 @@ for i = 1:numel(model.rxns)
     fluxes.(model.rxns{i}) = round(x(i), 9);
 end
 out.fluxes = fluxes;
+end
+
+
+function restore_solver(previous)
+if ~isempty(previous)
+    setRavenSolver(previous);
+end
 end

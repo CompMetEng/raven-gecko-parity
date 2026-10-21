@@ -26,6 +26,13 @@ inputs:
     - -100
     - -1
 
+  # Named, not inherited. getMinNrFluxes is a MILP and glpk, RAVEN's default, cannot solve
+  # it; the MATLAB side used to ask for scip, which RAVEN ships only as a Windows binary,
+  # so on Linux that side never ran. Gurobi is what the nightly and the other solver
+  # scenarios use, and both sides are told the same one.
+  matlab_solver: gurobi
+  python_solver: gurobi
+
 # Reduced to structured, solver-tie-free data on both sides: which of
 # to_minimize ended up active (a set, not an ordered list -- MILP solvers
 # don't promise iteration order), and the flux vector. Not compared: the
