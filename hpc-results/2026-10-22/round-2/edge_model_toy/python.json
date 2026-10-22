@@ -1,0 +1,302 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "duplicate_names_written": true,
+    "irreversible": {
+      "genes": [
+        "G1",
+        "G2",
+        "G3",
+        "G9"
+      ],
+      "n_metabolites": 6,
+      "reactions": [
+        {
+          "clauses": [],
+          "lower_bound": 0.0,
+          "objective": 0.0,
+          "reaction": "R1",
+          "upper_bound": 1000.0
+        },
+        {
+          "clauses": [],
+          "lower_bound": 0.0,
+          "objective": 0.0,
+          "reaction": "R2",
+          "upper_bound": 0.0
+        },
+        {
+          "clauses": [],
+          "lower_bound": 0.0,
+          "objective": 0.0,
+          "reaction": "R2_REV",
+          "upper_bound": 1000.0
+        },
+        {
+          "clauses": [
+            [
+              "G1",
+              "G2"
+            ]
+          ],
+          "lower_bound": 0.0,
+          "objective": 1.0,
+          "reaction": "R3",
+          "upper_bound": 500.5
+        },
+        {
+          "clauses": [
+            [
+              "G1"
+            ],
+            [
+              "G3"
+            ]
+          ],
+          "lower_bound": 0.0,
+          "objective": 0.0,
+          "reaction": "R4",
+          "upper_bound": 1000.0
+        },
+        {
+          "clauses": [],
+          "lower_bound": 0.0,
+          "objective": 0.0,
+          "reaction": "R5",
+          "upper_bound": 10.0
+        },
+        {
+          "clauses": [],
+          "lower_bound": 0.0,
+          "objective": 0.0,
+          "reaction": "R5_REV",
+          "upper_bound": 10.0
+        },
+        {
+          "clauses": [],
+          "lower_bound": 0.0,
+          "objective": 0.0,
+          "reaction": "R6",
+          "upper_bound": 1000.0
+        }
+      ]
+    },
+    "removed_gene": {
+      "genes": [
+        "G2",
+        "G3",
+        "G9"
+      ],
+      "n_metabolites": 6,
+      "reactions": [
+        {
+          "clauses": [],
+          "lower_bound": 0.0,
+          "objective": 0.0,
+          "reaction": "R1",
+          "upper_bound": 1000.0
+        },
+        {
+          "clauses": [],
+          "lower_bound": -1000.0,
+          "objective": 0.0,
+          "reaction": "R2",
+          "upper_bound": 0.0
+        },
+        {
+          "clauses": [
+            [
+              "G3"
+            ]
+          ],
+          "lower_bound": 0.0,
+          "objective": 0.0,
+          "reaction": "R4",
+          "upper_bound": 1000.0
+        },
+        {
+          "clauses": [],
+          "lower_bound": -10.0,
+          "objective": 0.0,
+          "reaction": "R5",
+          "upper_bound": 10.0
+        },
+        {
+          "clauses": [],
+          "lower_bound": 0.0,
+          "objective": 0.0,
+          "reaction": "R6",
+          "upper_bound": 1000.0
+        }
+      ]
+    },
+    "reread": {
+      "genes": [
+        "G1",
+        "G2",
+        "G3",
+        "G9"
+      ],
+      "n_metabolites": 6,
+      "reactions": [
+        {
+          "clauses": [],
+          "lower_bound": 0.0,
+          "objective": 0.0,
+          "reaction": "R1",
+          "upper_bound": 1000.0
+        },
+        {
+          "clauses": [],
+          "lower_bound": -1000.0,
+          "objective": 0.0,
+          "reaction": "R2",
+          "upper_bound": 0.0
+        },
+        {
+          "clauses": [
+            [
+              "G1",
+              "G2"
+            ]
+          ],
+          "lower_bound": 0.0,
+          "objective": 1.0,
+          "reaction": "R3",
+          "upper_bound": 500.5
+        },
+        {
+          "clauses": [
+            [
+              "G1"
+            ],
+            [
+              "G3"
+            ]
+          ],
+          "lower_bound": 0.0,
+          "objective": 0.0,
+          "reaction": "R4",
+          "upper_bound": 1000.0
+        },
+        {
+          "clauses": [],
+          "lower_bound": -10.0,
+          "objective": 0.0,
+          "reaction": "R5",
+          "upper_bound": 10.0
+        },
+        {
+          "clauses": [],
+          "lower_bound": 0.0,
+          "objective": 0.0,
+          "reaction": "R6",
+          "upper_bound": 1000.0
+        }
+      ]
+    },
+    "yaml_lines": [
+      "!!omap",
+      "- metaData: !!omap",
+      "  - id: edge",
+      "  - name: edge",
+      "  - defaultLB: -1000.0",
+      "  - defaultUB: 1000.0",
+      "- metabolites:",
+      "  - !!omap",
+      "    - id: A_c",
+      "    - name: A",
+      "    - compartment: c",
+      "    - formula: C",
+      "  - !!omap",
+      "    - id: B_c",
+      "    - name: B",
+      "    - compartment: c",
+      "    - formula: C",
+      "  - !!omap",
+      "    - id: C_c",
+      "    - name: C",
+      "    - compartment: c",
+      "    - formula: C",
+      "  - !!omap",
+      "    - id: X1_c",
+      "    - name: X1",
+      "    - compartment: c",
+      "    - formula: C",
+      "  - !!omap",
+      "    - id: X2_c",
+      "    - name: X2",
+      "    - compartment: c",
+      "    - formula: C",
+      "  - !!omap",
+      "    - id: O_c",
+      "    - name: O",
+      "    - compartment: c",
+      "    - formula: C",
+      "- reactions:",
+      "  - !!omap",
+      "    - id: R1",
+      "    - name: supply",
+      "    - metabolites: !!omap",
+      "      - A_c: 1.0",
+      "    - lower_bound: 0.0",
+      "    - upper_bound: 1000.0",
+      "  - !!omap",
+      "    - id: R2",
+      "    - name: backward only",
+      "    - metabolites: !!omap",
+      "      - A_c: -1.0",
+      "      - B_c: 1.0",
+      "    - lower_bound: -1000.0",
+      "    - upper_bound: 0.0",
+      "  - !!omap",
+      "    - id: R3",
+      "    - name: complex step",
+      "    - metabolites: !!omap",
+      "      - B_c: -1.0",
+      "      - C_c: 1.0",
+      "    - lower_bound: 0.0",
+      "    - upper_bound: 500.5",
+      "    - gene_reaction_rule: G1 and G2",
+      "    - objective_coefficient: 1.0",
+      "  - !!omap",
+      "    - id: R4",
+      "    - name: \"\"",
+      "    - metabolites: !!omap",
+      "      - C_c: -1.0",
+      "    - lower_bound: 0.0",
+      "    - upper_bound: 1000.0",
+      "    - gene_reaction_rule: G3 or G1",
+      "  - !!omap",
+      "    - id: R5",
+      "    - name: to X1",
+      "    - metabolites: !!omap",
+      "      - B_c: -1.0",
+      "      - X1_c: 1.0",
+      "    - lower_bound: -10.0",
+      "    - upper_bound: 10.0",
+      "  - !!omap",
+      "    - id: R6",
+      "    - name: to X2",
+      "    - metabolites: !!omap",
+      "      - X1_c: -1.0",
+      "      - X2_c: -1.0",
+      "    - lower_bound: 0.0",
+      "    - upper_bound: 1000.0",
+      "- genes:",
+      "  - !!omap",
+      "    - id: G1",
+      "  - !!omap",
+      "    - id: G2",
+      "  - !!omap",
+      "    - id: G3",
+      "  - !!omap",
+      "    - id: G9",
+      "- compartments: !!omap",
+      "  - c: cytosol"
+    ]
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "edge_model_toy"
+}

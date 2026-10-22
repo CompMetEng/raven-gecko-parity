@@ -143,10 +143,25 @@ Eight new scenarios on hand-written inputs, run on RAVEN `f667229` (branch `fix/
 
 **`homology_toy`** (`getModelFromHomology`): `hom_a1_flag` (`(A or B) and C`, only `C` mapped): RAVEN keeps the unmapped subunit as `OLD_T_B and nC`, Python drops it and keeps `nC`. `hom_a2_drop`, `hom_a3_drop`: Python keeps the reaction with the mapped genes, RAVEN drops the reaction. `hom_b_t1t2` (`T1` has `R_T1` with gene `Y`, `T2` has `R_T2` with gene `X`; hits `Y` to `N1`, `X` to `N1` and `N2`; preferred order `T1`, `T2`): Python keeps `R_T1` and `R_T2` (rule `N2`), RAVEN only `R_T1`. `hom_c_t2t1` (two templates with one reaction id, preferred order given): RAVEN fails with "Input A of class double and input B of class cell must be cell arrays of character vectors"; Python renames the second reaction (`R1_T1`). `makeFakeBlastStructure` needs at least 10 pairs, so the MATLAB side pads the list with pairs of genes that no template has.
 
-**`curate_tables_toy`** (`curateModelFromTables`, two empty reactions plus the review's tables with `genes.tsv` extended to the genes in the rules): RAVEN links the two table reactions to the two existing reactions by `rxnIdx` (2 reactions); Python adds two new reactions (4). RAVEN reads the `metFormulas` header and the gene short names; Python does not. New ids: Python `M_1`, `R_0011`; RAVEN `M_0001`. Default bounds: RAVEN (-Inf, Inf), Python (-1000, 1000). With unpadded identifiers (`R_9`, `R_10`) RAVEN fails: `generateNewIds` sorts the identifiers as text, takes `9` as the largest and mints `R_10`, which exists.
+**`curate_tables_toy`** (`curateModelFromTables`, two empty reactions plus the review's tables with `genes.tsv` extended to the genes in the rules): Both sides add four reactions. RAVEN groups the coefficient rows of a table reaction by `rxnIdx` and name; Python grouped them by name only, so the two reactions called `hexokinase` collapsed into one stoichiometry. RAVEN reads the `metFormulas` header and the gene short names; Python does not. New ids: Python `M_1`, `R_0011`; RAVEN `M_0001`. Default bounds: RAVEN (-Inf, Inf), Python (-1000, 1000). With unpadded identifiers (`R_9`, `R_10`) RAVEN fails: `generateNewIds` sorts the identifiers as text, takes `9` as the largest and mints `R_10`, which exists.
 
 **`score_model_toy`** (`scoreModel`, first six genes with levels 0, missing, 1, 2, 10, missing): with threshold 1 the gene scores agree (-5, none, 0, 3.47, 10, none), but for 3 reactions whose genes have no level Python returns NaN where RAVEN returns the default -2 (7 reactions when all levels are missing). With threshold 0 RAVEN scores 10 for the levels 1, 2 and 10, -5 for the level 0 and nothing for the missing levels; Python scores -5 for all six genes, the missing ones included.
 
 **`export_for_git_toy`**: see above. The branches also give `Rxn id` as header and write an equation without a coefficient of 1.
 
 Not checked: ftINIT and `prepINITModel` (the two sides take different inputs: RAVEN expression data, Python reaction scores; an interface decision comes first), `setGAM`, `scaleBiomassPseudoreaction`, `reporterMetabolites`, `getUniProtScores`, T2 as a fixture shared by several scenarios (`edge_model_toy` covers the cases for YAML, `convertToIrrev` and `removeGenes`), T4 and T6.
+
+## 7. After the alignment (branches `parity/round-2`)
+
+Runs on RAVEN `7e80e11` and raven-toolbox `6e45b9e` (`round-2/<scenario>/` holds `status.txt`, `matlab.json`, `python.json`).
+
+| Scenario | Result |
+| --- | --- |
+| `gap_fill_toy`, `gap_fill_milp_toy` (milp_c made unambiguous), `homology_toy`, `curate_tables_toy` (sort key made identical on both sides), `score_model_toy`, `export_for_git_toy`, `merge_linear_toy`, `merge_models_smallyeast`, `init_scores_smallyeast` | `MATCH` |
+| `edge_model_toy` | `DIFFER`: duplicate metabolite names, orphan gene after `removeGenes`, YAML header and empty reaction names (decision D6 open) |
+| `model_manipulation_smallyeast` | `DIFFER`: after `expandModel` RAVEN puts the first clause in place of the reaction, Python appends every clause |
+| `add_reactions_from_equations_smallyeast` | `DIFFER`: gene order |
+| `simplify_order_toy` | `DIFFER`: surviving reaction of a linear chain, constrain-before-group order, reserved zero-bounded reaction, orphan metabolite |
+| `task_list_parsing` | `DIFFER`: ID in first column and comment-first rows raise in RAVEN, lowercase header bounds, orphan continuation row, bad number, `.xls` |
+
+`gap_fill_toy` hit the 1800 s MATLAB timeout twice in one run and matched when rerun; the cause of the hang is not known. MATLAB test classes: `tGapfilling` 41, `tManipulation` 87, `tReconstruction` 31, `tIO` 24 passed; `tINIT` 19 passed, 3 incomplete.

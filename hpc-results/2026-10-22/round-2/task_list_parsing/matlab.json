@@ -1,0 +1,328 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "edge_cases": {
+      "bad_number": {
+        "error": false,
+        "n_tasks": 1,
+        "tasks": [
+          {
+            "changed": [],
+            "comments": "\u03e8",
+            "description": "d",
+            "equations": [],
+            "id": "T1",
+            "inputs": [
+              {
+                "lb": 0,
+                "metabolite": "A[c]",
+                "ub": 1000
+              }
+            ],
+            "outputs": [
+              {
+                "lb": 1000,
+                "metabolite": "B[c]",
+                "ub": 1000
+              }
+            ],
+            "print_fluxes": true,
+            "should_fail": true
+          }
+        ]
+      },
+      "comment_first": {
+        "error": true
+      },
+      "id_first": {
+        "error": true
+      },
+      "lowercase": {
+        "error": false,
+        "n_tasks": 1,
+        "tasks": [
+          {
+            "changed": [],
+            "comments": "\u0000",
+            "description": "d",
+            "equations": [],
+            "id": "T1",
+            "inputs": [
+              {
+                "lb": 0,
+                "metabolite": "A[c]",
+                "ub": 0
+              }
+            ],
+            "outputs": [
+              {
+                "lb": 0,
+                "metabolite": "B[c]",
+                "ub": 0
+              }
+            ],
+            "print_fluxes": false,
+            "should_fail": false
+          }
+        ]
+      },
+      "orphan": {
+        "error": false,
+        "n_tasks": 2,
+        "tasks": [
+          {
+            "changed": [],
+            "comments": "\u0000",
+            "description": "",
+            "equations": [],
+            "id": "",
+            "inputs": [
+              {
+                "lb": 0,
+                "metabolite": "X[c]",
+                "ub": 0
+              }
+            ],
+            "outputs": [],
+            "print_fluxes": false,
+            "should_fail": false
+          },
+          {
+            "changed": [],
+            "comments": "\u0000",
+            "description": "d",
+            "equations": [],
+            "id": "T1",
+            "inputs": [
+              {
+                "lb": 0,
+                "metabolite": "A[c]",
+                "ub": 0
+              }
+            ],
+            "outputs": [
+              {
+                "lb": 0,
+                "metabolite": "B[c]",
+                "ub": 0
+              }
+            ],
+            "print_fluxes": false,
+            "should_fail": false
+          }
+        ]
+      },
+      "xls": {
+        "error": false,
+        "n_tasks": 2,
+        "tasks": [
+          {
+            "changed": [
+              {
+                "lb": 56.2,
+                "reaction": "ATP[a] + H2O[a] => ADP[a] + Pi[a] + H+[a]",
+                "ub": 60
+              }
+            ],
+            "comments": "Messed up reaction",
+            "description": "Aerobic rephosphorylation of ATP from glucose",
+            "equations": [
+              {
+                "equation": "ATP[c] + H2O[c] => ADP[c] + Pi[c] + H+[c]",
+                "lb": 30.2,
+                "ub": 30.6
+              }
+            ],
+            "id": "ER",
+            "inputs": [
+              {
+                "lb": 23.6,
+                "metabolite": "O2[s]",
+                "ub": 23.8
+              },
+              {
+                "lb": 23.6,
+                "metabolite": "glucose[s]",
+                "ub": 23.8
+              }
+            ],
+            "outputs": [
+              {
+                "lb": 26.1,
+                "metabolite": "H2O[s]",
+                "ub": 26.2
+              },
+              {
+                "lb": 26.1,
+                "metabolite": "CO2[s]",
+                "ub": 26.2
+              }
+            ],
+            "print_fluxes": true,
+            "should_fail": true
+          },
+          {
+            "changed": [],
+            "comments": "",
+            "description": "ATP de novo synthesis",
+            "equations": [
+              {
+                "equation": "ATP[c] + H2O[c] <=> ADP[c] + Pi[c] + H+[c]",
+                "lb": -1000,
+                "ub": 1000
+              }
+            ],
+            "id": "BS",
+            "inputs": [
+              {
+                "lb": 0,
+                "metabolite": "O2[s]",
+                "ub": 1000
+              },
+              {
+                "lb": 0,
+                "metabolite": "glucose[s]",
+                "ub": 1000
+              },
+              {
+                "lb": 0,
+                "metabolite": "NH3[s]",
+                "ub": 1000
+              },
+              {
+                "lb": 0,
+                "metabolite": "Pi[s]",
+                "ub": 1000
+              }
+            ],
+            "outputs": [
+              {
+                "lb": 0,
+                "metabolite": "H2O[s]",
+                "ub": 1.1
+              },
+              {
+                "lb": 0,
+                "metabolite": "CO2[s]",
+                "ub": 1.1
+              },
+              {
+                "lb": 1,
+                "metabolite": "ATP[c]",
+                "ub": 1.3
+              }
+            ],
+            "print_fluxes": false,
+            "should_fail": false
+          }
+        ]
+      }
+    },
+    "error": false,
+    "n_tasks": 2,
+    "tasks": [
+      {
+        "changed": [
+          {
+            "lb": 56.2,
+            "reaction": "ATP[a] + H2O[a] => ADP[a] + Pi[a] + H+[a]",
+            "ub": 60
+          }
+        ],
+        "comments": "Messed up reaction",
+        "description": "Aerobic rephosphorylation of ATP from glucose",
+        "equations": [
+          {
+            "equation": "ATP[c] + H2O[c] => ADP[c] + Pi[c] + H+[c]",
+            "lb": 30.2,
+            "ub": 30.6
+          }
+        ],
+        "id": "ER",
+        "inputs": [
+          {
+            "lb": 23.6,
+            "metabolite": "O2[s]",
+            "ub": 23.8
+          },
+          {
+            "lb": 23.6,
+            "metabolite": "glucose[s]",
+            "ub": 23.8
+          }
+        ],
+        "outputs": [
+          {
+            "lb": 26.1,
+            "metabolite": "H2O[s]",
+            "ub": 26.2
+          },
+          {
+            "lb": 26.1,
+            "metabolite": "CO2[s]",
+            "ub": 26.2
+          }
+        ],
+        "print_fluxes": true,
+        "should_fail": true
+      },
+      {
+        "changed": [],
+        "comments": "",
+        "description": "ATP de novo synthesis",
+        "equations": [
+          {
+            "equation": "ATP[c] + H2O[c] <=> ADP[c] + Pi[c] + H+[c]",
+            "lb": -1000,
+            "ub": 1000
+          }
+        ],
+        "id": "BS",
+        "inputs": [
+          {
+            "lb": 0,
+            "metabolite": "O2[s]",
+            "ub": 1000
+          },
+          {
+            "lb": 0,
+            "metabolite": "glucose[s]",
+            "ub": 1000
+          },
+          {
+            "lb": 0,
+            "metabolite": "NH3[s]",
+            "ub": 1000
+          },
+          {
+            "lb": 0,
+            "metabolite": "Pi[s]",
+            "ub": 1000
+          }
+        ],
+        "outputs": [
+          {
+            "lb": 0,
+            "metabolite": "H2O[s]",
+            "ub": 1.1
+          },
+          {
+            "lb": 0,
+            "metabolite": "CO2[s]",
+            "ub": 1.1
+          },
+          {
+            "lb": 1,
+            "metabolite": "ATP[c]",
+            "ub": 1.3
+          }
+        ],
+        "print_fluxes": false,
+        "should_fail": false
+      }
+    ]
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "task_list_parsing"
+}

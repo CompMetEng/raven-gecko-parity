@@ -1,0 +1,184 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "padded_ids": {
+      "genes": [
+        {
+          "gene": "G1",
+          "short_name": "GENE1"
+        },
+        {
+          "gene": "G2",
+          "short_name": "GENE2"
+        }
+      ],
+      "metabolite_ids": [
+        "M_0001",
+        "M_0002"
+      ],
+      "metabolites": [
+        {
+          "charge": -4,
+          "formula": "C10H12N5O13P3",
+          "metabolite": "atp[c]"
+        },
+        {
+          "charge": 0,
+          "formula": "C6H12O6",
+          "metabolite": "glucose[c]"
+        }
+      ],
+      "n_metabolites": 2,
+      "n_reactions": 4,
+      "reaction_ids": [
+        "R_0009",
+        "R_0010",
+        "R_0011",
+        "R_0012"
+      ],
+      "reactions": [
+        {
+          "clauses": [
+            [
+              "G1"
+            ]
+          ],
+          "lower_bound": "-Infinity",
+          "name": "hexokinase",
+          "stoichiometry": [
+            {
+              "coefficient": -1,
+              "metabolite": "atp[c]"
+            },
+            {
+              "coefficient": -1,
+              "metabolite": "glucose[c]"
+            }
+          ],
+          "upper_bound": "Infinity"
+        },
+        {
+          "clauses": [
+            [
+              "G2"
+            ]
+          ],
+          "lower_bound": "-Infinity",
+          "name": "hexokinase",
+          "stoichiometry": [
+            {
+              "coefficient": -2,
+              "metabolite": "glucose[c]"
+            }
+          ],
+          "upper_bound": "Infinity"
+        },
+        {
+          "clauses": [],
+          "lower_bound": 0,
+          "name": "",
+          "stoichiometry": [],
+          "upper_bound": 1000
+        },
+        {
+          "clauses": [],
+          "lower_bound": 0,
+          "name": "",
+          "stoichiometry": [],
+          "upper_bound": 1000
+        }
+      ]
+    },
+    "unpadded_ids": {
+      "genes": [
+        {
+          "gene": "G1",
+          "short_name": "GENE1"
+        },
+        {
+          "gene": "G2",
+          "short_name": "GENE2"
+        }
+      ],
+      "metabolite_ids": [
+        "M_0001",
+        "M_0002"
+      ],
+      "metabolites": [
+        {
+          "charge": -4,
+          "formula": "C10H12N5O13P3",
+          "metabolite": "atp[c]"
+        },
+        {
+          "charge": 0,
+          "formula": "C6H12O6",
+          "metabolite": "glucose[c]"
+        }
+      ],
+      "n_metabolites": 2,
+      "n_reactions": 4,
+      "reaction_ids": [
+        "R_10",
+        "R_11",
+        "R_12",
+        "R_9"
+      ],
+      "reactions": [
+        {
+          "clauses": [
+            [
+              "G1"
+            ]
+          ],
+          "lower_bound": "-Infinity",
+          "name": "hexokinase",
+          "stoichiometry": [
+            {
+              "coefficient": -1,
+              "metabolite": "atp[c]"
+            },
+            {
+              "coefficient": -1,
+              "metabolite": "glucose[c]"
+            }
+          ],
+          "upper_bound": "Infinity"
+        },
+        {
+          "clauses": [
+            [
+              "G2"
+            ]
+          ],
+          "lower_bound": "-Infinity",
+          "name": "hexokinase",
+          "stoichiometry": [
+            {
+              "coefficient": -2,
+              "metabolite": "glucose[c]"
+            }
+          ],
+          "upper_bound": "Infinity"
+        },
+        {
+          "clauses": [],
+          "lower_bound": 0,
+          "name": "",
+          "stoichiometry": [],
+          "upper_bound": 1000
+        },
+        {
+          "clauses": [],
+          "lower_bound": 0,
+          "name": "",
+          "stoichiometry": [],
+          "upper_bound": 1000
+        }
+      ]
+    }
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "curate_tables_toy"
+}

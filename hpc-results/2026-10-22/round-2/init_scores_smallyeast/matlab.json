@@ -1,0 +1,2128 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "gene_scores": {
+      "n_genes": 61,
+      "n_scored": 60,
+      "scores": [
+        {
+          "gene": "YAL054C",
+          "has_score": true,
+          "score": -5
+        },
+        {
+          "gene": "YBR117C",
+          "has_score": true,
+          "score": -5
+        },
+        {
+          "gene": "YBR196C",
+          "has_score": true,
+          "score": -1.8501798888754366
+        },
+        {
+          "gene": "YBR218C",
+          "has_score": true,
+          "score": 10
+        },
+        {
+          "gene": "YCL040W",
+          "has_score": true,
+          "score": 0.596254544571123
+        },
+        {
+          "gene": "YCR012W",
+          "has_score": true,
+          "score": 9.142973058023063
+        },
+        {
+          "gene": "YCR073W-A",
+          "has_score": false,
+          "score": 0
+        },
+        {
+          "gene": "YDL021W",
+          "has_score": true,
+          "score": 8.342481402753142
+        },
+        {
+          "gene": "YDL022W",
+          "has_score": true,
+          "score": 7.207045864745992
+        },
+        {
+          "gene": "YDL066W",
+          "has_score": true,
+          "score": -1.1363709784574323
+        },
+        {
+          "gene": "YDR050C",
+          "has_score": true,
+          "score": 7.698849519038182
+        },
+        {
+          "gene": "YER062C",
+          "has_score": true,
+          "score": 0.7367461688566666
+        },
+        {
+          "gene": "YER178W",
+          "has_score": true,
+          "score": 10
+        },
+        {
+          "gene": "YFR053C",
+          "has_score": true,
+          "score": -5
+        },
+        {
+          "gene": "YGL062W",
+          "has_score": true,
+          "score": 8.112747917777194
+        },
+        {
+          "gene": "YGL253W",
+          "has_score": true,
+          "score": 6.897740090682087
+        },
+        {
+          "gene": "YGL256W",
+          "has_score": true,
+          "score": 10
+        },
+        {
+          "gene": "YGR087C",
+          "has_score": true,
+          "score": 4.5764826891349655
+        },
+        {
+          "gene": "YGR192C",
+          "has_score": true,
+          "score": 3.328107685498086
+        },
+        {
+          "gene": "YGR240C",
+          "has_score": true,
+          "score": 5.310825498026144
+        },
+        {
+          "gene": "YGR244C",
+          "has_score": true,
+          "score": 6.268389563317064
+        },
+        {
+          "gene": "YGR248W",
+          "has_score": true,
+          "score": 0.04487858728963373
+        },
+        {
+          "gene": "YGR254W",
+          "has_score": true,
+          "score": 0.5175574663452053
+        },
+        {
+          "gene": "YGR256W",
+          "has_score": true,
+          "score": -5
+        },
+        {
+          "gene": "YHR163W",
+          "has_score": true,
+          "score": -5
+        },
+        {
+          "gene": "YHR174W",
+          "has_score": true,
+          "score": -0.4565067196755889
+        },
+        {
+          "gene": "YHR183W",
+          "has_score": true,
+          "score": -5
+        },
+        {
+          "gene": "YIL053W",
+          "has_score": true,
+          "score": 8.904580526030534
+        },
+        {
+          "gene": "YIL125W",
+          "has_score": true,
+          "score": -4.035312477502352
+        },
+        {
+          "gene": "YJL052W",
+          "has_score": true,
+          "score": -5
+        },
+        {
+          "gene": "YJL121C",
+          "has_score": true,
+          "score": 10
+        },
+        {
+          "gene": "YJR009C",
+          "has_score": true,
+          "score": 9.699018290232866
+        },
+        {
+          "gene": "YJR051W",
+          "has_score": true,
+          "score": 7.32321941157867
+        },
+        {
+          "gene": "YKL029C",
+          "has_score": true,
+          "score": 9.701222820909809
+        },
+        {
+          "gene": "YKL060C",
+          "has_score": true,
+          "score": 8.570323776098963
+        },
+        {
+          "gene": "YKL085W",
+          "has_score": true,
+          "score": 9.785864329389556
+        },
+        {
+          "gene": "YKL141W",
+          "has_score": true,
+          "score": -2.6800096019798163
+        },
+        {
+          "gene": "YKL152C",
+          "has_score": true,
+          "score": 9.73678304784793
+        },
+        {
+          "gene": "YKR097W",
+          "has_score": true,
+          "score": -5
+        },
+        {
+          "gene": "YLR044C",
+          "has_score": true,
+          "score": 10
+        },
+        {
+          "gene": "YLR134W",
+          "has_score": true,
+          "score": 10
+        },
+        {
+          "gene": "YLR153C",
+          "has_score": true,
+          "score": 3.5084515692704805
+        },
+        {
+          "gene": "YLR304C",
+          "has_score": true,
+          "score": -4.933543314595868
+        },
+        {
+          "gene": "YLR354C",
+          "has_score": true,
+          "score": -5
+        },
+        {
+          "gene": "YLR377C",
+          "has_score": true,
+          "score": -5
+        },
+        {
+          "gene": "YML042W",
+          "has_score": true,
+          "score": -5
+        },
+        {
+          "gene": "YMR205C",
+          "has_score": true,
+          "score": -0.13530422069150622
+        },
+        {
+          "gene": "YMR303C",
+          "has_score": true,
+          "score": 1.7229028750886022
+        },
+        {
+          "gene": "YNL241C",
+          "has_score": true,
+          "score": 7.508714202428909
+        },
+        {
+          "gene": "YNR001C",
+          "has_score": true,
+          "score": -5
+        },
+        {
+          "gene": "YNR034W",
+          "has_score": true,
+          "score": 6.478173668569215
+        },
+        {
+          "gene": "YOL056W",
+          "has_score": true,
+          "score": 4.287936397147352
+        },
+        {
+          "gene": "YOL059W",
+          "has_score": true,
+          "score": 1.293298555375519
+        },
+        {
+          "gene": "YOL086C",
+          "has_score": true,
+          "score": -5
+        },
+        {
+          "gene": "YOR095C",
+          "has_score": true,
+          "score": -5
+        },
+        {
+          "gene": "YOR142W",
+          "has_score": true,
+          "score": 10
+        },
+        {
+          "gene": "YOR347C",
+          "has_score": true,
+          "score": 10
+        },
+        {
+          "gene": "YPL061W",
+          "has_score": true,
+          "score": 4.874120760907549
+        },
+        {
+          "gene": "YPL262W",
+          "has_score": true,
+          "score": -5
+        },
+        {
+          "gene": "YPR001W",
+          "has_score": true,
+          "score": 1.0998220359325475
+        },
+        {
+          "gene": "YPR074C",
+          "has_score": true,
+          "score": 10
+        }
+      ]
+    },
+    "reaction_scores": {
+      "n_reactions": 53,
+      "scores": [
+        {
+          "reaction": "ACO",
+          "score": -4.933543314595868
+        },
+        {
+          "reaction": "ACS",
+          "score": 3.5084515692704805
+        },
+        {
+          "reaction": "ADH1",
+          "score": 10
+        },
+        {
+          "reaction": "ALD6",
+          "score": 4.874120760907549
+        },
+        {
+          "reaction": "ATPX",
+          "score": -2
+        },
+        {
+          "reaction": "CAT2",
+          "score": -5
+        },
+        {
+          "reaction": "CIT",
+          "score": 1.0998220359325475
+        },
+        {
+          "reaction": "CO2TRANS",
+          "score": -2
+        },
+        {
+          "reaction": "DAR",
+          "score": 7.207045864745992
+        },
+        {
+          "reaction": "ENO",
+          "score": 0.5175574663452053
+        },
+        {
+          "reaction": "FADHX",
+          "score": -2
+        },
+        {
+          "reaction": "FBA",
+          "score": 8.570323776098963
+        },
+        {
+          "reaction": "FBP",
+          "score": -5
+        },
+        {
+          "reaction": "FRDS2",
+          "score": 7.32321941157867
+        },
+        {
+          "reaction": "FUM1",
+          "score": -5
+        },
+        {
+          "reaction": "GLD",
+          "score": 9.699018290232866
+        },
+        {
+          "reaction": "GND",
+          "score": -5
+        },
+        {
+          "reaction": "GPM",
+          "score": 9.73678304784793
+        },
+        {
+          "reaction": "GPP",
+          "score": 8.904580526030534
+        },
+        {
+          "reaction": "GROWTH",
+          "score": -2
+        },
+        {
+          "reaction": "HXK",
+          "score": 6.897740090682087
+        },
+        {
+          "reaction": "IDP1",
+          "score": -1.1363709784574323
+        },
+        {
+          "reaction": "KGD1KGD2",
+          "score": -4.035312477502352
+        },
+        {
+          "reaction": "LSC1LSC2",
+          "score": 10
+        },
+        {
+          "reaction": "MAE1",
+          "score": 9.701222820909809
+        },
+        {
+          "reaction": "MDH1",
+          "score": 9.785864329389556
+        },
+        {
+          "reaction": "NADHX",
+          "score": -2
+        },
+        {
+          "reaction": "PCK",
+          "score": -5
+        },
+        {
+          "reaction": "PDC",
+          "score": 10
+        },
+        {
+          "reaction": "PDH",
+          "score": 10
+        },
+        {
+          "reaction": "PFK",
+          "score": 5.310825498026144
+        },
+        {
+          "reaction": "PGI",
+          "score": -1.8501798888754366
+        },
+        {
+          "reaction": "PGK",
+          "score": 9.142973058023063
+        },
+        {
+          "reaction": "PGL",
+          "score": 6.478173668569215
+        },
+        {
+          "reaction": "PYC",
+          "score": 10
+        },
+        {
+          "reaction": "PYK",
+          "score": 10
+        },
+        {
+          "reaction": "RPE",
+          "score": 10
+        },
+        {
+          "reaction": "RPI",
+          "score": -5
+        },
+        {
+          "reaction": "SDH",
+          "score": -2.6800096019798163
+        },
+        {
+          "reaction": "ShuttleX",
+          "score": -2
+        },
+        {
+          "reaction": "TAL1",
+          "score": -5
+        },
+        {
+          "reaction": "TKI1TKI2a",
+          "score": 10
+        },
+        {
+          "reaction": "TKI1TKI2b",
+          "score": 10
+        },
+        {
+          "reaction": "TPI",
+          "score": 7.698849519038182
+        },
+        {
+          "reaction": "ZWF",
+          "score": 7.508714202428909
+        },
+        {
+          "reaction": "acOUT",
+          "score": -2
+        },
+        {
+          "reaction": "biomassOUT",
+          "score": -2
+        },
+        {
+          "reaction": "co2OUT",
+          "score": -2
+        },
+        {
+          "reaction": "ethIN",
+          "score": -2
+        },
+        {
+          "reaction": "ethOUT",
+          "score": -2
+        },
+        {
+          "reaction": "glcIN",
+          "score": -2
+        },
+        {
+          "reaction": "glyOUT",
+          "score": -2
+        },
+        {
+          "reaction": "o2IN",
+          "score": -2
+        }
+      ]
+    },
+    "variants": {
+      "nan_level": {
+        "gene_scores": {
+          "n_genes": 61,
+          "n_scored": 58,
+          "scores": [
+            {
+              "gene": "YAL054C",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YBR117C",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YBR196C",
+              "has_score": false,
+              "score": 0
+            },
+            {
+              "gene": "YBR218C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YCL040W",
+              "has_score": true,
+              "score": 0.596254544571123
+            },
+            {
+              "gene": "YCR012W",
+              "has_score": true,
+              "score": 9.142973058023063
+            },
+            {
+              "gene": "YCR073W-A",
+              "has_score": false,
+              "score": 0
+            },
+            {
+              "gene": "YDL021W",
+              "has_score": true,
+              "score": 8.342481402753142
+            },
+            {
+              "gene": "YDL022W",
+              "has_score": true,
+              "score": 7.207045864745992
+            },
+            {
+              "gene": "YDL066W",
+              "has_score": true,
+              "score": -1.1363709784574323
+            },
+            {
+              "gene": "YDR050C",
+              "has_score": true,
+              "score": 7.698849519038182
+            },
+            {
+              "gene": "YER062C",
+              "has_score": true,
+              "score": 0.7367461688566666
+            },
+            {
+              "gene": "YER178W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YFR053C",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YGL062W",
+              "has_score": true,
+              "score": 8.112747917777194
+            },
+            {
+              "gene": "YGL253W",
+              "has_score": true,
+              "score": 6.897740090682087
+            },
+            {
+              "gene": "YGL256W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YGR087C",
+              "has_score": true,
+              "score": 4.5764826891349655
+            },
+            {
+              "gene": "YGR192C",
+              "has_score": true,
+              "score": 3.328107685498086
+            },
+            {
+              "gene": "YGR240C",
+              "has_score": true,
+              "score": 5.310825498026144
+            },
+            {
+              "gene": "YGR244C",
+              "has_score": true,
+              "score": 6.268389563317064
+            },
+            {
+              "gene": "YGR248W",
+              "has_score": true,
+              "score": 0.04487858728963373
+            },
+            {
+              "gene": "YGR254W",
+              "has_score": true,
+              "score": 0.5175574663452053
+            },
+            {
+              "gene": "YGR256W",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YHR163W",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YHR174W",
+              "has_score": true,
+              "score": -0.4565067196755889
+            },
+            {
+              "gene": "YHR183W",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YIL053W",
+              "has_score": true,
+              "score": 8.904580526030534
+            },
+            {
+              "gene": "YIL125W",
+              "has_score": true,
+              "score": -4.035312477502352
+            },
+            {
+              "gene": "YJL052W",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YJL121C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YJR009C",
+              "has_score": true,
+              "score": 9.699018290232866
+            },
+            {
+              "gene": "YJR051W",
+              "has_score": true,
+              "score": 7.32321941157867
+            },
+            {
+              "gene": "YKL029C",
+              "has_score": true,
+              "score": 9.701222820909809
+            },
+            {
+              "gene": "YKL060C",
+              "has_score": true,
+              "score": 8.570323776098963
+            },
+            {
+              "gene": "YKL085W",
+              "has_score": true,
+              "score": 9.785864329389556
+            },
+            {
+              "gene": "YKL141W",
+              "has_score": true,
+              "score": -2.6800096019798163
+            },
+            {
+              "gene": "YKL152C",
+              "has_score": true,
+              "score": 9.73678304784793
+            },
+            {
+              "gene": "YKR097W",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YLR044C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YLR134W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YLR153C",
+              "has_score": true,
+              "score": 3.5084515692704805
+            },
+            {
+              "gene": "YLR304C",
+              "has_score": true,
+              "score": -4.933543314595868
+            },
+            {
+              "gene": "YLR354C",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YLR377C",
+              "has_score": false,
+              "score": 0
+            },
+            {
+              "gene": "YML042W",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YMR205C",
+              "has_score": true,
+              "score": -0.13530422069150622
+            },
+            {
+              "gene": "YMR303C",
+              "has_score": true,
+              "score": 1.7229028750886022
+            },
+            {
+              "gene": "YNL241C",
+              "has_score": true,
+              "score": 7.508714202428909
+            },
+            {
+              "gene": "YNR001C",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YNR034W",
+              "has_score": true,
+              "score": 6.478173668569215
+            },
+            {
+              "gene": "YOL056W",
+              "has_score": true,
+              "score": 4.287936397147352
+            },
+            {
+              "gene": "YOL059W",
+              "has_score": true,
+              "score": 1.293298555375519
+            },
+            {
+              "gene": "YOL086C",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YOR095C",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YOR142W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YOR347C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YPL061W",
+              "has_score": true,
+              "score": 4.874120760907549
+            },
+            {
+              "gene": "YPL262W",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YPR001W",
+              "has_score": true,
+              "score": 1.0998220359325475
+            },
+            {
+              "gene": "YPR074C",
+              "has_score": true,
+              "score": 10
+            }
+          ]
+        },
+        "reaction_scores": {
+          "n_reactions": 53,
+          "scores": [
+            {
+              "reaction": "ACO",
+              "score": -4.933543314595868
+            },
+            {
+              "reaction": "ACS",
+              "score": 3.5084515692704805
+            },
+            {
+              "reaction": "ADH1",
+              "score": 10
+            },
+            {
+              "reaction": "ALD6",
+              "score": 4.874120760907549
+            },
+            {
+              "reaction": "ATPX",
+              "score": -2
+            },
+            {
+              "reaction": "CAT2",
+              "score": -5
+            },
+            {
+              "reaction": "CIT",
+              "score": 1.0998220359325475
+            },
+            {
+              "reaction": "CO2TRANS",
+              "score": -2
+            },
+            {
+              "reaction": "DAR",
+              "score": 7.207045864745992
+            },
+            {
+              "reaction": "ENO",
+              "score": 0.5175574663452053
+            },
+            {
+              "reaction": "FADHX",
+              "score": -2
+            },
+            {
+              "reaction": "FBA",
+              "score": 8.570323776098963
+            },
+            {
+              "reaction": "FBP",
+              "score": -2
+            },
+            {
+              "reaction": "FRDS2",
+              "score": 7.32321941157867
+            },
+            {
+              "reaction": "FUM1",
+              "score": -5
+            },
+            {
+              "reaction": "GLD",
+              "score": 9.699018290232866
+            },
+            {
+              "reaction": "GND",
+              "score": -5
+            },
+            {
+              "reaction": "GPM",
+              "score": 9.73678304784793
+            },
+            {
+              "reaction": "GPP",
+              "score": 8.904580526030534
+            },
+            {
+              "reaction": "GROWTH",
+              "score": -2
+            },
+            {
+              "reaction": "HXK",
+              "score": 6.897740090682087
+            },
+            {
+              "reaction": "IDP1",
+              "score": -1.1363709784574323
+            },
+            {
+              "reaction": "KGD1KGD2",
+              "score": -4.035312477502352
+            },
+            {
+              "reaction": "LSC1LSC2",
+              "score": 10
+            },
+            {
+              "reaction": "MAE1",
+              "score": 9.701222820909809
+            },
+            {
+              "reaction": "MDH1",
+              "score": 9.785864329389556
+            },
+            {
+              "reaction": "NADHX",
+              "score": -2
+            },
+            {
+              "reaction": "PCK",
+              "score": -5
+            },
+            {
+              "reaction": "PDC",
+              "score": 10
+            },
+            {
+              "reaction": "PDH",
+              "score": 10
+            },
+            {
+              "reaction": "PFK",
+              "score": 5.310825498026144
+            },
+            {
+              "reaction": "PGI",
+              "score": -2
+            },
+            {
+              "reaction": "PGK",
+              "score": 9.142973058023063
+            },
+            {
+              "reaction": "PGL",
+              "score": 6.478173668569215
+            },
+            {
+              "reaction": "PYC",
+              "score": 10
+            },
+            {
+              "reaction": "PYK",
+              "score": 10
+            },
+            {
+              "reaction": "RPE",
+              "score": 10
+            },
+            {
+              "reaction": "RPI",
+              "score": -5
+            },
+            {
+              "reaction": "SDH",
+              "score": -2.6800096019798163
+            },
+            {
+              "reaction": "ShuttleX",
+              "score": -2
+            },
+            {
+              "reaction": "TAL1",
+              "score": -5
+            },
+            {
+              "reaction": "TKI1TKI2a",
+              "score": 10
+            },
+            {
+              "reaction": "TKI1TKI2b",
+              "score": 10
+            },
+            {
+              "reaction": "TPI",
+              "score": 7.698849519038182
+            },
+            {
+              "reaction": "ZWF",
+              "score": 7.508714202428909
+            },
+            {
+              "reaction": "acOUT",
+              "score": -2
+            },
+            {
+              "reaction": "biomassOUT",
+              "score": -2
+            },
+            {
+              "reaction": "co2OUT",
+              "score": -2
+            },
+            {
+              "reaction": "ethIN",
+              "score": -2
+            },
+            {
+              "reaction": "ethOUT",
+              "score": -2
+            },
+            {
+              "reaction": "glcIN",
+              "score": -2
+            },
+            {
+              "reaction": "glyOUT",
+              "score": -2
+            },
+            {
+              "reaction": "o2IN",
+              "score": -2
+            }
+          ]
+        }
+      },
+      "zero_level": {
+        "gene_scores": {
+          "n_genes": 61,
+          "n_scored": 60,
+          "scores": [
+            {
+              "gene": "YAL054C",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YBR117C",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YBR196C",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YBR218C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YCL040W",
+              "has_score": true,
+              "score": 0.596254544571123
+            },
+            {
+              "gene": "YCR012W",
+              "has_score": true,
+              "score": 9.142973058023063
+            },
+            {
+              "gene": "YCR073W-A",
+              "has_score": false,
+              "score": 0
+            },
+            {
+              "gene": "YDL021W",
+              "has_score": true,
+              "score": 8.342481402753142
+            },
+            {
+              "gene": "YDL022W",
+              "has_score": true,
+              "score": 7.207045864745992
+            },
+            {
+              "gene": "YDL066W",
+              "has_score": true,
+              "score": -1.1363709784574323
+            },
+            {
+              "gene": "YDR050C",
+              "has_score": true,
+              "score": 7.698849519038182
+            },
+            {
+              "gene": "YER062C",
+              "has_score": true,
+              "score": 0.7367461688566666
+            },
+            {
+              "gene": "YER178W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YFR053C",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YGL062W",
+              "has_score": true,
+              "score": 8.112747917777194
+            },
+            {
+              "gene": "YGL253W",
+              "has_score": true,
+              "score": 6.897740090682087
+            },
+            {
+              "gene": "YGL256W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YGR087C",
+              "has_score": true,
+              "score": 4.5764826891349655
+            },
+            {
+              "gene": "YGR192C",
+              "has_score": true,
+              "score": 3.328107685498086
+            },
+            {
+              "gene": "YGR240C",
+              "has_score": true,
+              "score": 5.310825498026144
+            },
+            {
+              "gene": "YGR244C",
+              "has_score": true,
+              "score": 6.268389563317064
+            },
+            {
+              "gene": "YGR248W",
+              "has_score": true,
+              "score": 0.04487858728963373
+            },
+            {
+              "gene": "YGR254W",
+              "has_score": true,
+              "score": 0.5175574663452053
+            },
+            {
+              "gene": "YGR256W",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YHR163W",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YHR174W",
+              "has_score": true,
+              "score": -0.4565067196755889
+            },
+            {
+              "gene": "YHR183W",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YIL053W",
+              "has_score": true,
+              "score": 8.904580526030534
+            },
+            {
+              "gene": "YIL125W",
+              "has_score": true,
+              "score": -4.035312477502352
+            },
+            {
+              "gene": "YJL052W",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YJL121C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YJR009C",
+              "has_score": true,
+              "score": 9.699018290232866
+            },
+            {
+              "gene": "YJR051W",
+              "has_score": true,
+              "score": 7.32321941157867
+            },
+            {
+              "gene": "YKL029C",
+              "has_score": true,
+              "score": 9.701222820909809
+            },
+            {
+              "gene": "YKL060C",
+              "has_score": true,
+              "score": 8.570323776098963
+            },
+            {
+              "gene": "YKL085W",
+              "has_score": true,
+              "score": 9.785864329389556
+            },
+            {
+              "gene": "YKL141W",
+              "has_score": true,
+              "score": -2.6800096019798163
+            },
+            {
+              "gene": "YKL152C",
+              "has_score": true,
+              "score": 9.73678304784793
+            },
+            {
+              "gene": "YKR097W",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YLR044C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YLR134W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YLR153C",
+              "has_score": true,
+              "score": 3.5084515692704805
+            },
+            {
+              "gene": "YLR304C",
+              "has_score": true,
+              "score": -4.933543314595868
+            },
+            {
+              "gene": "YLR354C",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YLR377C",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YML042W",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YMR205C",
+              "has_score": true,
+              "score": -0.13530422069150622
+            },
+            {
+              "gene": "YMR303C",
+              "has_score": true,
+              "score": 1.7229028750886022
+            },
+            {
+              "gene": "YNL241C",
+              "has_score": true,
+              "score": 7.508714202428909
+            },
+            {
+              "gene": "YNR001C",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YNR034W",
+              "has_score": true,
+              "score": 6.478173668569215
+            },
+            {
+              "gene": "YOL056W",
+              "has_score": true,
+              "score": 4.287936397147352
+            },
+            {
+              "gene": "YOL059W",
+              "has_score": true,
+              "score": 1.293298555375519
+            },
+            {
+              "gene": "YOL086C",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YOR095C",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YOR142W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YOR347C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YPL061W",
+              "has_score": true,
+              "score": 4.874120760907549
+            },
+            {
+              "gene": "YPL262W",
+              "has_score": true,
+              "score": -5
+            },
+            {
+              "gene": "YPR001W",
+              "has_score": true,
+              "score": 1.0998220359325475
+            },
+            {
+              "gene": "YPR074C",
+              "has_score": true,
+              "score": 10
+            }
+          ]
+        },
+        "reaction_scores": {
+          "n_reactions": 53,
+          "scores": [
+            {
+              "reaction": "ACO",
+              "score": -4.933543314595868
+            },
+            {
+              "reaction": "ACS",
+              "score": 3.5084515692704805
+            },
+            {
+              "reaction": "ADH1",
+              "score": 10
+            },
+            {
+              "reaction": "ALD6",
+              "score": 4.874120760907549
+            },
+            {
+              "reaction": "ATPX",
+              "score": -2
+            },
+            {
+              "reaction": "CAT2",
+              "score": -5
+            },
+            {
+              "reaction": "CIT",
+              "score": 1.0998220359325475
+            },
+            {
+              "reaction": "CO2TRANS",
+              "score": -2
+            },
+            {
+              "reaction": "DAR",
+              "score": 7.207045864745992
+            },
+            {
+              "reaction": "ENO",
+              "score": 0.5175574663452053
+            },
+            {
+              "reaction": "FADHX",
+              "score": -2
+            },
+            {
+              "reaction": "FBA",
+              "score": 8.570323776098963
+            },
+            {
+              "reaction": "FBP",
+              "score": -5
+            },
+            {
+              "reaction": "FRDS2",
+              "score": 7.32321941157867
+            },
+            {
+              "reaction": "FUM1",
+              "score": -5
+            },
+            {
+              "reaction": "GLD",
+              "score": 9.699018290232866
+            },
+            {
+              "reaction": "GND",
+              "score": -5
+            },
+            {
+              "reaction": "GPM",
+              "score": 9.73678304784793
+            },
+            {
+              "reaction": "GPP",
+              "score": 8.904580526030534
+            },
+            {
+              "reaction": "GROWTH",
+              "score": -2
+            },
+            {
+              "reaction": "HXK",
+              "score": 6.897740090682087
+            },
+            {
+              "reaction": "IDP1",
+              "score": -1.1363709784574323
+            },
+            {
+              "reaction": "KGD1KGD2",
+              "score": -4.035312477502352
+            },
+            {
+              "reaction": "LSC1LSC2",
+              "score": 10
+            },
+            {
+              "reaction": "MAE1",
+              "score": 9.701222820909809
+            },
+            {
+              "reaction": "MDH1",
+              "score": 9.785864329389556
+            },
+            {
+              "reaction": "NADHX",
+              "score": -2
+            },
+            {
+              "reaction": "PCK",
+              "score": -5
+            },
+            {
+              "reaction": "PDC",
+              "score": 10
+            },
+            {
+              "reaction": "PDH",
+              "score": 10
+            },
+            {
+              "reaction": "PFK",
+              "score": 5.310825498026144
+            },
+            {
+              "reaction": "PGI",
+              "score": -5
+            },
+            {
+              "reaction": "PGK",
+              "score": 9.142973058023063
+            },
+            {
+              "reaction": "PGL",
+              "score": 6.478173668569215
+            },
+            {
+              "reaction": "PYC",
+              "score": 10
+            },
+            {
+              "reaction": "PYK",
+              "score": 10
+            },
+            {
+              "reaction": "RPE",
+              "score": 10
+            },
+            {
+              "reaction": "RPI",
+              "score": -5
+            },
+            {
+              "reaction": "SDH",
+              "score": -2.6800096019798163
+            },
+            {
+              "reaction": "ShuttleX",
+              "score": -2
+            },
+            {
+              "reaction": "TAL1",
+              "score": -5
+            },
+            {
+              "reaction": "TKI1TKI2a",
+              "score": 10
+            },
+            {
+              "reaction": "TKI1TKI2b",
+              "score": 10
+            },
+            {
+              "reaction": "TPI",
+              "score": 7.698849519038182
+            },
+            {
+              "reaction": "ZWF",
+              "score": 7.508714202428909
+            },
+            {
+              "reaction": "acOUT",
+              "score": -2
+            },
+            {
+              "reaction": "biomassOUT",
+              "score": -2
+            },
+            {
+              "reaction": "co2OUT",
+              "score": -2
+            },
+            {
+              "reaction": "ethIN",
+              "score": -2
+            },
+            {
+              "reaction": "ethOUT",
+              "score": -2
+            },
+            {
+              "reaction": "glcIN",
+              "score": -2
+            },
+            {
+              "reaction": "glyOUT",
+              "score": -2
+            },
+            {
+              "reaction": "o2IN",
+              "score": -2
+            }
+          ]
+        }
+      },
+      "zero_reference": {
+        "gene_scores": {
+          "n_genes": 61,
+          "n_scored": 60,
+          "scores": [
+            {
+              "gene": "YAL054C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YBR117C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YBR196C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YBR218C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YCL040W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YCR012W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YCR073W-A",
+              "has_score": false,
+              "score": 0
+            },
+            {
+              "gene": "YDL021W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YDL022W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YDL066W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YDR050C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YER062C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YER178W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YFR053C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YGL062W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YGL253W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YGL256W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YGR087C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YGR192C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YGR240C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YGR244C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YGR248W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YGR254W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YGR256W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YHR163W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YHR174W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YHR183W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YIL053W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YIL125W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YJL052W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YJL121C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YJR009C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YJR051W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YKL029C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YKL060C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YKL085W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YKL141W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YKL152C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YKR097W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YLR044C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YLR134W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YLR153C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YLR304C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YLR354C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YLR377C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YML042W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YMR205C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YMR303C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YNL241C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YNR001C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YNR034W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YOL056W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YOL059W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YOL086C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YOR095C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YOR142W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YOR347C",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YPL061W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YPL262W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YPR001W",
+              "has_score": true,
+              "score": 10
+            },
+            {
+              "gene": "YPR074C",
+              "has_score": true,
+              "score": 10
+            }
+          ]
+        },
+        "reaction_scores": {
+          "n_reactions": 53,
+          "scores": [
+            {
+              "reaction": "ACO",
+              "score": 10
+            },
+            {
+              "reaction": "ACS",
+              "score": 10
+            },
+            {
+              "reaction": "ADH1",
+              "score": 10
+            },
+            {
+              "reaction": "ALD6",
+              "score": 10
+            },
+            {
+              "reaction": "ATPX",
+              "score": -2
+            },
+            {
+              "reaction": "CAT2",
+              "score": 10
+            },
+            {
+              "reaction": "CIT",
+              "score": 10
+            },
+            {
+              "reaction": "CO2TRANS",
+              "score": -2
+            },
+            {
+              "reaction": "DAR",
+              "score": 10
+            },
+            {
+              "reaction": "ENO",
+              "score": 10
+            },
+            {
+              "reaction": "FADHX",
+              "score": -2
+            },
+            {
+              "reaction": "FBA",
+              "score": 10
+            },
+            {
+              "reaction": "FBP",
+              "score": 10
+            },
+            {
+              "reaction": "FRDS2",
+              "score": 10
+            },
+            {
+              "reaction": "FUM1",
+              "score": 10
+            },
+            {
+              "reaction": "GLD",
+              "score": 10
+            },
+            {
+              "reaction": "GND",
+              "score": 10
+            },
+            {
+              "reaction": "GPM",
+              "score": 10
+            },
+            {
+              "reaction": "GPP",
+              "score": 10
+            },
+            {
+              "reaction": "GROWTH",
+              "score": -2
+            },
+            {
+              "reaction": "HXK",
+              "score": 10
+            },
+            {
+              "reaction": "IDP1",
+              "score": 10
+            },
+            {
+              "reaction": "KGD1KGD2",
+              "score": 10
+            },
+            {
+              "reaction": "LSC1LSC2",
+              "score": 10
+            },
+            {
+              "reaction": "MAE1",
+              "score": 10
+            },
+            {
+              "reaction": "MDH1",
+              "score": 10
+            },
+            {
+              "reaction": "NADHX",
+              "score": -2
+            },
+            {
+              "reaction": "PCK",
+              "score": 10
+            },
+            {
+              "reaction": "PDC",
+              "score": 10
+            },
+            {
+              "reaction": "PDH",
+              "score": 10
+            },
+            {
+              "reaction": "PFK",
+              "score": 10
+            },
+            {
+              "reaction": "PGI",
+              "score": 10
+            },
+            {
+              "reaction": "PGK",
+              "score": 10
+            },
+            {
+              "reaction": "PGL",
+              "score": 10
+            },
+            {
+              "reaction": "PYC",
+              "score": 10
+            },
+            {
+              "reaction": "PYK",
+              "score": 10
+            },
+            {
+              "reaction": "RPE",
+              "score": 10
+            },
+            {
+              "reaction": "RPI",
+              "score": 10
+            },
+            {
+              "reaction": "SDH",
+              "score": 10
+            },
+            {
+              "reaction": "ShuttleX",
+              "score": -2
+            },
+            {
+              "reaction": "TAL1",
+              "score": 10
+            },
+            {
+              "reaction": "TKI1TKI2a",
+              "score": 10
+            },
+            {
+              "reaction": "TKI1TKI2b",
+              "score": 10
+            },
+            {
+              "reaction": "TPI",
+              "score": 10
+            },
+            {
+              "reaction": "ZWF",
+              "score": 10
+            },
+            {
+              "reaction": "acOUT",
+              "score": -2
+            },
+            {
+              "reaction": "biomassOUT",
+              "score": -2
+            },
+            {
+              "reaction": "co2OUT",
+              "score": -2
+            },
+            {
+              "reaction": "ethIN",
+              "score": -2
+            },
+            {
+              "reaction": "ethOUT",
+              "score": -2
+            },
+            {
+              "reaction": "glcIN",
+              "score": -2
+            },
+            {
+              "reaction": "glyOUT",
+              "score": -2
+            },
+            {
+              "reaction": "o2IN",
+              "score": -2
+            }
+          ]
+        }
+      }
+    }
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "init_scores_smallyeast"
+}

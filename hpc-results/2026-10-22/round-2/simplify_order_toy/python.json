@@ -1,0 +1,231 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "duplicates_and_dead_end": {
+      "bounds": [
+        {
+          "lower_bound": 0.0,
+          "reaction": "IN",
+          "upper_bound": 1000.0
+        },
+        {
+          "lower_bound": 0.0,
+          "reaction": "R1",
+          "upper_bound": 1000.0
+        },
+        {
+          "lower_bound": 0.0,
+          "reaction": "OUT",
+          "upper_bound": 1000.0
+        }
+      ],
+      "genes": [],
+      "metabolites": [
+        "A",
+        "B"
+      ],
+      "reactions": [
+        "IN",
+        "R1",
+        "OUT"
+      ],
+      "stoichiometry": [
+        {
+          "coefficient": 1.0,
+          "metabolite": "A",
+          "reaction": "IN"
+        },
+        {
+          "coefficient": -1.0,
+          "metabolite": "A",
+          "reaction": "R1"
+        },
+        {
+          "coefficient": 1.0,
+          "metabolite": "B",
+          "reaction": "R1"
+        },
+        {
+          "coefficient": -1.0,
+          "metabolite": "B",
+          "reaction": "OUT"
+        }
+      ]
+    },
+    "group_chain": {
+      "bounds": [
+        {
+          "lower_bound": 0.0,
+          "reaction": "IN",
+          "upper_bound": 1000.0
+        },
+        {
+          "lower_bound": 0.0,
+          "reaction": "R3",
+          "upper_bound": 1000.0
+        },
+        {
+          "lower_bound": 0.0,
+          "reaction": "OUT",
+          "upper_bound": 1000.0
+        }
+      ],
+      "genes": [],
+      "metabolites": [
+        "M0",
+        "M3"
+      ],
+      "reactions": [
+        "IN",
+        "R3",
+        "OUT"
+      ],
+      "stoichiometry": [
+        {
+          "coefficient": 1.0,
+          "metabolite": "M0",
+          "reaction": "IN"
+        },
+        {
+          "coefficient": -1.0,
+          "metabolite": "M0",
+          "reaction": "R3"
+        },
+        {
+          "coefficient": 1.0,
+          "metabolite": "M3",
+          "reaction": "R3"
+        },
+        {
+          "coefficient": -1.0,
+          "metabolite": "M3",
+          "reaction": "OUT"
+        }
+      ]
+    },
+    "group_then_constrain": {
+      "bounds": [
+        {
+          "lower_bound": 0.0,
+          "reaction": "IN",
+          "upper_bound": 1000.0
+        },
+        {
+          "lower_bound": 0.0,
+          "reaction": "R1",
+          "upper_bound": 1000.0
+        },
+        {
+          "lower_bound": 0.0,
+          "reaction": "OUT",
+          "upper_bound": 1000.0
+        },
+        {
+          "lower_bound": 0.0,
+          "reaction": "R1_REV",
+          "upper_bound": 1000.0
+        }
+      ],
+      "genes": [],
+      "metabolites": [
+        "A",
+        "B"
+      ],
+      "reactions": [
+        "IN",
+        "R1",
+        "OUT",
+        "R1_REV"
+      ],
+      "stoichiometry": [
+        {
+          "coefficient": 1.0,
+          "metabolite": "A",
+          "reaction": "IN"
+        },
+        {
+          "coefficient": -1.0,
+          "metabolite": "A",
+          "reaction": "R1"
+        },
+        {
+          "coefficient": 1.0,
+          "metabolite": "B",
+          "reaction": "R1"
+        },
+        {
+          "coefficient": -1.0,
+          "metabolite": "B",
+          "reaction": "OUT"
+        },
+        {
+          "coefficient": 1.0,
+          "metabolite": "A",
+          "reaction": "R1_REV"
+        },
+        {
+          "coefficient": -1.0,
+          "metabolite": "B",
+          "reaction": "R1_REV"
+        }
+      ]
+    },
+    "zero_interval_reserved": {
+      "bounds": [
+        {
+          "lower_bound": 0.0,
+          "reaction": "IN",
+          "upper_bound": 1000.0
+        },
+        {
+          "lower_bound": 0.0,
+          "reaction": "R1",
+          "upper_bound": 1000.0
+        },
+        {
+          "lower_bound": 0.0,
+          "reaction": "OUT",
+          "upper_bound": 1000.0
+        }
+      ],
+      "genes": [
+        "g1"
+      ],
+      "metabolites": [
+        "A",
+        "B",
+        "ORPH"
+      ],
+      "reactions": [
+        "IN",
+        "R1",
+        "OUT"
+      ],
+      "stoichiometry": [
+        {
+          "coefficient": 1.0,
+          "metabolite": "A",
+          "reaction": "IN"
+        },
+        {
+          "coefficient": -1.0,
+          "metabolite": "A",
+          "reaction": "R1"
+        },
+        {
+          "coefficient": 1.0,
+          "metabolite": "B",
+          "reaction": "R1"
+        },
+        {
+          "coefficient": -1.0,
+          "metabolite": "B",
+          "reaction": "OUT"
+        }
+      ]
+    }
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "simplify_order_toy"
+}
