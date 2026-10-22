@@ -300,6 +300,53 @@ def cmd_compare(args: argparse.Namespace, config: Config) -> int:
     return 1
 
 
+def cmd_seeds(args: argparse.Namespace, config: Config) -> int:
+    """Run the Python side of scenarios under several hash seeds and require the same result."""
+    import os
+    import subprocess
+    import sys
+    import tempfile
+
+    root = _scenario_root(config)
+    scenarios = [load_scenario(root / name) for name in args.scenarios] or list_scenarios(root, args.pair)
+    code = "import sys; from parity.cli import main; sys.exit(main(sys.argv[1:]))"
+    failed = False
+    for scenario in scenarios:
+        documents = {}
+        with tempfile.TemporaryDirectory(prefix="parity_seeds_") as workdir:
+            for seed in args.seeds:
+                target = Path(workdir) / f"seed{seed}.json"
+                command = [sys.executable, "-c", code]
+                if args.config:
+                    command += ["--config", args.config]
+                command += ["run", scenario.id, "--impl", "python", "-o", str(target)]
+                env = {**os.environ, "PYTHONHASHSEED": str(seed)}
+                done = subprocess.run(command, env=env, capture_output=True, text=True)
+                if done.returncode != 0:
+                    print(f"{scenario.id}: seed {seed} failed (exit {done.returncode})")
+                    print(done.stderr.strip()[-400:])
+                    failed = True
+                    break
+                documents[seed] = json.loads(target.read_text(encoding="utf-8"))
+        if len(documents) != len(args.seeds):
+            continue
+        first = args.seeds[0]
+        differing = []
+        for seed in args.seeds[1:]:
+            differences = compare_results(documents[first], documents[seed], scenario.tolerance)
+            if differences:
+                differing.append((seed, differences))
+        if not differing:
+            print(f"{scenario.id}: same result under seeds {', '.join(map(str, args.seeds))}")
+            continue
+        failed = True
+        for seed, differences in differing:
+            print(f"{scenario.id}: seed {seed} differs from seed {first} ({len(differences)} difference(s))")
+            for difference in differences[: args.limit]:
+                print(difference.format())
+    return 1 if failed else 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="parity", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument(
@@ -382,6 +429,16 @@ def build_parser() -> argparse.ArgumentParser:
     collect.add_argument("scenario")
     collect.add_argument("-o", "--output", help="result JSON path (default: results/matlab/<scenario>.json)")
     collect.set_defaults(func=cmd_collect)
+
+    seeds = sub.add_parser(
+        "seeds",
+        help="run the Python side under several PYTHONHASHSEED values and compare the results",
+    )
+    seeds.add_argument("scenarios", nargs="*", help="scenario ids (default: all, or those of --pair)")
+    seeds.add_argument("--pair", help="only scenarios of this pair")
+    seeds.add_argument("--seeds", type=int, nargs="+", default=[0, 1, 2, 3], help="hash seeds (default: 0 1 2 3)")
+    seeds.add_argument("--limit", type=int, default=10, help="differences to print per seed")
+    seeds.set_defaults(func=cmd_seeds)
 
     compare = sub.add_parser("compare", help="diff two scenario result files")
     compare.add_argument("left")
