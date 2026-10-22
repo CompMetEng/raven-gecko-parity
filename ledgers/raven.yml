@@ -582,7 +582,13 @@ entries:
       lower-risk than the core LP construction the scenario above exercises.'
   - matlab: findPotentialErrors
     status: subsumed
-    reason: Structural checks folded into utils.check_model's report.
+    reason: 'Non-DNF GPR lint. The Python counterpart is utils.find_non_dnf_grrules, which the standardizeGrRules
+      row already holds, so this row cannot name it (a Python export is claimed by one row). It is not folded into
+      utils.check_model. find_potential_errors_toy compares the flagged reactions of both on thirteen rules
+      (bracketed DNF, an OR below an AND at different depths, gene ids containing "and" or "or", an empty rule)
+      and they match.'
+    scenarios:
+      - find_potential_errors_toy
   - matlab: fitParameters
     python: raven_toolbox.biomass.fit_parameters
     status: parity
@@ -1366,10 +1372,18 @@ entries:
     notes: from migration.md. Exact closed-form background replaces RAVEN's Monte-Carlo (RM1 in IMPROVEMENTS).
   - matlab: rescaleModelForINIT
     status: subsumed
-    reason: Numerical preconditioning inside the ftINIT preparation, part of prep_init_model.
+    reason: 'Numerical preconditioning inside the ftINIT preparation. Python has it as init.prep.rescale_for_init
+      (not exported), called by prep_init_model. rescale_for_init_toy gives the same coefficients on both sides
+      (cap at maxStoichDiff times the smallest coefficient, then mean 1) but the bounds differ: rescale_for_init
+      also resets every non-zero bound to +-1000, which RAVEN does in prepINITModel after the call, so a bound of
+      -500 or 800 comes back as -1000 or 1000 from Python and unchanged from rescaleModelForINIT.'
+    scenarios:
+      - rescale_for_init_toy
   - matlab: reverseRxns
     status: subsumed
-    reason: Direction-flipping helper used by the INIT preprocessing.
+    reason: 'Direction-flipping helper used by the INIT preprocessing. Python has no function of its own: the flip
+      is written inline in init.prep (_orient_forward) and in manipulation.constrain_reversible_reactions, so it
+      is compared through ftinit_toy and simplify_order_toy, not by itself.'
   - matlab: runDynamicFBA
     status: matlab-only
     reason: 'Not ported: maintained Python packages already cover dynamic FBA (dfba, reframed, mewpy).'
@@ -1407,7 +1421,11 @@ entries:
       both.'
   - matlab: sampleChebyshevCenter
     status: subsumed
-    reason: Interior-point start for CHRR; the private _chebyshev_center, over scipy linprog.
+    reason: 'Interior-point start for CHRR; the private _chebyshev_center, over scipy linprog. chebyshev_center_toy
+      solves the same LP on both sides for a rectangle, a square, a triangle and a 3-D simplex: the inscribed radius
+      matches in all four, and so does the centre where it is unique.'
+    scenarios:
+      - chebyshev_center_toy
   - matlab: sampleCHRR
     status: subsumed
     reason: CHRR is reached through analysis.random_sampling(method='chrr'); the implementation is the private
@@ -1438,6 +1456,7 @@ entries:
     scenarios:
       - init_scores_smallyeast
       - score_model_toy
+      - hpa_scores_toy
     notes: 'Gene scores to reaction scores via the GPR. RAVEN#746 folded the old thin scoreModel.m wrapper into scoreComplexModel.m
       and renamed the result scoreModel; this row now names the renamed function and its behavior is unchanged by the
       fold. Scope differs from score_reactions_from_genes: scoreModel also derives the gene scores from HPA or array
@@ -1446,7 +1465,9 @@ entries:
       the capability rather than exposing it as a separate entry point. Only the arrayData path has a Python counterpart
       of its own; the HPA path''s median/average aggregators do not. score_model_toy compares expression data against
       a threshold: a zero reference (a positive level scores +10, 0 against 0 scores -5), a missing level (the gene
-      gets no score) and a rule whose genes have no score (-2).'
+      gets no score) and a rule whose genes have no score (-2). hpa_scores_toy compares the HPA gene scores (best
+      and average over cell types, one cell type, another tissue): they agree except for the level "None", which
+      RAVEN scores -8 and hpa_gene_scores drops.'
   - matlab: setExchangeBounds
     python: raven_toolbox.manipulation.set_exchange_bounds
     status: parity
@@ -1601,17 +1622,15 @@ entries:
     status: subsumed
     reason: Sheet writer; inside io.export_to_excel.
   - matlab: writeFasta
-    status: subsumed
-    reason: 'Generic {Header,Sequence} struct-array FASTA writer. Briefly removed as unreferenced,
-      then restored (SysBioChalmers/RAVEN#711, #728) once processProteinFastaFile needed it
-      again. raven_toolbox.localization.write_fasta (below) covers the practical need on the
-      Python side -- writing sequences for a localization-prediction tool -- with a different,
-      more specific shape (dict of id -> sequence, DeepLoc batching, whitespace-in-id
-      validation), not a like-for-like port of this one.'
-  - python: raven_toolbox.localization.write_fasta
-    status: python-only
-    reason: 'No MATLAB counterpart to this specific shape: writeFasta.m (see above) is a plain
-      struct-array writer with no batching or id validation.'
+    python: raven_toolbox.localization.write_fasta
+    status: parity
+    scenarios:
+      - write_fasta_toy
+    notes: 'Generic {Header,Sequence} struct-array FASTA writer (briefly removed as unreferenced, then restored,
+      SysBioChalmers/RAVEN#711, #728). The Python function takes a dict of id to sequence and adds DeepLoc
+      batching and a check that ids contain no whitespace. Line wrapping is the same (RAVEN lineWidth, default 80;
+      Python wrap, default 60), and write_fasta_toy compares the file text at widths 10, 20 and 80. The two differ
+      for an empty sequence: RAVEN writes the header line only, Python writes the header and an empty line.'
   - python: raven_toolbox.io.get_model_metadata
     status: python-only
     reason: 'MATLAB models carry version and date as struct fields (model.version, model.date), so there is
@@ -1994,8 +2013,12 @@ entries:
     reason: Parsed-data type. RAVEN passes structs and parallel cell arrays instead.
   - python: raven_toolbox.init.hpa_gene_scores
     status: subsumed
-    reason: RAVEN has the same computation, but inside scoreModel's HPA branch rather than as its own entry
-      point. A packaging difference, not a divergence.
+    reason: 'RAVEN has the same computation, but inside scoreModel''s HPA branch rather than as its own entry
+      point. hpa_scores_toy compares the two on six genes for the best and average score over cell types, one
+      cell type, and a second tissue: they agree, with one divergence. RAVEN''s default level table has a
+      "None" level (-8); HPA_LEVEL_SCORES has no "None", so Python drops such a gene instead of scoring it -8.'
+    scenarios:
+      - hpa_scores_toy
   - python: raven_toolbox.init.rna_gene_scores
     status: subsumed
     reason: 'RAVEN has the same computation, but inside scoreModel''s arrayData branch rather than as its own

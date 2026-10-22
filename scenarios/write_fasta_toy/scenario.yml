@@ -1,0 +1,32 @@
+id: write_fasta_toy
+pair: raven
+description: >-
+  writeFasta/write_fasta writing the same records at the same line width and comparing the file
+  text. The records have sequences shorter than, equal to, a multiple of and longer than the
+  line width, and one record has an empty sequence. Headers contain no whitespace, which
+  write_fasta requires.
+
+entries:
+  - writeFasta
+
+inputs:
+  records:
+    - header: P1
+      sequence: ACDEFGHIKLMNPQRSTVWYACDEF
+    - header: P2
+      sequence: ACDEFGHIKLMNPQRSTVWY
+    - header: P3
+      sequence: ACDE
+    - header: P4
+      sequence: ""
+  cases:
+    - name: width_10
+      width: 10
+    - name: width_20
+      width: 20
+    - name: width_80
+      width: 80
+
+tolerance:
+  rel: 0.0
+  abs: 0.0

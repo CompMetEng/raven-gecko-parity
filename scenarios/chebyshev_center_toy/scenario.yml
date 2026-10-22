@@ -1,0 +1,35 @@
+id: chebyshev_center_toy
+pair: raven
+description: >-
+  sampleChebyshevCenter and the private _chebyshev_center on four polytopes {x : A x <= b}: a
+  rectangle (the centre is not unique along the long side), a unit square, a triangle and a
+  three-dimensional simplex. Both solve the same LP, so the inscribed radius is compared in
+  every case; the centre is compared only where it is unique. _chebyshev_center is private on
+  the Python side; the scenario imports it because the sampling functions that call it are
+  random.
+
+entries:
+  - sampleChebyshevCenter
+
+inputs:
+  cases:
+    - name: rectangle
+      unique_centre: false
+      A: [[-1, 0], [1, 0], [0, -1], [0, 1]]
+      b: [0, 2, 0, 1]
+    - name: unit_square
+      unique_centre: true
+      A: [[-1, 0], [1, 0], [0, -1], [0, 1]]
+      b: [0, 1, 0, 1]
+    - name: triangle
+      unique_centre: true
+      A: [[-1, 0], [0, -1], [1, 1]]
+      b: [0, 0, 1]
+    - name: simplex_3d
+      unique_centre: true
+      A: [[-1, 0, 0], [0, -1, 0], [0, 0, -1], [1, 1, 1]]
+      b: [0, 0, 0, 1]
+
+tolerance:
+  rel: 1.0e-6
+  abs: 1.0e-7

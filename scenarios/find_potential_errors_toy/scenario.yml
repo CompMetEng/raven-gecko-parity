@@ -1,0 +1,30 @@
+id: find_potential_errors_toy
+pair: raven
+description: >-
+  findPotentialErrors/find_non_dnf_grrules on one reaction per gene rule: single genes, a
+  conjunction, bracketed disjunctions of conjunctions that are in DNF, rules with an OR below
+  an AND (flagged), nested ORs inside conjunctions at different depths, and gene ids that
+  contain "and" or "or" as a substring. The compared result is the set of flagged reaction ids.
+
+entries:
+  - findPotentialErrors
+
+inputs:
+  rules:
+    - "G1"
+    - "G1 and G2"
+    - "G1 or G2"
+    - "(G1 and G2) or G3"
+    - "((G1 and G2) or G3)"
+    - "(G1 or G2) or (G3 and G4)"
+    - "G1 and (G2 or G3)"
+    - "(G1 or G2) and (G3 or G4)"
+    - "G1 and (G2 and (G3 or G4))"
+    - "(G1 and G2) or (G3 and (G4 or G5))"
+    - "SANDY1 and ORC2"
+    - "ANDY1 or ORC2 or (BRAND3 and FORD4)"
+    - ""
+
+tolerance:
+  rel: 0.0
+  abs: 0.0

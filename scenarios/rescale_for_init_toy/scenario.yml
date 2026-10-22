@@ -1,0 +1,40 @@
+id: rescale_for_init_toy
+pair: raven
+description: >-
+  rescaleModelForINIT/rescale_for_init on four hand-built reactions: one that is already
+  balanced, two whose largest coefficient exceeds the cap (maxStoichDiff times the smallest
+  coefficient, with the cap reached from both signs) and one with a single metabolite. Each
+  reaction carries bounds inside, at and outside +-1000, so the bounds after the call are
+  compared as well as the stoichiometry. Two values of maxStoichDiff are run, the default (25)
+  and 5.
+
+entries:
+  - rescaleModelForINIT
+
+inputs:
+  reactions:
+    - id: R1
+      coefficients: {A: -1, B: 1}
+      lb: -500
+      ub: 800
+    - id: R2
+      coefficients: {A: -100, B: 2, C: 1}
+      lb: 0
+      ub: 1000
+    - id: R3
+      coefficients: {A: -0.01, B: 10, C: 1}
+      lb: -1000
+      ub: 0
+    - id: R4
+      coefficients: {C: -40}
+      lb: 0
+      ub: 50
+  cases:
+    - name: default
+      max_stoich_diff: 25
+    - name: diff_five
+      max_stoich_diff: 5
+
+tolerance:
+  rel: 1.0e-9
+  abs: 1.0e-12

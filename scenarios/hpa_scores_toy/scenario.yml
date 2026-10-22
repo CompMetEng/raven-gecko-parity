@@ -1,0 +1,35 @@
+id: hpa_scores_toy
+pair: raven
+description: >-
+  The HPA branch of scoreModel and hpa_gene_scores: categorical protein levels turned into
+  gene scores for one tissue, optionally one cell type, with the best (maximum) or average
+  score over the cell types. Six genes of smallYeast (sorted by id) carry hand-written
+  levels: genes measured in one or two cell types, a gene detected in one cell type and not
+  detected in the other (best and average differ), a gene measured only in another tissue,
+  and a gene whose level is "None", which RAVEN's default level table scores as -8.
+
+entries:
+  - scoreModel
+
+inputs:
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
+  # gene is an index into the sorted gene ids of the model.
+  rows:
+    - {gene: 0, tissue: liver, celltype: hepatocytes, level: High}
+    - {gene: 0, tissue: liver, celltype: kupffer, level: Low}
+    - {gene: 1, tissue: liver, celltype: hepatocytes, level: Not detected}
+    - {gene: 1, tissue: liver, celltype: kupffer, level: Low}
+    - {gene: 2, tissue: liver, celltype: hepatocytes, level: Medium}
+    - {gene: 3, tissue: kidney, celltype: tubules, level: Strong}
+    - {gene: 4, tissue: liver, celltype: kupffer, level: None}
+    - {gene: 5, tissue: liver, celltype: hepatocytes, level: Weak}
+    - {gene: 5, tissue: liver, celltype: kupffer, level: Moderate}
+  cases:
+    - {name: liver_best, tissue: liver, celltype: "", multiple: best}
+    - {name: liver_average, tissue: liver, celltype: "", multiple: average}
+    - {name: liver_hepatocytes, tissue: liver, celltype: hepatocytes, multiple: best}
+    - {name: kidney_best, tissue: kidney, celltype: "", multiple: best}
+
+tolerance:
+  rel: 0.0
+  abs: 0.0
