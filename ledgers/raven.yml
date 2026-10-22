@@ -477,12 +477,12 @@ entries:
     notes: from migration.md. Standard-GEM repo layout (model/<fmt>/…).
       Python also takes version= and date=, stamped into the exported copy; MATLAB models carry
       model.version / model.date as fields, so there it is set before the call.
-      Confirmed on MATLAB (RAVEN 79a7d8c, cluster batch 2026-10-21) - RAVEN's default formats are mat, txt,
-      xlsx, xml and yml and it also writes dependencies.txt. raven-toolbox defaults to yml, xml, mat and xlsx.
-      Review 2026-10-21, no change made. Suggestions are a default of all five formats on both sides, lossless
-      txt numbers (RAVEN's %6.2f rounds bounds to two decimals and raven-toolbox's %g keeps six digits), more
-      versions in dependencies.txt on the Python side, an optional read-back check, and a decision on which
-      .mat and .xlsx layout a repository should hold. Until decided, the default formats differ as noted above.
+      Both sides write all five formats by default (mat, txt, xlsx, xml, yml) and dependencies.txt. The txt table is
+      headed 'Rxn id' and holds bounds and objective coefficients with the digits needed to read them back (a whole
+      number as an integer, the rest the shortest exact text), padded nowhere. dependencies.txt on the Python side lists
+      python, cobra, libSBML, ruamel.yaml, scipy, openpyxl and raven_toolbox in a fixed order, then the model's version
+      and date; RAVEN lists MATLAB, libSBML, RAVEN and the fields of model.modelVersion. The .mat and .xlsx files hold the RAVEN
+      model structure on both sides. RAVEN no longer has mainBranchFlag.
   - matlab: exportModel
     status: via-dependency
     reason: 'cobrapy covers this: cobra.io.write_sbml_model.'
