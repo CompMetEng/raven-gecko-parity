@@ -1520,11 +1520,20 @@ entries:
       comes to the same thing. model_manipulation_smallyeast also records the reaction order after the expand
       checkpoint, where the two sides differ (see expandModel).'
   - matlab: sortModel
-    status: subsumed
-    reason: Different operations. sortModel re-orients reversible reactions so that the metabolite that is first in
-      lexicographical order is a reactant, and can sort the metabolites in an equation and the reactions within a subsystem
-      (sortModel.m:2-22). utils.sort_identifiers sorts reactions, metabolites and genes by id (utils/sort.py:12-21).
-      Python has no counterpart of the reversible re-orientation.
+    python: raven_toolbox.utils.sort_model
+    status: parity
+    scenarios:
+      - sort_model_toy
+    notes: 'sortModel and sort_model take the same options (sortReversible, sortMetName, sortReactionOrder, seed), all
+      false by default. The direction flip and the metabolite order are compared exactly. The reaction-order search
+      draws from MATLAB''s random generator on one side and from numpy''s on the other, so the permutation depends on
+      the generator and only the order score of each subsystem, the set of reactions, the position of the reactions
+      without a subsystem and the stoichiometry of the irreversible reactions are compared. The search reverses a
+      reversible reaction only when the subsystem has more than one reversible reaction, on both sides. Neither side
+      changes the bounds when it reverses a reaction, so a reaction with asymmetric bounds changes meaning. A reaction
+      that lists several subsystems is not covered by the scenario: RAVEN finds the reactions of every subsystem
+      before the first one is reordered, Python finds them again after each. utils.sort_identifiers is the
+      counterpart of sortIdentifiers.'
   - matlab: splitProbForConditioning
     status: internal
     reason: Numerical conditioning of a MATLAB LP before it goes to the solver.
