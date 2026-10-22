@@ -1,0 +1,8 @@
+Name,Passed,Failed,Incomplete,Duration
+tTasks/checkTasksSucceedsOnFullModel,1,0,0,1.22745
+tTasks/checkTasksFailsWithoutKeyReaction,1,0,0,0.096183
+tTasks/parseTaskListReturnsStruct,1,0,0,0.14724
+tTasks/checkTasksWarnsWhenSeveralMetabolitesShareAName,1,0,0,0.096693
+tTasks/parseTaskListReadsFlagsListsAndHeadersLeniently,1,0,0,0.401948
+tTasks/checkTasksLeavesNaNChangedBoundsAlone,1,0,0,0.122599
+tTasks/parseTaskListMatchesExpected,1,0,0,4.133669

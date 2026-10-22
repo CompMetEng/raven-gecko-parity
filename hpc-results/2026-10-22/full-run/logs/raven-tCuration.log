@@ -1,0 +1,8 @@
+GUROBI_ON_PATH=/apps/Arch/software/Gurobi/13.0.1-GCCcore-14.3.0/matlab/gurobi.mexa64
+GUROBI_OK=1
+Running tCuration
+......
+Done tCuration
+__________
+
+SUMMARY passed=6 failed=0 incomplete=0 total=6

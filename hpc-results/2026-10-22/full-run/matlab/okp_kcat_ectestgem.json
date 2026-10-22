@@ -1,0 +1,59 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "read_output": {
+      "rows": [
+        {
+          "gene": "G1",
+          "kcat": 12.5,
+          "reaction": "R2_EXP_1",
+          "source": "OKP-CataPro",
+          "substrate": "m1"
+        },
+        {
+          "gene": "G4",
+          "kcat": 3.2,
+          "reaction": "R3",
+          "source": "OKP-BRENDA",
+          "substrate": "m1"
+        }
+      ]
+    },
+    "smiles": {
+      "e1e": "C(C1C)O",
+      "e2e": "C1C(=NC2)",
+      "m1c": "C(C1C)O",
+      "m2c": "C1C(=NC2)",
+      "prot_P1": "",
+      "prot_P2": "",
+      "prot_P3": "",
+      "prot_P4": "",
+      "prot_P5": "",
+      "prot_pool": ""
+    },
+    "write": {
+      "after_clearing_m2_with_filter": [
+        "MDFM,C(C1C)O",
+        "MNTD,C(C1C)O",
+        "MRAL,C(C1C)O",
+        "MSYN,C(C1C)O"
+      ],
+      "after_clearing_m2_without_filter": [
+        "MDFM,C(C1C)O",
+        "MLFK,None",
+        "MNTD,C(C1C)O",
+        "MRAL,C(C1C)O",
+        "MSYN,C(C1C)O"
+      ],
+      "with_smiles": [
+        "MDFM,C(C1C)O",
+        "MNTD,C(C1C)O",
+        "MRAL,C(C1C)O",
+        "MSYN,C(C1C)O"
+      ]
+    }
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "okp_kcat_ectestgem"
+}

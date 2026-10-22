@@ -1,0 +1,11 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "flagged_reactions": [
+      "HXK"
+    ]
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "standardize_gr_rules_smallyeast"
+}

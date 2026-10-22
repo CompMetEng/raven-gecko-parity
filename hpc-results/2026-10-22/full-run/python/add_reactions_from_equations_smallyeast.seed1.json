@@ -1,0 +1,199 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "explicit_bounds": {
+      "added_detail": [
+        {
+          "clauses": [],
+          "lower_bound": 0.0,
+          "name": "reversible arrow held to one direction",
+          "reaction": "PX_FORCED_IRREV",
+          "stoichiometry": [
+            {
+              "coefficient": 1.0,
+              "metabolite": "ACCOA_c"
+            },
+            {
+              "coefficient": -1.0,
+              "metabolite": "AC_c"
+            }
+          ],
+          "upper_bound": 7.5
+        },
+        {
+          "clauses": [],
+          "lower_bound": -5.0,
+          "name": "irreversible arrow opened both ways",
+          "reaction": "PX_FORCED_REV",
+          "stoichiometry": [
+            {
+              "coefficient": -1.0,
+              "metabolite": "GLY_c"
+            },
+            {
+              "coefficient": 1.0,
+              "metabolite": "GP_c"
+            }
+          ],
+          "upper_bound": 5.0
+        }
+      ],
+      "added_genes": [],
+      "added_metabolite_detail": [],
+      "added_metabolites": [],
+      "added_reactions": [
+        "PX_FORCED_IRREV",
+        "PX_FORCED_REV"
+      ],
+      "n_genes_after": 61,
+      "n_genes_before": 61,
+      "n_metabolites_after": 52,
+      "n_metabolites_before": 52,
+      "n_reactions_after": 55,
+      "n_reactions_before": 53
+    },
+    "from_arrows": {
+      "added_detail": [
+        {
+          "clauses": [],
+          "lower_bound": 0.0,
+          "name": "fractional and integer coefficients",
+          "reaction": "PX_COEFF",
+          "stoichiometry": [
+            {
+              "coefficient": 2.0,
+              "metabolite": "ACA_c"
+            },
+            {
+              "coefficient": 1.5,
+              "metabolite": "ADP_c"
+            },
+            {
+              "coefficient": -1.5,
+              "metabolite": "ATP_c"
+            },
+            {
+              "coefficient": -2.0,
+              "metabolite": "PYR_c"
+            }
+          ],
+          "upper_bound": 1000.0
+        },
+        {
+          "clauses": [
+            [
+              "YPROBE1",
+              "YPROBE2"
+            ]
+          ],
+          "lower_bound": 0.0,
+          "name": "creates two genes",
+          "reaction": "PX_GPR",
+          "stoichiometry": [
+            {
+              "coefficient": 1.0,
+              "metabolite": "ACA_c"
+            },
+            {
+              "coefficient": -1.0,
+              "metabolite": "ETH_c"
+            }
+          ],
+          "upper_bound": 1000.0
+        },
+        {
+          "clauses": [],
+          "lower_bound": 0.0,
+          "name": "irreversible arrow",
+          "reaction": "PX_IRREV",
+          "stoichiometry": [
+            {
+              "coefficient": 1.0,
+              "metabolite": "ACA_c"
+            },
+            {
+              "coefficient": 1.0,
+              "metabolite": "CO2_c"
+            },
+            {
+              "coefficient": -1.0,
+              "metabolite": "PYR_c"
+            }
+          ],
+          "upper_bound": 1000.0
+        },
+        {
+          "clauses": [],
+          "lower_bound": 0.0,
+          "name": "creates a metabolite",
+          "reaction": "PX_NEWMET",
+          "stoichiometry": [
+            {
+              "coefficient": 1.0,
+              "metabolite": "PROBE_c"
+            },
+            {
+              "coefficient": -1.0,
+              "metabolite": "PYR_c"
+            }
+          ],
+          "upper_bound": 1000.0
+        },
+        {
+          "clauses": [],
+          "lower_bound": -1000.0,
+          "name": "reversible arrow",
+          "reaction": "PX_REV",
+          "stoichiometry": [
+            {
+              "coefficient": 1.0,
+              "metabolite": "ADP_c"
+            },
+            {
+              "coefficient": -1.0,
+              "metabolite": "ATP_c"
+            },
+            {
+              "coefficient": 1.0,
+              "metabolite": "G6P_c"
+            },
+            {
+              "coefficient": -1.0,
+              "metabolite": "GLC_c"
+            }
+          ],
+          "upper_bound": 1000.0
+        }
+      ],
+      "added_genes": [
+        "YPROBE1",
+        "YPROBE2"
+      ],
+      "added_metabolite_detail": [
+        {
+          "compartment": "c",
+          "metabolite": "PROBE_c"
+        }
+      ],
+      "added_metabolites": [
+        "PROBE_c"
+      ],
+      "added_reactions": [
+        "PX_COEFF",
+        "PX_GPR",
+        "PX_IRREV",
+        "PX_NEWMET",
+        "PX_REV"
+      ],
+      "n_genes_after": 63,
+      "n_genes_before": 61,
+      "n_metabolites_after": 53,
+      "n_metabolites_before": 52,
+      "n_reactions_after": 58,
+      "n_reactions_before": 53
+    }
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "add_reactions_from_equations_smallyeast"
+}

@@ -1,0 +1,59 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "matches": [
+      {
+        "eccode": "1.1.1.1",
+        "kcat": 50,
+        "origin": 1,
+        "reaction": "R2_EXP_1",
+        "wildcard_level": 0
+      },
+      {
+        "eccode": "1.1.1.1",
+        "kcat": 50,
+        "origin": 1,
+        "reaction": "R2_EXP_2",
+        "wildcard_level": 0
+      },
+      {
+        "eccode": "1.1.1.1",
+        "kcat": 60,
+        "origin": 1,
+        "reaction": "R2_REV_EXP_1",
+        "wildcard_level": 0
+      },
+      {
+        "eccode": "1.1.1.1",
+        "kcat": 60,
+        "origin": 1,
+        "reaction": "R2_REV_EXP_2",
+        "wildcard_level": 0
+      },
+      {
+        "eccode": "1.1.2.1",
+        "kcat": 80,
+        "origin": 1,
+        "reaction": "R3",
+        "wildcard_level": 0
+      },
+      {
+        "eccode": "1.1.1.3",
+        "kcat": 60,
+        "origin": 3,
+        "reaction": "R5",
+        "wildcard_level": 1
+      },
+      {
+        "eccode": "1.1.2.1",
+        "kcat": 40,
+        "origin": 1,
+        "reaction": "R7",
+        "wildcard_level": 0
+      }
+    ]
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "fuzzy_kcat_coefficient_ectestgem"
+}

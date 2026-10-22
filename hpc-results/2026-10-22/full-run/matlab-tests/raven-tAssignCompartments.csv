@@ -1,0 +1,4 @@
+Name,Passed,Failed,Incomplete,Duration
+tAssignCompartments/functionalityOverridesScore,1,0,0,0.940031
+tAssignCompartments/scoreRespectedWhenFunctional,1,0,0,0.077743
+tAssignCompartments/infeasibleGrowthFloorReported,1,0,0,5.995109

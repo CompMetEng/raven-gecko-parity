@@ -1,0 +1,1 @@
+get_gene_data_fixture seeds_match=20/20 repeat_identical=20/20 differ_seeds: none

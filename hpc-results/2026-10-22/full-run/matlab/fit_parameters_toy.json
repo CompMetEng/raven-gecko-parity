@@ -1,0 +1,11 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "fitness_score": 2.9952062495110292e-30,
+    "fitted_coefficient": -2.000000000000002,
+    "parameters": 2.000000000000002
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "fit_parameters_toy"
+}

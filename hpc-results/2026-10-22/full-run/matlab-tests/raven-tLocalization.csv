@@ -1,0 +1,9 @@
+Name,Passed,Failed,Incomplete,Duration
+tLocalization/deeploc,1,0,0,0.955802
+tLocalization/deeplocWithCompartmentMap,1,0,0,0.047814
+tLocalization/mulocdeep,1,0,0,1.293546
+tLocalization/compartments,1,0,0,0.195851
+tLocalization/uniprot,1,0,0,0.104384
+tLocalization/uniprotWholeWordMatch,1,0,0,0.132611
+tLocalization/uniprotMultiIsoformNote,1,0,0,0.021308
+tLocalization/wolfRemoved,1,0,0,1.785912

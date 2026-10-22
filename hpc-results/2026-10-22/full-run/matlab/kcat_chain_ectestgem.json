@@ -1,0 +1,656 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "constraints": {
+      "coefficients": [
+        {
+          "coefficient": -0.1388888888888889,
+          "metabolite": "prot_standard",
+          "reaction": "R1"
+        },
+        {
+          "coefficient": -0.1388888888888889,
+          "metabolite": "prot_standard",
+          "reaction": "R1_REV"
+        },
+        {
+          "coefficient": -0.05555555555555555,
+          "metabolite": "prot_P1",
+          "reaction": "R2_EXP_1"
+        },
+        {
+          "coefficient": -0.1111111111111111,
+          "metabolite": "prot_P2",
+          "reaction": "R2_EXP_1"
+        },
+        {
+          "coefficient": -0.16666666666666666,
+          "metabolite": "prot_P3",
+          "reaction": "R2_EXP_2"
+        },
+        {
+          "coefficient": -0.046296296296296294,
+          "metabolite": "prot_P1",
+          "reaction": "R2_REV_EXP_1"
+        },
+        {
+          "coefficient": -0.09259259259259259,
+          "metabolite": "prot_P2",
+          "reaction": "R2_REV_EXP_1"
+        },
+        {
+          "coefficient": -0.1388888888888889,
+          "metabolite": "prot_P3",
+          "reaction": "R2_REV_EXP_2"
+        },
+        {
+          "coefficient": -0.013888888888888888,
+          "metabolite": "prot_P1",
+          "reaction": "R2a_EXP_1"
+        },
+        {
+          "coefficient": -0.027777777777777776,
+          "metabolite": "prot_P2",
+          "reaction": "R2a_EXP_1"
+        },
+        {
+          "coefficient": -0.041666666666666664,
+          "metabolite": "prot_P3",
+          "reaction": "R2a_EXP_2"
+        },
+        {
+          "coefficient": -0.046296296296296294,
+          "metabolite": "prot_P1",
+          "reaction": "R2a_REV_EXP_1"
+        },
+        {
+          "coefficient": -0.09259259259259259,
+          "metabolite": "prot_P2",
+          "reaction": "R2a_REV_EXP_1"
+        },
+        {
+          "coefficient": -0.1388888888888889,
+          "metabolite": "prot_P3",
+          "reaction": "R2a_REV_EXP_2"
+        },
+        {
+          "coefficient": -0.011122233344455567,
+          "metabolite": "prot_P4",
+          "reaction": "R3"
+        },
+        {
+          "coefficient": -0.23148148148148148,
+          "metabolite": "prot_P5",
+          "reaction": "R5"
+        },
+        {
+          "coefficient": -0.1388888888888889,
+          "metabolite": "prot_standard",
+          "reaction": "R6"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "prot_pool",
+          "reaction": "prot_pool_exchange"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "prot_P1",
+          "reaction": "usage_prot_P1"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "prot_pool",
+          "reaction": "usage_prot_P1"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "prot_P2",
+          "reaction": "usage_prot_P2"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "prot_pool",
+          "reaction": "usage_prot_P2"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "prot_P3",
+          "reaction": "usage_prot_P3"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "prot_pool",
+          "reaction": "usage_prot_P3"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "prot_P4",
+          "reaction": "usage_prot_P4"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "prot_pool",
+          "reaction": "usage_prot_P4"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "prot_P5",
+          "reaction": "usage_prot_P5"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "prot_pool",
+          "reaction": "usage_prot_P5"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "prot_pool",
+          "reaction": "usage_prot_standard"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "prot_standard",
+          "reaction": "usage_prot_standard"
+        }
+      ],
+      "light_partial_isozyme": [
+        {
+          "coefficient": -0.027777777777777776,
+          "metabolite": "prot_pool",
+          "reaction": "R1"
+        }
+      ]
+    },
+    "dlkcat": {
+      "merged": [
+        {
+          "kcat": 50,
+          "reaction": "R2_EXP_1",
+          "source": "brenda"
+        },
+        {
+          "kcat": 50,
+          "reaction": "R2_EXP_2",
+          "source": "brenda"
+        },
+        {
+          "kcat": 60,
+          "reaction": "R2_REV_EXP_1",
+          "source": "brenda"
+        },
+        {
+          "kcat": 60,
+          "reaction": "R2_REV_EXP_2",
+          "source": "brenda"
+        },
+        {
+          "kcat": 200,
+          "reaction": "R2a_EXP_1",
+          "source": "DLKcat"
+        },
+        {
+          "kcat": 180,
+          "reaction": "R2a_EXP_1",
+          "source": "DLKcat"
+        },
+        {
+          "kcat": 80,
+          "reaction": "R3",
+          "source": "brenda"
+        },
+        {
+          "kcat": 60,
+          "reaction": "R5",
+          "source": "brenda"
+        }
+      ],
+      "read_output": [
+        {
+          "gene": "G1",
+          "kcat": 200,
+          "reaction": "R2a_EXP_1"
+        },
+        {
+          "gene": "G2",
+          "kcat": 180,
+          "reaction": "R2a_EXP_1"
+        }
+      ],
+      "written_input": [
+        {
+          "gene": "G1",
+          "reaction": "R2a_EXP_1",
+          "substrate": "m1"
+        },
+        {
+          "gene": "G2",
+          "reaction": "R2a_EXP_1",
+          "substrate": "m1"
+        },
+        {
+          "gene": "G3",
+          "reaction": "R2a_EXP_2",
+          "substrate": "m1"
+        }
+      ]
+    },
+    "fuzzy": {
+      "brenda_kcat_max": [
+        {
+          "eccode": "1.1.1.1",
+          "kcat": 50,
+          "organism": "testus testus",
+          "substrate": "m1"
+        },
+        {
+          "eccode": "1.1.1.1",
+          "kcat": 60,
+          "organism": "testus testus",
+          "substrate": "m2"
+        },
+        {
+          "eccode": "1.1.2.1",
+          "kcat": 80,
+          "organism": "testus testus",
+          "substrate": "m1"
+        }
+      ],
+      "matches": [
+        {
+          "eccode": "1.1.1.1",
+          "kcat": 50,
+          "origin": 1,
+          "reaction": "R2_EXP_1",
+          "wildcard_level": 0
+        },
+        {
+          "eccode": "1.1.1.1",
+          "kcat": 50,
+          "origin": 1,
+          "reaction": "R2_EXP_2",
+          "wildcard_level": 0
+        },
+        {
+          "eccode": "1.1.1.1",
+          "kcat": 60,
+          "origin": 1,
+          "reaction": "R2_REV_EXP_1",
+          "wildcard_level": 0
+        },
+        {
+          "eccode": "1.1.1.1",
+          "kcat": 60,
+          "origin": 1,
+          "reaction": "R2_REV_EXP_2",
+          "wildcard_level": 0
+        },
+        {
+          "eccode": "",
+          "kcat": 0,
+          "origin": -1,
+          "reaction": "R2a_EXP_1",
+          "wildcard_level": -1
+        },
+        {
+          "eccode": "",
+          "kcat": 0,
+          "origin": -1,
+          "reaction": "R2a_EXP_2",
+          "wildcard_level": -1
+        },
+        {
+          "eccode": "",
+          "kcat": 0,
+          "origin": -1,
+          "reaction": "R2a_REV_EXP_1",
+          "wildcard_level": -1
+        },
+        {
+          "eccode": "",
+          "kcat": 0,
+          "origin": -1,
+          "reaction": "R2a_REV_EXP_2",
+          "wildcard_level": -1
+        },
+        {
+          "eccode": "1.1.2.1",
+          "kcat": 80,
+          "origin": 1,
+          "reaction": "R3",
+          "wildcard_level": 0
+        },
+        {
+          "eccode": "1.1.1.3",
+          "kcat": 60,
+          "origin": 3,
+          "reaction": "R5",
+          "wildcard_level": 1
+        }
+      ]
+    },
+    "selection": {
+      "after_custom_kcats": [
+        {
+          "kcat": 999,
+          "notes": "override",
+          "reaction": "R3",
+          "source": "custom"
+        }
+      ],
+      "after_isozyme_fill": [
+        {
+          "kcat": 50,
+          "notes": "",
+          "reaction": "R2_EXP_1",
+          "source": "brenda"
+        },
+        {
+          "kcat": 50,
+          "notes": "",
+          "reaction": "R2_EXP_2",
+          "source": "brenda"
+        },
+        {
+          "kcat": 60,
+          "notes": "",
+          "reaction": "R2_REV_EXP_1",
+          "source": "brenda"
+        },
+        {
+          "kcat": 60,
+          "notes": "",
+          "reaction": "R2_REV_EXP_2",
+          "source": "brenda"
+        },
+        {
+          "kcat": 200,
+          "notes": "",
+          "reaction": "R2a_EXP_1",
+          "source": "dlkcat"
+        },
+        {
+          "kcat": 200,
+          "notes": "",
+          "reaction": "R2a_EXP_2",
+          "source": "isozymes"
+        },
+        {
+          "kcat": 0,
+          "notes": "",
+          "reaction": "R2a_REV_EXP_1",
+          "source": ""
+        },
+        {
+          "kcat": 0,
+          "notes": "",
+          "reaction": "R2a_REV_EXP_2",
+          "source": ""
+        },
+        {
+          "kcat": 80,
+          "notes": "",
+          "reaction": "R3",
+          "source": "brenda"
+        },
+        {
+          "kcat": 60,
+          "notes": "",
+          "reaction": "R5",
+          "source": "brenda"
+        }
+      ],
+      "after_select_max": [
+        {
+          "kcat": 50,
+          "notes": "",
+          "reaction": "R2_EXP_1",
+          "source": "brenda"
+        },
+        {
+          "kcat": 50,
+          "notes": "",
+          "reaction": "R2_EXP_2",
+          "source": "brenda"
+        },
+        {
+          "kcat": 60,
+          "notes": "",
+          "reaction": "R2_REV_EXP_1",
+          "source": "brenda"
+        },
+        {
+          "kcat": 60,
+          "notes": "",
+          "reaction": "R2_REV_EXP_2",
+          "source": "brenda"
+        },
+        {
+          "kcat": 200,
+          "notes": "",
+          "reaction": "R2a_EXP_1",
+          "source": "dlkcat"
+        },
+        {
+          "kcat": 0,
+          "notes": "",
+          "reaction": "R2a_EXP_2",
+          "source": ""
+        },
+        {
+          "kcat": 0,
+          "notes": "",
+          "reaction": "R2a_REV_EXP_1",
+          "source": ""
+        },
+        {
+          "kcat": 0,
+          "notes": "",
+          "reaction": "R2a_REV_EXP_2",
+          "source": ""
+        },
+        {
+          "kcat": 80,
+          "notes": "",
+          "reaction": "R3",
+          "source": "brenda"
+        },
+        {
+          "kcat": 60,
+          "notes": "",
+          "reaction": "R5",
+          "source": "brenda"
+        }
+      ],
+      "select_median": {
+        "raised": false
+      }
+    },
+    "standard": {
+      "after_remove": {
+        "ec_rxns": [
+          "R2_EXP_1",
+          "R2_EXP_2",
+          "R2_REV_EXP_1",
+          "R2_REV_EXP_2",
+          "R2a_EXP_1",
+          "R2a_EXP_2",
+          "R2a_REV_EXP_1",
+          "R2a_REV_EXP_2",
+          "R3",
+          "R5"
+        ],
+        "rows": [
+          {
+            "kcat": 50,
+            "notes": "",
+            "reaction": "R2_EXP_1",
+            "source": "brenda"
+          },
+          {
+            "kcat": 50,
+            "notes": "",
+            "reaction": "R2_EXP_2",
+            "source": "brenda"
+          },
+          {
+            "kcat": 60,
+            "notes": "",
+            "reaction": "R2_REV_EXP_1",
+            "source": "brenda"
+          },
+          {
+            "kcat": 60,
+            "notes": "",
+            "reaction": "R2_REV_EXP_2",
+            "source": "brenda"
+          },
+          {
+            "kcat": 200,
+            "notes": "",
+            "reaction": "R2a_EXP_1",
+            "source": "dlkcat"
+          },
+          {
+            "kcat": 200,
+            "notes": "",
+            "reaction": "R2a_EXP_2",
+            "source": "isozymes"
+          },
+          {
+            "kcat": 0,
+            "notes": "",
+            "reaction": "R2a_REV_EXP_1",
+            "source": ""
+          },
+          {
+            "kcat": 0,
+            "notes": "",
+            "reaction": "R2a_REV_EXP_2",
+            "source": ""
+          },
+          {
+            "kcat": 999,
+            "notes": "override",
+            "reaction": "R3",
+            "source": "custom"
+          },
+          {
+            "kcat": 60,
+            "notes": "",
+            "reaction": "R5",
+            "source": "brenda"
+          }
+        ]
+      },
+      "all_after_assign": [
+        {
+          "kcat": 60,
+          "notes": "",
+          "reaction": "R1",
+          "source": "standard"
+        },
+        {
+          "kcat": 60,
+          "notes": "",
+          "reaction": "R1_REV",
+          "source": "standard"
+        },
+        {
+          "kcat": 50,
+          "notes": "",
+          "reaction": "R2_EXP_1",
+          "source": "brenda"
+        },
+        {
+          "kcat": 50,
+          "notes": "",
+          "reaction": "R2_EXP_2",
+          "source": "brenda"
+        },
+        {
+          "kcat": 60,
+          "notes": "",
+          "reaction": "R2_REV_EXP_1",
+          "source": "brenda"
+        },
+        {
+          "kcat": 60,
+          "notes": "",
+          "reaction": "R2_REV_EXP_2",
+          "source": "brenda"
+        },
+        {
+          "kcat": 200,
+          "notes": "",
+          "reaction": "R2a_EXP_1",
+          "source": "dlkcat"
+        },
+        {
+          "kcat": 200,
+          "notes": "",
+          "reaction": "R2a_EXP_2",
+          "source": "isozymes"
+        },
+        {
+          "kcat": 60,
+          "notes": "",
+          "reaction": "R2a_REV_EXP_1",
+          "source": "standard"
+        },
+        {
+          "kcat": 60,
+          "notes": "",
+          "reaction": "R2a_REV_EXP_2",
+          "source": "standard"
+        },
+        {
+          "kcat": 999,
+          "notes": "override",
+          "reaction": "R3",
+          "source": "custom"
+        },
+        {
+          "kcat": 60,
+          "notes": "",
+          "reaction": "R5",
+          "source": "brenda"
+        },
+        {
+          "kcat": 60,
+          "notes": "",
+          "reaction": "R6",
+          "source": "standard"
+        }
+      ],
+      "new_ec_rxns": [
+        "R1",
+        "R1_REV",
+        "R6"
+      ],
+      "r6_and_r2a_rev": [
+        {
+          "kcat": 60,
+          "notes": "",
+          "reaction": "R2a_REV_EXP_1",
+          "source": "standard"
+        },
+        {
+          "kcat": 60,
+          "notes": "",
+          "reaction": "R2a_REV_EXP_2",
+          "source": "standard"
+        },
+        {
+          "kcat": 60,
+          "notes": "",
+          "reaction": "R6",
+          "source": "standard"
+        }
+      ]
+    }
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "kcat_chain_ectestgem"
+}

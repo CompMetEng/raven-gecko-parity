@@ -1,0 +1,18 @@
+GUROBI_ON_PATH=/apps/Arch/software/Gurobi/13.0.1-GCCcore-14.3.0/matlab/gurobi.mexa64
+GUROBI_OK=1
+Running tSolver
+.......
+================================================================================
+tSolver/optimizeProbSolvesMILPWithCobraGlpk was filtered.
+    Test Diagnostic: Dependency "COBRA Toolbox" not available; test skipped.
+================================================================================
+... .
+Done tSolver
+__________
+
+Failure Summary:
+
+     Name                                         Failed  Incomplete  Reason(s)
+    ==========================================================================================
+     tSolver/optimizeProbSolvesMILPWithCobraGlpk              X       Filtered by assumption.
+SUMMARY passed=10 failed=0 incomplete=1 total=11

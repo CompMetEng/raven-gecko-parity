@@ -1,0 +1,6 @@
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+met {'file': 'empty_met.yml', 'warnings': ["1 metabolite(s) have an empty name (MAL_m); the YAML is written anyway, but RAVEN's writeYAMLmodel refuses such a model."]}
+rxn {'file': 'empty_rxn.yml', 'warnings': []}
+gene {'file': 'empty_gene.yml', 'warnings': []}
+space {'file': 'empty_space.yml', 'warnings': []}

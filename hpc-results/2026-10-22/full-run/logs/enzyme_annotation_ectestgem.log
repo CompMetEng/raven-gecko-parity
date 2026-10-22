@@ -1,0 +1,123 @@
+scenario: enzyme_annotation_ectestgem  host: vera-r05-04  start: 2026-10-22T07:49:02Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529276/tmp8h0567wp.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmpm7nhhoau.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmpngs_hd7w.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmpeyph8_5_.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmp9gcf60we.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmpgxcehh9t.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmpnrllub1u.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmpe7xc08vr.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmpovf_kihn.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmp7xfgihwt.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+enzyme_annotation_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/enzyme_annotation_ectestgem.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529276/tmp6v8k9vqn.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmpucsf3g6d.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmpk4xag6t2.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmpd209_um8.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmp2v12q4xb.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmpo248dzho.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmpwo_0djap.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmp0euyyi0p.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmp0lhdsisq.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmpv2yfofw4.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+enzyme_annotation_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/enzyme_annotation_ectestgem.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529276/tmpjpu1q3hi.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmp08ys8qy7.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmpph5h1hpz.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmpf039ko2q.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmpd4710iab.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmpmku5wgly.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmpo8qihz7z.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmp1lrae964.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmpuksb2ld0.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529276/tmppag2ifuq.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+enzyme_annotation_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/enzyme_annotation_ectestgem.seed2.json
+enzyme_annotation_ectestgem [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/matlab/enzyme_annotation_ectestgem.json
+Terminated
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: enzyme_annotation_ectestgem  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: enzyme_annotation_ectestgem  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: enzyme_annotation_ectestgem  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: enzyme_annotation_ectestgem  (python vs python)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: enzyme_annotation_ectestgem  (python vs python)
+tolerance: rel=0 abs=0
+result:   MATCH
+end: 2026-10-22T07:49:51Z  status: MATCH

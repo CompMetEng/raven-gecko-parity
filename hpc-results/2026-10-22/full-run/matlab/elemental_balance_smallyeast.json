@@ -1,0 +1,302 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "imbalance_detail": [
+      {
+        "elements": [
+          {
+            "amount": 2,
+            "element": "H"
+          },
+          {
+            "amount": 1,
+            "element": "O"
+          }
+        ],
+        "reaction": "ACS"
+      },
+      {
+        "elements": [
+          {
+            "amount": 2,
+            "element": "H"
+          },
+          {
+            "amount": 1,
+            "element": "O"
+          }
+        ],
+        "reaction": "ALD6"
+      },
+      {
+        "elements": [
+          {
+            "amount": 2,
+            "element": "H"
+          },
+          {
+            "amount": 1,
+            "element": "O"
+          }
+        ],
+        "reaction": "ATPX"
+      },
+      {
+        "elements": [
+          {
+            "amount": 2,
+            "element": "H"
+          },
+          {
+            "amount": 1,
+            "element": "O"
+          }
+        ],
+        "reaction": "CIT"
+      },
+      {
+        "elements": [
+          {
+            "amount": -2,
+            "element": "H"
+          },
+          {
+            "amount": -1,
+            "element": "O"
+          }
+        ],
+        "reaction": "ENO"
+      },
+      {
+        "elements": [
+          {
+            "amount": -8.799999999999997,
+            "element": "H"
+          },
+          {
+            "amount": -4.3999999999999915,
+            "element": "O"
+          }
+        ],
+        "reaction": "FADHX"
+      },
+      {
+        "elements": [
+          {
+            "amount": 2,
+            "element": "H"
+          },
+          {
+            "amount": 1,
+            "element": "O"
+          }
+        ],
+        "reaction": "FBP"
+      },
+      {
+        "elements": [
+          {
+            "amount": 2,
+            "element": "H"
+          },
+          {
+            "amount": 1,
+            "element": "O"
+          }
+        ],
+        "reaction": "FUM1"
+      },
+      {
+        "elements": [
+          {
+            "amount": 2,
+            "element": "H"
+          },
+          {
+            "amount": 1,
+            "element": "O"
+          }
+        ],
+        "reaction": "GPP"
+      },
+      {
+        "elements": [
+          {
+            "amount": -8.799999999999997,
+            "element": "H"
+          },
+          {
+            "amount": -4.399999999999999,
+            "element": "O"
+          }
+        ],
+        "reaction": "NADHX"
+      },
+      {
+        "elements": [
+          {
+            "amount": 2,
+            "element": "H"
+          },
+          {
+            "amount": 1,
+            "element": "O"
+          }
+        ],
+        "reaction": "PGL"
+      },
+      {
+        "elements": [
+          {
+            "amount": 2,
+            "element": "H"
+          },
+          {
+            "amount": 1,
+            "element": "O"
+          }
+        ],
+        "reaction": "PYC"
+      },
+      {
+        "elements": [
+          {
+            "amount": -2,
+            "element": "C"
+          },
+          {
+            "amount": -4,
+            "element": "H"
+          },
+          {
+            "amount": -2,
+            "element": "O"
+          }
+        ],
+        "reaction": "acOUT"
+      },
+      {
+        "elements": [
+          {
+            "amount": -1,
+            "element": "C"
+          },
+          {
+            "amount": -2,
+            "element": "O"
+          }
+        ],
+        "reaction": "co2OUT"
+      },
+      {
+        "elements": [
+          {
+            "amount": 2,
+            "element": "C"
+          },
+          {
+            "amount": 6,
+            "element": "H"
+          },
+          {
+            "amount": 1,
+            "element": "O"
+          }
+        ],
+        "reaction": "ethIN"
+      },
+      {
+        "elements": [
+          {
+            "amount": -2,
+            "element": "C"
+          },
+          {
+            "amount": -6,
+            "element": "H"
+          },
+          {
+            "amount": -1,
+            "element": "O"
+          }
+        ],
+        "reaction": "ethOUT"
+      },
+      {
+        "elements": [
+          {
+            "amount": 6,
+            "element": "C"
+          },
+          {
+            "amount": 12,
+            "element": "H"
+          },
+          {
+            "amount": 6,
+            "element": "O"
+          }
+        ],
+        "reaction": "glcIN"
+      },
+      {
+        "elements": [
+          {
+            "amount": -3,
+            "element": "C"
+          },
+          {
+            "amount": -8,
+            "element": "H"
+          },
+          {
+            "amount": -3,
+            "element": "O"
+          }
+        ],
+        "reaction": "glyOUT"
+      },
+      {
+        "elements": [
+          {
+            "amount": 2,
+            "element": "O"
+          }
+        ],
+        "reaction": "o2IN"
+      }
+    ],
+    "n_reactions": 53,
+    "n_unbalanced": 19,
+    "unbalanced_reactions": [
+      "ACS",
+      "ALD6",
+      "ATPX",
+      "CIT",
+      "ENO",
+      "FADHX",
+      "FBP",
+      "FUM1",
+      "GPP",
+      "NADHX",
+      "PGL",
+      "PYC",
+      "acOUT",
+      "co2OUT",
+      "ethIN",
+      "ethOUT",
+      "glcIN",
+      "glyOUT",
+      "o2IN"
+    ],
+    "verdicts": {
+      "balanced": 32,
+      "error": 0,
+      "unbalanced": 19,
+      "unknown": 2
+    }
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "elemental_balance_smallyeast"
+}

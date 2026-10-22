@@ -1,0 +1,59 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "matches": [
+      {
+        "eccode": "1.1.1.1",
+        "kcat": 50.0,
+        "origin": 1,
+        "reaction": "R2_EXP_1",
+        "wildcard_level": 0
+      },
+      {
+        "eccode": "1.1.1.1",
+        "kcat": 50.0,
+        "origin": 1,
+        "reaction": "R2_EXP_2",
+        "wildcard_level": 0
+      },
+      {
+        "eccode": "1.1.1.1",
+        "kcat": 60.0,
+        "origin": 1,
+        "reaction": "R2_REV_EXP_1",
+        "wildcard_level": 0
+      },
+      {
+        "eccode": "1.1.1.1",
+        "kcat": 60.0,
+        "origin": 1,
+        "reaction": "R2_REV_EXP_2",
+        "wildcard_level": 0
+      },
+      {
+        "eccode": "1.1.2.1",
+        "kcat": 80.0,
+        "origin": 1,
+        "reaction": "R3",
+        "wildcard_level": 0
+      },
+      {
+        "eccode": "1.1.1.3",
+        "kcat": 60.0,
+        "origin": 3,
+        "reaction": "R5",
+        "wildcard_level": 1
+      },
+      {
+        "eccode": "1.1.2.1",
+        "kcat": 160.0,
+        "origin": 1,
+        "reaction": "R7",
+        "wildcard_level": 0
+      }
+    ]
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "fuzzy_kcat_coefficient_ectestgem"
+}

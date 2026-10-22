@@ -1,0 +1,878 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "blast": {
+      "directions": [
+        {
+          "from_id": "human",
+          "n_hits": 8,
+          "to_id": "yeast"
+        },
+        {
+          "from_id": "yeast",
+          "n_hits": 8,
+          "to_id": "human"
+        }
+      ],
+      "hits": [
+        {
+          "align_len": 371,
+          "bitscore": 179,
+          "evalue": 3.65e-55,
+          "from_gene": "sp|P06280|AGAL_HUMAN",
+          "from_id": "human",
+          "identity": 32.075,
+          "ppos": 48.79,
+          "to_gene": "sp|P04824|MEL1_YEASX",
+          "to_id": "yeast"
+        },
+        {
+          "align_len": 371,
+          "bitscore": 182,
+          "evalue": 3.49e-56,
+          "from_gene": "sp|P06280|AGAL_HUMAN",
+          "from_id": "human",
+          "identity": 32.884,
+          "ppos": 48.52,
+          "to_gene": "sp|P41945|MEL2_YEASX",
+          "to_id": "yeast"
+        },
+        {
+          "align_len": 371,
+          "bitscore": 187,
+          "evalue": 4.44e-58,
+          "from_gene": "sp|P06280|AGAL_HUMAN",
+          "from_id": "human",
+          "identity": 32.884,
+          "ppos": 48.25,
+          "to_gene": "sp|P41946|MEL5_YEASX",
+          "to_id": "yeast"
+        },
+        {
+          "align_len": 371,
+          "bitscore": 187,
+          "evalue": 4.44e-58,
+          "from_gene": "sp|P06280|AGAL_HUMAN",
+          "from_id": "human",
+          "identity": 32.884,
+          "ppos": 48.52,
+          "to_gene": "sp|P41947|MEL6_YEASX",
+          "to_id": "yeast"
+        },
+        {
+          "align_len": 344,
+          "bitscore": 188,
+          "evalue": 7.27e-59,
+          "from_gene": "sp|P17050|NAGAB_HUMAN",
+          "from_id": "human",
+          "identity": 33.43,
+          "ppos": 50,
+          "to_gene": "sp|P04824|MEL1_YEASX",
+          "to_id": "yeast"
+        },
+        {
+          "align_len": 344,
+          "bitscore": 189,
+          "evalue": 5.09e-59,
+          "from_gene": "sp|P17050|NAGAB_HUMAN",
+          "from_id": "human",
+          "identity": 34.012,
+          "ppos": 49.71,
+          "to_gene": "sp|P41945|MEL2_YEASX",
+          "to_id": "yeast"
+        },
+        {
+          "align_len": 326,
+          "bitscore": 192,
+          "evalue": 2.52e-60,
+          "from_gene": "sp|P17050|NAGAB_HUMAN",
+          "from_id": "human",
+          "identity": 34.663,
+          "ppos": 51.53,
+          "to_gene": "sp|P41946|MEL5_YEASX",
+          "to_id": "yeast"
+        },
+        {
+          "align_len": 344,
+          "bitscore": 191,
+          "evalue": 6.27e-60,
+          "from_gene": "sp|P17050|NAGAB_HUMAN",
+          "from_id": "human",
+          "identity": 34.012,
+          "ppos": 50,
+          "to_gene": "sp|P41947|MEL6_YEASX",
+          "to_id": "yeast"
+        },
+        {
+          "align_len": 371,
+          "bitscore": 179,
+          "evalue": 4.31e-55,
+          "from_gene": "sp|P04824|MEL1_YEASX",
+          "from_id": "yeast",
+          "identity": 32.075,
+          "ppos": 48.79,
+          "to_gene": "sp|P06280|AGAL_HUMAN",
+          "to_id": "human"
+        },
+        {
+          "align_len": 344,
+          "bitscore": 188,
+          "evalue": 8.94e-59,
+          "from_gene": "sp|P04824|MEL1_YEASX",
+          "from_id": "yeast",
+          "identity": 33.43,
+          "ppos": 50,
+          "to_gene": "sp|P17050|NAGAB_HUMAN",
+          "to_id": "human"
+        },
+        {
+          "align_len": 371,
+          "bitscore": 182,
+          "evalue": 4.11e-56,
+          "from_gene": "sp|P41945|MEL2_YEASX",
+          "from_id": "yeast",
+          "identity": 32.884,
+          "ppos": 48.52,
+          "to_gene": "sp|P06280|AGAL_HUMAN",
+          "to_id": "human"
+        },
+        {
+          "align_len": 344,
+          "bitscore": 189,
+          "evalue": 6.26e-59,
+          "from_gene": "sp|P41945|MEL2_YEASX",
+          "from_id": "yeast",
+          "identity": 34.012,
+          "ppos": 49.71,
+          "to_gene": "sp|P17050|NAGAB_HUMAN",
+          "to_id": "human"
+        },
+        {
+          "align_len": 371,
+          "bitscore": 187,
+          "evalue": 5.23e-58,
+          "from_gene": "sp|P41946|MEL5_YEASX",
+          "from_id": "yeast",
+          "identity": 32.884,
+          "ppos": 48.25,
+          "to_gene": "sp|P06280|AGAL_HUMAN",
+          "to_id": "human"
+        },
+        {
+          "align_len": 326,
+          "bitscore": 192,
+          "evalue": 3.1e-60,
+          "from_gene": "sp|P41946|MEL5_YEASX",
+          "from_id": "yeast",
+          "identity": 34.663,
+          "ppos": 51.53,
+          "to_gene": "sp|P17050|NAGAB_HUMAN",
+          "to_id": "human"
+        },
+        {
+          "align_len": 371,
+          "bitscore": 187,
+          "evalue": 5.23e-58,
+          "from_gene": "sp|P41947|MEL6_YEASX",
+          "from_id": "yeast",
+          "identity": 32.884,
+          "ppos": 48.52,
+          "to_gene": "sp|P06280|AGAL_HUMAN",
+          "to_id": "human"
+        },
+        {
+          "align_len": 344,
+          "bitscore": 191,
+          "evalue": 7.71e-60,
+          "from_gene": "sp|P41947|MEL6_YEASX",
+          "from_id": "yeast",
+          "identity": 34.012,
+          "ppos": 50,
+          "to_gene": "sp|P17050|NAGAB_HUMAN",
+          "to_id": "human"
+        }
+      ],
+      "n_hits": 16
+    },
+    "draft": {
+      "gene_rules": [
+        {
+          "clauses": [
+            [
+              "t_YAL054C"
+            ]
+          ],
+          "reaction": "ACS"
+        },
+        {
+          "clauses": [
+            [
+              "t_YGL256W"
+            ]
+          ],
+          "reaction": "ADH1"
+        },
+        {
+          "clauses": [
+            [
+              "t_YDL022W"
+            ]
+          ],
+          "reaction": "DAR"
+        },
+        {
+          "clauses": [
+            [
+              "t_YGR192C"
+            ]
+          ],
+          "reaction": "GLD"
+        },
+        {
+          "clauses": [
+            [
+              "t_YDL021W"
+            ]
+          ],
+          "reaction": "GPM"
+        },
+        {
+          "clauses": [
+            [
+              "t_YER062C"
+            ]
+          ],
+          "reaction": "GPP"
+        },
+        {
+          "clauses": [
+            [
+              "t_YCL040W"
+            ],
+            [
+              "t_YFR053C"
+            ],
+            [
+              "t_YGL253W"
+            ]
+          ],
+          "reaction": "HXK"
+        },
+        {
+          "clauses": [
+            [
+              "t_YDL066W"
+            ]
+          ],
+          "reaction": "IDP1"
+        },
+        {
+          "clauses": [
+            [
+              "t_YGR087C"
+            ]
+          ],
+          "reaction": "PDC"
+        },
+        {
+          "clauses": [
+            [
+              "t_YER178W"
+            ]
+          ],
+          "reaction": "PDH"
+        },
+        {
+          "clauses": [
+            [
+              "t_YGR240C"
+            ]
+          ],
+          "reaction": "PFK"
+        },
+        {
+          "clauses": [
+            [
+              "t_YBR196C"
+            ]
+          ],
+          "reaction": "PGI"
+        },
+        {
+          "clauses": [
+            [
+              "t_YCR012W"
+            ]
+          ],
+          "reaction": "PGK"
+        },
+        {
+          "clauses": [
+            [
+              "t_YCR073W-A"
+            ]
+          ],
+          "reaction": "PGL"
+        },
+        {
+          "clauses": [
+            [
+              "t_YBR218C"
+            ],
+            [
+              "t_YGL062W"
+            ]
+          ],
+          "reaction": "PYC"
+        },
+        {
+          "clauses": [
+            [
+              "t_YBR117C"
+            ]
+          ],
+          "reaction": "TKI1TKI2a"
+        },
+        {
+          "clauses": [
+            [
+              "t_YBR117C"
+            ]
+          ],
+          "reaction": "TKI1TKI2b"
+        },
+        {
+          "clauses": [
+            [
+              "t_YDR050C"
+            ]
+          ],
+          "reaction": "TPI"
+        }
+      ],
+      "genes": [
+        "t_YAL054C",
+        "t_YBR117C",
+        "t_YBR196C",
+        "t_YBR218C",
+        "t_YCL040W",
+        "t_YCR012W",
+        "t_YCR073W-A",
+        "t_YDL021W",
+        "t_YDL022W",
+        "t_YDL066W",
+        "t_YDR050C",
+        "t_YER062C",
+        "t_YER178W",
+        "t_YFR053C",
+        "t_YGL062W",
+        "t_YGL253W",
+        "t_YGL256W",
+        "t_YGR087C",
+        "t_YGR192C",
+        "t_YGR240C"
+      ],
+      "metabolites": [
+        "ACA_c",
+        "ACCOA_c",
+        "ACCOA_m",
+        "AC_c",
+        "ADP_c",
+        "AKG_m",
+        "ATP_c",
+        "CO2_c",
+        "CO2_m",
+        "COA_c",
+        "COA_m",
+        "DHAP_c",
+        "E4P_c",
+        "ETH_c",
+        "F16P_c",
+        "F6P_c",
+        "G15L_c",
+        "G6P_c",
+        "GA3P_c",
+        "GLC_c",
+        "GLY_c",
+        "GP_c",
+        "ICI_m",
+        "NADH_c",
+        "NADH_m",
+        "NADPH_m",
+        "NADP_m",
+        "NAD_c",
+        "NAD_m",
+        "OAA_m",
+        "P13G_c",
+        "P2G_c",
+        "P3G_c",
+        "P6G_c",
+        "PI_c",
+        "PYR_c",
+        "R5P_c",
+        "S7P_c",
+        "X5P_c"
+      ],
+      "n_genes": 20,
+      "n_metabolites": 39,
+      "n_reactions": 18,
+      "ortholog_pairs": [
+        {
+          "source": "YAL054C",
+          "target": "t_YAL054C"
+        },
+        {
+          "source": "YBR117C",
+          "target": "t_YBR117C"
+        },
+        {
+          "source": "YBR196C",
+          "target": "t_YBR196C"
+        },
+        {
+          "source": "YBR218C",
+          "target": "t_YBR218C"
+        },
+        {
+          "source": "YCL040W",
+          "target": "t_YCL040W"
+        },
+        {
+          "source": "YCR012W",
+          "target": "t_YCR012W"
+        },
+        {
+          "source": "YCR073W-A",
+          "target": "t_YCR073W-A"
+        },
+        {
+          "source": "YDL021W",
+          "target": "t_YDL021W"
+        },
+        {
+          "source": "YDL022W",
+          "target": "t_YDL022W"
+        },
+        {
+          "source": "YDL066W",
+          "target": "t_YDL066W"
+        },
+        {
+          "source": "YDR050C",
+          "target": "t_YDR050C"
+        },
+        {
+          "source": "YER062C",
+          "target": "t_YER062C"
+        },
+        {
+          "source": "YER178W",
+          "target": "t_YER178W"
+        },
+        {
+          "source": "YFR053C",
+          "target": "t_YFR053C"
+        },
+        {
+          "source": "YGL062W",
+          "target": "t_YGL062W"
+        },
+        {
+          "source": "YGL253W",
+          "target": "t_YGL253W"
+        },
+        {
+          "source": "YGL256W",
+          "target": "t_YGL256W"
+        },
+        {
+          "source": "YGR087C",
+          "target": "t_YGR087C"
+        },
+        {
+          "source": "YGR192C",
+          "target": "t_YGR192C"
+        },
+        {
+          "source": "YGR240C",
+          "target": "t_YGR240C"
+        }
+      ],
+      "reactions": [
+        "ACS",
+        "ADH1",
+        "DAR",
+        "GLD",
+        "GPM",
+        "GPP",
+        "HXK",
+        "IDP1",
+        "PDC",
+        "PDH",
+        "PFK",
+        "PGI",
+        "PGK",
+        "PGL",
+        "PYC",
+        "TKI1TKI2a",
+        "TKI1TKI2b",
+        "TPI"
+      ],
+      "stoichiometry": [
+        {
+          "coefficient": 1,
+          "metabolite": "ACCOA_c",
+          "reaction": "ACS"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "AC_c",
+          "reaction": "ACS"
+        },
+        {
+          "coefficient": 2,
+          "metabolite": "ADP_c",
+          "reaction": "ACS"
+        },
+        {
+          "coefficient": -2,
+          "metabolite": "ATP_c",
+          "reaction": "ACS"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "COA_c",
+          "reaction": "ACS"
+        },
+        {
+          "coefficient": 2,
+          "metabolite": "PI_c",
+          "reaction": "ACS"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "ACA_c",
+          "reaction": "ADH1"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "ETH_c",
+          "reaction": "ADH1"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "NADH_c",
+          "reaction": "ADH1"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "NAD_c",
+          "reaction": "ADH1"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "DHAP_c",
+          "reaction": "DAR"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "GP_c",
+          "reaction": "DAR"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "NADH_c",
+          "reaction": "DAR"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "NAD_c",
+          "reaction": "DAR"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "GA3P_c",
+          "reaction": "GLD"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "NADH_c",
+          "reaction": "GLD"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "NAD_c",
+          "reaction": "GLD"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "P13G_c",
+          "reaction": "GLD"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "PI_c",
+          "reaction": "GLD"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "P2G_c",
+          "reaction": "GPM"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "P3G_c",
+          "reaction": "GPM"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "GLY_c",
+          "reaction": "GPP"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "GP_c",
+          "reaction": "GPP"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "PI_c",
+          "reaction": "GPP"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "ADP_c",
+          "reaction": "HXK"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "ATP_c",
+          "reaction": "HXK"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "G6P_c",
+          "reaction": "HXK"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "GLC_c",
+          "reaction": "HXK"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "AKG_m",
+          "reaction": "IDP1"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "CO2_m",
+          "reaction": "IDP1"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "ICI_m",
+          "reaction": "IDP1"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "NADPH_m",
+          "reaction": "IDP1"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "NADP_m",
+          "reaction": "IDP1"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "ACA_c",
+          "reaction": "PDC"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "CO2_c",
+          "reaction": "PDC"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "PYR_c",
+          "reaction": "PDC"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "ACCOA_m",
+          "reaction": "PDH"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "CO2_m",
+          "reaction": "PDH"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "COA_m",
+          "reaction": "PDH"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "NADH_m",
+          "reaction": "PDH"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "NAD_m",
+          "reaction": "PDH"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "PYR_c",
+          "reaction": "PDH"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "ADP_c",
+          "reaction": "PFK"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "ATP_c",
+          "reaction": "PFK"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "F16P_c",
+          "reaction": "PFK"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "F6P_c",
+          "reaction": "PFK"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "F6P_c",
+          "reaction": "PGI"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "G6P_c",
+          "reaction": "PGI"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "ADP_c",
+          "reaction": "PGK"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "ATP_c",
+          "reaction": "PGK"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "P13G_c",
+          "reaction": "PGK"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "P3G_c",
+          "reaction": "PGK"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "G15L_c",
+          "reaction": "PGL"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "P6G_c",
+          "reaction": "PGL"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "ADP_c",
+          "reaction": "PYC"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "ATP_c",
+          "reaction": "PYC"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "CO2_c",
+          "reaction": "PYC"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "OAA_m",
+          "reaction": "PYC"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "PI_c",
+          "reaction": "PYC"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "PYR_c",
+          "reaction": "PYC"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "GA3P_c",
+          "reaction": "TKI1TKI2a"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "R5P_c",
+          "reaction": "TKI1TKI2a"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "S7P_c",
+          "reaction": "TKI1TKI2a"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "X5P_c",
+          "reaction": "TKI1TKI2a"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "E4P_c",
+          "reaction": "TKI1TKI2b"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "F6P_c",
+          "reaction": "TKI1TKI2b"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "GA3P_c",
+          "reaction": "TKI1TKI2b"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "X5P_c",
+          "reaction": "TKI1TKI2b"
+        },
+        {
+          "coefficient": -1,
+          "metabolite": "DHAP_c",
+          "reaction": "TPI"
+        },
+        {
+          "coefficient": 1,
+          "metabolite": "GA3P_c",
+          "reaction": "TPI"
+        }
+      ]
+    }
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "homology_chain"
+}

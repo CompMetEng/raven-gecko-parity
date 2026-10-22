@@ -1,0 +1,51 @@
+scenario: ec_model_expansion_ectestgem  host: vera-r05-04  start: 2026-10-22T07:48:45Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529265/tmpqnoqdw3t.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529265/tmpxo9fdjyd.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+ec_model_expansion_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/ec_model_expansion_ectestgem.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529265/tmpxa314mn9.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529265/tmp6zr8m2li.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+ec_model_expansion_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/ec_model_expansion_ectestgem.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529265/tmp616rw29q.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529265/tmplc3w99er.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+ec_model_expansion_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/ec_model_expansion_ectestgem.seed2.json
+ec_model_expansion_ectestgem [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/matlab/ec_model_expansion_ectestgem.json
+Terminated
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: ec_model_expansion_ectestgem  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: ec_model_expansion_ectestgem  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: ec_model_expansion_ectestgem  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: ec_model_expansion_ectestgem  (python vs python)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: ec_model_expansion_ectestgem  (python vs python)
+tolerance: rel=0 abs=0
+result:   MATCH
+end: 2026-10-22T07:49:52Z  status: MATCH

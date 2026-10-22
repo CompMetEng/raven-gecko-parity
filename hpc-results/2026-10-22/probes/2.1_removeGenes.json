@@ -1,0 +1,189 @@
+{
+  "fieldsBefore": [
+    "id",
+    "name",
+    "description",
+    "version",
+    "date",
+    "annotation",
+    "rxns",
+    "rxnNames",
+    "mets",
+    "metNames",
+    "S",
+    "lb",
+    "ub",
+    "rev",
+    "c",
+    "b",
+    "genes",
+    "grRules",
+    "rxnGeneMat",
+    "subSystems",
+    "metComps",
+    "inchis",
+    "metFormulas",
+    "metMiriams",
+    "comps",
+    "compNames",
+    "geneMiriams",
+    "geneShortNames"
+  ],
+  "before": {
+    "genes": 61,
+    "mets": 52,
+    "rxns": 53,
+    "genesInNoRule": []
+  },
+  "step1": {
+    "default": {
+      "genes": 60,
+      "mets": 52,
+      "rxns": 53,
+      "genesInNoRule": []
+    },
+    "removeUnusedMets": {
+      "genes": 60,
+      "mets": 52,
+      "rxns": 53,
+      "genesInNoRule": []
+    },
+    "removeBlockedRxns": {
+      "genes": 60,
+      "mets": 52,
+      "rxns": 53,
+      "genesInNoRule": []
+    },
+    "standardizeRulesFalse": {
+      "genes": 60,
+      "mets": 52,
+      "rxns": 53,
+      "genesInNoRule": []
+    }
+  },
+  "step2": {
+    "singleGeneRxnCount": 22,
+    "rxn": "PGI",
+    "gene": [
+      "YBR196C"
+    ],
+    "rxnBefore": {
+      "lb": -1000,
+      "ub": 1000,
+      "grRule": "YBR196C"
+    },
+    "rxnStays": true,
+    "rxnAfter": {
+      "lb": 0,
+      "ub": 0,
+      "grRule": ""
+    },
+    "after": {
+      "genes": 60,
+      "mets": 52,
+      "rxns": 53,
+      "genesInNoRule": []
+    }
+  },
+  "step3": {
+    "unused1StillInGenes": false,
+    "genesAfter": 61,
+    "fieldsAfter": [
+      "id",
+      "name",
+      "description",
+      "version",
+      "date",
+      "annotation",
+      "rxns",
+      "rxnNames",
+      "mets",
+      "metNames",
+      "S",
+      "lb",
+      "ub",
+      "rev",
+      "c",
+      "b",
+      "genes",
+      "grRules",
+      "rxnGeneMat",
+      "subSystems",
+      "metComps",
+      "inchis",
+      "metFormulas",
+      "metMiriams",
+      "comps",
+      "compNames",
+      "geneMiriams",
+      "geneShortNames"
+    ],
+    "geneFieldsWrongLength": [],
+    "removeUsedGene": {
+      "note": "fieldnames before/after for the YFR053C removal"
+    }
+  },
+  "step4": {
+    "fieldsBefore": [
+      "id",
+      "name",
+      "description",
+      "version",
+      "date",
+      "annotation",
+      "rxns",
+      "rxnNames",
+      "mets",
+      "metNames",
+      "S",
+      "lb",
+      "ub",
+      "rev",
+      "c",
+      "b",
+      "genes",
+      "grRules",
+      "rxnGeneMat",
+      "subSystems",
+      "metComps",
+      "inchis",
+      "metFormulas",
+      "metMiriams",
+      "comps",
+      "compNames",
+      "geneMiriams",
+      "geneShortNames"
+    ],
+    "fieldsAfter": [
+      "id",
+      "name",
+      "description",
+      "version",
+      "date",
+      "annotation",
+      "rxns",
+      "rxnNames",
+      "mets",
+      "metNames",
+      "S",
+      "lb",
+      "ub",
+      "rev",
+      "c",
+      "b",
+      "genes",
+      "grRules",
+      "rxnGeneMat",
+      "subSystems",
+      "metComps",
+      "inchis",
+      "metFormulas",
+      "metMiriams",
+      "comps",
+      "compNames",
+      "geneMiriams",
+      "geneShortNames"
+    ],
+    "geneFieldsWrongLength": []
+  }
+}

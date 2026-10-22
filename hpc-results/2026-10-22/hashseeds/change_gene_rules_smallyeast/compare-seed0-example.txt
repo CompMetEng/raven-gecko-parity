@@ -1,0 +1,3 @@
+scenario: change_gene_rules_smallyeast  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH

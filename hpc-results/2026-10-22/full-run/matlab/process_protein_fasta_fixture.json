@@ -1,0 +1,22 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "processed": [
+      {
+        "header": "LT1",
+        "sequence": "MAAAAAAAAA"
+      },
+      {
+        "header": "LT2",
+        "sequence": "MBBBBBBBBB"
+      },
+      {
+        "header": "",
+        "sequence": "MZZZ"
+      }
+    ]
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "process_protein_fasta_fixture"
+}

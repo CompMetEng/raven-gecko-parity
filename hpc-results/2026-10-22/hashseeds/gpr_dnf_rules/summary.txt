@@ -1,0 +1,1 @@
+gpr_dnf_rules seeds_match=20/20 repeat_identical=20/20 differ_seeds: none

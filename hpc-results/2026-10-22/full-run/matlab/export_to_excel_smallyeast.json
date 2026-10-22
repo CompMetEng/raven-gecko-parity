@@ -1,0 +1,35 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "rxns_bounds": [
+      {
+        "lower_bound": null,
+        "reaction": "PGI",
+        "upper_bound": null
+      },
+      {
+        "lower_bound": null,
+        "reaction": "FBA",
+        "upper_bound": null
+      },
+      {
+        "lower_bound": null,
+        "reaction": "HXK",
+        "upper_bound": null
+      },
+      {
+        "lower_bound": null,
+        "reaction": "glcIN",
+        "upper_bound": 0
+      },
+      {
+        "lower_bound": null,
+        "reaction": "o2IN",
+        "upper_bound": 0
+      }
+    ]
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "export_to_excel_smallyeast"
+}

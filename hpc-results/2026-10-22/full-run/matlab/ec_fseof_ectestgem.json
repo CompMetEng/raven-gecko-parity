@@ -1,0 +1,19 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "enforced_levels": [
+      0,
+      259.19974080000003,
+      518.3994816000001,
+      777.5992224,
+      1036.7989632000001,
+      1295.998704
+    ],
+    "targets": [
+      "R5"
+    ]
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "ec_fseof_ectestgem"
+}

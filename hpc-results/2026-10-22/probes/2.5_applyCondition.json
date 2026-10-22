@@ -1,0 +1,189 @@
+{
+  "v_out": {
+    "yaml": "prelude:\n  reset_exchanges: out\n",
+    "nChanged": 0,
+    "ids": [],
+    "lbBefore": [],
+    "ubBefore": [],
+    "lbAfter": [],
+    "ubAfter": []
+  },
+  "v_in": {
+    "yaml": "prelude:\n  reset_exchanges: in\n",
+    "nChanged": 3,
+    "ids": [
+      "glcIN",
+      "o2IN",
+      "ethIN"
+    ],
+    "lbBefore": [
+      0,
+      0,
+      0
+    ],
+    "ubBefore": [
+      0,
+      0,
+      0
+    ],
+    "lbAfter": [
+      0,
+      0,
+      0
+    ],
+    "ubAfter": [
+      1000,
+      1000,
+      1000
+    ]
+  },
+  "v_both": {
+    "yaml": "prelude:\n  reset_exchanges: both\n",
+    "nChanged": 3,
+    "ids": [
+      "glcIN",
+      "o2IN",
+      "ethIN"
+    ],
+    "lbBefore": [
+      0,
+      0,
+      0
+    ],
+    "ubBefore": [
+      0,
+      0,
+      0
+    ],
+    "lbAfter": [
+      0,
+      0,
+      0
+    ],
+    "ubAfter": [
+      1000,
+      1000,
+      1000
+    ]
+  },
+  "v_uptake": {
+    "yaml": "prelude:\n  reset_exchanges: uptake\n",
+    "nChanged": 0,
+    "ids": [],
+    "lbBefore": [],
+    "ubBefore": [],
+    "lbAfter": [],
+    "ubAfter": []
+  },
+  "v_excrete": {
+    "yaml": "prelude:\n  reset_exchanges: excrete\n",
+    "nChanged": 0,
+    "ids": [],
+    "lbBefore": [],
+    "ubBefore": [],
+    "lbAfter": [],
+    "ubAfter": []
+  },
+  "v_blocked": {
+    "yaml": "prelude:\n  reset_exchanges: blocked\n",
+    "nChanged": 3,
+    "ids": [
+      "glcIN",
+      "o2IN",
+      "ethIN"
+    ],
+    "lbBefore": [
+      0,
+      0,
+      0
+    ],
+    "ubBefore": [
+      0,
+      0,
+      0
+    ],
+    "lbAfter": [
+      0,
+      0,
+      0
+    ],
+    "ubAfter": [
+      1000,
+      1000,
+      1000
+    ]
+  },
+  "v_reverse": {
+    "yaml": "prelude:\n  reset_exchanges: reverse\n",
+    "nChanged": 0,
+    "ids": [],
+    "lbBefore": [],
+    "ubBefore": [],
+    "lbAfter": [],
+    "ubAfter": []
+  },
+  "v_true": {
+    "yaml": "prelude:\n  reset_exchanges: true\n",
+    "error": {
+      "identifier": "MATLAB:invalidConversion",
+      "message": "Conversion to char from logical is not possible."
+    }
+  },
+  "v_false": {
+    "yaml": "prelude:\n  reset_exchanges: false\n",
+    "error": {
+      "identifier": "MATLAB:invalidConversion",
+      "message": "Conversion to char from logical is not possible."
+    }
+  },
+  "v_none": {
+    "yaml": "prelude:\n  reset_exchanges: none\n",
+    "error": {
+      "identifier": "",
+      "message": "Invalid reactionType specified"
+    }
+  },
+  "v_all": {
+    "yaml": "prelude:\n  reset_exchanges: all\n",
+    "nChanged": 3,
+    "ids": [
+      "glcIN",
+      "o2IN",
+      "ethIN"
+    ],
+    "lbBefore": [
+      0,
+      0,
+      0
+    ],
+    "ubBefore": [
+      0,
+      0,
+      0
+    ],
+    "lbAfter": [
+      0,
+      0,
+      0
+    ],
+    "ubAfter": [
+      1000,
+      1000,
+      1000
+    ]
+  },
+  "v_0": {
+    "yaml": "prelude:\n  reset_exchanges: 0\n",
+    "error": {
+      "identifier": "",
+      "message": "Invalid reactionType specified"
+    }
+  },
+  "v_1": {
+    "yaml": "prelude:\n  reset_exchanges: 1\n",
+    "error": {
+      "identifier": "",
+      "message": "Invalid reactionType specified"
+    }
+  }
+}

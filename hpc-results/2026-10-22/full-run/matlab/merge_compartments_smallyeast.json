@@ -1,0 +1,1310 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "bounds": [
+      {
+        "lower_bound": -1000,
+        "reaction": "ACO",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "ACS",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": -1000,
+        "reaction": "ADH1",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "ALD6",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "ATPX",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "CIT",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "DAR",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": -1000,
+        "reaction": "ENO",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "FADHX",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": -1000,
+        "reaction": "FBA",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "FBP",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "FRDS2",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": -1000,
+        "reaction": "FUM1",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": -1000,
+        "reaction": "GLD",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "GND",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": -1000,
+        "reaction": "GPM",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "GPP",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "GROWTH",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "HXK",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "IDP1",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "KGD1KGD2",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": -1000,
+        "reaction": "LSC1LSC2",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "MAE1",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": -1000,
+        "reaction": "MDH1",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "NADHX",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "PCK",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "PDC",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "PDH",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "PFK",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": -1000,
+        "reaction": "PGI",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": -1000,
+        "reaction": "PGK",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "PGL",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "PYC",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "PYK",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": -1000,
+        "reaction": "RPE",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": -1000,
+        "reaction": "RPI",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "SDH",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": -1000,
+        "reaction": "TAL1",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": -1000,
+        "reaction": "TKI1TKI2a",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": -1000,
+        "reaction": "TKI1TKI2b",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": -1000,
+        "reaction": "TPI",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "ZWF",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "acOUT",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "biomassOUT",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "co2OUT",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "ethIN",
+        "upper_bound": 0
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "ethOUT",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "glcIN",
+        "upper_bound": 0
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "glyOUT",
+        "upper_bound": 1000
+      },
+      {
+        "lower_bound": 0,
+        "reaction": "o2IN",
+        "upper_bound": 0
+      }
+    ],
+    "compartments": [
+      "s"
+    ],
+    "deduplicated_reactions": [],
+    "metabolites": [
+      "(S)-malate",
+      "2-oxoglutarate",
+      "2-phospho-D-glycerate",
+      "3-phospho-D-glycerate",
+      "3-phospho-D-glyceroyl phosphate",
+      "6-O-phosphono-D-glucono-1,5-lactone",
+      "6-phospho-D-gluconate",
+      "ADP",
+      "ATP",
+      "CO2",
+      "D-erythrose 4-phosphate",
+      "D-glyceraldehyde 3-phosphate",
+      "D-ribose 5-phosphate",
+      "D-ribulose 5-phosphate",
+      "D-xylulose 5-phosphate",
+      "FAD",
+      "FADH2",
+      "NAD(+)",
+      "NADH",
+      "NADP(+)",
+      "NADPH",
+      "O2",
+      "acetaldehyde",
+      "acetate",
+      "acetyl-CoA",
+      "alpha-D-glucose",
+      "alpha-D-glucose 6-phosphate",
+      "beta-D-fructofuranose 1,6-bisphosphate",
+      "beta-D-fructofuranose 6-phosphate",
+      "biomass",
+      "citrate",
+      "coenzyme A",
+      "ethanol",
+      "fumarate",
+      "glycerol",
+      "glycerol monophosphate",
+      "glycerone phosphate",
+      "isocitrate",
+      "oxaloacetate",
+      "phosphate",
+      "phosphoenolpyruvate",
+      "pyruvate",
+      "sedoheptulose 7-phosphate",
+      "succinate",
+      "succinyl-CoA"
+    ],
+    "n_metabolites_after": 45,
+    "n_metabolites_before": 52,
+    "n_reactions_after": 50,
+    "n_reactions_before": 53,
+    "n_species_before": 45,
+    "reactions": [
+      "ACO",
+      "ACS",
+      "ADH1",
+      "ALD6",
+      "ATPX",
+      "CIT",
+      "DAR",
+      "ENO",
+      "FADHX",
+      "FBA",
+      "FBP",
+      "FRDS2",
+      "FUM1",
+      "GLD",
+      "GND",
+      "GPM",
+      "GPP",
+      "GROWTH",
+      "HXK",
+      "IDP1",
+      "KGD1KGD2",
+      "LSC1LSC2",
+      "MAE1",
+      "MDH1",
+      "NADHX",
+      "PCK",
+      "PDC",
+      "PDH",
+      "PFK",
+      "PGI",
+      "PGK",
+      "PGL",
+      "PYC",
+      "PYK",
+      "RPE",
+      "RPI",
+      "SDH",
+      "TAL1",
+      "TKI1TKI2a",
+      "TKI1TKI2b",
+      "TPI",
+      "ZWF",
+      "acOUT",
+      "biomassOUT",
+      "co2OUT",
+      "ethIN",
+      "ethOUT",
+      "glcIN",
+      "glyOUT",
+      "o2IN"
+    ],
+    "removed_reactions": [
+      "CAT2",
+      "CO2TRANS",
+      "ShuttleX"
+    ],
+    "stoichiometry": [
+      {
+        "coefficient": -1,
+        "reaction": "ACO",
+        "species": "citrate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "ACO",
+        "species": "isocitrate"
+      },
+      {
+        "coefficient": 2,
+        "reaction": "ACS",
+        "species": "ADP"
+      },
+      {
+        "coefficient": -2,
+        "reaction": "ACS",
+        "species": "ATP"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "ACS",
+        "species": "acetate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "ACS",
+        "species": "acetyl-CoA"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "ACS",
+        "species": "coenzyme A"
+      },
+      {
+        "coefficient": 2,
+        "reaction": "ACS",
+        "species": "phosphate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "ADH1",
+        "species": "NAD(+)"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "ADH1",
+        "species": "NADH"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "ADH1",
+        "species": "acetaldehyde"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "ADH1",
+        "species": "ethanol"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "ALD6",
+        "species": "NADP(+)"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "ALD6",
+        "species": "NADPH"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "ALD6",
+        "species": "acetaldehyde"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "ALD6",
+        "species": "acetate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "ATPX",
+        "species": "ADP"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "ATPX",
+        "species": "ATP"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "ATPX",
+        "species": "phosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "CIT",
+        "species": "acetyl-CoA"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "CIT",
+        "species": "citrate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "CIT",
+        "species": "coenzyme A"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "CIT",
+        "species": "oxaloacetate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "DAR",
+        "species": "NAD(+)"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "DAR",
+        "species": "NADH"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "DAR",
+        "species": "glycerol monophosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "DAR",
+        "species": "glycerone phosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "ENO",
+        "species": "2-phospho-D-glycerate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "ENO",
+        "species": "phosphoenolpyruvate"
+      },
+      {
+        "coefficient": -2.4,
+        "reaction": "FADHX",
+        "species": "ADP"
+      },
+      {
+        "coefficient": 2.4,
+        "reaction": "FADHX",
+        "species": "ATP"
+      },
+      {
+        "coefficient": 2,
+        "reaction": "FADHX",
+        "species": "FAD"
+      },
+      {
+        "coefficient": -2,
+        "reaction": "FADHX",
+        "species": "FADH2"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "FADHX",
+        "species": "O2"
+      },
+      {
+        "coefficient": -2.4,
+        "reaction": "FADHX",
+        "species": "phosphate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "FBA",
+        "species": "D-glyceraldehyde 3-phosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "FBA",
+        "species": "beta-D-fructofuranose 1,6-bisphosphate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "FBA",
+        "species": "glycerone phosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "FBP",
+        "species": "beta-D-fructofuranose 1,6-bisphosphate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "FBP",
+        "species": "beta-D-fructofuranose 6-phosphate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "FBP",
+        "species": "phosphate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "FRDS2",
+        "species": "FAD"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "FRDS2",
+        "species": "FADH2"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "FRDS2",
+        "species": "fumarate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "FRDS2",
+        "species": "succinate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "FUM1",
+        "species": "(S)-malate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "FUM1",
+        "species": "fumarate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "GLD",
+        "species": "3-phospho-D-glyceroyl phosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "GLD",
+        "species": "D-glyceraldehyde 3-phosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "GLD",
+        "species": "NAD(+)"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "GLD",
+        "species": "NADH"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "GLD",
+        "species": "phosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "GND",
+        "species": "6-phospho-D-gluconate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "GND",
+        "species": "CO2"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "GND",
+        "species": "D-ribulose 5-phosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "GND",
+        "species": "NADP(+)"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "GND",
+        "species": "NADPH"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "GPM",
+        "species": "2-phospho-D-glycerate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "GPM",
+        "species": "3-phospho-D-glycerate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "GPP",
+        "species": "glycerol"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "GPP",
+        "species": "glycerol monophosphate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "GPP",
+        "species": "phosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "GROWTH",
+        "species": "2-oxoglutarate"
+      },
+      {
+        "coefficient": -6,
+        "reaction": "GROWTH",
+        "species": "3-phospho-D-glycerate"
+      },
+      {
+        "coefficient": 254,
+        "reaction": "GROWTH",
+        "species": "ADP"
+      },
+      {
+        "coefficient": -254,
+        "reaction": "GROWTH",
+        "species": "ATP"
+      },
+      {
+        "coefficient": -3,
+        "reaction": "GROWTH",
+        "species": "D-erythrose 4-phosphate"
+      },
+      {
+        "coefficient": -3,
+        "reaction": "GROWTH",
+        "species": "D-ribose 5-phosphate"
+      },
+      {
+        "coefficient": -22,
+        "reaction": "GROWTH",
+        "species": "NAD(+)"
+      },
+      {
+        "coefficient": 22,
+        "reaction": "GROWTH",
+        "species": "NADH"
+      },
+      {
+        "coefficient": 112,
+        "reaction": "GROWTH",
+        "species": "NADP(+)"
+      },
+      {
+        "coefficient": -112,
+        "reaction": "GROWTH",
+        "species": "NADPH"
+      },
+      {
+        "coefficient": -27,
+        "reaction": "GROWTH",
+        "species": "acetyl-CoA"
+      },
+      {
+        "coefficient": -25,
+        "reaction": "GROWTH",
+        "species": "alpha-D-glucose 6-phosphate"
+      },
+      {
+        "coefficient": 10,
+        "reaction": "GROWTH",
+        "species": "biomass"
+      },
+      {
+        "coefficient": 27,
+        "reaction": "GROWTH",
+        "species": "coenzyme A"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "GROWTH",
+        "species": "glycerol monophosphate"
+      },
+      {
+        "coefficient": -10,
+        "reaction": "GROWTH",
+        "species": "oxaloacetate"
+      },
+      {
+        "coefficient": 298,
+        "reaction": "GROWTH",
+        "species": "phosphate"
+      },
+      {
+        "coefficient": -6,
+        "reaction": "GROWTH",
+        "species": "phosphoenolpyruvate"
+      },
+      {
+        "coefficient": -18,
+        "reaction": "GROWTH",
+        "species": "pyruvate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "HXK",
+        "species": "ADP"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "HXK",
+        "species": "ATP"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "HXK",
+        "species": "alpha-D-glucose"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "HXK",
+        "species": "alpha-D-glucose 6-phosphate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "IDP1",
+        "species": "2-oxoglutarate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "IDP1",
+        "species": "CO2"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "IDP1",
+        "species": "NADP(+)"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "IDP1",
+        "species": "NADPH"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "IDP1",
+        "species": "isocitrate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "KGD1KGD2",
+        "species": "2-oxoglutarate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "KGD1KGD2",
+        "species": "CO2"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "KGD1KGD2",
+        "species": "NAD(+)"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "KGD1KGD2",
+        "species": "NADH"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "KGD1KGD2",
+        "species": "coenzyme A"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "KGD1KGD2",
+        "species": "succinyl-CoA"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "LSC1LSC2",
+        "species": "ADP"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "LSC1LSC2",
+        "species": "ATP"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "LSC1LSC2",
+        "species": "coenzyme A"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "LSC1LSC2",
+        "species": "phosphate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "LSC1LSC2",
+        "species": "succinate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "LSC1LSC2",
+        "species": "succinyl-CoA"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "MAE1",
+        "species": "(S)-malate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "MAE1",
+        "species": "CO2"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "MAE1",
+        "species": "NADP(+)"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "MAE1",
+        "species": "NADPH"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "MAE1",
+        "species": "pyruvate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "MDH1",
+        "species": "(S)-malate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "MDH1",
+        "species": "NAD(+)"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "MDH1",
+        "species": "NADH"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "MDH1",
+        "species": "oxaloacetate"
+      },
+      {
+        "coefficient": -2.4,
+        "reaction": "NADHX",
+        "species": "ADP"
+      },
+      {
+        "coefficient": 2.4,
+        "reaction": "NADHX",
+        "species": "ATP"
+      },
+      {
+        "coefficient": 2,
+        "reaction": "NADHX",
+        "species": "NAD(+)"
+      },
+      {
+        "coefficient": -2,
+        "reaction": "NADHX",
+        "species": "NADH"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "NADHX",
+        "species": "O2"
+      },
+      {
+        "coefficient": -2.4,
+        "reaction": "NADHX",
+        "species": "phosphate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "PCK",
+        "species": "ADP"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "PCK",
+        "species": "ATP"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "PCK",
+        "species": "CO2"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "PCK",
+        "species": "oxaloacetate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "PCK",
+        "species": "phosphoenolpyruvate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "PDC",
+        "species": "CO2"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "PDC",
+        "species": "acetaldehyde"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "PDC",
+        "species": "pyruvate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "PDH",
+        "species": "CO2"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "PDH",
+        "species": "NAD(+)"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "PDH",
+        "species": "NADH"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "PDH",
+        "species": "acetyl-CoA"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "PDH",
+        "species": "coenzyme A"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "PDH",
+        "species": "pyruvate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "PFK",
+        "species": "ADP"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "PFK",
+        "species": "ATP"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "PFK",
+        "species": "beta-D-fructofuranose 1,6-bisphosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "PFK",
+        "species": "beta-D-fructofuranose 6-phosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "PGI",
+        "species": "alpha-D-glucose 6-phosphate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "PGI",
+        "species": "beta-D-fructofuranose 6-phosphate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "PGK",
+        "species": "3-phospho-D-glycerate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "PGK",
+        "species": "3-phospho-D-glyceroyl phosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "PGK",
+        "species": "ADP"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "PGK",
+        "species": "ATP"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "PGL",
+        "species": "6-O-phosphono-D-glucono-1,5-lactone"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "PGL",
+        "species": "6-phospho-D-gluconate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "PYC",
+        "species": "ADP"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "PYC",
+        "species": "ATP"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "PYC",
+        "species": "CO2"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "PYC",
+        "species": "oxaloacetate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "PYC",
+        "species": "phosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "PYC",
+        "species": "pyruvate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "PYK",
+        "species": "ADP"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "PYK",
+        "species": "ATP"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "PYK",
+        "species": "phosphoenolpyruvate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "PYK",
+        "species": "pyruvate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "RPE",
+        "species": "D-ribulose 5-phosphate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "RPE",
+        "species": "D-xylulose 5-phosphate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "RPI",
+        "species": "D-ribose 5-phosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "RPI",
+        "species": "D-ribulose 5-phosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "SDH",
+        "species": "FAD"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "SDH",
+        "species": "FADH2"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "SDH",
+        "species": "fumarate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "SDH",
+        "species": "succinate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "TAL1",
+        "species": "D-erythrose 4-phosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "TAL1",
+        "species": "D-glyceraldehyde 3-phosphate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "TAL1",
+        "species": "beta-D-fructofuranose 6-phosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "TAL1",
+        "species": "sedoheptulose 7-phosphate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "TKI1TKI2a",
+        "species": "D-glyceraldehyde 3-phosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "TKI1TKI2a",
+        "species": "D-ribose 5-phosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "TKI1TKI2a",
+        "species": "D-xylulose 5-phosphate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "TKI1TKI2a",
+        "species": "sedoheptulose 7-phosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "TKI1TKI2b",
+        "species": "D-erythrose 4-phosphate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "TKI1TKI2b",
+        "species": "D-glyceraldehyde 3-phosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "TKI1TKI2b",
+        "species": "D-xylulose 5-phosphate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "TKI1TKI2b",
+        "species": "beta-D-fructofuranose 6-phosphate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "TPI",
+        "species": "D-glyceraldehyde 3-phosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "TPI",
+        "species": "glycerone phosphate"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "ZWF",
+        "species": "6-O-phosphono-D-glucono-1,5-lactone"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "ZWF",
+        "species": "NADP(+)"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "ZWF",
+        "species": "NADPH"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "ZWF",
+        "species": "alpha-D-glucose 6-phosphate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "acOUT",
+        "species": "acetate"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "biomassOUT",
+        "species": "biomass"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "co2OUT",
+        "species": "CO2"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "ethIN",
+        "species": "ethanol"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "ethOUT",
+        "species": "ethanol"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "glcIN",
+        "species": "alpha-D-glucose"
+      },
+      {
+        "coefficient": -1,
+        "reaction": "glyOUT",
+        "species": "glycerol"
+      },
+      {
+        "coefficient": 1,
+        "reaction": "o2IN",
+        "species": "O2"
+      }
+    ]
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "merge_compartments_smallyeast"
+}

@@ -1,0 +1,132 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "blocked_metabolites": [
+      "BIOMASS_c",
+      "CI_m",
+      "CO2_c",
+      "E4P_c",
+      "F6P_c",
+      "GLY_c",
+      "MAL_m",
+      "PEP_c",
+      "PYR_c",
+      "R5P_c",
+      "S7P_c"
+    ],
+    "candidate_reactions": [
+      {
+        "metabolite": "BIOMASS_c",
+        "reactions": [
+          "GROWTH"
+        ]
+      },
+      {
+        "metabolite": "CI_m",
+        "reactions": [
+          "ACO",
+          "CIT"
+        ]
+      },
+      {
+        "metabolite": "CO2_c",
+        "reactions": [
+          "CO2TRANS",
+          "GND",
+          "MAE1",
+          "PCK",
+          "PDC"
+        ]
+      },
+      {
+        "metabolite": "E4P_c",
+        "reactions": [
+          "TAL1",
+          "TKI1TKI2b"
+        ]
+      },
+      {
+        "metabolite": "F6P_c",
+        "reactions": [
+          "FBP",
+          "PGI",
+          "TAL1",
+          "TKI1TKI2b"
+        ]
+      },
+      {
+        "metabolite": "GLY_c",
+        "reactions": [
+          "GPP"
+        ]
+      },
+      {
+        "metabolite": "MAL_m",
+        "reactions": [
+          "FUM1",
+          "MDH1"
+        ]
+      },
+      {
+        "metabolite": "PEP_c",
+        "reactions": [
+          "ENO",
+          "PCK"
+        ]
+      },
+      {
+        "metabolite": "PYR_c",
+        "reactions": [
+          "MAE1",
+          "PYK"
+        ]
+      },
+      {
+        "metabolite": "R5P_c",
+        "reactions": [
+          "RPI",
+          "TKI1TKI2a"
+        ]
+      },
+      {
+        "metabolite": "S7P_c",
+        "reactions": [
+          "TAL1",
+          "TKI1TKI2a"
+        ]
+      }
+    ],
+    "n_blocked": 11,
+    "n_reachable": 23,
+    "n_removed": 2,
+    "pruning_fraction": 0.6415094339622642,
+    "reachable_metabolites": [
+      "ACA_c",
+      "ACCOA_c",
+      "ACCOA_m",
+      "AC_c",
+      "ADP_c",
+      "ATP_c",
+      "COA_c",
+      "COA_m",
+      "ETH_c",
+      "FADH2_m",
+      "FAD_m",
+      "G6P_c",
+      "GLC_c",
+      "NADH_c",
+      "NADH_m",
+      "NADPH_c",
+      "NADPH_m",
+      "NADP_c",
+      "NADP_m",
+      "NAD_c",
+      "NAD_m",
+      "O2_c",
+      "PI_c"
+    ]
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "gapfill_topology_smallyeast"
+}

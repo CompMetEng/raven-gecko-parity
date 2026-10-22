@@ -1,0 +1,135 @@
+scenario: model_edits_ectestgem  host: vera-r05-04  start: 2026-10-22T07:51:09Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529304/tmp1aqyx8vl.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmpvkvtwivl.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmpsofjqtvl.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmpr0_wmyuw.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmpfknpo8h_.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmp2tbcgi9n.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmpz3i2_m4e.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmpe8i0xd5i.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmpx2mqmsgd.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+model_edits_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/model_edits_ectestgem.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529304/tmpv2m4g0ng.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmpsqm0bqq0.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmp36728tkj.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmp_za38dk2.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmpj11dcd_0.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmpxk2dcwsb.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmpu8f7rgie.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmprmpcvnet.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmp5emtus3t.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+model_edits_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/model_edits_ectestgem.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529304/tmpzfz_83ut.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmpa1qevv0n.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmp4m_76o40.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmpoec2zdt2.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmpyl0d8g7r.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmpzvao8afv.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmp94nqasaf.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmp23v8ywsz.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529304/tmpx7qr5aw1.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+model_edits_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/model_edits_ectestgem.seed2.json
+model_edits_ectestgem [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/matlab/model_edits_ectestgem.json
+Terminated
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: model_edits_ectestgem  (python vs matlab)
+tolerance: rel=0 abs=0
+
+1 difference(s):
+  results.reactions_from_enzyme.unknown.raised
+      boolean mismatch
+      left=True  right=False
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 0)
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: model_edits_ectestgem  (python vs matlab)
+tolerance: rel=0 abs=0
+
+1 difference(s):
+  results.reactions_from_enzyme.unknown.raised
+      boolean mismatch
+      left=True  right=False
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 1)
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: model_edits_ectestgem  (python vs matlab)
+tolerance: rel=0 abs=0
+
+1 difference(s):
+  results.reactions_from_enzyme.unknown.raised
+      boolean mismatch
+      left=True  right=False
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 2)
+--- python seed 0 vs seed 1
+scenario: model_edits_ectestgem  (python vs python)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: model_edits_ectestgem  (python vs python)
+tolerance: rel=0 abs=0
+result:   MATCH
+end: 2026-10-22T07:51:40Z  status: DIFFER

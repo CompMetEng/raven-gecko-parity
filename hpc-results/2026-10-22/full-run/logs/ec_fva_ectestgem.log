@@ -1,0 +1,42 @@
+scenario: ec_fva_ectestgem  host: vera-r06-02  start: 2026-10-22T07:48:38Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529258/tmpsiudzfdp.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+ec_fva_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/ec_fva_ectestgem.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529258/tmp_9y2jl2v.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+ec_fva_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/ec_fva_ectestgem.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529258/tmp2l8acx8l.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+ec_fva_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/ec_fva_ectestgem.seed2.json
+ec_fva_ectestgem [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/matlab/ec_fva_ectestgem.json
+Terminated
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: ec_fva_ectestgem  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-06
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: ec_fva_ectestgem  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-06
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: ec_fva_ectestgem  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-06
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: ec_fva_ectestgem  (python vs python)
+tolerance: rel=1e-06 abs=1e-06
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: ec_fva_ectestgem  (python vs python)
+tolerance: rel=1e-06 abs=1e-06
+result:   MATCH
+end: 2026-10-22T07:49:35Z  status: MATCH

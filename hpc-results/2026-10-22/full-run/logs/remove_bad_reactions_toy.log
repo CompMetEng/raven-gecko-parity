@@ -1,0 +1,102 @@
+scenario: remove_bad_reactions_toy  host: vera-r05-04  start: 2026-10-22T07:51:43Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529311/tmpsjbn77am.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 8 nonzeros
+Read LP format model from file /local/tmp.10529311/tmpzbets51p.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/util/solver.py:554: UserWarning: Solver status is 'infeasible'.
+  warn(f"Solver status is '{status}'.", UserWarning)
+Read LP format model from file /local/tmp.10529311/tmpg9uihdgw.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/util/solver.py:554: UserWarning: Solver status is 'infeasible'.
+  warn(f"Solver status is '{status}'.", UserWarning)
+Read LP format model from file /local/tmp.10529311/tmpmdlcsml_.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 8 nonzeros
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/util/solver.py:554: UserWarning: Solver status is 'infeasible'.
+  warn(f"Solver status is '{status}'.", UserWarning)
+Read LP format model from file /local/tmp.10529311/tmp_7wmvf_3.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 8 nonzeros
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/util/solver.py:554: UserWarning: Solver status is 'infeasible'.
+  warn(f"Solver status is '{status}'.", UserWarning)
+remove_bad_reactions_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/remove_bad_reactions_toy.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529311/tmpnl_jfkem.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 8 nonzeros
+Read LP format model from file /local/tmp.10529311/tmpx86vgfwc.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/util/solver.py:554: UserWarning: Solver status is 'infeasible'.
+  warn(f"Solver status is '{status}'.", UserWarning)
+Read LP format model from file /local/tmp.10529311/tmp2m6j8d4w.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/util/solver.py:554: UserWarning: Solver status is 'infeasible'.
+  warn(f"Solver status is '{status}'.", UserWarning)
+Read LP format model from file /local/tmp.10529311/tmpqvdh5x5y.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 8 nonzeros
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/util/solver.py:554: UserWarning: Solver status is 'infeasible'.
+  warn(f"Solver status is '{status}'.", UserWarning)
+Read LP format model from file /local/tmp.10529311/tmpbzxnglt8.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 8 nonzeros
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/util/solver.py:554: UserWarning: Solver status is 'infeasible'.
+  warn(f"Solver status is '{status}'.", UserWarning)
+remove_bad_reactions_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/remove_bad_reactions_toy.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529311/tmpouo1etn0.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 8 nonzeros
+Read LP format model from file /local/tmp.10529311/tmprsjaziry.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/util/solver.py:554: UserWarning: Solver status is 'infeasible'.
+  warn(f"Solver status is '{status}'.", UserWarning)
+Read LP format model from file /local/tmp.10529311/tmppacejf3b.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/util/solver.py:554: UserWarning: Solver status is 'infeasible'.
+  warn(f"Solver status is '{status}'.", UserWarning)
+Read LP format model from file /local/tmp.10529311/tmpv05ho7yx.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 8 nonzeros
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/util/solver.py:554: UserWarning: Solver status is 'infeasible'.
+  warn(f"Solver status is '{status}'.", UserWarning)
+Read LP format model from file /local/tmp.10529311/tmpn4_n1hzq.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 8 nonzeros
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/util/solver.py:554: UserWarning: Solver status is 'infeasible'.
+  warn(f"Solver status is '{status}'.", UserWarning)
+remove_bad_reactions_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/remove_bad_reactions_toy.seed2.json
+remove_bad_reactions_toy [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/matlab/remove_bad_reactions_toy.json
+Terminated
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: remove_bad_reactions_toy  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: remove_bad_reactions_toy  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: remove_bad_reactions_toy  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: remove_bad_reactions_toy  (python vs python)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: remove_bad_reactions_toy  (python vs python)
+tolerance: rel=0 abs=0
+result:   MATCH
+end: 2026-10-22T07:52:10Z  status: MATCH

@@ -1,0 +1,51 @@
+scenario: gpr_dnf_rules  host: vera-r05-04  start: 2026-10-22T07:50:11Z  seeds: 0 1 2
+Uppercase AND/OR found in rule 'G1 AND G2'.
+invalid syntax
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/core/gene.py:358: SyntaxWarning: Uppercase AND/OR found in rule 'G1 AND G2'.
+  warn(
+Uppercase AND/OR found in rule 'G1 OR G2'.
+invalid syntax
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/core/gene.py:358: SyntaxWarning: Uppercase AND/OR found in rule 'G1 OR G2'.
+  warn(
+gpr_dnf_rules [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/gpr_dnf_rules.seed0.json
+Uppercase AND/OR found in rule 'G1 AND G2'.
+invalid syntax
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/core/gene.py:358: SyntaxWarning: Uppercase AND/OR found in rule 'G1 AND G2'.
+  warn(
+Uppercase AND/OR found in rule 'G1 OR G2'.
+invalid syntax
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/core/gene.py:358: SyntaxWarning: Uppercase AND/OR found in rule 'G1 OR G2'.
+  warn(
+gpr_dnf_rules [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/gpr_dnf_rules.seed1.json
+Uppercase AND/OR found in rule 'G1 AND G2'.
+invalid syntax
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/core/gene.py:358: SyntaxWarning: Uppercase AND/OR found in rule 'G1 AND G2'.
+  warn(
+Uppercase AND/OR found in rule 'G1 OR G2'.
+invalid syntax
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/core/gene.py:358: SyntaxWarning: Uppercase AND/OR found in rule 'G1 OR G2'.
+  warn(
+gpr_dnf_rules [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/gpr_dnf_rules.seed2.json
+gpr_dnf_rules [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/matlab/gpr_dnf_rules.json
+Terminated
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: gpr_dnf_rules  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: gpr_dnf_rules  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: gpr_dnf_rules  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: gpr_dnf_rules  (python vs python)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: gpr_dnf_rules  (python vs python)
+tolerance: rel=0 abs=0
+result:   MATCH
+end: 2026-10-22T07:50:53Z  status: MATCH

@@ -1,0 +1,45 @@
+scenario: okp_kcat_ectestgem  host: vera-r06-01  start: 2026-10-22T07:51:34Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529308/tmpg0gnwtej.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+parse_okp_output: 1 result row(s) could not be mapped to an ec.rxn (sequence and/or SMILES not in the model).
+okp_kcat_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/okp_kcat_ectestgem.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529308/tmpsdhhnq2f.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+parse_okp_output: 1 result row(s) could not be mapped to an ec.rxn (sequence and/or SMILES not in the model).
+okp_kcat_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/okp_kcat_ectestgem.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529308/tmp919h0ubz.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+parse_okp_output: 1 result row(s) could not be mapped to an ec.rxn (sequence and/or SMILES not in the model).
+okp_kcat_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/okp_kcat_ectestgem.seed2.json
+okp_kcat_ectestgem [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/matlab/okp_kcat_ectestgem.json
+Terminated
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: okp_kcat_ectestgem  (python vs matlab)
+tolerance: rel=1e-09 abs=1e-12
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: okp_kcat_ectestgem  (python vs matlab)
+tolerance: rel=1e-09 abs=1e-12
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: okp_kcat_ectestgem  (python vs matlab)
+tolerance: rel=1e-09 abs=1e-12
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: okp_kcat_ectestgem  (python vs python)
+tolerance: rel=1e-09 abs=1e-12
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: okp_kcat_ectestgem  (python vs python)
+tolerance: rel=1e-09 abs=1e-12
+result:   MATCH
+end: 2026-10-22T07:52:27Z  status: MATCH

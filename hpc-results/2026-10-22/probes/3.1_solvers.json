@@ -1,0 +1,57 @@
+{
+  "matlab": "24.2.0.2712019 (R2024b)",
+  "gurobi": {
+    "setRavenSolver": "ok",
+    "getprefSolver": "gurobi"
+  },
+  "scip": {
+    "setRavenSolver": "error",
+    "error": {
+      "identifier": "",
+      "message": "SCIP not found. RAVEN only provides the precompiled SCIP MEX binary for Windows. Instructions on how to compile the SCIP MEX file are found at https://github.com/scipopt/MatlabSCIPInterface"
+    }
+  },
+  "cobra": {
+    "setRavenSolver": "error",
+    "error": {
+      "identifier": "",
+      "message": "COBRA toolbox is not initialized, run 'initCobraToolbox()'"
+    }
+  },
+  "glpk": {
+    "setRavenSolver": "ok",
+    "getprefSolver": "glpk"
+  },
+  "gurobiOnPath": "/apps/Arch/software/Gurobi/13.0.1-GCCcore-14.3.0/matlab/gurobi.mexa64",
+  "gurobiTinyLP": "OPTIMAL",
+  "gurobiVersionInfo": {
+    "license": 2,
+    "major": 13,
+    "minor": 0,
+    "technical": 1
+  },
+  "gurobiVersion": {
+    "identifier": "MATLAB:UndefinedFunction",
+    "message": "Unrecognized function or variable 'gurobi_version'."
+  },
+  "grbLicenseFile": "/apps/Arch/software/Gurobi/13.0.1-GCCcore-14.3.0/gurobi.lic",
+  "licenseFileText": "TOKENSERVER=gurobi.lic.chalmers.se\nPORT=27690",
+  "gurobi_milp": {
+    "milpError": {
+      "identifier": "MATLAB:structAssToNonStruct",
+      "message": "Unable to perform assignment because dot indexing is not supported for variables of this type."
+    }
+  },
+  "scip_milp": {
+    "milpError": {
+      "identifier": "",
+      "message": "SCIP not found. RAVEN only provides the precompiled SCIP MEX binary for Windows. Instructions on how to compile the SCIP MEX file are found at https://github.com/scipopt/MatlabSCIPInterface"
+    }
+  },
+  "cobra_milp": {
+    "milpError": {
+      "identifier": "",
+      "message": "COBRA toolbox is not initialized, run 'initCobraToolbox()'"
+    }
+  }
+}

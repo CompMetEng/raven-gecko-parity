@@ -1,0 +1,25 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "infeasible": {
+      "active": [],
+      "fluxes": {},
+      "status": "infeasible"
+    },
+    "tie_broken_by_scores": {
+      "active": [
+        "demand",
+        "source1"
+      ],
+      "fluxes": {
+        "demand": 5.0,
+        "source1": 5.0,
+        "source2": 0.0
+      },
+      "status": "optimal"
+    }
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "min_nr_fluxes_toy"
+}

@@ -1,0 +1,276 @@
+{
+  "met": {
+    "file": "/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/probes2/../out/probes-A/p5-files/empty_met.yml",
+    "loaded": true,
+    "metNames1": [
+      ""
+    ],
+    "rxnNames1": [
+      "Production of acetate"
+    ],
+    "geneShortNames1": [
+      "ACS1"
+    ],
+    "first5": {
+      "mets": [
+        "MAL_m",
+        "AKG_m",
+        "P2G_c",
+        "P3G_c",
+        "P13G_c"
+      ],
+      "metNames": [
+        "",
+        "2-oxoglutarate",
+        "2-phospho-D-glycerate",
+        "3-phospho-D-glycerate",
+        "3-phospho-D-glyceroyl phosphate"
+      ],
+      "metFormulas": [
+        "C4H6O5",
+        "C5H6O5",
+        "C3H7O7P",
+        "C3H7O7P",
+        "C3H8O10P2"
+      ]
+    },
+    "first5Orig": {
+      "mets": [
+        "MAL_m",
+        "AKG_m",
+        "P2G_c",
+        "P3G_c",
+        "P13G_c"
+      ],
+      "metNames": [
+        "(S)-malate",
+        "2-oxoglutarate",
+        "2-phospho-D-glycerate",
+        "3-phospho-D-glycerate",
+        "3-phospho-D-glyceroyl phosphate"
+      ],
+      "metFormulas": [
+        "C4H6O5",
+        "C5H6O5",
+        "C3H7O7P",
+        "C3H7O7P",
+        "C3H8O10P2"
+      ]
+    },
+    "metsEqualOrig": true,
+    "metFormulasEqualOrig": true,
+    "nonEmptyNameCount": [
+      51,
+      52
+    ],
+    "checkModelStruct": "[\bWarning: The following metabolites have empty names:\n\tMAL_m]\b \n[\b> In <a href=\"matlab:matlab.lang.internal.introspective.errorDocCallback('checkModelStruct/reportIssue', '/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/RAVEN/src/queries/checkModelStruct.m', 89)\" style=\"font-weight:bold\">checkModelStruct/reportIssue</a> (<a href=\"matlab: opentoline('/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/RAVEN/src/queries/checkModelStruct.m',89,0)\">line 89</a>)\nIn <a href=\"matlab:matlab.lang.internal.introspective.errorDocCallback('checkModelStruct', '/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/RAVEN/src/queries/checkModelStruct.m', 320)\" style=\"font-weight:bold\">checkModelStruct</a> (<a href=\"matlab: opentoline('/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/RAVEN/src/queries/checkModelStruct.m',320,0)\">line 320</a>)\nIn <a href=\"matlab:matlab.lang.internal.introspective.errorDocCallback('p5_readback', '/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/probes2/p5_readback.m', 21)\" style=\"font-weight:bold\">p5_readback</a> (<a href=\"matlab: opentoline('/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/probes2/p5_readback.m',21,0)\">line 21</a>)\nIn <a href=\"matlab:matlab.lang.internal.introspective.errorDocCallback('run', '/apps/Common/software/MATLAB/2024b/toolbox/matlab/lang/run.m', 112)\" style=\"font-weight:bold\">run</a> (<a href=\"matlab: opentoline('/apps/Common/software/MATLAB/2024b/toolbox/matlab/lang/run.m',112,0)\">line 112</a>)]\b \n"
+  },
+  "rxn": {
+    "file": "/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/probes2/../out/probes-A/p5-files/empty_rxn.yml",
+    "loaded": true,
+    "metNames1": [
+      "(S)-malate"
+    ],
+    "rxnNames1": [
+      ""
+    ],
+    "geneShortNames1": [
+      "ACS1"
+    ],
+    "first5": {
+      "mets": [
+        "MAL_m",
+        "AKG_m",
+        "P2G_c",
+        "P3G_c",
+        "P13G_c"
+      ],
+      "metNames": [
+        "(S)-malate",
+        "2-oxoglutarate",
+        "2-phospho-D-glycerate",
+        "3-phospho-D-glycerate",
+        "3-phospho-D-glyceroyl phosphate"
+      ],
+      "metFormulas": [
+        "C4H6O5",
+        "C5H6O5",
+        "C3H7O7P",
+        "C3H7O7P",
+        "C3H8O10P2"
+      ]
+    },
+    "first5Orig": {
+      "mets": [
+        "MAL_m",
+        "AKG_m",
+        "P2G_c",
+        "P3G_c",
+        "P13G_c"
+      ],
+      "metNames": [
+        "(S)-malate",
+        "2-oxoglutarate",
+        "2-phospho-D-glycerate",
+        "3-phospho-D-glycerate",
+        "3-phospho-D-glyceroyl phosphate"
+      ],
+      "metFormulas": [
+        "C4H6O5",
+        "C5H6O5",
+        "C3H7O7P",
+        "C3H7O7P",
+        "C3H8O10P2"
+      ]
+    },
+    "metsEqualOrig": true,
+    "metFormulasEqualOrig": true,
+    "nonEmptyNameCount": [
+      52,
+      52
+    ],
+    "checkModelStruct": ""
+  },
+  "gene": {
+    "file": "/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/probes2/../out/probes-A/p5-files/empty_gene.yml",
+    "geneNameKeyLinesInFile": 0,
+    "loaded": true,
+    "metNames1": [
+      "(S)-malate"
+    ],
+    "rxnNames1": [
+      "Production of acetate"
+    ],
+    "geneShortNames1": [
+      ""
+    ],
+    "first5": {
+      "mets": [
+        "MAL_m",
+        "AKG_m",
+        "P2G_c",
+        "P3G_c",
+        "P13G_c"
+      ],
+      "metNames": [
+        "(S)-malate",
+        "2-oxoglutarate",
+        "2-phospho-D-glycerate",
+        "3-phospho-D-glycerate",
+        "3-phospho-D-glyceroyl phosphate"
+      ],
+      "metFormulas": [
+        "C4H6O5",
+        "C5H6O5",
+        "C3H7O7P",
+        "C3H7O7P",
+        "C3H8O10P2"
+      ]
+    },
+    "first5Orig": {
+      "mets": [
+        "MAL_m",
+        "AKG_m",
+        "P2G_c",
+        "P3G_c",
+        "P13G_c"
+      ],
+      "metNames": [
+        "(S)-malate",
+        "2-oxoglutarate",
+        "2-phospho-D-glycerate",
+        "3-phospho-D-glycerate",
+        "3-phospho-D-glyceroyl phosphate"
+      ],
+      "metFormulas": [
+        "C4H6O5",
+        "C5H6O5",
+        "C3H7O7P",
+        "C3H7O7P",
+        "C3H8O10P2"
+      ]
+    },
+    "metsEqualOrig": true,
+    "metFormulasEqualOrig": true,
+    "nonEmptyNameCount": [
+      52,
+      52
+    ],
+    "checkModelStruct": ""
+  },
+  "space": {
+    "file": "/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/probes2/../out/probes-A/p5-files/empty_space.yml",
+    "loaded": true,
+    "metNames1": [
+      " "
+    ],
+    "rxnNames1": [
+      "Production of acetate"
+    ],
+    "geneShortNames1": [
+      "ACS1"
+    ],
+    "first5": {
+      "mets": [
+        "MAL_m",
+        "AKG_m",
+        "P2G_c",
+        "P3G_c",
+        "P13G_c"
+      ],
+      "metNames": [
+        " ",
+        "2-oxoglutarate",
+        "2-phospho-D-glycerate",
+        "3-phospho-D-glycerate",
+        "3-phospho-D-glyceroyl phosphate"
+      ],
+      "metFormulas": [
+        "C4H6O5",
+        "C5H6O5",
+        "C3H7O7P",
+        "C3H7O7P",
+        "C3H8O10P2"
+      ]
+    },
+    "first5Orig": {
+      "mets": [
+        "MAL_m",
+        "AKG_m",
+        "P2G_c",
+        "P3G_c",
+        "P13G_c"
+      ],
+      "metNames": [
+        "(S)-malate",
+        "2-oxoglutarate",
+        "2-phospho-D-glycerate",
+        "3-phospho-D-glycerate",
+        "3-phospho-D-glyceroyl phosphate"
+      ],
+      "metFormulas": [
+        "C4H6O5",
+        "C5H6O5",
+        "C3H7O7P",
+        "C3H7O7P",
+        "C3H8O10P2"
+      ]
+    },
+    "metsEqualOrig": true,
+    "metFormulasEqualOrig": true,
+    "nonEmptyNameCount": [
+      52,
+      52
+    ],
+    "checkModelStruct": ""
+  },
+  "writeSingleSpace": {
+    "linesAfterMetabolites": [
+      "- metabolites:",
+      "  - !!omap",
+      "    - id: MAL_m",
+      "    - name: \" \"",
+      "    - compartment: m"
+    ]
+  }
+}

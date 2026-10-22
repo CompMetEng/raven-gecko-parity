@@ -1,0 +1,22 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "processed": [
+      {
+        "header": "LT1",
+        "sequence": "MAAAAAAAAA"
+      },
+      {
+        "header": "LT2",
+        "sequence": "MBBBBBBBBB"
+      },
+      {
+        "header": "",
+        "sequence": "MZZZ"
+      }
+    ]
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "process_protein_fasta_fixture"
+}

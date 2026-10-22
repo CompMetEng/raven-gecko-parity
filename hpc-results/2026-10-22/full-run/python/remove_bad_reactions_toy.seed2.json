@@ -1,0 +1,23 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "default_removes_r2": {
+      "remaining": [
+        "R1"
+      ],
+      "removed": [
+        "R2"
+      ]
+    },
+    "ignoring_both_mets_removes_nothing": {
+      "remaining": [
+        "R1",
+        "R2"
+      ],
+      "removed": []
+    }
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "remove_bad_reactions_toy"
+}

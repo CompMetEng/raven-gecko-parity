@@ -1,0 +1,33 @@
+scenario: merge_models_smallyeast  host: vera-r05-04  start: 2026-10-22T07:50:56Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+merge_models_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/merge_models_smallyeast.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+merge_models_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/merge_models_smallyeast.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+merge_models_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/merge_models_smallyeast.seed2.json
+merge_models_smallyeast [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/matlab/merge_models_smallyeast.json
+Terminated
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: merge_models_smallyeast  (python vs matlab)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: merge_models_smallyeast  (python vs matlab)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: merge_models_smallyeast  (python vs matlab)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: merge_models_smallyeast  (python vs python)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: merge_models_smallyeast  (python vs python)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+end: 2026-10-22T07:51:31Z  status: MATCH

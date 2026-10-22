@@ -1,0 +1,374 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "n_dnf": 21,
+    "n_rules": 25,
+    "n_unparsable": 0,
+    "rules": [
+      {
+        "clauses": [],
+        "is_dnf": true,
+        "n_clauses": 0,
+        "parsed": true,
+        "rule": ""
+      },
+      {
+        "clauses": [
+          [
+            "G1"
+          ]
+        ],
+        "is_dnf": true,
+        "n_clauses": 1,
+        "parsed": true,
+        "rule": "G1"
+      },
+      {
+        "clauses": [
+          [
+            "G1",
+            "G2"
+          ]
+        ],
+        "is_dnf": true,
+        "n_clauses": 1,
+        "parsed": true,
+        "rule": "G1 and G2"
+      },
+      {
+        "clauses": [
+          [
+            "G1"
+          ],
+          [
+            "G2"
+          ]
+        ],
+        "is_dnf": true,
+        "n_clauses": 2,
+        "parsed": true,
+        "rule": "G1 or G2"
+      },
+      {
+        "clauses": [
+          [
+            "G1",
+            "G2"
+          ],
+          [
+            "G3"
+          ]
+        ],
+        "is_dnf": true,
+        "n_clauses": 2,
+        "parsed": true,
+        "rule": "(G1 and G2) or G3"
+      },
+      {
+        "clauses": [
+          [
+            "G1",
+            "G2"
+          ],
+          [
+            "G3",
+            "G4"
+          ]
+        ],
+        "is_dnf": true,
+        "n_clauses": 2,
+        "parsed": true,
+        "rule": "(G1 and G2) or (G3 and G4)"
+      },
+      {
+        "clauses": [
+          [
+            "G1",
+            "G2"
+          ],
+          [
+            "G1",
+            "G3"
+          ]
+        ],
+        "is_dnf": false,
+        "n_clauses": 2,
+        "parsed": true,
+        "rule": "G1 and (G2 or G3)"
+      },
+      {
+        "clauses": [
+          [
+            "G1",
+            "G3"
+          ],
+          [
+            "G1",
+            "G4"
+          ],
+          [
+            "G2",
+            "G3"
+          ],
+          [
+            "G2",
+            "G4"
+          ]
+        ],
+        "is_dnf": false,
+        "n_clauses": 4,
+        "parsed": true,
+        "rule": "(G1 or G2) and (G3 or G4)"
+      },
+      {
+        "clauses": [
+          [
+            "G1",
+            "G2"
+          ],
+          [
+            "G1",
+            "G3",
+            "G4"
+          ]
+        ],
+        "is_dnf": false,
+        "n_clauses": 2,
+        "parsed": true,
+        "rule": "G1 and (G2 or (G3 and G4))"
+      },
+      {
+        "clauses": [
+          [
+            "G1",
+            "G3",
+            "G4"
+          ],
+          [
+            "G1",
+            "G3",
+            "G5"
+          ],
+          [
+            "G2",
+            "G3",
+            "G4"
+          ],
+          [
+            "G2",
+            "G3",
+            "G5"
+          ]
+        ],
+        "is_dnf": false,
+        "n_clauses": 4,
+        "parsed": true,
+        "rule": "(G1 or G2) and G3 and (G4 or G5)"
+      },
+      {
+        "clauses": [
+          [
+            "G1",
+            "G2"
+          ],
+          [
+            "G3",
+            "G4"
+          ]
+        ],
+        "is_dnf": true,
+        "n_clauses": 2,
+        "parsed": true,
+        "rule": "G1 and G2 or G3 and G4"
+      },
+      {
+        "clauses": [
+          [
+            "G1"
+          ]
+        ],
+        "is_dnf": true,
+        "n_clauses": 1,
+        "parsed": true,
+        "rule": "((G1))"
+      },
+      {
+        "clauses": [
+          [
+            "G1",
+            "G2"
+          ]
+        ],
+        "is_dnf": true,
+        "n_clauses": 1,
+        "parsed": true,
+        "rule": "((G1 and G2))"
+      },
+      {
+        "clauses": [
+          [
+            "G1"
+          ],
+          [
+            "G2",
+            "G3"
+          ]
+        ],
+        "is_dnf": true,
+        "n_clauses": 2,
+        "parsed": true,
+        "rule": "(G1) or ((G2) and (G3))"
+      },
+      {
+        "clauses": [
+          [
+            "G1",
+            "G1"
+          ]
+        ],
+        "is_dnf": true,
+        "n_clauses": 1,
+        "parsed": true,
+        "rule": "G1 and G1"
+      },
+      {
+        "clauses": [
+          [
+            "G1"
+          ],
+          [
+            "G1"
+          ]
+        ],
+        "is_dnf": true,
+        "n_clauses": 2,
+        "parsed": true,
+        "rule": "G1 or G1"
+      },
+      {
+        "clauses": [
+          [
+            "G1",
+            "G2"
+          ]
+        ],
+        "is_dnf": true,
+        "n_clauses": 1,
+        "parsed": true,
+        "rule": "G1 AND G2"
+      },
+      {
+        "clauses": [
+          [
+            "G1"
+          ],
+          [
+            "G2"
+          ]
+        ],
+        "is_dnf": true,
+        "n_clauses": 2,
+        "parsed": true,
+        "rule": "G1 OR G2"
+      },
+      {
+        "clauses": [
+          [
+            "G1",
+            "G2"
+          ]
+        ],
+        "is_dnf": true,
+        "n_clauses": 1,
+        "parsed": true,
+        "rule": "G1 & G2"
+      },
+      {
+        "clauses": [
+          [
+            "G1"
+          ],
+          [
+            "G2"
+          ]
+        ],
+        "is_dnf": true,
+        "n_clauses": 2,
+        "parsed": true,
+        "rule": "G1 | G2"
+      },
+      {
+        "clauses": [
+          [
+            "RAND1"
+          ],
+          [
+            "G2"
+          ]
+        ],
+        "is_dnf": true,
+        "n_clauses": 2,
+        "parsed": true,
+        "rule": "RAND1 or G2"
+      },
+      {
+        "clauses": [
+          [
+            "ORC1",
+            "NANDA"
+          ]
+        ],
+        "is_dnf": true,
+        "n_clauses": 1,
+        "parsed": true,
+        "rule": "ORC1 and NANDA"
+      },
+      {
+        "clauses": [
+          [
+            "10",
+            "100"
+          ]
+        ],
+        "is_dnf": true,
+        "n_clauses": 1,
+        "parsed": true,
+        "rule": "10 and 100"
+      },
+      {
+        "clauses": [
+          [
+            "100"
+          ],
+          [
+            "10"
+          ]
+        ],
+        "is_dnf": true,
+        "n_clauses": 2,
+        "parsed": true,
+        "rule": "100 or 10"
+      },
+      {
+        "clauses": [
+          [
+            "YFR053C"
+          ],
+          [
+            "YGL253W"
+          ],
+          [
+            "YCL040W"
+          ]
+        ],
+        "is_dnf": true,
+        "n_clauses": 3,
+        "parsed": true,
+        "rule": "YFR053C or YGL253W or YCL040W"
+      }
+    ]
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "gpr_dnf_rules"
+}

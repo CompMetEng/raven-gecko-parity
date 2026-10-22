@@ -1,0 +1,130 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "irreversible": {
+      "n_added": 4,
+      "n_metabolites_after": 52,
+      "n_metabolites_before": 52,
+      "n_reactions_after": 57,
+      "n_reactions_before": 53,
+      "transports": [
+        {
+          "from_species": {
+            "coefficient": -1,
+            "name": "CO2"
+          },
+          "lower_bound": 0,
+          "name": "CO2 transport, cytosol-mitochondria",
+          "to_species": {
+            "coefficient": 1,
+            "name": "CO2"
+          },
+          "upper_bound": 1000
+        },
+        {
+          "from_species": {
+            "coefficient": -1,
+            "name": "NAD(+)"
+          },
+          "lower_bound": 0,
+          "name": "NAD(+) transport, cytosol-mitochondria",
+          "to_species": {
+            "coefficient": 1,
+            "name": "NAD(+)"
+          },
+          "upper_bound": 1000
+        },
+        {
+          "from_species": {
+            "coefficient": -1,
+            "name": "acetyl-CoA"
+          },
+          "lower_bound": 0,
+          "name": "acetyl-CoA transport, cytosol-mitochondria",
+          "to_species": {
+            "coefficient": 1,
+            "name": "acetyl-CoA"
+          },
+          "upper_bound": 1000
+        },
+        {
+          "from_species": {
+            "coefficient": -1,
+            "name": "coenzyme A"
+          },
+          "lower_bound": 0,
+          "name": "coenzyme A transport, cytosol-mitochondria",
+          "to_species": {
+            "coefficient": 1,
+            "name": "coenzyme A"
+          },
+          "upper_bound": 1000
+        }
+      ]
+    },
+    "reversible": {
+      "n_added": 4,
+      "n_metabolites_after": 52,
+      "n_metabolites_before": 52,
+      "n_reactions_after": 57,
+      "n_reactions_before": 53,
+      "transports": [
+        {
+          "from_species": {
+            "coefficient": -1,
+            "name": "CO2"
+          },
+          "lower_bound": -1000,
+          "name": "CO2 transport, cytosol-mitochondria",
+          "to_species": {
+            "coefficient": 1,
+            "name": "CO2"
+          },
+          "upper_bound": 1000
+        },
+        {
+          "from_species": {
+            "coefficient": -1,
+            "name": "NAD(+)"
+          },
+          "lower_bound": -1000,
+          "name": "NAD(+) transport, cytosol-mitochondria",
+          "to_species": {
+            "coefficient": 1,
+            "name": "NAD(+)"
+          },
+          "upper_bound": 1000
+        },
+        {
+          "from_species": {
+            "coefficient": -1,
+            "name": "acetyl-CoA"
+          },
+          "lower_bound": -1000,
+          "name": "acetyl-CoA transport, cytosol-mitochondria",
+          "to_species": {
+            "coefficient": 1,
+            "name": "acetyl-CoA"
+          },
+          "upper_bound": 1000
+        },
+        {
+          "from_species": {
+            "coefficient": -1,
+            "name": "coenzyme A"
+          },
+          "lower_bound": -1000,
+          "name": "coenzyme A transport, cytosol-mitochondria",
+          "to_species": {
+            "coefficient": 1,
+            "name": "coenzyme A"
+          },
+          "upper_bound": 1000
+        }
+      ]
+    }
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "add_transport_reactions_smallyeast"
+}

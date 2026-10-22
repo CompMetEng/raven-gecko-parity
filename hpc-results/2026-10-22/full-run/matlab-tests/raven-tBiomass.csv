@@ -1,0 +1,13 @@
+Name,Passed,Failed,Incomplete,Duration
+tBiomass/getBiomassFractionsHandlesMissingComponents,1,0,0,0.82991
+tBiomass/setGAMReturnsModel,1,0,0,0.036948
+tBiomass/scaleBiomassFractionErrorsOnMissingComponent,1,0,0,0.138589
+tBiomass/scaleBiomassFractionBalancesToOne,1,0,0,0.231186
+tBiomass/scaleBiomassFractionBalancesToTargetTotal,1,0,0,0.03435
+tBiomass/scaleBiomassFractionRefusesNegativeBalanceAtTargetTotal,1,0,0,0.021702
+tBiomass/scaleBiomassFractionRefusesNegativeBalance,1,0,0,0.009138
+tBiomass/scaleBiomassPseudoreactionErrorsOnMissingComponent,1,0,0,0.009718
+tBiomass/scaleBiomassPseudoreactionRebalancesProton,1,0,0,0.004149
+tBiomass/scaleBiomassPseudoreactionRefusesUnknownCharge,1,0,0,0.023687
+tBiomass/fitParametersSetsUpperBoundPerXRxn,1,0,0,0.401352
+tBiomass/fitParametersRuns,1,0,0,1.602251

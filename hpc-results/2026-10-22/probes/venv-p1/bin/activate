@@ -1,0 +1,3 @@
+# Probe harness: the real venv, with a parity wrapper that runs cobra's FVA in-process (processes=1).
+source /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/bin/activate
+export PATH=/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/probes2/venv-p1/bin:$PATH

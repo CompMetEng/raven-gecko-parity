@@ -1,0 +1,16 @@
+Name,Passed,Failed,Incomplete,Duration
+tSampling/sampleMaxVolEllipseUnitBox,1,0,0,0.781095
+tSampling/sampleMaxVolEllipseScaledBox,1,0,0,0.014886
+tSampling/sampleMaxVolEllipseShearedBox,1,0,0,0.012015
+tSampling/sampleMaxVolEllipseTriangle,1,0,0,0.002607
+tSampling/sampleMaxVolEllipseRejectsExterior,1,0,0,0.253917
+tSampling/sampleCHRRReturnsInfo,1,0,0,22.328181
+tSampling/sampleACHRReturnsSteadyState,1,0,0,0.935329
+tSampling/randomSamplingDefaultsToACHR,1,0,0,2.019197
+tSampling/randomSamplingCHRRDispatch,1,0,0,0.998034
+tSampling/randomSamplingCHRRWithGurobi,1,0,0,0.974202
+tSampling/randomSamplingCHRRExposesInfo,1,0,0,0.918724
+tSampling/randomSamplingCHRRDeterministic,1,0,0,1.998298
+tSampling/randomSamplingCHRRVaries,1,0,0,2.896915
+tSampling/randomSamplingUnknownMethodErrors,1,0,0,0.048406
+tSampling/randomSamplingLoopDetectionUsesModelBounds,1,0,0,1.981303

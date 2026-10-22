@@ -1,0 +1,33 @@
+scenario: min_nr_fluxes_toy  host: vera-r05-04  start: 2026-10-22T07:50:59Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+min_nr_fluxes_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/min_nr_fluxes_toy.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+min_nr_fluxes_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/min_nr_fluxes_toy.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+min_nr_fluxes_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/min_nr_fluxes_toy.seed2.json
+min_nr_fluxes_toy [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/matlab/min_nr_fluxes_toy.json
+Terminated
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: min_nr_fluxes_toy  (python vs matlab)
+tolerance: rel=1e-09 abs=1e-09
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: min_nr_fluxes_toy  (python vs matlab)
+tolerance: rel=1e-09 abs=1e-09
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: min_nr_fluxes_toy  (python vs matlab)
+tolerance: rel=1e-09 abs=1e-09
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: min_nr_fluxes_toy  (python vs python)
+tolerance: rel=1e-09 abs=1e-09
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: min_nr_fluxes_toy  (python vs python)
+tolerance: rel=1e-09 abs=1e-09
+result:   MATCH
+end: 2026-10-22T07:51:31Z  status: MATCH

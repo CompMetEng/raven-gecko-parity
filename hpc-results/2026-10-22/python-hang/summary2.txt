@@ -1,0 +1,8 @@
+run 6 seed=8 rc=1 stack_bytes=3777
+run 7 seed=12 rc=1 stack_bytes=2099
+run 5 seed=4 rc=1 stack_bytes=3777
+run 4 seed=0 rc=1 stack_bytes=3777
+run 1 seed=0 rc=1 stack_bytes=2099
+run 3 seed=0 rc=1 stack_bytes=3777
+run 2 seed=0 rc=1 stack_bytes=3777
+run 8 seed=16 rc=1 stack_bytes=2099

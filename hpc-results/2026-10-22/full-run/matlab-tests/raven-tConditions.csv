@@ -1,0 +1,6 @@
+Name,Passed,Failed,Incomplete,Duration
+tConditions/applyConditionSetsBounds,1,0,0,1.125364
+tConditions/applyConditionResetExchangesZeroesUptake,1,0,0,0.02145
+tConditions/applyConditionRemoveMetZeroesCoefficient,1,0,0,0.019842
+tConditions/applyConditionRecomputesChargeBalance,1,0,0,0.004773
+tConditions/applyConditionBiomassDeltaAddsToCoefficient,1,0,0,1.484641

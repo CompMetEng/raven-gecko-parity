@@ -1,0 +1,6 @@
+#!/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/bin/python
+import sys
+import cobra
+cobra.Configuration().processes = 1
+from parity.cli import main
+sys.exit(main())

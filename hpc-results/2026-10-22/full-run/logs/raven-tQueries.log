@@ -1,0 +1,20 @@
+GUROBI_ON_PATH=/apps/Arch/software/Gurobi/13.0.1-GCCcore-14.3.0/matlab/gurobi.mexa64
+GUROBI_OK=1
+Running tQueries
+..[Warning: The following metabolite identifiers do not start with a letter or _
+(conflicting with SBML specifications). This does not impact RAVEN
+functionality, but be aware that exportModel will automatically add M_ prefixes
+to all metabolite identifiers:
+	13dpg_c
+	2pg_c
+	3pg_c
+	6pgc_c
+	6pgl_c] 
+[> In checkModelStruct/reportIssue (line 89)
+In checkModelStruct (line 346)
+In tQueries/checkModelStructValidModel (line 25)]
+........ .......... .......... .......... .....
+Done tQueries
+__________
+
+SUMMARY passed=45 failed=0 incomplete=0 total=45

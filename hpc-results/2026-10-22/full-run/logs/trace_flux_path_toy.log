@@ -1,0 +1,33 @@
+scenario: trace_flux_path_toy  host: vera-r06-02  start: 2026-10-22T07:53:12Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+trace_flux_path_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/trace_flux_path_toy.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+trace_flux_path_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/trace_flux_path_toy.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+trace_flux_path_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/trace_flux_path_toy.seed2.json
+trace_flux_path_toy [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/matlab/trace_flux_path_toy.json
+Terminated
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: trace_flux_path_toy  (python vs matlab)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: trace_flux_path_toy  (python vs matlab)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: trace_flux_path_toy  (python vs matlab)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: trace_flux_path_toy  (python vs python)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: trace_flux_path_toy  (python vs python)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+end: 2026-10-22T07:53:54Z  status: MATCH

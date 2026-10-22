@@ -1,0 +1,18 @@
+Timeout (0:02:30)!
+Thread 0x0000154deb3175c0 [python] (most recent call first):
+  File "/apps/Arch/software/Python/3.14.2-GCCcore-15.2.0/lib/python3.14/selectors.py", line 398 in select
+  File "/apps/Arch/software/Python/3.14.2-GCCcore-15.2.0/lib/python3.14/multiprocessing/connection.py", line 1165 in wait
+  File "/apps/Arch/software/Python/3.14.2-GCCcore-15.2.0/lib/python3.14/multiprocessing/popen_forkserver.py", line 65 in poll
+  File "/apps/Arch/software/Python/3.14.2-GCCcore-15.2.0/lib/python3.14/multiprocessing/popen_fork.py", line 44 in wait
+  File "/apps/Arch/software/Python/3.14.2-GCCcore-15.2.0/lib/python3.14/multiprocessing/process.py", line 156 in join
+  File "/apps/Arch/software/Python/3.14.2-GCCcore-15.2.0/lib/python3.14/multiprocessing/pool.py", line 669 in join
+  File "/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/util/process_pool.py", line 85 in __exit__
+  File "/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/flux_analysis/variability.py", line 303 in flux_variability_analysis
+  File "/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/venv/lib/python3.14/site-packages/cobra/flux_analysis/variability.py", line 383 in find_blocked_reactions
+  File "/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/raven-toolbox/src/raven_toolbox/gapfilling/report.py", line 106 in _blocked_ids
+  File "/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/raven-toolbox/src/raven_toolbox/gapfilling/report.py", line 299 in gap_report
+  File "/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/raven-gecko-parity/scenarios/gap_report_toy/run.py", line 38 in run
+  File "/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/raven-gecko-parity/src/parity/scenarios.py", line 184 in run_python
+  File "/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/raven-gecko-parity/src/parity/cli.py", line 221 in cmd_run
+  File "/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/raven-gecko-parity/src/parity/cli.py", line 390 in main
+  File "<string>", line 6 in <module>

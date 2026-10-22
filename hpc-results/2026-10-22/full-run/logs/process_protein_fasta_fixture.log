@@ -1,0 +1,39 @@
+scenario: process_protein_fasta_fixture  host: vera-r06-02  start: 2026-10-22T07:51:33Z  seeds: 0 1 2
+Processed FASTA written to: /local/tmp.10529309/tmpcvrfn263/sample_processed.faa
+  Total sequences  : 3
+  Renamed          : 3
+  Kept (no match)  : 0
+process_protein_fasta_fixture [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/process_protein_fasta_fixture.seed0.json
+Processed FASTA written to: /local/tmp.10529309/tmplsmh70h6/sample_processed.faa
+  Total sequences  : 3
+  Renamed          : 3
+  Kept (no match)  : 0
+process_protein_fasta_fixture [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/process_protein_fasta_fixture.seed1.json
+Processed FASTA written to: /local/tmp.10529309/tmpx8x8jfwu/sample_processed.faa
+  Total sequences  : 3
+  Renamed          : 3
+  Kept (no match)  : 0
+process_protein_fasta_fixture [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/process_protein_fasta_fixture.seed2.json
+process_protein_fasta_fixture [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/matlab/process_protein_fasta_fixture.json
+Terminated
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: process_protein_fasta_fixture  (python vs matlab)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: process_protein_fasta_fixture  (python vs matlab)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: process_protein_fasta_fixture  (python vs matlab)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: process_protein_fasta_fixture  (python vs python)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: process_protein_fasta_fixture  (python vs python)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+end: 2026-10-22T07:52:04Z  status: MATCH

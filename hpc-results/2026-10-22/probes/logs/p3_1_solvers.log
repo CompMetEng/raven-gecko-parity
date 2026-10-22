@@ -1,0 +1,7 @@
+Exception in thread "connector": org.apache.commons.lang.NotImplementedException: Connector is not running. Use Connector.ensureServiceOn() to ensure it is running before using it.
+	at com.mathworks.messageservice.MessageServiceFactory.getBuilder(MessageServiceFactory.java:39)
+	at com.mathworks.messageservice.MessageServiceFactory.getMessageService(MessageServiceFactory.java:17)
+	at com.mathworks.peermodel.synchronizer.utils.PeerModelInitialize.initialize(PeerModelInitialize.java:20)
+	at com.mathworks.matlabserver.connector.impl.ConnectorImpl.startPeerModel(ConnectorImpl.java:528)
+	at com.mathworks.matlabserver.connector.impl.ConnectorImpl.doStart(ConnectorImpl.java:414)
+	at com.mathworks.matlabserver.connector.impl.ConnectorImpl$1.lambda$run$0(ConnectorImpl.java:194)

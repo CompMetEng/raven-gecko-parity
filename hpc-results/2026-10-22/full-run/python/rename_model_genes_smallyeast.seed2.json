@@ -1,0 +1,216 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "renamed": {
+      "all_gene_ids": [
+        "ACS1",
+        "FBA1",
+        "HXK1",
+        "PGI1",
+        "TPI1",
+        "YBR117C",
+        "YBR218C",
+        "YCR012W",
+        "YCR073W-A",
+        "YDL021W",
+        "YDL022W",
+        "YDL066W",
+        "YER062C",
+        "YER178W",
+        "YFR053C",
+        "YGL062W",
+        "YGL253W",
+        "YGL256W",
+        "YGR087C",
+        "YGR192C",
+        "YGR240C",
+        "YGR244C",
+        "YGR248W",
+        "YGR254W",
+        "YGR256W",
+        "YHR163W",
+        "YHR174W",
+        "YHR183W",
+        "YIL053W",
+        "YIL125W",
+        "YJL052W",
+        "YJL121C",
+        "YJR009C",
+        "YJR051W",
+        "YKL029C",
+        "YKL085W",
+        "YKL141W",
+        "YKL152C",
+        "YKR097W",
+        "YLR044C",
+        "YLR134W",
+        "YLR153C",
+        "YLR304C",
+        "YLR354C",
+        "YLR377C",
+        "YML042W",
+        "YMR205C",
+        "YMR303C",
+        "YNL241C",
+        "YNR001C",
+        "YNR034W",
+        "YOL056W",
+        "YOL059W",
+        "YOL086C",
+        "YOR095C",
+        "YOR142W",
+        "YOR347C",
+        "YPL061W",
+        "YPL262W",
+        "YPR001W",
+        "YPR074C"
+      ],
+      "reaction_genes": {
+        "ACO": [
+          "YLR304C"
+        ],
+        "ACS": [
+          "ACS1",
+          "YLR153C"
+        ],
+        "ADH1": [
+          "YGL256W",
+          "YMR303C",
+          "YOL086C"
+        ],
+        "ALD6": [
+          "YPL061W"
+        ],
+        "CAT2": [
+          "YML042W"
+        ],
+        "CIT": [
+          "YNR001C",
+          "YPR001W"
+        ],
+        "DAR": [
+          "YDL022W",
+          "YOL059W"
+        ],
+        "ENO": [
+          "YGR254W",
+          "YHR174W"
+        ],
+        "FBA": [
+          "FBA1"
+        ],
+        "FBP": [
+          "YLR377C"
+        ],
+        "FRDS2": [
+          "YJR051W"
+        ],
+        "FUM1": [
+          "YPL262W"
+        ],
+        "GLD": [
+          "YGR192C",
+          "YJL052W",
+          "YJR009C"
+        ],
+        "GND": [
+          "YGR256W",
+          "YHR183W"
+        ],
+        "GPM": [
+          "YDL021W",
+          "YKL152C",
+          "YOL056W"
+        ],
+        "GPP": [
+          "YER062C",
+          "YIL053W"
+        ],
+        "HXK": [
+          "HXK1",
+          "YFR053C",
+          "YGL253W"
+        ],
+        "IDP1": [
+          "YDL066W"
+        ],
+        "KGD1KGD2": [
+          "YIL125W"
+        ],
+        "LSC1LSC2": [
+          "YGR244C",
+          "YOR142W"
+        ],
+        "MAE1": [
+          "YKL029C"
+        ],
+        "MDH1": [
+          "YKL085W"
+        ],
+        "PCK": [
+          "YKR097W"
+        ],
+        "PDC": [
+          "YGR087C",
+          "YLR044C",
+          "YLR134W"
+        ],
+        "PDH": [
+          "YER178W"
+        ],
+        "PFK": [
+          "YGR240C",
+          "YMR205C"
+        ],
+        "PGI": [
+          "PGI1"
+        ],
+        "PGK": [
+          "YCR012W"
+        ],
+        "PGL": [
+          "YCR073W-A",
+          "YGR248W",
+          "YHR163W",
+          "YNR034W"
+        ],
+        "PYC": [
+          "YBR218C",
+          "YGL062W"
+        ],
+        "PYK": [
+          "YOR347C"
+        ],
+        "RPE": [
+          "YJL121C"
+        ],
+        "RPI": [
+          "YOR095C"
+        ],
+        "SDH": [
+          "YKL141W"
+        ],
+        "TAL1": [
+          "YLR354C"
+        ],
+        "TKI1TKI2a": [
+          "YBR117C",
+          "YPR074C"
+        ],
+        "TKI1TKI2b": [
+          "YBR117C",
+          "YPR074C"
+        ],
+        "TPI": [
+          "TPI1"
+        ],
+        "ZWF": [
+          "YNL241C"
+        ]
+      }
+    }
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "rename_model_genes_smallyeast"
+}

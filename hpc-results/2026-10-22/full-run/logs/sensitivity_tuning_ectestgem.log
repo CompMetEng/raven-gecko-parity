@@ -1,0 +1,69 @@
+scenario: sensitivity_tuning_ectestgem  host: vera-r06-02  start: 2026-10-22T07:52:29Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529320/tmpr_n9rwqb.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529320/tmpt5ztt1gk.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529320/tmp51jbiiwg.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529320/tmp0yyqjubc.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+sensitivity_tuning_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/sensitivity_tuning_ectestgem.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529320/tmp95f1ym0u.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529320/tmp95obgkp_.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529320/tmpt0uwynu4.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529320/tmp6bqe68nn.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+sensitivity_tuning_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/sensitivity_tuning_ectestgem.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529320/tmp8r8xwt24.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529320/tmph066ri0m.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529320/tmpqny8a0wm.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529320/tmpipwg0hi_.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+sensitivity_tuning_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/sensitivity_tuning_ectestgem.seed2.json
+sensitivity_tuning_ectestgem [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/matlab/sensitivity_tuning_ectestgem.json
+Terminated
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: sensitivity_tuning_ectestgem  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: sensitivity_tuning_ectestgem  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: sensitivity_tuning_ectestgem  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: sensitivity_tuning_ectestgem  (python vs python)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: sensitivity_tuning_ectestgem  (python vs python)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+end: 2026-10-22T07:53:13Z  status: MATCH

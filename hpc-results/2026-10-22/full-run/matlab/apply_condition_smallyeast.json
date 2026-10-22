@@ -1,0 +1,51 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "exchange_bounds_after": [
+      {
+        "lb": 0,
+        "reaction": "acOUT",
+        "ub": 1000
+      },
+      {
+        "lb": 0,
+        "reaction": "biomassOUT",
+        "ub": 1000
+      },
+      {
+        "lb": 0,
+        "reaction": "co2OUT",
+        "ub": 1000
+      },
+      {
+        "lb": 0,
+        "reaction": "ethIN",
+        "ub": 0
+      },
+      {
+        "lb": 0,
+        "reaction": "ethOUT",
+        "ub": 1000
+      },
+      {
+        "lb": 0,
+        "reaction": "glcIN",
+        "ub": 0
+      },
+      {
+        "lb": 0,
+        "reaction": "glyOUT",
+        "ub": 1000
+      },
+      {
+        "lb": 0,
+        "reaction": "o2IN",
+        "ub": 0
+      }
+    ],
+    "growth_after": 0
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "apply_condition_smallyeast"
+}

@@ -1,0 +1,823 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "add_new_rxns": {
+      "enz_added": [
+        "ENEW1",
+        "ENEW2"
+      ],
+      "model": {
+        "ec": {
+          "coupling": [
+            {
+              "coefficient": 1.0,
+              "enzyme": "P1",
+              "reaction": "R2_EXP_1"
+            },
+            {
+              "coefficient": 1.0,
+              "enzyme": "P2",
+              "reaction": "R2_EXP_1"
+            },
+            {
+              "coefficient": 1.0,
+              "enzyme": "P3",
+              "reaction": "R2_EXP_2"
+            },
+            {
+              "coefficient": 1.0,
+              "enzyme": "P1",
+              "reaction": "R2_REV_EXP_1"
+            },
+            {
+              "coefficient": 1.0,
+              "enzyme": "P2",
+              "reaction": "R2_REV_EXP_1"
+            },
+            {
+              "coefficient": 1.0,
+              "enzyme": "P3",
+              "reaction": "R2_REV_EXP_2"
+            },
+            {
+              "coefficient": 1.0,
+              "enzyme": "P4",
+              "reaction": "R3"
+            },
+            {
+              "coefficient": 1.0,
+              "enzyme": "P5",
+              "reaction": "R5"
+            },
+            {
+              "coefficient": 1.0,
+              "enzyme": "ENEW1",
+              "reaction": "RNEW_EXP_1"
+            },
+            {
+              "coefficient": 1.0,
+              "enzyme": "ENEW2",
+              "reaction": "RNEW_EXP_2"
+            },
+            {
+              "coefficient": 1.0,
+              "enzyme": "ENEW1",
+              "reaction": "RNEW_REV_EXP_1"
+            },
+            {
+              "coefficient": 1.0,
+              "enzyme": "ENEW2",
+              "reaction": "RNEW_REV_EXP_2"
+            }
+          ],
+          "eccodes": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "enzymes": [
+            "P1",
+            "P2",
+            "P3",
+            "P4",
+            "P5",
+            "ENEW1",
+            "ENEW2"
+          ],
+          "genes": [
+            "G1",
+            "G2",
+            "G3",
+            "G4",
+            "G5",
+            "GNEW1",
+            "GNEW2"
+          ],
+          "kcat": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mw": [
+            10000.0,
+            20000.0,
+            30000.0,
+            40000.0,
+            50000.0,
+            15000.0,
+            25000.0
+          ],
+          "rxns": [
+            "R2_EXP_1",
+            "R2_EXP_2",
+            "R2_REV_EXP_1",
+            "R2_REV_EXP_2",
+            "R3",
+            "R5",
+            "RNEW_EXP_1",
+            "RNEW_EXP_2",
+            "RNEW_REV_EXP_1",
+            "RNEW_REV_EXP_2"
+          ],
+          "source": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ]
+        },
+        "gene_associations": [
+          {
+            "gene": "G1",
+            "reaction": "R2_EXP_1"
+          },
+          {
+            "gene": "G2",
+            "reaction": "R2_EXP_1"
+          },
+          {
+            "gene": "G3",
+            "reaction": "R2_EXP_2"
+          },
+          {
+            "gene": "G1",
+            "reaction": "R2_REV_EXP_1"
+          },
+          {
+            "gene": "G2",
+            "reaction": "R2_REV_EXP_1"
+          },
+          {
+            "gene": "G3",
+            "reaction": "R2_REV_EXP_2"
+          },
+          {
+            "gene": "G4",
+            "reaction": "R3"
+          },
+          {
+            "gene": "G5",
+            "reaction": "R5"
+          },
+          {
+            "gene": "GNEW1",
+            "reaction": "RNEW_EXP_1"
+          },
+          {
+            "gene": "GNEW2",
+            "reaction": "RNEW_EXP_2"
+          },
+          {
+            "gene": "GNEW1",
+            "reaction": "RNEW_REV_EXP_1"
+          },
+          {
+            "gene": "GNEW2",
+            "reaction": "RNEW_REV_EXP_2"
+          },
+          {
+            "gene": "GNEW1",
+            "reaction": "usage_prot_ENEW1"
+          },
+          {
+            "gene": "GNEW2",
+            "reaction": "usage_prot_ENEW2"
+          },
+          {
+            "gene": "G1",
+            "reaction": "usage_prot_P1"
+          },
+          {
+            "gene": "G2",
+            "reaction": "usage_prot_P2"
+          },
+          {
+            "gene": "G3",
+            "reaction": "usage_prot_P3"
+          },
+          {
+            "gene": "G4",
+            "reaction": "usage_prot_P4"
+          },
+          {
+            "gene": "G5",
+            "reaction": "usage_prot_P5"
+          }
+        ],
+        "genes": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "GNEW1",
+          "GNEW2"
+        ],
+        "n_genes": 7,
+        "n_metabolites": 12,
+        "n_reactions": 23,
+        "reactions": [
+          {
+            "id": "R1",
+            "lower_bound": 0.0,
+            "lower_kind": "finite",
+            "objective_coefficient": 0.0,
+            "upper_bound": 0.0,
+            "upper_kind": "+inf"
+          },
+          {
+            "id": "R1_REV",
+            "lower_bound": 0.0,
+            "lower_kind": "finite",
+            "objective_coefficient": 0.0,
+            "upper_bound": 0.0,
+            "upper_kind": "+inf"
+          },
+          {
+            "id": "R2_EXP_1",
+            "lower_bound": 0.0,
+            "lower_kind": "finite",
+            "objective_coefficient": 0.0,
+            "upper_bound": 0.0,
+            "upper_kind": "+inf"
+          },
+          {
+            "id": "R2_EXP_2",
+            "lower_bound": 0.0,
+            "lower_kind": "finite",
+            "objective_coefficient": 0.0,
+            "upper_bound": 0.0,
+            "upper_kind": "+inf"
+          },
+          {
+            "id": "R2_REV_EXP_1",
+            "lower_bound": 0.0,
+            "lower_kind": "finite",
+            "objective_coefficient": 0.0,
+            "upper_bound": 0.0,
+            "upper_kind": "+inf"
+          },
+          {
+            "id": "R2_REV_EXP_2",
+            "lower_bound": 0.0,
+            "lower_kind": "finite",
+            "objective_coefficient": 0.0,
+            "upper_bound": 0.0,
+            "upper_kind": "+inf"
+          },
+          {
+            "id": "R3",
+            "lower_bound": 0.0,
+            "lower_kind": "finite",
+            "objective_coefficient": 0.0,
+            "upper_bound": 0.0,
+            "upper_kind": "+inf"
+          },
+          {
+            "id": "R4",
+            "lower_bound": 0.0,
+            "lower_kind": "finite",
+            "objective_coefficient": 0.0,
+            "upper_bound": 0.0,
+            "upper_kind": "+inf"
+          },
+          {
+            "id": "R5",
+            "lower_bound": 0.0,
+            "lower_kind": "finite",
+            "objective_coefficient": 1.0,
+            "upper_bound": 0.0,
+            "upper_kind": "+inf"
+          },
+          {
+            "id": "RNEW_EXP_1",
+            "lower_bound": 0.0,
+            "lower_kind": "finite",
+            "objective_coefficient": 0.0,
+            "upper_bound": 1000.0,
+            "upper_kind": "finite"
+          },
+          {
+            "id": "RNEW_EXP_2",
+            "lower_bound": 0.0,
+            "lower_kind": "finite",
+            "objective_coefficient": 0.0,
+            "upper_bound": 1000.0,
+            "upper_kind": "finite"
+          },
+          {
+            "id": "RNEW_REV_EXP_1",
+            "lower_bound": 0.0,
+            "lower_kind": "finite",
+            "objective_coefficient": 0.0,
+            "upper_bound": 1000.0,
+            "upper_kind": "finite"
+          },
+          {
+            "id": "RNEW_REV_EXP_2",
+            "lower_bound": 0.0,
+            "lower_kind": "finite",
+            "objective_coefficient": 0.0,
+            "upper_bound": 1000.0,
+            "upper_kind": "finite"
+          },
+          {
+            "id": "S1",
+            "lower_bound": 0.0,
+            "lower_kind": "-inf",
+            "objective_coefficient": 0.0,
+            "upper_bound": 0.0,
+            "upper_kind": "+inf"
+          },
+          {
+            "id": "S2",
+            "lower_bound": 0.0,
+            "lower_kind": "-inf",
+            "objective_coefficient": 0.0,
+            "upper_bound": 0.0,
+            "upper_kind": "+inf"
+          },
+          {
+            "id": "prot_pool_exchange",
+            "lower_bound": 0.0,
+            "lower_kind": "finite",
+            "objective_coefficient": 0.0,
+            "upper_bound": 1000.0,
+            "upper_kind": "finite"
+          },
+          {
+            "id": "usage_prot_ENEW1",
+            "lower_bound": 0.0,
+            "lower_kind": "finite",
+            "objective_coefficient": 0.0,
+            "upper_bound": 1000.0,
+            "upper_kind": "finite"
+          },
+          {
+            "id": "usage_prot_ENEW2",
+            "lower_bound": 0.0,
+            "lower_kind": "finite",
+            "objective_coefficient": 0.0,
+            "upper_bound": 1000.0,
+            "upper_kind": "finite"
+          },
+          {
+            "id": "usage_prot_P1",
+            "lower_bound": 0.0,
+            "lower_kind": "finite",
+            "objective_coefficient": 0.0,
+            "upper_bound": 1000.0,
+            "upper_kind": "finite"
+          },
+          {
+            "id": "usage_prot_P2",
+            "lower_bound": 0.0,
+            "lower_kind": "finite",
+            "objective_coefficient": 0.0,
+            "upper_bound": 1000.0,
+            "upper_kind": "finite"
+          },
+          {
+            "id": "usage_prot_P3",
+            "lower_bound": 0.0,
+            "lower_kind": "finite",
+            "objective_coefficient": 0.0,
+            "upper_bound": 1000.0,
+            "upper_kind": "finite"
+          },
+          {
+            "id": "usage_prot_P4",
+            "lower_bound": 0.0,
+            "lower_kind": "finite",
+            "objective_coefficient": 0.0,
+            "upper_bound": 1000.0,
+            "upper_kind": "finite"
+          },
+          {
+            "id": "usage_prot_P5",
+            "lower_bound": 0.0,
+            "lower_kind": "finite",
+            "objective_coefficient": 0.0,
+            "upper_bound": 1000.0,
+            "upper_kind": "finite"
+          }
+        ],
+        "stoichiometry": [
+          {
+            "coefficient": -1.0,
+            "metabolite": "e1e",
+            "reaction": "R1"
+          },
+          {
+            "coefficient": 1.0,
+            "metabolite": "m1c",
+            "reaction": "R1"
+          },
+          {
+            "coefficient": 1.0,
+            "metabolite": "e1e",
+            "reaction": "R1_REV"
+          },
+          {
+            "coefficient": -1.0,
+            "metabolite": "m1c",
+            "reaction": "R1_REV"
+          },
+          {
+            "coefficient": -1.0,
+            "metabolite": "m1c",
+            "reaction": "R2_EXP_1"
+          },
+          {
+            "coefficient": 1.0,
+            "metabolite": "m2c",
+            "reaction": "R2_EXP_1"
+          },
+          {
+            "coefficient": -1.0,
+            "metabolite": "m1c",
+            "reaction": "R2_EXP_2"
+          },
+          {
+            "coefficient": 1.0,
+            "metabolite": "m2c",
+            "reaction": "R2_EXP_2"
+          },
+          {
+            "coefficient": 1.0,
+            "metabolite": "m1c",
+            "reaction": "R2_REV_EXP_1"
+          },
+          {
+            "coefficient": -1.0,
+            "metabolite": "m2c",
+            "reaction": "R2_REV_EXP_1"
+          },
+          {
+            "coefficient": 1.0,
+            "metabolite": "m1c",
+            "reaction": "R2_REV_EXP_2"
+          },
+          {
+            "coefficient": -1.0,
+            "metabolite": "m2c",
+            "reaction": "R2_REV_EXP_2"
+          },
+          {
+            "coefficient": -1.0,
+            "metabolite": "m1c",
+            "reaction": "R3"
+          },
+          {
+            "coefficient": 1.0,
+            "metabolite": "m2c",
+            "reaction": "R3"
+          },
+          {
+            "coefficient": -1.0,
+            "metabolite": "m1c",
+            "reaction": "R4"
+          },
+          {
+            "coefficient": 1.0,
+            "metabolite": "m2c",
+            "reaction": "R4"
+          },
+          {
+            "coefficient": 1.0,
+            "metabolite": "e2e",
+            "reaction": "R5"
+          },
+          {
+            "coefficient": -1.0,
+            "metabolite": "m2c",
+            "reaction": "R5"
+          },
+          {
+            "coefficient": 1.0,
+            "metabolite": "e2e",
+            "reaction": "RNEW_EXP_1"
+          },
+          {
+            "coefficient": -1.0,
+            "metabolite": "m1c",
+            "reaction": "RNEW_EXP_1"
+          },
+          {
+            "coefficient": 1.0,
+            "metabolite": "e2e",
+            "reaction": "RNEW_EXP_2"
+          },
+          {
+            "coefficient": -1.0,
+            "metabolite": "m1c",
+            "reaction": "RNEW_EXP_2"
+          },
+          {
+            "coefficient": -1.0,
+            "metabolite": "e2e",
+            "reaction": "RNEW_REV_EXP_1"
+          },
+          {
+            "coefficient": 1.0,
+            "metabolite": "m1c",
+            "reaction": "RNEW_REV_EXP_1"
+          },
+          {
+            "coefficient": -1.0,
+            "metabolite": "e2e",
+            "reaction": "RNEW_REV_EXP_2"
+          },
+          {
+            "coefficient": 1.0,
+            "metabolite": "m1c",
+            "reaction": "RNEW_REV_EXP_2"
+          },
+          {
+            "coefficient": -1.0,
+            "metabolite": "e1e",
+            "reaction": "S1"
+          },
+          {
+            "coefficient": -1.0,
+            "metabolite": "e2e",
+            "reaction": "S2"
+          },
+          {
+            "coefficient": 1.0,
+            "metabolite": "prot_pool",
+            "reaction": "prot_pool_exchange"
+          },
+          {
+            "coefficient": 1.0,
+            "metabolite": "prot_ENEW1",
+            "reaction": "usage_prot_ENEW1"
+          },
+          {
+            "coefficient": -1.0,
+            "metabolite": "prot_pool",
+            "reaction": "usage_prot_ENEW1"
+          },
+          {
+            "coefficient": 1.0,
+            "metabolite": "prot_ENEW2",
+            "reaction": "usage_prot_ENEW2"
+          },
+          {
+            "coefficient": -1.0,
+            "metabolite": "prot_pool",
+            "reaction": "usage_prot_ENEW2"
+          },
+          {
+            "coefficient": 1.0,
+            "metabolite": "prot_P1",
+            "reaction": "usage_prot_P1"
+          },
+          {
+            "coefficient": -1.0,
+            "metabolite": "prot_pool",
+            "reaction": "usage_prot_P1"
+          },
+          {
+            "coefficient": 1.0,
+            "metabolite": "prot_P2",
+            "reaction": "usage_prot_P2"
+          },
+          {
+            "coefficient": -1.0,
+            "metabolite": "prot_pool",
+            "reaction": "usage_prot_P2"
+          },
+          {
+            "coefficient": 1.0,
+            "metabolite": "prot_P3",
+            "reaction": "usage_prot_P3"
+          },
+          {
+            "coefficient": -1.0,
+            "metabolite": "prot_pool",
+            "reaction": "usage_prot_P3"
+          },
+          {
+            "coefficient": 1.0,
+            "metabolite": "prot_P4",
+            "reaction": "usage_prot_P4"
+          },
+          {
+            "coefficient": -1.0,
+            "metabolite": "prot_pool",
+            "reaction": "usage_prot_P4"
+          },
+          {
+            "coefficient": 1.0,
+            "metabolite": "prot_P5",
+            "reaction": "usage_prot_P5"
+          },
+          {
+            "coefficient": -1.0,
+            "metabolite": "prot_pool",
+            "reaction": "usage_prot_P5"
+          }
+        ]
+      },
+      "rxns_added": [
+        "RNEW_EXP_1",
+        "RNEW_EXP_2",
+        "RNEW_REV_EXP_1",
+        "RNEW_REV_EXP_2"
+      ]
+    },
+    "copy_ec": {
+      "fill_empty": {
+        "R1": [],
+        "R1_REV": [],
+        "R2_EXP_1": [
+          "1.1.1.1"
+        ],
+        "R2_EXP_2": [
+          "1.1.1.1"
+        ],
+        "R2_REV_EXP_1": [
+          "1.1.1.1"
+        ],
+        "R2_REV_EXP_2": [
+          "1.1.1.1"
+        ],
+        "R3": [
+          "1.1.2.1"
+        ],
+        "R4": [],
+        "R5": [
+          "1.1.1.3"
+        ],
+        "S1": [],
+        "S2": [],
+        "prot_pool_exchange": [],
+        "usage_prot_P1": [],
+        "usage_prot_P2": [],
+        "usage_prot_P3": [],
+        "usage_prot_P4": [],
+        "usage_prot_P5": []
+      },
+      "overwrite_false_unchanged": true,
+      "overwrite_true_with_empty": [
+        "1.1.1.1"
+      ]
+    },
+    "map_rxns": {
+      "mapped": [
+        {
+          "flux": -1.0,
+          "reaction": "R1"
+        },
+        {
+          "flux": -4.0,
+          "reaction": "R2"
+        },
+        {
+          "flux": 7.0,
+          "reaction": "R3"
+        },
+        {
+          "flux": 8.0,
+          "reaction": "R4"
+        },
+        {
+          "flux": 9.0,
+          "reaction": "R5"
+        },
+        {
+          "flux": 10.0,
+          "reaction": "S1"
+        },
+        {
+          "flux": 11.0,
+          "reaction": "S2"
+        }
+      ],
+      "usage": [
+        {
+          "enzyme": "P1",
+          "flux": 13.0
+        },
+        {
+          "enzyme": "P2",
+          "flux": 14.0
+        },
+        {
+          "enzyme": "P3",
+          "flux": 15.0
+        },
+        {
+          "enzyme": "P4",
+          "flux": 16.0
+        },
+        {
+          "enzyme": "P5",
+          "flux": 17.0
+        },
+        {
+          "enzyme": "pool",
+          "flux": 12.0
+        }
+      ]
+    },
+    "reactions_from_enzyme": {
+      "case_variant": {
+        "kcat": [
+          0.0,
+          0.0
+        ],
+        "raised": false,
+        "rxns": [
+          "R2_EXP_1",
+          "R2_REV_EXP_1"
+        ]
+      },
+      "known": {
+        "kcat": [
+          0.0,
+          0.0
+        ],
+        "raised": false,
+        "rxns": [
+          "R2_EXP_1",
+          "R2_REV_EXP_1"
+        ]
+      },
+      "unknown": {
+        "kcat": [],
+        "raised": true,
+        "rxns": []
+      }
+    },
+    "set_kcat": {
+      "base_list": {
+        "raised": false,
+        "records": [
+          {
+            "kcat": 3.0,
+            "reaction": "R2_EXP_1",
+            "source": "setKcatForReactions"
+          },
+          {
+            "kcat": 4.0,
+            "reaction": "R2_EXP_2",
+            "source": "setKcatForReactions"
+          }
+        ]
+      },
+      "base_scalar": {
+        "records": [
+          {
+            "kcat": 7.0,
+            "reaction": "R2_EXP_1",
+            "source": "setKcatForReactions"
+          },
+          {
+            "kcat": 7.0,
+            "reaction": "R2_EXP_2",
+            "source": "setKcatForReactions"
+          }
+        ]
+      },
+      "suffixed": {
+        "records": [
+          {
+            "kcat": 12.5,
+            "reaction": "R2_EXP_1",
+            "source": "setKcatForReactions"
+          },
+          {
+            "kcat": 0.0,
+            "reaction": "R2_EXP_2",
+            "source": ""
+          }
+        ]
+      }
+    }
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "model_edits_ectestgem"
+}

@@ -1,0 +1,2066 @@
+scenario: gap_report_toy  host: vera-r05-04  start: 2026-10-22T07:49:54Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpzra4p0sg.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpouiy5xen.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpap0g75_j.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpnm6ackta.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpfe0qydfi.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp1fxbe15m.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpvj9i7vxz.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpb7zxu3x9.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpgqnc7dds.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp453b6ln1.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpw9gkenn1.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpz2qth8_j.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpzsviw9bc.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp6xh2junt.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpi_inq20z.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpegpeajzn.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpm30odch5.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpc9wy4bxn.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpbyd4mrdh.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmprllbch20.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpbe680x4t.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpyq67nxbw.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp_zapf5x3.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpb2v_nnsz.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpppaabpu8.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpqrsb6doy.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp4_x2g7mw.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpzzz56o6o.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp2quxeah9.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpkzoras03.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpg1prfj6c.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp1stok91h.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmplmpjczr9.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp_l2yfajp.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpe321h4gq.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp5aa56uie.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpy5by1zk1.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpbz_2w85h.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpnzwjqmy2.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp15jak5e9.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp98f9xr05.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpps14tfa9.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp0cz98hg9.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpc555t2kv.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpwwxcy6r7.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpdxpb5d4w.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmp4rmw8hor.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpvb6z4aaw.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp69wukt3_.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpbb5gv8ud.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpp43w18k7.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpf4o50f29.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpmd5usrzh.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpnljjeh3l.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp_g898_c_.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpy90fs09u.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp98lyltp3.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpk1r9_kwk.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpiyrcg45b.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpm6ub_up3.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp04jpv0d8.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpwd6mp927.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpmygocg2z.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp4dc17tu4.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpvr78tb55.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpfjp9m7pq.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmprw03kh1w.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpe4uar2br.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpzlznmpnx.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpaduv72nh.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpnjmpo0du.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp4jsh0jie.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpdktdlgjh.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmplbl3zqpg.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpzn_ax2oh.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpiruh0f5_.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp7rirrmvo.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp281_iz09.lp
+Reading time = 0.00 seconds
+Read LP format model from file /local/tmp.10529290/tmpev2x5kl8.lp
+: 9 rows, 15 columns, 25 nonzeros
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpe5v71nvr.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpcboimuh0.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpnswlcvhn.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpf0th87hc.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpzhaa33jb.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp4rbbps46.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmp57u04t22.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmped8y3a87.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp5sp648va.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp4hf6vz77.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpp1quojg6.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpqxm0cgx8.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp95grm_dv.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp_hwp5vqu.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpl78exv_8.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp3_3x5iom.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpxvxya7mh.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpuos_qdvf.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp3wnouxtq.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmp400rx308.lp
+Reading time = 0.00 seconds
+: 8 rows, 14 columns, 24 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpylh15epb.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp0j4hmrp_.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpip2aknuu.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp35tqo55k.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpd5pjkebl.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpn83i_y2p.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp1l7btvtt.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpehbg6r5b.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp14y32jw3.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmph69hf_10.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp40mjmqno.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpk6sqd_6r.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp38aojaeo.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp1jfivom3.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpcx1on900.lp
+Reading time = 0.00 seconds
+: 8 rows, 14 columns, 24 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp_9y5iorc.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpy_nev9p_.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpncqq9yo9.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp1ohddc7q.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpzitzrenk.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmphjsdif_n.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmp9g8wuhsr.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpit1sdqg7.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpu4wzsuv9.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp9bm5d2nc.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp56v4qkjz.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpb6zjmjve.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpykb09d1y.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpauy19612.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmplrskk404.lp
+Reading time = 0.00 seconds
+: 8 rows, 14 columns, 24 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpqk50pj2v.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmps_hms_z1.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp0dijek5v.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp5by8cewj.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpkbd5nnu8.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp61w1kr6o.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp9in64jhs.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp9g2h1i4j.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpjtb02n8w.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp689g_hs1.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpy4hjakgx.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp86fc60kn.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp4gqzkpo1.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpwmja497o.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmps3b6g14_.lp
+Reading time = 0.00 seconds
+: 8 rows, 14 columns, 24 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpqhdqa8ce.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmprztsafpv.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpbjc0r3ec.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpqaf0rs4g.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpxi_9dtt0.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpv_vma0b9.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpo13w0e1i.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpbb9hzrd6.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpdkthxn4i.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpqng24419.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpmnsdrhlm.lp
+Read LP format model from file /local/tmp.10529290/tmpwg6ycs7x.lp
+Reading time = 0.00 seconds
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp3lole7fh.lp
+Read LP format model from file /local/tmp.10529290/tmph64axmw7.lp
+Reading time = 0.00 seconds
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmper9ktca3.lp
+Reading time = 0.00 seconds
+: 8 rows, 14 columns, 24 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmptqusou5v.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpvve6uhgs.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp85uvu5_h.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpg6i43v77.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpopqvfk8_.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp8qa56tr2.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpdlc3n22v.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmppqiip4at.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpz3lcnt75.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpyyvvb_op.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpmdxw43pk.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmp4o4wku5u.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmppqu3rx00.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpi7xn1tf2.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpxmefxaqn.lp
+Reading time = 0.00 seconds
+: 8 rows, 14 columns, 24 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp6mqk7jzv.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpsayjopzb.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpw43tsdg4.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpwxyh7pgd.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpiy_4ztqq.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpgf9xqyl8.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmp4lv7aqmi.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp0nrbuz3n.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpzk_72058.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmphf0gy5sh.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmprk5ztcvd.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpbfclwn8_.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmp3euwh9zr.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp45u9m71s.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmp6rng93_z.lp
+Reading time = 0.00 seconds
+: 8 rows, 14 columns, 24 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpzw1c2qgd.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp6x8jmitc.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpxydfzvit.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp8iy0wzl4.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpnseovsxg.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp3ofh1skh.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp5oq54824.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp53jd72jz.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmplqpuov5r.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpro2mifh_.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpkn9yaoiq.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp18qprffe.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpf8i5b4j3.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpgwjq0xog.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmp0snv0cz8.lp
+Reading time = 0.00 seconds
+: 8 rows, 14 columns, 24 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpdu4sw5di.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmps2kve5i9.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpuzhatd53.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp1rwxqj04.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpsyr3sk27.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp2ficb36w.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpcfk4thq4.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp9cdcgvr0.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpg70mrxlx.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpgz60krwd.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp4nl588ew.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpmkmkbz9x.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpzwgaxtv8.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp9bmxy33x.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Read LP format model from file /local/tmp.10529290/tmph2_kts8a.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpdqth2vlg.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpoa0_r79_.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpfxe4jkye.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp46lxv54s.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpqvizw0_e.lp
+Read LP format model from file /local/tmp.10529290/tmpaeeil1ds.lp
+Reading time = 0.00 seconds
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpi7iot63w.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmplxbjzqas.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp6_rczlym.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpit7_uhbq.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpqgck7x9f.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmphujhf1g8.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp13c3x1mj.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpa32kq197.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp6aum5ew8.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp060tcbsd.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmppxdv2h_z.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpufhzzq9e.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpq5kmhbtx.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpxsab59m7.lp
+Reading time = 0.00 seconds
+: 8 rows, 14 columns, 24 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpl9_pdmjs.lp
+Reading time = 0.00 seconds
+: 8 rows, 14 columns, 24 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpw14imaej.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp14p5m8j9.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp7ps_tsvj.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpbhn179dy.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpcakmx9tp.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpld08pm2r.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpmb88uaxw.lp
+Read LP format model from file /local/tmp.10529290/tmpq4vqei0i.lp
+Reading time = 0.00 seconds
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpzblz95bp.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpgs6nkbr8.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpr04t2iz9.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpswzspi50.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmprjfzgqul.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp9lxu2s7i.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp0zestrzn.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpmmjo1s_a.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpcitfpbdr.lp
+Reading time = 0.00 seconds
+: 8 rows, 14 columns, 24 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpwjt1nelk.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp5g7noa1y.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpx_2f7tnp.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp58or86e6.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmphl5ehs9s.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpzbz9s7qf.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp7sb26ex0.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp4958ijwy.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpqn7olhxb.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmplz9g7p3i.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp0erh9rzs.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpgnam7s8j.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpob43vhw9.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp0mstscos.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp0rjv_9p5.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp3iiix9cw.lp
+Reading time = 0.00 seconds
+: 9 rows, 31 columns, 41 nonzeros
+gap_report_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/gap_report_toy.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpewx8qnqv.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpd58ziex6.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmprwurirem.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmprmp_b8j5.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp41ohgp3f.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpmusnrpwv.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpsks845uo.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpqfqruixg.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp6crtedyt.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpdsqzdl32.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpy4c48fm0.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpiw9xlm76.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp8rtj0z9r.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpivx5thnr.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp5nx1lhqv.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmprn9l43mj.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpy9ahl3p8.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpmmggbad8.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmph9ehwxld.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmppu07vi59.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpcz41rags.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp1n6mus33.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpqnviay5g.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpq6gbhzaw.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpd4sd_ugb.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpoww83gih.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp3y7xiq8s.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpbnneica_.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp3ohs8s75.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpy7r3n9p6.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmptc5ta4og.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpth7ipqy0.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmptt_dnzbs.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpsntp1px2.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp3i_zu4zs.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpg0w0mn8j.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmph3op4skz.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpintfwqny.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpd4z83061.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp91bx0jse.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpz0yy8zbh.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp_3vr6ba7.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpnaxu155d.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpcxinihgd.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Terminated
+PYTHON FAILED (seed 1)
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpfps4_lfh.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpiwpga4z7.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpazd2v2bb.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp04wgzqt8.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpsjizmbni.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmps0jjn9gl.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp2_iqw4gq.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmphqtvwywp.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpj7ztvn1x.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpr8dxn97f.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpwi9kxrho.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpnlk3e_hn.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+/apps/Arch/software/Python/3.14.2-GCCcore-15.2.0/lib/python3.14/multiprocessing/resource_tracker.py:396: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown: {'/mp-psygznyj', '/mp-bg5kyn61', '/mp-5nz6nukz', '/mp-fmn7wpgn', '/mp-1d960tkd', '/mp-gjux41k6'}
+  warnings.warn(
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpehh01kh3.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpp2wpppzt.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpssfw4v1j.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpl9pziy6k.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpjqxbgvh6.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpyuoza8r_.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpbuyj9t5v.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpthlzckxz.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpf5e31f7f.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpu0rs6r3b.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpubfca101.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp2kzjrgcf.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpjbsjeg5l.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpuks53o98.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpcsr5zbaz.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpy4e_bt0d.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpig2b4f1t.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmphf8acok9.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp02zd8wej.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp1mnol7ck.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp1yc3kyc6.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpl47cif4q.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpkyd42san.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpyhx7s2c6.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpiddksdfg.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp0261kfss.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp4fibryg2.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmp4x9cz_30.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpuaj6amnp.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpdgwh96vn.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp_ro5chd_.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpu6cwptm4.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp7asq3shd.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmphy_0ix36.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Read LP format model from file /local/tmp.10529290/tmpe0tft44t.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp78m3mz7s.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpe3b583l9.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpdiqum_gg.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpd8pf9j92.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpeu5mfowh.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpnq5dzovm.lp
+Read LP format model from file /local/tmp.10529290/tmp86q0_6a1.lp
+Reading time = 0.00 seconds
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpvdeujcbg.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpzrvwi3uo.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmprh1z70d8.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp3bf7_39u.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp4gdm53n7.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpd4yo0cf7.lp
+Read LP format model from file /local/tmp.10529290/tmpn_zjpr8e.lp
+Reading time = 0.00 seconds
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpmnjjib4b.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpu_h34czm.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp2l_ws050.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp9t8ppkzz.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpx8yj_2m1.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpkjhhkvbe.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpmtwqf5gp.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpljkox3l1.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpertdrz7r.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpgzgnezgg.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpm8mnul9q.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpml2vfg1m.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpeh2r5qpn.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpvlfg1jd3.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp22j4kpih.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp8pwawp8p.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp6fue6_f_.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpbr23pp5x.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpkf4zmbi6.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpxbm71wc_.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpjve3n5lj.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpjw36a8kk.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp8768rrif.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpt03wf5j8.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpzeo5rkxd.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp_43f7o8a.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpdp9wf264.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp_qavw_z6.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+/cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/hpc-scripts/run_scenario.sh: line 66: 3320766 Killed                  PYTHONHASHSEED=$seed parity run "$id" --impl python -o "$PARITY_OUT/python/$id.seed$seed.json"
+PYTHON FAILED (seed 2)
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp331gh3ev.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp9poq6uab.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp3nl7w6li.lp
+Reading time = 0.01 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpjsei5wrx.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpn717hdai.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmp8ilhdw7g.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529290/tmpsq9ov_mc.lp
+Reading time = 0.00 seconds
+: 9 rows, 15 columns, 25 nonzeros
+/apps/Arch/software/Python/3.14.2-GCCcore-15.2.0/lib/python3.14/multiprocessing/resource_tracker.py:396: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown: {'/mp-vrpqjipt', '/mp-ry3_fy_6', '/mp-jdwmosgz', '/mp-540winew', '/mp-5immagz5', '/mp-1zc7wbbb'}
+  warnings.warn(
+gap_report_toy [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/matlab/gap_report_toy.json
+Terminated
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: gap_report_toy  (python vs matlab)
+tolerance: rel=0 abs=0
+result:   MATCH
+end: 2026-10-22T08:23:23Z  status: ERROR

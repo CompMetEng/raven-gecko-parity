@@ -1,0 +1,42 @@
+{
+  "A": {
+    "file": "\tID\tDESCRIPTION\tSHOULD FAIL\tIN\tIN LB\tIN UB\tOUT\tOUT LB\tOUT UB\tEQU\tEQU LB\tEQU UB\tCHANGED RXN\tCHANGED LB\tCHANGED UB\tPRINT FLUX\tCOMMENTS\tREFERENCES\tEXPLANATIONS\n\tA\tA\t0\ta[s]\t\t\te[s]\t1\t\t\t\t\tNOSUCHRXN\t0\t0\t0\t\t\t\n",
+    "ok": true,
+    "okAll": true
+  },
+  "B": {
+    "file": "\tID\tDESCRIPTION\tSHOULD FAIL\tIN\tIN LB\tIN UB\tOUT\tOUT LB\tOUT UB\tEQU\tEQU LB\tEQU UB\tCHANGED RXN\tCHANGED LB\tCHANGED UB\tPRINT FLUX\tCOMMENTS\tREFERENCES\tEXPLANATIONS\n\tB\tB\t0\ta[s]\t2\t\ta[s];e[s]\t3\t\t\t\t\t\t\t\t0\t\t\t\n",
+    "error": {
+      "identifier": "RAVEN:badInput",
+      "message": "The IN LB and OUT LB in \"[B] B\" cannot be nonzero for the same metabolite"
+    }
+  },
+  "C": {
+    "file": "\tID\tDESCRIPTION\tSHOULD FAIL\tIN\tIN LB\tIN UB\tOUT\tOUT LB\tOUT UB\tEQU\tEQU LB\tEQU UB\tCHANGED RXN\tCHANGED LB\tCHANGED UB\tPRINT FLUX\tCOMMENTS\tREFERENCES\tEXPLANATIONS\n\tC\tC\t0\ta[s]; a[s]\t\t\te[s]\t1\t\t\t\t\t\t\t\t0\t\t\t\n",
+    "error": {
+      "identifier": "RAVEN:badInput",
+      "message": "The constraints on some input(s) in \"[C] C\" are defined more than one time"
+    }
+  },
+  "D": {
+    "file": "\tID\tDESCRIPTION\tSHOULD FAIL\tIN\tIN LB\tIN UB\tOUT\tOUT LB\tOUT UB\tEQU\tEQU LB\tEQU UB\tCHANGED RXN\tCHANGED LB\tCHANGED UB\tPRINT FLUX\tCOMMENTS\tREFERENCES\tEXPLANATIONS\n\tD\tD\t0\ta[s]\t\t\te[s]\t1\t\t\t\t\tR2\t5\t1\t0\t\t\t\n",
+    "error": {
+      "identifier": "",
+      "message": "Invalid set of bounds for reaction(s): R2."
+    }
+  },
+  "E": {
+    "file": "\tID\tDESCRIPTION\tSHOULD FAIL\tIN\tIN LB\tIN UB\tOUT\tOUT LB\tOUT UB\tEQU\tEQU LB\tEQU UB\tCHANGED RXN\tCHANGED LB\tCHANGED UB\tPRINT FLUX\tCOMMENTS\tREFERENCES\tEXPLANATIONS\n\tE\tE\t0\ta[s]\t\t\te[s]\t1\t\t\t\t\tR2; R3\t-5; 10\t\t0\t\t\t\n",
+    "error": {
+      "identifier": "MATLAB:innerdim",
+      "message": "Incorrect dimensions for matrix multiplication. Check that the number of columns in the first matrix matches the number of rows in the second matrix. To operate on each element of the matrix individually, use TIMES (.*) for elementwise multiplication."
+    }
+  },
+  "F": {
+    "file": "\tID\tDESCRIPTION\tSHOULD FAIL\tIN\tIN LB\tIN UB\tOUT\tOUT LB\tOUT UB\tEQU\tEQU LB\tEQU UB\tCHANGED RXN\tCHANGED LB\tCHANGED UB\tPRINT FLUX\tCOMMENTS\tREFERENCES\tEXPLANATIONS\n\tF\tF\t0\ta[s]\t\t\te[s]\t1\t\ta[c] => b[c]\t7\t3\t\t\t\t0\t\t\t\n",
+    "error": {
+      "identifier": "",
+      "message": "Invalid set of bounds for reaction(s): TEMPORARY_1."
+    }
+  }
+}

@@ -1,0 +1,34 @@
+GUROBI_ON_PATH=/apps/Arch/software/Gurobi/13.0.1-GCCcore-14.3.0/matlab/gurobi.mexa64
+GUROBI_OK=1
+Running tReconstruction
+.....
+Standardizing grRules of template model with ID "srcModel" ... done
+..... .....
+================================================================================
+tReconstruction/getKEGGModelForOrganismNeedsData was filtered.
+    Test Diagnostic: Requires keggModel.mat and an HMM library from toolbox-assets.
+================================================================================
+.
+================================================================================
+tReconstruction/getModelFromKEGGNeedsData was filtered.
+    Test Diagnostic: Downloads and assembles the full KEGG artefact set from toolbox-assets; not run automatically.
+================================================================================
+..
+================================================================================
+tReconstruction/getPhylDistNeedsData was filtered.
+    Test Diagnostic: keggPhylDist.mat is present; skipping error-path test.
+================================================================================
+.
+Done tReconstruction
+__________
+
+Failure Summary:
+
+     Name                                              Failed  Incomplete  Reason(s)
+    ===============================================================================================
+     tReconstruction/getKEGGModelForOrganismNeedsData              X       Filtered by assumption.
+    -----------------------------------------------------------------------------------------------
+     tReconstruction/getModelFromKEGGNeedsData                     X       Filtered by assumption.
+    -----------------------------------------------------------------------------------------------
+     tReconstruction/getPhylDistNeedsData                          X       Filtered by assumption.
+SUMMARY passed=16 failed=0 incomplete=3 total=19

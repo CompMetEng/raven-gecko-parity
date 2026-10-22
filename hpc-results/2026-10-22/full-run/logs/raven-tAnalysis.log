@@ -1,0 +1,11 @@
+GUROBI_ON_PATH=/apps/Arch/software/Gurobi/13.0.1-GCCcore-14.3.0/matlab/gurobi.mexa64
+GUROBI_OK=1
+Running tAnalysis
+Starting parallel pool (parpool) using the 'Processes' profile ...
+Connected to parallel pool with 2 workers.
+.......... .......... .......... .......
+Done tAnalysis
+__________
+
+SUMMARY passed=37 failed=0 incomplete=0 total=37
+Parallel pool using the 'Processes' profile is shutting down.

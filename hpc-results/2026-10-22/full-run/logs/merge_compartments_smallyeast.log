@@ -1,0 +1,42 @@
+scenario: merge_compartments_smallyeast  host: vera-r05-04  start: 2026-10-22T07:50:37Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529300/tmpb49cs14l.lp
+Reading time = 0.00 seconds
+: 52 rows, 106 columns, 406 nonzeros
+merge_compartments_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/merge_compartments_smallyeast.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529300/tmp2ed2k6jd.lp
+Reading time = 0.00 seconds
+: 52 rows, 106 columns, 406 nonzeros
+merge_compartments_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/merge_compartments_smallyeast.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529300/tmppopbxh1p.lp
+Reading time = 0.00 seconds
+: 52 rows, 106 columns, 406 nonzeros
+merge_compartments_smallyeast [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/merge_compartments_smallyeast.seed2.json
+merge_compartments_smallyeast [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/matlab/merge_compartments_smallyeast.json
+Terminated
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: merge_compartments_smallyeast  (python vs matlab)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: merge_compartments_smallyeast  (python vs matlab)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: merge_compartments_smallyeast  (python vs matlab)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+--- python seed 0 vs seed 1
+scenario: merge_compartments_smallyeast  (python vs python)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: merge_compartments_smallyeast  (python vs python)
+tolerance: rel=1e-12 abs=1e-15
+result:   MATCH
+end: 2026-10-22T07:51:17Z  status: MATCH

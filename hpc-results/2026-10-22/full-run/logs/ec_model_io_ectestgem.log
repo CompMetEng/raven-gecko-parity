@@ -1,0 +1,81 @@
+scenario: ec_model_io_ectestgem  host: vera-r05-04  start: 2026-10-22T07:48:48Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529273/tmpw_okqvqi.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+ec_model_io_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/ec_model_io_ectestgem.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529273/tmptho_pysw.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+ec_model_io_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/ec_model_io_ectestgem.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10529273/tmp6bkpw0c0.lp
+Reading time = 0.00 seconds
+: 4 rows, 14 columns, 24 nonzeros
+ec_model_io_ectestgem [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/python/ec_model_io_ectestgem.seed2.json
+ec_model_io_ectestgem [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/dev-1/matlab/ec_model_io_ectestgem.json
+Terminated
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: ec_model_io_ectestgem  (python vs matlab)
+tolerance: rel=0 abs=0
+
+3 difference(s):
+  results.written.lines
+      length mismatch
+      left=354  right=295
+  results.written.n_chars
+      numeric mismatch (|delta| = 1469)
+      left=6916  right=5447
+  results.written.n_lines
+      numeric mismatch (|delta| = 59)
+      left=354  right=295
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 0)
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: ec_model_io_ectestgem  (python vs matlab)
+tolerance: rel=0 abs=0
+
+3 difference(s):
+  results.written.lines
+      length mismatch
+      left=354  right=295
+  results.written.n_chars
+      numeric mismatch (|delta| = 1469)
+      left=6916  right=5447
+  results.written.n_lines
+      numeric mismatch (|delta| = 59)
+      left=354  right=295
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 1)
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: ec_model_io_ectestgem  (python vs matlab)
+tolerance: rel=0 abs=0
+
+3 difference(s):
+  results.written.lines
+      length mismatch
+      left=354  right=295
+  results.written.n_chars
+      numeric mismatch (|delta| = 1469)
+      left=6916  right=5447
+  results.written.n_lines
+      numeric mismatch (|delta| = 59)
+      left=354  right=295
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 2)
+--- python seed 0 vs seed 1
+scenario: ec_model_io_ectestgem  (python vs python)
+tolerance: rel=0 abs=0
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: ec_model_io_ectestgem  (python vs python)
+tolerance: rel=0 abs=0
+result:   MATCH
+end: 2026-10-22T07:49:32Z  status: DIFFER

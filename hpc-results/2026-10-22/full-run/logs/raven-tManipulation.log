@@ -1,0 +1,10 @@
+GUROBI_ON_PATH=/apps/Arch/software/Gurobi/13.0.1-GCCcore-14.3.0/matlab/gurobi.mexa64
+GUROBI_OK=1
+Running tManipulation
+.......... .......... .......... .......... No rxns ids with prefix "r_" currently exist in the model. The first new id will be "r_0001"
+..........
+.......... .......... .......... .....
+Done tManipulation
+__________
+
+SUMMARY passed=85 failed=0 incomplete=0 total=85

@@ -1,0 +1,47 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "consume_pair": {
+      "fluxes": {
+        "R1": 0,
+        "R2": 0,
+        "R3": 0.5
+      },
+      "metabolites": [
+        "C",
+        "D"
+      ],
+      "status": "optimal"
+    },
+    "produce_all_ignored": {
+      "fluxes": {},
+      "metabolites": [],
+      "status": "infeasible"
+    },
+    "produce_default": {
+      "fluxes": {
+        "R1": 1,
+        "R2": 1,
+        "R3": 0
+      },
+      "metabolites": [
+        "A"
+      ],
+      "status": "optimal"
+    },
+    "produce_ignore_by_name": {
+      "fluxes": {
+        "R1": 2,
+        "R2": 1,
+        "R3": 0
+      },
+      "metabolites": [
+        "B"
+      ],
+      "status": "optimal"
+    }
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "find_leak_metabolite_toy"
+}
