@@ -1,0 +1,62 @@
+id: edge_model_toy
+pair: raven
+description: 'Cases that smallYeast does not contain, on a hand-written six-reaction model: an orphan
+  metabolite and an orphan gene, a reaction that only runs backward, an and-complex and an or-rule sharing
+  a gene, a reaction without a name, two metabolites with one name in one compartment, an objective, and
+  bounds that are not 0, 1000 or -1000. The model is written to YAML and read back, split into irreversible
+  reactions, and a gene is removed.'
+entries: [writeYAMLmodel, readYAMLmodel, convertToIrrev, removeGenes]
+inputs:
+  orphan_metabolite: O
+  orphan_gene: G9
+  duplicate_name: dup
+  removed_gene: G1
+  reactions:
+  - id: R1
+    name: supply
+    substrates: []
+    products: [A]
+    lb: 0
+    ub: 1000
+    objective: 0
+    rule: ''
+  - id: R2
+    name: backward only
+    substrates: [A]
+    products: [B]
+    lb: -1000
+    ub: 0
+    objective: 0
+    rule: ''
+  - id: R3
+    name: complex step
+    substrates: [B]
+    products: [C]
+    lb: 0
+    ub: 500.5
+    objective: 1
+    rule: G1 and G2
+  - id: R4
+    name: ''
+    substrates: [C]
+    products: []
+    lb: 0
+    ub: 1000
+    objective: 0
+    rule: G3 or G1
+  - id: R5
+    name: to X1
+    substrates: [B]
+    products: [X1]
+    lb: -10
+    ub: 10
+    objective: 0
+    rule: ''
+  - id: R6
+    name: to X2
+    substrates: [X1, X2]
+    products: []
+    lb: 0
+    ub: 1000
+    objective: 0
+    rule: ''
