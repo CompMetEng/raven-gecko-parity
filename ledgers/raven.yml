@@ -48,7 +48,8 @@ entries:
       matching in merge_compartments and add_reactions_from_model). allowNewMets and allowNewGenes default false
       in RAVEN and true in the Python signature. The bounds an arrow implies come from different places ---
       model.annotations.defaultLB/defaultUB against cobra''s configuration --- which agree at -1000/1000 for
-      smallYeast by coincidence rather than by construction.'
+      smallYeast by coincidence rather than by construction. The gene order after adding reactions differs
+      (add_reactions_from_equations_smallyeast, from_arrows checkpoint).'
   - matlab: addRxnsGenesMets
     python: raven_toolbox.manipulation.add_reactions_from_model
     status: parity
@@ -479,7 +480,10 @@ entries:
       - model_manipulation_smallyeast
     notes: 'from migration.md. Splits OR-GPR (isozyme) reactions into one per AND-clause. Adopted from geckopy.
       grRules are compared as gene sets rather than as strings --- expandModel ends by calling
-      standardizeGrRules, which brackets complexes, while the Python side joins a clause with " and ".'
+      standardizeGrRules, which brackets complexes, while the Python side joins a clause with " and ".
+      Reaction order differs (model_manipulation_smallyeast, expand checkpoint): RAVEN puts the first clause
+      in place of the original reaction and appends the others (HXK_EXP_1 where HXK was), while Python
+      appends every clause at the end and leaves a one-clause reaction where it was.'
   - matlab: exportForGit
     python: raven_toolbox.io.export_for_git
     status: parity
@@ -1102,7 +1106,12 @@ entries:
       whitespace, and stores an empty CHANGED LB or UB as NaN (leave the bound unchanged), which raven-toolbox
       now does too (None) instead of defaulting to -1000 and 1000. A .xls task list is read by RAVEN only;
       raven-toolbox raises a clear error. Covered by task_list_edge_cases. Until both are merged the
-      differences above hold.'
+      differences above hold.
+      task_list_parsing edge_cases still differ: RAVEN raises on a task list with the ID in the first column
+      or a comment as the first row, and Python parses both; a lowercase header gives RAVEN bounds of 0 where
+      Python uses the defaults; RAVEN keeps an orphan continuation row as an extra task and Python skips it
+      with a warning; a bad number is read by RAVEN into the comments and raises in Python; a .xls file is read
+      by RAVEN and refused by Python.'
   - matlab: parseYAML
     status: subsumed
     reason: The RAVEN YAML tokeniser; inside io.read_yaml_model.
@@ -1475,7 +1484,11 @@ entries:
       bounds, so a reaction locked at zero flux was not counted as a producer there. Fixed in raven-toolbox to
       match RAVEN''s bounds-blind check; the scenario''s dead_end_alone checkpoint covers it running alone, not
       just composed. deleteDuplicates is the contractModel divergence; deleteUnconstrained has no Python analogue
-      (cobra models carry boundary reactions, not an unconstrained field).'
+      (cobra models carry boundary reactions, not an unconstrained field). simplify_order_toy compares the
+      model order and differs on four points: RAVEN keeps the lowest-index reaction of a linear chain (R1)
+      where Python keeps R3; RAVEN constrains reversible reactions before grouping and Python groups first;
+      Python removes a reserved zero-bounded reaction and its gene (reserved is ignored by the zero-interval
+      pass) where RAVEN keeps them; Python keeps an orphan metabolite that RAVEN removes.'
   - matlab: solveLP
     status: via-dependency
     reason: 'cobrapy covers this: model.optimize().'
@@ -1486,7 +1499,8 @@ entries:
       - model_manipulation_smallyeast
     notes: 'from migration.md. Model-wide alphabetical sort; also via sort_ids= on write_yaml_model. RAVEN also
       sorts model.comps; the Python side has compartments as a plain dict and emits them in key order, which
-      comes to the same thing.'
+      comes to the same thing. model_manipulation_smallyeast also records the reaction order after the expand
+      checkpoint, where the two sides differ (see expandModel).'
   - matlab: sortModel
     status: subsumed
     reason: Different operations. sortModel re-orients reversible reactions so that the metabolite that is first in
