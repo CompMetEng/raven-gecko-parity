@@ -1,0 +1,230 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "hom_a1_drop": {
+      "n_reactions": 0,
+      "reactions": []
+    },
+    "hom_a1_flag": {
+      "n_reactions": 1,
+      "reactions": [
+        {
+          "clauses": [
+            [
+              "nC"
+            ]
+          ],
+          "reaction": "R1"
+        }
+      ]
+    },
+    "hom_a1_keep": {
+      "n_reactions": 1,
+      "reactions": [
+        {
+          "clauses": [
+            [
+              "nC"
+            ]
+          ],
+          "reaction": "R1"
+        }
+      ]
+    },
+    "hom_a2_drop": {
+      "n_reactions": 1,
+      "reactions": [
+        {
+          "clauses": [
+            [
+              "nA"
+            ]
+          ],
+          "reaction": "R1"
+        }
+      ]
+    },
+    "hom_a2_flag": {
+      "n_reactions": 1,
+      "reactions": [
+        {
+          "clauses": [
+            [
+              "OLD_T_B",
+              "nC"
+            ],
+            [
+              "nA"
+            ]
+          ],
+          "reaction": "R1"
+        }
+      ]
+    },
+    "hom_a2_keep": {
+      "n_reactions": 1,
+      "reactions": [
+        {
+          "clauses": [
+            [
+              "nA"
+            ],
+            [
+              "nC"
+            ]
+          ],
+          "reaction": "R1"
+        }
+      ]
+    },
+    "hom_a3_drop": {
+      "n_reactions": 1,
+      "reactions": [
+        {
+          "clauses": [
+            [
+              "nC"
+            ]
+          ],
+          "reaction": "R1"
+        }
+      ]
+    },
+    "hom_a3_flag": {
+      "n_reactions": 1,
+      "reactions": [
+        {
+          "clauses": [
+            [
+              "OLD_T_A",
+              "OLD_T_B"
+            ],
+            [
+              "nC"
+            ]
+          ],
+          "reaction": "R1"
+        }
+      ]
+    },
+    "hom_a3_keep": {
+      "n_reactions": 1,
+      "reactions": [
+        {
+          "clauses": [
+            [
+              "nC"
+            ]
+          ],
+          "reaction": "R1"
+        }
+      ]
+    },
+    "hom_b_none": {
+      "n_reactions": 2,
+      "reactions": [
+        {
+          "clauses": [
+            [
+              "N1"
+            ]
+          ],
+          "reaction": "R_T1"
+        },
+        {
+          "clauses": [
+            [
+              "N1"
+            ],
+            [
+              "N2"
+            ]
+          ],
+          "reaction": "R_T2"
+        }
+      ]
+    },
+    "hom_b_t1t2": {
+      "n_reactions": 2,
+      "reactions": [
+        {
+          "clauses": [
+            [
+              "N1"
+            ]
+          ],
+          "reaction": "R_T1"
+        },
+        {
+          "clauses": [
+            [
+              "N2"
+            ]
+          ],
+          "reaction": "R_T2"
+        }
+      ]
+    },
+    "hom_b_t2t1": {
+      "n_reactions": 1,
+      "reactions": [
+        {
+          "clauses": [
+            [
+              "N1"
+            ],
+            [
+              "N2"
+            ]
+          ],
+          "reaction": "R_T2"
+        }
+      ]
+    },
+    "hom_c_none": {
+      "n_reactions": 2,
+      "reactions": [
+        {
+          "clauses": [
+            [
+              "N1"
+            ]
+          ],
+          "reaction": "R1"
+        },
+        {
+          "clauses": [
+            [
+              "N2"
+            ]
+          ],
+          "reaction": "R1_T2"
+        }
+      ]
+    },
+    "hom_c_t2t1": {
+      "n_reactions": 2,
+      "reactions": [
+        {
+          "clauses": [
+            [
+              "N2"
+            ]
+          ],
+          "reaction": "R1"
+        },
+        {
+          "clauses": [
+            [
+              "N1"
+            ]
+          ],
+          "reaction": "R1_T1"
+        }
+      ]
+    }
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "homology_toy"
+}

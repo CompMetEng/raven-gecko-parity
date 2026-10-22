@@ -1,0 +1,237 @@
+scenario: gap_fill_toy  host: vera-r05-04  start: 2026-10-22T09:08:46Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10530510/tmp8avi2pp6.lp
+Reading time = 0.00 seconds
+: 6 rows, 14 columns, 20 nonzeros
+Read LP format model from file /local/tmp.10530510/tmph47vvp7b.lp
+Reading time = 0.00 seconds
+: 6 rows, 14 columns, 20 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpnj688abj.lp
+Reading time = 0.00 seconds
+: 6 rows, 14 columns, 20 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpagl0pvdw.lp
+Reading time = 0.00 seconds
+: 4 rows, 8 columns, 12 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp_9ayu9f7.lp
+Reading time = 0.00 seconds
+: 4 rows, 8 columns, 12 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp76x922wr.lp
+Reading time = 0.00 seconds
+: 4 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10530510/tmptbcxr7h0.lp
+Reading time = 0.00 seconds
+: 4 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10530510/tmps2e8_19y.lp
+Reading time = 0.00 seconds
+: 4 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpt9ug9_93.lp
+Reading time = 0.00 seconds
+: 4 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpowhmwdsj.lp
+Reading time = 0.00 seconds
+: 4 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpmx39dlmf.lp
+Reading time = 0.00 seconds
+: 4 rows, 10 columns, 14 nonzeros
+gap_fill_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/tierB-final/python/gap_fill_toy.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10530510/tmpudn8umx2.lp
+Reading time = 0.00 seconds
+: 6 rows, 14 columns, 20 nonzeros
+Read LP format model from file /local/tmp.10530510/tmplxzvl0e4.lp
+Reading time = 0.00 seconds
+: 6 rows, 14 columns, 20 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp5r_d1los.lp
+Reading time = 0.00 seconds
+: 6 rows, 14 columns, 20 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpba7sn4ya.lp
+Reading time = 0.00 seconds
+: 4 rows, 8 columns, 12 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp6kzdupdk.lp
+Reading time = 0.00 seconds
+: 4 rows, 8 columns, 12 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpcjoyiabd.lp
+Reading time = 0.00 seconds
+: 4 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp2pl50y40.lp
+Reading time = 0.00 seconds
+: 4 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpe3b2yn73.lp
+Reading time = 0.00 seconds
+: 4 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpiyn1ia1x.lp
+Reading time = 0.00 seconds
+: 4 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpbih9g5_u.lp
+Reading time = 0.00 seconds
+: 4 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpxnlj_4lt.lp
+Reading time = 0.00 seconds
+: 4 rows, 10 columns, 14 nonzeros
+gap_fill_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/tierB-final/python/gap_fill_toy.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10530510/tmptcxe1zw1.lp
+Reading time = 0.00 seconds
+: 6 rows, 14 columns, 20 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp4_zk4hk6.lp
+Reading time = 0.00 seconds
+: 6 rows, 14 columns, 20 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp1fc6b1gf.lp
+Reading time = 0.00 seconds
+: 6 rows, 14 columns, 20 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpu5phqlzv.lp
+Reading time = 0.00 seconds
+: 4 rows, 8 columns, 12 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp6b4z2t2b.lp
+Reading time = 0.00 seconds
+: 4 rows, 8 columns, 12 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpam639qdv.lp
+Reading time = 0.00 seconds
+: 4 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpj2n665fq.lp
+Reading time = 0.00 seconds
+: 4 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp2behqvji.lp
+Reading time = 0.00 seconds
+: 4 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpg2mmgpv3.lp
+Reading time = 0.00 seconds
+: 4 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpfon99_6u.lp
+Reading time = 0.00 seconds
+: 4 rows, 10 columns, 14 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpo72mbswu.lp
+Reading time = 0.00 seconds
+: 4 rows, 10 columns, 14 nonzeros
+gap_fill_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/tierB-final/python/gap_fill_toy.seed2.json
+gap_fill_toy [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/tierB-final/matlab/gap_fill_toy.json
+Terminated
+MATLAB TIMED OUT after 1800 s (attempt 1 of 2)
+gap_fill_toy [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/tierB-final/matlab/gap_fill_toy.json
+Terminated
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: gap_fill_toy  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+
+10 difference(s):
+  results.fill_a.cannot_connect
+      length mismatch
+      left=4  right=7
+  results.fill_b.error
+      present on the left only
+      left='Gap-filling is infeasible: the blocked reactions cannot all carry flux even with every template reaction added.'  right=None
+  results.fill_b.added_reactions
+      present on the right only
+      left=None  right=['T1', 'T2']
+  results.fill_b.cannot_connect
+      present on the right only
+      left=None  right=[]
+  results.fill_b.newly_connected
+      present on the right only
+      left=None  right=['EX_D', 'EX_F', 'R2', 'R3']
+  results.fill_c.added_reactions
+      length mismatch
+      left=0  right=1
+  results.fill_c.cannot_connect
+      length mismatch
+      left=1  right=0
+  results.fill_c.newly_connected
+      length mismatch
+      left=0  right=1
+  results.fill_d_scores1.added_reactions
+      length mismatch
+      left=2  right=1
+  results.fill_d_scores2.added_reactions
+      length mismatch
+      left=2  right=1
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 0)
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: gap_fill_toy  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+
+10 difference(s):
+  results.fill_a.cannot_connect
+      length mismatch
+      left=4  right=7
+  results.fill_b.error
+      present on the left only
+      left='Gap-filling is infeasible: the blocked reactions cannot all carry flux even with every template reaction added.'  right=None
+  results.fill_b.added_reactions
+      present on the right only
+      left=None  right=['T1', 'T2']
+  results.fill_b.cannot_connect
+      present on the right only
+      left=None  right=[]
+  results.fill_b.newly_connected
+      present on the right only
+      left=None  right=['EX_D', 'EX_F', 'R2', 'R3']
+  results.fill_c.added_reactions
+      length mismatch
+      left=0  right=1
+  results.fill_c.cannot_connect
+      length mismatch
+      left=1  right=0
+  results.fill_c.newly_connected
+      length mismatch
+      left=0  right=1
+  results.fill_d_scores1.added_reactions
+      length mismatch
+      left=2  right=1
+  results.fill_d_scores2.added_reactions
+      length mismatch
+      left=2  right=1
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 1)
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: gap_fill_toy  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+
+10 difference(s):
+  results.fill_a.cannot_connect
+      length mismatch
+      left=4  right=7
+  results.fill_b.error
+      present on the left only
+      left='Gap-filling is infeasible: the blocked reactions cannot all carry flux even with every template reaction added.'  right=None
+  results.fill_b.added_reactions
+      present on the right only
+      left=None  right=['T1', 'T2']
+  results.fill_b.cannot_connect
+      present on the right only
+      left=None  right=[]
+  results.fill_b.newly_connected
+      present on the right only
+      left=None  right=['EX_D', 'EX_F', 'R2', 'R3']
+  results.fill_c.added_reactions
+      length mismatch
+      left=0  right=1
+  results.fill_c.cannot_connect
+      length mismatch
+      left=1  right=0
+  results.fill_c.newly_connected
+      length mismatch
+      left=0  right=1
+  results.fill_d_scores1.added_reactions
+      length mismatch
+      left=2  right=1
+  results.fill_d_scores2.added_reactions
+      length mismatch
+      left=2  right=1
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 2)
+--- python seed 0 vs seed 1
+scenario: gap_fill_toy  (python vs python)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: gap_fill_toy  (python vs python)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+end: 2026-10-22T09:09:44Z  status: DIFFER

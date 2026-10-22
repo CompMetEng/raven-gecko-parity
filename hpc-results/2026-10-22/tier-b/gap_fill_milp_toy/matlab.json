@@ -1,0 +1,42 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "milp_a": {
+      "added_reactions": [],
+      "solved": false
+    },
+    "milp_b": {
+      "added_reactions": [
+        "T1"
+      ],
+      "solved": true
+    },
+    "milp_c": {
+      "added_reactions": [
+        "T2"
+      ],
+      "solved": true
+    },
+    "milp_d": {
+      "added_reactions": [
+        "T1"
+      ],
+      "solved": true
+    },
+    "milp_e_fastlp": {
+      "added_reactions": [
+        "Rname_template"
+      ],
+      "cannot_connect": []
+    },
+    "milp_e_milp": {
+      "added_reactions": [
+        "Rname_template"
+      ],
+      "solved": true
+    }
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "gap_fill_milp_toy"
+}

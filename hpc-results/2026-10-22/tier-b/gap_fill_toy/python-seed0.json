@@ -1,0 +1,60 @@
+{
+  "implementation": "python",
+  "result_version": 1,
+  "results": {
+    "fill_a": {
+      "added_reactions": [],
+      "cannot_connect": [
+        "EX_D",
+        "EX_F",
+        "R2",
+        "R3"
+      ],
+      "newly_connected": []
+    },
+    "fill_b": {
+      "error": "Gap-filling is infeasible: the blocked reactions cannot all carry flux even with every template reaction added."
+    },
+    "fill_c": {
+      "added_reactions": [],
+      "cannot_connect": [
+        "R2"
+      ],
+      "newly_connected": []
+    },
+    "fill_d_noscores": {
+      "added_reactions": [
+        "T1"
+      ],
+      "cannot_connect": [],
+      "newly_connected": [
+        "EX_D",
+        "R2"
+      ]
+    },
+    "fill_d_scores1": {
+      "added_reactions": [
+        "T1",
+        "T3"
+      ],
+      "cannot_connect": [],
+      "newly_connected": [
+        "EX_D",
+        "R2"
+      ]
+    },
+    "fill_d_scores2": {
+      "added_reactions": [
+        "T2",
+        "T3"
+      ],
+      "cannot_connect": [],
+      "newly_connected": [
+        "EX_D",
+        "R2"
+      ]
+    }
+  },
+  "runtime": "python 3.14.2",
+  "scenario": "gap_fill_toy"
+}

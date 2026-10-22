@@ -1,0 +1,72 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "ml_a": {
+      "groups": [
+        {
+          "members": [
+            "R1",
+            "R2"
+          ]
+        }
+      ],
+      "reactions": [
+        "R0",
+        "R1"
+      ],
+      "reversed_reactions": [
+        "R1"
+      ]
+    },
+    "ml_a_reordered": {
+      "groups": [
+        {
+          "members": [
+            "R1",
+            "R2"
+          ]
+        }
+      ],
+      "reactions": [
+        "R0",
+        "R2"
+      ],
+      "reversed_reactions": [
+        "R2"
+      ]
+    },
+    "ml_chain": {
+      "groups": [
+        {
+          "members": [
+            "C0",
+            "C1",
+            "C2",
+            "C3"
+          ]
+        }
+      ],
+      "reactions": [],
+      "reversed_reactions": []
+    },
+    "ml_mixed_direction": {
+      "groups": [
+        {
+          "members": [
+            "D0",
+            "D1",
+            "D2",
+            "D3"
+          ]
+        }
+      ],
+      "reactions": [],
+      "reversed_reactions": [
+        "D1"
+      ]
+    }
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "merge_linear_toy"
+}

@@ -4,7 +4,7 @@ Vera, MATLAB R2024b, GLPK unless a scenario names Gurobi. Gurobi 13.0.1 (token s
 
 Revisions (all `develop`): RAVEN `7bc599d` (contains `beadbc0`), raven-toolbox `12f04bf`, raven-gecko-parity `83d260e`, GECKO `52e46f7`, geckopy `277b74a` (main). `MANIFEST.txt` in `full-run/` records them. Its `dirty=68` for raven-gecko-parity counts untracked files (the per-scenario `.run.lock` files and the `results/` folder); `git status` lists no modified tracked file.
 
-Batch layout: `full-run/` (4.0), `probes/` (scripts, one JSON per probe, logs, the YAML files written by Python), `hashseeds/` (4), `python-hang/` (the `gap_report_toy` hang), `scip-tests/` (3.5).
+Batch layout: `tier-b/` (the new scenarios, below), `full-run/` (4.0), `probes/` (scripts, one JSON per probe, logs, the YAML files written by Python), `hashseeds/` (4), `python-hang/` (the `gap_report_toy` hang), `scip-tests/` (3.5).
 
 ## 4.0 Full run on merged develop
 
@@ -121,3 +121,32 @@ Python (raven-toolbox `12f04bf`) wrote four variants of smallYeast to `probes/p5
 2.4 as above (inputs opened, field names, extra product targets). 2.2 uses `arrayData.threshold = 1` as given. 2.3 task files were built from `taskTestModel` (copied into the probe) and the header of `test_tasks.txt`, one row per case. 3.1 added `addpath(GUROBI_MATLAB)`. The hash-seed run of `gap_report_toy` uses a wrapper that sets `cobra.Configuration().processes = 1`; nothing in RAVEN or raven-toolbox was edited, and RAVEN and raven-toolbox are back on `develop`.
 
 Not checked: the HPA path of 2.2 (no fixture); SCIP and the cobra solver (not installed); the cause of the pool hang; whether `fuzzy_kcat_coefficient_ectestgem` and the three documented `DIFFER` scenarios still differ for the stated reasons (verdicts only); tier B probes (not built yet).
+
+## Tier B: new scenarios (`tier-b/`)
+
+Eight new scenarios on hand-written inputs, run on RAVEN `f667229` (branch `fix/export-for-git`, which only changes `exportForGit`) and raven-toolbox `c7af46a` (branch with the `exportForGit` changes and in-process FVA), seeds 0, 1 and 2. `DRAFT-inputs.md` lists the inputs as shown before the run. Each folder holds the compare output, the MATLAB result and the Python seed 0 result. RAVEN is not changed by the other scenarios, so their verdicts do not depend on the `exportForGit` branch.
+
+| Scenario | Verdict | Differences (Python against MATLAB) |
+| --- | --- | --- |
+| `merge_linear_toy` | `MATCH` | none; in the three-reaction case both sides merge `R1` and `R2` (survivors `R0`, `R1`), also with the reactions in reverse order |
+| `export_for_git_toy` | `MATCH` | on the branches: header, bounds with 1/3 and 0.30000000000000004, objective, files written; before the branches the header, the numbers and the default formats differed |
+| `gap_fill_toy` | `DIFFER` | see below |
+| `gap_fill_milp_toy` | `DIFFER` | see below |
+| `homology_toy` | `DIFFER` | see below |
+| `curate_tables_toy` | `DIFFER` | see below |
+| `score_model_toy` | `DIFFER` | see below |
+| `edge_model_toy` | `DIFFER` | RAVEN refuses to write two metabolites with one name in one compartment (Python writes them); `removeGenes` with defaults keeps `R3` (`G1 and G2`, rule emptied) where Python deletes it; the YAML header: Python writes `defaultLB`/`defaultUB` and an empty reaction name as `name: ""`, RAVEN writes neither. `convertToIrrev`/`convert_to_irreversible` agree on this model |
+
+**`gap_fill_toy`** (`fillGaps` and `connect_blocked_reactions`, defaults): `fill_a` (`EX_A` upper bound 0.5): Python cannot connect `EX_D`, `EX_F`, `R2`, `R3`; RAVEN also lists `EX_A`, `EX_B`, `R1`. `fill_b` (`EX_A` 1.5, two blocked chains): Python raises "Gap-filling is infeasible"; RAVEN adds `T1`, `T2` and connects `EX_D`, `EX_F`, `R2`, `R3`. `fill_c` (net production allowed, `D` has no exit): Python cannot connect `R2`; RAVEN adds `T1` and connects it. `fill_d` with scores `{T1:-1, T2:-1, T3:0.5}` and `{T1:-2, T2:-1, T3:0}`: Python adds `T1, T3` and `T2, T3`; RAVEN adds `T1` and `T2`. `fill_d` without scores agrees. Python's default `eps` is 1.0; RAVEN uses 0.1 internally.
+
+**`gap_fill_milp_toy`** (`gapFillMILP`/`fill_gaps_milp`, `gapFillFastLP`/`fill_gaps_fast_lp`): `milp_a` (`EX_A` and `BIO` bounded at 5000, minimum growth 1500, `bigM` 1000): Python adds `T1`; RAVEN does not solve it. `milp_b` (objective coefficient 2, minimum growth 15, supply 10): Python does not solve it; RAVEN adds `T1`. `milp_c` (objective `BIO + BIO2`, minimum growth 5): Python adds `T1`, `T2`; RAVEN adds `T2`. `milp_d` (template reaction `T2` with lower bound 1): Python adds `T1`, `T2`; RAVEN adds `T1`. `milp_e` (a template reaction with the id of a draft reaction): RAVEN adds it as `Rname_template`, Python adds nothing (MILP not solved; LP lists `R1`, `Rname` as unconnectable).
+
+**`homology_toy`** (`getModelFromHomology`): `hom_a1_flag` (`(A or B) and C`, only `C` mapped): RAVEN keeps the unmapped subunit as `OLD_T_B and nC`, Python drops it and keeps `nC`. `hom_a2_drop`, `hom_a3_drop`: Python keeps the reaction with the mapped genes, RAVEN drops the reaction. `hom_b_t1t2` (preferred order `T1`, `T2`, `X` also hit by `T1`'s gene mapping): Python keeps `R_T1` and `R_T2`, RAVEN only `R_T1`. `hom_c_t2t1` (two templates with one reaction id, preferred order given): RAVEN fails with "Input A of class double and input B of class cell must be cell arrays of character vectors"; Python renames the second reaction (`R1_T1`). `makeFakeBlastStructure` needs at least 10 pairs, so the MATLAB side pads the list with pairs of genes that no template has.
+
+**`curate_tables_toy`** (`curateModelFromTables`, two empty reactions plus the review's tables with `genes.tsv` extended to the genes in the rules): RAVEN links the two table reactions to the two existing reactions by `rxnIdx` (2 reactions); Python adds two new reactions (4). RAVEN reads the `metFormulas` header and the gene short names; Python does not. New ids: Python `M_1`, `R_0011`; RAVEN `M_0001`. Default bounds: RAVEN (-Inf, Inf), Python (-1000, 1000). With unpadded identifiers (`R_9`, `R_10`) RAVEN fails: `generateNewIds` sorts the identifiers as text, takes `9` as the largest and mints `R_10`, which exists.
+
+**`score_model_toy`** (`scoreModel`, six genes, threshold 1 and 0): threshold 0 (reference level 0): RAVEN gives +10 where Python gives -5, and a zero level gives no score on the RAVEN side; reaction scores: Python returns NaN for reactions whose genes all lack a level where RAVEN returns the default -2 (3 reactions at threshold 1, 7 when all levels are missing).
+
+**`export_for_git_toy`**: see above. The branches also give `Rxn id` as header and write an equation without a coefficient of 1.
+
+Not checked: ftINIT and `prepINITModel` (the two sides take different inputs: RAVEN expression data, Python reaction scores; an interface decision comes first), `setGAM`, `scaleBiomassPseudoreaction`, `reporterMetabolites`, `getUniProtScores`, T2 as a fixture shared by several scenarios (`edge_model_toy` covers the cases for YAML, `convertToIrrev` and `removeGenes`), T4 and T6.

@@ -1,0 +1,752 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "all_missing": {
+      "gene_scores": [
+        {
+          "gene": "YAL054C",
+          "has_score": false,
+          "score": 0
+        },
+        {
+          "gene": "YBR117C",
+          "has_score": false,
+          "score": 0
+        },
+        {
+          "gene": "YBR196C",
+          "has_score": false,
+          "score": 0
+        },
+        {
+          "gene": "YBR218C",
+          "has_score": false,
+          "score": 0
+        },
+        {
+          "gene": "YCL040W",
+          "has_score": false,
+          "score": 0
+        },
+        {
+          "gene": "YCR012W",
+          "has_score": false,
+          "score": 0
+        }
+      ],
+      "reaction_scores": [
+        {
+          "reaction": "ACO",
+          "score": -2
+        },
+        {
+          "reaction": "ACS",
+          "score": -2
+        },
+        {
+          "reaction": "ADH1",
+          "score": -2
+        },
+        {
+          "reaction": "ALD6",
+          "score": -2
+        },
+        {
+          "reaction": "ATPX",
+          "score": -2
+        },
+        {
+          "reaction": "CAT2",
+          "score": -2
+        },
+        {
+          "reaction": "CIT",
+          "score": -2
+        },
+        {
+          "reaction": "CO2TRANS",
+          "score": -2
+        },
+        {
+          "reaction": "DAR",
+          "score": -2
+        },
+        {
+          "reaction": "ENO",
+          "score": -2
+        },
+        {
+          "reaction": "FADHX",
+          "score": -2
+        },
+        {
+          "reaction": "FBA",
+          "score": -2
+        },
+        {
+          "reaction": "FBP",
+          "score": -2
+        },
+        {
+          "reaction": "FRDS2",
+          "score": -2
+        },
+        {
+          "reaction": "FUM1",
+          "score": -2
+        },
+        {
+          "reaction": "GLD",
+          "score": -2
+        },
+        {
+          "reaction": "GND",
+          "score": -2
+        },
+        {
+          "reaction": "GPM",
+          "score": -2
+        },
+        {
+          "reaction": "GPP",
+          "score": -2
+        },
+        {
+          "reaction": "GROWTH",
+          "score": -2
+        },
+        {
+          "reaction": "HXK",
+          "score": -2
+        },
+        {
+          "reaction": "IDP1",
+          "score": -2
+        },
+        {
+          "reaction": "KGD1KGD2",
+          "score": -2
+        },
+        {
+          "reaction": "LSC1LSC2",
+          "score": -2
+        },
+        {
+          "reaction": "MAE1",
+          "score": -2
+        },
+        {
+          "reaction": "MDH1",
+          "score": -2
+        },
+        {
+          "reaction": "NADHX",
+          "score": -2
+        },
+        {
+          "reaction": "PCK",
+          "score": -2
+        },
+        {
+          "reaction": "PDC",
+          "score": -2
+        },
+        {
+          "reaction": "PDH",
+          "score": -2
+        },
+        {
+          "reaction": "PFK",
+          "score": -2
+        },
+        {
+          "reaction": "PGI",
+          "score": -2
+        },
+        {
+          "reaction": "PGK",
+          "score": -2
+        },
+        {
+          "reaction": "PGL",
+          "score": -2
+        },
+        {
+          "reaction": "PYC",
+          "score": -2
+        },
+        {
+          "reaction": "PYK",
+          "score": -2
+        },
+        {
+          "reaction": "RPE",
+          "score": -2
+        },
+        {
+          "reaction": "RPI",
+          "score": -2
+        },
+        {
+          "reaction": "SDH",
+          "score": -2
+        },
+        {
+          "reaction": "ShuttleX",
+          "score": -2
+        },
+        {
+          "reaction": "TAL1",
+          "score": -2
+        },
+        {
+          "reaction": "TKI1TKI2a",
+          "score": -2
+        },
+        {
+          "reaction": "TKI1TKI2b",
+          "score": -2
+        },
+        {
+          "reaction": "TPI",
+          "score": -2
+        },
+        {
+          "reaction": "ZWF",
+          "score": -2
+        },
+        {
+          "reaction": "acOUT",
+          "score": -2
+        },
+        {
+          "reaction": "biomassOUT",
+          "score": -2
+        },
+        {
+          "reaction": "co2OUT",
+          "score": -2
+        },
+        {
+          "reaction": "ethIN",
+          "score": -2
+        },
+        {
+          "reaction": "ethOUT",
+          "score": -2
+        },
+        {
+          "reaction": "glcIN",
+          "score": -2
+        },
+        {
+          "reaction": "glyOUT",
+          "score": -2
+        },
+        {
+          "reaction": "o2IN",
+          "score": -2
+        }
+      ]
+    },
+    "threshold_one": {
+      "gene_scores": [
+        {
+          "gene": "YAL054C",
+          "has_score": true,
+          "score": -5
+        },
+        {
+          "gene": "YBR117C",
+          "has_score": false,
+          "score": 0
+        },
+        {
+          "gene": "YBR196C",
+          "has_score": true,
+          "score": 0
+        },
+        {
+          "gene": "YBR218C",
+          "has_score": true,
+          "score": 3.4657359027997265
+        },
+        {
+          "gene": "YCL040W",
+          "has_score": true,
+          "score": 10
+        },
+        {
+          "gene": "YCR012W",
+          "has_score": false,
+          "score": 0
+        }
+      ],
+      "reaction_scores": [
+        {
+          "reaction": "ACO",
+          "score": -2
+        },
+        {
+          "reaction": "ACS",
+          "score": -5
+        },
+        {
+          "reaction": "ADH1",
+          "score": -2
+        },
+        {
+          "reaction": "ALD6",
+          "score": -2
+        },
+        {
+          "reaction": "ATPX",
+          "score": -2
+        },
+        {
+          "reaction": "CAT2",
+          "score": -2
+        },
+        {
+          "reaction": "CIT",
+          "score": -2
+        },
+        {
+          "reaction": "CO2TRANS",
+          "score": -2
+        },
+        {
+          "reaction": "DAR",
+          "score": -2
+        },
+        {
+          "reaction": "ENO",
+          "score": -2
+        },
+        {
+          "reaction": "FADHX",
+          "score": -2
+        },
+        {
+          "reaction": "FBA",
+          "score": -2
+        },
+        {
+          "reaction": "FBP",
+          "score": -2
+        },
+        {
+          "reaction": "FRDS2",
+          "score": -2
+        },
+        {
+          "reaction": "FUM1",
+          "score": -2
+        },
+        {
+          "reaction": "GLD",
+          "score": -2
+        },
+        {
+          "reaction": "GND",
+          "score": -2
+        },
+        {
+          "reaction": "GPM",
+          "score": -2
+        },
+        {
+          "reaction": "GPP",
+          "score": -2
+        },
+        {
+          "reaction": "GROWTH",
+          "score": -2
+        },
+        {
+          "reaction": "HXK",
+          "score": 10
+        },
+        {
+          "reaction": "IDP1",
+          "score": -2
+        },
+        {
+          "reaction": "KGD1KGD2",
+          "score": -2
+        },
+        {
+          "reaction": "LSC1LSC2",
+          "score": -2
+        },
+        {
+          "reaction": "MAE1",
+          "score": -2
+        },
+        {
+          "reaction": "MDH1",
+          "score": -2
+        },
+        {
+          "reaction": "NADHX",
+          "score": -2
+        },
+        {
+          "reaction": "PCK",
+          "score": -2
+        },
+        {
+          "reaction": "PDC",
+          "score": -2
+        },
+        {
+          "reaction": "PDH",
+          "score": -2
+        },
+        {
+          "reaction": "PFK",
+          "score": -2
+        },
+        {
+          "reaction": "PGI",
+          "score": 0
+        },
+        {
+          "reaction": "PGK",
+          "score": -2
+        },
+        {
+          "reaction": "PGL",
+          "score": -2
+        },
+        {
+          "reaction": "PYC",
+          "score": 3.4657359027997265
+        },
+        {
+          "reaction": "PYK",
+          "score": -2
+        },
+        {
+          "reaction": "RPE",
+          "score": -2
+        },
+        {
+          "reaction": "RPI",
+          "score": -2
+        },
+        {
+          "reaction": "SDH",
+          "score": -2
+        },
+        {
+          "reaction": "ShuttleX",
+          "score": -2
+        },
+        {
+          "reaction": "TAL1",
+          "score": -2
+        },
+        {
+          "reaction": "TKI1TKI2a",
+          "score": -2
+        },
+        {
+          "reaction": "TKI1TKI2b",
+          "score": -2
+        },
+        {
+          "reaction": "TPI",
+          "score": -2
+        },
+        {
+          "reaction": "ZWF",
+          "score": -2
+        },
+        {
+          "reaction": "acOUT",
+          "score": -2
+        },
+        {
+          "reaction": "biomassOUT",
+          "score": -2
+        },
+        {
+          "reaction": "co2OUT",
+          "score": -2
+        },
+        {
+          "reaction": "ethIN",
+          "score": -2
+        },
+        {
+          "reaction": "ethOUT",
+          "score": -2
+        },
+        {
+          "reaction": "glcIN",
+          "score": -2
+        },
+        {
+          "reaction": "glyOUT",
+          "score": -2
+        },
+        {
+          "reaction": "o2IN",
+          "score": -2
+        }
+      ]
+    },
+    "threshold_zero": {
+      "gene_scores": [
+        {
+          "gene": "YAL054C",
+          "has_score": true,
+          "score": -5
+        },
+        {
+          "gene": "YBR117C",
+          "has_score": false,
+          "score": 0
+        },
+        {
+          "gene": "YBR196C",
+          "has_score": true,
+          "score": 10
+        },
+        {
+          "gene": "YBR218C",
+          "has_score": true,
+          "score": 10
+        },
+        {
+          "gene": "YCL040W",
+          "has_score": true,
+          "score": 10
+        },
+        {
+          "gene": "YCR012W",
+          "has_score": false,
+          "score": 0
+        }
+      ],
+      "reaction_scores": [
+        {
+          "reaction": "ACO",
+          "score": -2
+        },
+        {
+          "reaction": "ACS",
+          "score": -5
+        },
+        {
+          "reaction": "ADH1",
+          "score": -2
+        },
+        {
+          "reaction": "ALD6",
+          "score": -2
+        },
+        {
+          "reaction": "ATPX",
+          "score": -2
+        },
+        {
+          "reaction": "CAT2",
+          "score": -2
+        },
+        {
+          "reaction": "CIT",
+          "score": -2
+        },
+        {
+          "reaction": "CO2TRANS",
+          "score": -2
+        },
+        {
+          "reaction": "DAR",
+          "score": -2
+        },
+        {
+          "reaction": "ENO",
+          "score": -2
+        },
+        {
+          "reaction": "FADHX",
+          "score": -2
+        },
+        {
+          "reaction": "FBA",
+          "score": -2
+        },
+        {
+          "reaction": "FBP",
+          "score": -2
+        },
+        {
+          "reaction": "FRDS2",
+          "score": -2
+        },
+        {
+          "reaction": "FUM1",
+          "score": -2
+        },
+        {
+          "reaction": "GLD",
+          "score": -2
+        },
+        {
+          "reaction": "GND",
+          "score": -2
+        },
+        {
+          "reaction": "GPM",
+          "score": -2
+        },
+        {
+          "reaction": "GPP",
+          "score": -2
+        },
+        {
+          "reaction": "GROWTH",
+          "score": -2
+        },
+        {
+          "reaction": "HXK",
+          "score": 10
+        },
+        {
+          "reaction": "IDP1",
+          "score": -2
+        },
+        {
+          "reaction": "KGD1KGD2",
+          "score": -2
+        },
+        {
+          "reaction": "LSC1LSC2",
+          "score": -2
+        },
+        {
+          "reaction": "MAE1",
+          "score": -2
+        },
+        {
+          "reaction": "MDH1",
+          "score": -2
+        },
+        {
+          "reaction": "NADHX",
+          "score": -2
+        },
+        {
+          "reaction": "PCK",
+          "score": -2
+        },
+        {
+          "reaction": "PDC",
+          "score": -2
+        },
+        {
+          "reaction": "PDH",
+          "score": -2
+        },
+        {
+          "reaction": "PFK",
+          "score": -2
+        },
+        {
+          "reaction": "PGI",
+          "score": 10
+        },
+        {
+          "reaction": "PGK",
+          "score": -2
+        },
+        {
+          "reaction": "PGL",
+          "score": -2
+        },
+        {
+          "reaction": "PYC",
+          "score": 10
+        },
+        {
+          "reaction": "PYK",
+          "score": -2
+        },
+        {
+          "reaction": "RPE",
+          "score": -2
+        },
+        {
+          "reaction": "RPI",
+          "score": -2
+        },
+        {
+          "reaction": "SDH",
+          "score": -2
+        },
+        {
+          "reaction": "ShuttleX",
+          "score": -2
+        },
+        {
+          "reaction": "TAL1",
+          "score": -2
+        },
+        {
+          "reaction": "TKI1TKI2a",
+          "score": -2
+        },
+        {
+          "reaction": "TKI1TKI2b",
+          "score": -2
+        },
+        {
+          "reaction": "TPI",
+          "score": -2
+        },
+        {
+          "reaction": "ZWF",
+          "score": -2
+        },
+        {
+          "reaction": "acOUT",
+          "score": -2
+        },
+        {
+          "reaction": "biomassOUT",
+          "score": -2
+        },
+        {
+          "reaction": "co2OUT",
+          "score": -2
+        },
+        {
+          "reaction": "ethIN",
+          "score": -2
+        },
+        {
+          "reaction": "ethOUT",
+          "score": -2
+        },
+        {
+          "reaction": "glcIN",
+          "score": -2
+        },
+        {
+          "reaction": "glyOUT",
+          "score": -2
+        },
+        {
+          "reaction": "o2IN",
+          "score": -2
+        }
+      ]
+    }
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "score_model_toy"
+}

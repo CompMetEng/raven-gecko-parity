@@ -1,0 +1,59 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "files_written": [
+      "mat/model.mat",
+      "model/dependencies.txt",
+      "txt/model.txt",
+      "xlsx/model.xlsx",
+      "xml/model.xml",
+      "yml/model.yml"
+    ],
+    "header": [
+      "Rxn id",
+      "Formula",
+      "Gene-reaction association",
+      "LB",
+      "UB",
+      "Objective"
+    ],
+    "libsbml_recorded": true,
+    "rows": [
+      {
+        "equation": "g6p[c] => f6p[c]",
+        "lower_bound": "0.1",
+        "objective": "0",
+        "reaction": "R_A",
+        "rule": "G3",
+        "upper_bound": "0.30000000000000004"
+      },
+      {
+        "equation": "glucose[c] <=> g6p[c]",
+        "lower_bound": "-0.3333333333333333",
+        "objective": "0",
+        "reaction": "R_B",
+        "rule": "G1 and G2",
+        "upper_bound": "1000"
+      },
+      {
+        "equation": "f6p[c] =>",
+        "lower_bound": "0",
+        "objective": "1",
+        "reaction": "R_C",
+        "rule": "",
+        "upper_bound": "1e-07"
+      },
+      {
+        "equation": "=> glucose[c]",
+        "lower_bound": "0",
+        "objective": "0",
+        "reaction": "R_D",
+        "rule": "",
+        "upper_bound": "1000"
+      }
+    ]
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "export_for_git_toy"
+}

@@ -1,0 +1,387 @@
+scenario: homology_toy  host: vera-r05-04  start: 2026-10-22T09:10:59Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10530510/tmpc89fpuyx.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp43snhlwe.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpi1dlompt.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp2ithnwnm.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmph2e82g_8.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpnlpcsse7.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpa0lr5y9f.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpozi_nf17.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmprdu456c6.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpq6tv6m8w.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpgdk5c4ih.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpe73zcn0v.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpw3p24zie.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpmati3duu.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmplvvhc213.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmprgbawlc2.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp1xwm1_ea.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp0wk3y44e.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpujlowvtj.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpbz7clc08.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpm2xfkznx.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmppri0hcjr.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp22ngw27k.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpdpzb4u3b.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpx_zarbph.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp4zq0xxe6.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpn7bf6krx.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmprf6zx_o9.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+homology_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/tierB-final/python/homology_toy.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10530510/tmpjtgmqrmo.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp17xpruaa.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp70k70qgq.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpl2vrn5b4.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpgxsei8ah.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp1mh2vr0h.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpogqh_ngz.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpfhu2uv9f.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpiu1y6ulq.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpq3g7ic19.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpi3isymwa.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpls29dcnf.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp0x5ibxcn.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpnqjs1rzd.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp83rht7jy.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpwoejtnuk.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpppczqv25.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpwdg5fk83.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp5te6cwse.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp6nt6p9_0.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp_vl6b0ke.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpjnivzzle.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpdvnuv77p.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp9zfri4jr.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpicyzm6e3.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpxg55tuj8.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmplkleoe8c.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpw11_bum9.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+homology_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/tierB-final/python/homology_toy.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10530510/tmps8w7df6p.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpced2edm8.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpexd_vnkq.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpzpel0dhw.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpvdjwfbbl.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp2slvywpb.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp_ld332lr.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp0z5kcse2.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpta7i0l2q.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpi610wqba.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmph6h9j2m0.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmplknfi4r0.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpqbw9taxt.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpqck7xj4b.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpmoh3vksi.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpuow5ditf.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpoatn1eo7.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp2h_q703q.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpvo21cc6m.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpgpccj8pz.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpqg0hq9gu.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp0374twwl.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpia09lew0.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpundk6fzz.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp_erx3p30.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpwuoa58hb.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpo9tna39x.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpl7k2edni.lp
+Reading time = 0.00 seconds
+: 2 rows, 2 columns, 4 nonzeros
+homology_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/tierB-final/python/homology_toy.seed2.json
+homology_toy [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/tierB-final/matlab/homology_toy.json
+Terminated
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: homology_toy  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+
+10 difference(s):
+  results.hom_a1_flag.reactions[0].clauses[0]
+      length mismatch
+      left=1  right=2
+  results.hom_a2_drop.n_reactions
+      numeric mismatch (|delta| = 1)
+      left=1  right=0
+  results.hom_a2_drop.reactions
+      length mismatch
+      left=1  right=0
+  results.hom_a3_drop.n_reactions
+      numeric mismatch (|delta| = 1)
+      left=1  right=0
+  results.hom_a3_drop.reactions
+      length mismatch
+      left=1  right=0
+  results.hom_b_t1t2.n_reactions
+      numeric mismatch (|delta| = 1)
+      left=2  right=1
+  results.hom_b_t1t2.reactions
+      length mismatch
+      left=2  right=1
+  results.hom_c_t2t1.n_reactions
+      present on the left only
+      left=2  right=None
+  results.hom_c_t2t1.reactions
+      present on the left only
+      left=[{'clauses': [['N2']], 'reaction': 'R1'}, {'clauses': [['N1']], 'reaction': 'R1_T1'}]  right=None
+  results.hom_c_t2t1.error
+      present on the right only
+      left=None  right='Input A of class double and input B of class cell must be cell arrays of character vectors, unless one is a character vector.'
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 0)
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: homology_toy  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+
+10 difference(s):
+  results.hom_a1_flag.reactions[0].clauses[0]
+      length mismatch
+      left=1  right=2
+  results.hom_a2_drop.n_reactions
+      numeric mismatch (|delta| = 1)
+      left=1  right=0
+  results.hom_a2_drop.reactions
+      length mismatch
+      left=1  right=0
+  results.hom_a3_drop.n_reactions
+      numeric mismatch (|delta| = 1)
+      left=1  right=0
+  results.hom_a3_drop.reactions
+      length mismatch
+      left=1  right=0
+  results.hom_b_t1t2.n_reactions
+      numeric mismatch (|delta| = 1)
+      left=2  right=1
+  results.hom_b_t1t2.reactions
+      length mismatch
+      left=2  right=1
+  results.hom_c_t2t1.n_reactions
+      present on the left only
+      left=2  right=None
+  results.hom_c_t2t1.reactions
+      present on the left only
+      left=[{'clauses': [['N2']], 'reaction': 'R1'}, {'clauses': [['N1']], 'reaction': 'R1_T1'}]  right=None
+  results.hom_c_t2t1.error
+      present on the right only
+      left=None  right='Input A of class double and input B of class cell must be cell arrays of character vectors, unless one is a character vector.'
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 1)
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: homology_toy  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+
+10 difference(s):
+  results.hom_a1_flag.reactions[0].clauses[0]
+      length mismatch
+      left=1  right=2
+  results.hom_a2_drop.n_reactions
+      numeric mismatch (|delta| = 1)
+      left=1  right=0
+  results.hom_a2_drop.reactions
+      length mismatch
+      left=1  right=0
+  results.hom_a3_drop.n_reactions
+      numeric mismatch (|delta| = 1)
+      left=1  right=0
+  results.hom_a3_drop.reactions
+      length mismatch
+      left=1  right=0
+  results.hom_b_t1t2.n_reactions
+      numeric mismatch (|delta| = 1)
+      left=2  right=1
+  results.hom_b_t1t2.reactions
+      length mismatch
+      left=2  right=1
+  results.hom_c_t2t1.n_reactions
+      present on the left only
+      left=2  right=None
+  results.hom_c_t2t1.reactions
+      present on the left only
+      left=[{'clauses': [['N2']], 'reaction': 'R1'}, {'clauses': [['N1']], 'reaction': 'R1_T1'}]  right=None
+  results.hom_c_t2t1.error
+      present on the right only
+      left=None  right='Input A of class double and input B of class cell must be cell arrays of character vectors, unless one is a character vector.'
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 2)
+--- python seed 0 vs seed 1
+scenario: homology_toy  (python vs python)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: homology_toy  (python vs python)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+end: 2026-10-22T09:11:29Z  status: DIFFER

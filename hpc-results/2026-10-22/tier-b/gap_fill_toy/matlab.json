@@ -1,0 +1,73 @@
+{
+  "implementation": "matlab",
+  "result_version": 1,
+  "results": {
+    "fill_a": {
+      "added_reactions": [],
+      "cannot_connect": [
+        "EX_A",
+        "EX_B",
+        "EX_D",
+        "EX_F",
+        "R1",
+        "R2",
+        "R3"
+      ],
+      "newly_connected": []
+    },
+    "fill_b": {
+      "added_reactions": [
+        "T1",
+        "T2"
+      ],
+      "cannot_connect": [],
+      "newly_connected": [
+        "EX_D",
+        "EX_F",
+        "R2",
+        "R3"
+      ]
+    },
+    "fill_c": {
+      "added_reactions": [
+        "T1"
+      ],
+      "cannot_connect": [],
+      "newly_connected": [
+        "R2"
+      ]
+    },
+    "fill_d_noscores": {
+      "added_reactions": [
+        "T1"
+      ],
+      "cannot_connect": [],
+      "newly_connected": [
+        "EX_D",
+        "R2"
+      ]
+    },
+    "fill_d_scores1": {
+      "added_reactions": [
+        "T1"
+      ],
+      "cannot_connect": [],
+      "newly_connected": [
+        "EX_D",
+        "R2"
+      ]
+    },
+    "fill_d_scores2": {
+      "added_reactions": [
+        "T2"
+      ],
+      "cannot_connect": [],
+      "newly_connected": [
+        "EX_D",
+        "R2"
+      ]
+    }
+  },
+  "runtime": "matlab 2024b",
+  "scenario": "gap_fill_toy"
+}

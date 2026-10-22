@@ -1,0 +1,243 @@
+scenario: gap_fill_milp_toy  host: vera-r05-04  start: 2026-10-22T09:09:46Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10530510/tmpqhpnh20s.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpovcpq6tx.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp1r6su_gp.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpvenawzeq.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp73pjnc4h.lp
+Reading time = 0.00 seconds
+: 3 rows, 6 columns, 6 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpmqyo8b9i.lp
+Reading time = 0.00 seconds
+: 3 rows, 6 columns, 6 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpe8nc23bv.lp
+Reading time = 0.00 seconds
+: 3 rows, 6 columns, 6 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpx26rcxa2.lp
+Reading time = 0.00 seconds
+: 3 rows, 6 columns, 6 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpxemn8sqf.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 6 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp1hu0088v.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 6 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpeu5jre45.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 6 nonzeros
+Read LP format model from file /local/tmp.10530510/tmprechbv8f.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 6 nonzeros
+gap_fill_milp_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/tierB-final/python/gap_fill_milp_toy.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10530510/tmp4q0ky2qq.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpep00al2x.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpawuwvap6.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp84yacrdx.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpxr8od2ie.lp
+Reading time = 0.00 seconds
+: 3 rows, 6 columns, 6 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp1so2nxwh.lp
+Reading time = 0.00 seconds
+: 3 rows, 6 columns, 6 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpei5r8ara.lp
+Reading time = 0.00 seconds
+: 3 rows, 6 columns, 6 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp17h2xn9b.lp
+Reading time = 0.00 seconds
+: 3 rows, 6 columns, 6 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpxhukwcp0.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 6 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpiu4g681q.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 6 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpl3tdfv0a.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 6 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpp_h9hr27.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 6 nonzeros
+gap_fill_milp_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/tierB-final/python/gap_fill_milp_toy.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+Read LP format model from file /local/tmp.10530510/tmpdog1ug97.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpujqcrfwn.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmptop8g5zi.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpgg1w2ab7.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 4 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp8e4cws84.lp
+Reading time = 0.00 seconds
+: 3 rows, 6 columns, 6 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp6hwz7lvn.lp
+Reading time = 0.00 seconds
+: 3 rows, 6 columns, 6 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpiw0k2fhy.lp
+Reading time = 0.00 seconds
+: 3 rows, 6 columns, 6 nonzeros
+Read LP format model from file /local/tmp.10530510/tmpg7l0jh47.lp
+Reading time = 0.00 seconds
+: 3 rows, 6 columns, 6 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp8s50ew9a.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 6 nonzeros
+Read LP format model from file /local/tmp.10530510/tmprcj7e_v_.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 6 nonzeros
+Read LP format model from file /local/tmp.10530510/tmp59z43l56.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 6 nonzeros
+Read LP format model from file /local/tmp.10530510/tmphvrnbfae.lp
+Reading time = 0.00 seconds
+: 2 rows, 4 columns, 6 nonzeros
+gap_fill_milp_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/tierB-final/python/gap_fill_milp_toy.seed2.json
+gap_fill_milp_toy [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/tierB-final/matlab/gap_fill_milp_toy.json
+Terminated
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: gap_fill_milp_toy  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+
+10 difference(s):
+  results.milp_a.added_reactions
+      length mismatch
+      left=1  right=0
+  results.milp_a.solved
+      boolean mismatch
+      left=True  right=False
+  results.milp_b.added_reactions
+      length mismatch
+      left=0  right=1
+  results.milp_b.solved
+      boolean mismatch
+      left=False  right=True
+  results.milp_c.added_reactions
+      length mismatch
+      left=2  right=1
+  results.milp_d.added_reactions
+      length mismatch
+      left=2  right=1
+  results.milp_e_fastlp.added_reactions
+      length mismatch
+      left=0  right=1
+  results.milp_e_fastlp.cannot_connect
+      length mismatch
+      left=2  right=0
+  results.milp_e_milp.added_reactions
+      length mismatch
+      left=0  right=1
+  results.milp_e_milp.solved
+      boolean mismatch
+      left=False  right=True
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 0)
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: gap_fill_milp_toy  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+
+10 difference(s):
+  results.milp_a.added_reactions
+      length mismatch
+      left=1  right=0
+  results.milp_a.solved
+      boolean mismatch
+      left=True  right=False
+  results.milp_b.added_reactions
+      length mismatch
+      left=0  right=1
+  results.milp_b.solved
+      boolean mismatch
+      left=False  right=True
+  results.milp_c.added_reactions
+      length mismatch
+      left=2  right=1
+  results.milp_d.added_reactions
+      length mismatch
+      left=2  right=1
+  results.milp_e_fastlp.added_reactions
+      length mismatch
+      left=0  right=1
+  results.milp_e_fastlp.cannot_connect
+      length mismatch
+      left=2  right=0
+  results.milp_e_milp.added_reactions
+      length mismatch
+      left=0  right=1
+  results.milp_e_milp.solved
+      boolean mismatch
+      left=False  right=True
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 1)
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: gap_fill_milp_toy  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+
+10 difference(s):
+  results.milp_a.added_reactions
+      length mismatch
+      left=1  right=0
+  results.milp_a.solved
+      boolean mismatch
+      left=True  right=False
+  results.milp_b.added_reactions
+      length mismatch
+      left=0  right=1
+  results.milp_b.solved
+      boolean mismatch
+      left=False  right=True
+  results.milp_c.added_reactions
+      length mismatch
+      left=2  right=1
+  results.milp_d.added_reactions
+      length mismatch
+      left=2  right=1
+  results.milp_e_fastlp.added_reactions
+      length mismatch
+      left=0  right=1
+  results.milp_e_fastlp.cannot_connect
+      length mismatch
+      left=2  right=0
+  results.milp_e_milp.added_reactions
+      length mismatch
+      left=0  right=1
+  results.milp_e_milp.solved
+      boolean mismatch
+      left=False  right=True
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 2)
+--- python seed 0 vs seed 1
+scenario: gap_fill_milp_toy  (python vs python)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: gap_fill_milp_toy  (python vs python)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+end: 2026-10-22T09:10:18Z  status: DIFFER

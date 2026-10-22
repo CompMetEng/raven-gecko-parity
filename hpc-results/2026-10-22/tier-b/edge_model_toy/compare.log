@@ -1,0 +1,81 @@
+scenario: edge_model_toy  host: vera-r05-04  start: 2026-10-22T09:12:58Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+edge_model_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/tierB-final/python/edge_model_toy.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+edge_model_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/tierB-final/python/edge_model_toy.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+edge_model_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/tierB-final/python/edge_model_toy.seed2.json
+edge_model_toy [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/tierB-final/matlab/edge_model_toy.json
+Terminated
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: edge_model_toy  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+
+4 difference(s):
+  results.duplicate_names_written
+      boolean mismatch
+      left=True  right=False
+  results.removed_gene.genes
+      length mismatch
+      left=3  right=2
+  results.removed_gene.reactions
+      length mismatch
+      left=5  right=6
+  results.yaml_lines
+      length mismatch
+      left=98  right=95
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 0)
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: edge_model_toy  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+
+4 difference(s):
+  results.duplicate_names_written
+      boolean mismatch
+      left=True  right=False
+  results.removed_gene.genes
+      length mismatch
+      left=3  right=2
+  results.removed_gene.reactions
+      length mismatch
+      left=5  right=6
+  results.yaml_lines
+      length mismatch
+      left=98  right=95
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 1)
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: edge_model_toy  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+
+4 difference(s):
+  results.duplicate_names_written
+      boolean mismatch
+      left=True  right=False
+  results.removed_gene.genes
+      length mismatch
+      left=3  right=2
+  results.removed_gene.reactions
+      length mismatch
+      left=5  right=6
+  results.yaml_lines
+      length mismatch
+      left=98  right=95
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 2)
+--- python seed 0 vs seed 1
+scenario: edge_model_toy  (python vs python)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: edge_model_toy  (python vs python)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+end: 2026-10-22T09:13:25Z  status: DIFFER

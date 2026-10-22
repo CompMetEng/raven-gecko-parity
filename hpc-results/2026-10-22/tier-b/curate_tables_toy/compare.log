@@ -1,0 +1,273 @@
+scenario: curate_tables_toy  host: vera-r05-04  start: 2026-10-22T09:11:31Z  seeds: 0 1 2
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+curate_tables_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/tierB-final/python/curate_tables_toy.seed0.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+curate_tables_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/tierB-final/python/curate_tables_toy.seed1.json
+Set parameter TSPort to value 27690
+Set parameter TokenServer to value "gurobi.lic.chalmers.se"
+curate_tables_toy [python] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/tierB-final/python/curate_tables_toy.seed2.json
+curate_tables_toy [matlab] -> /cephyr/NOBACKUP/groups/compmeteng/eduardk/parity-work/out/tierB-final/matlab/curate_tables_toy.json
+Terminated
+--- python (PYTHONHASHSEED=0) vs matlab
+scenario: curate_tables_toy  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+
+32 difference(s):
+  results.padded_ids.genes[0].short_name
+      mismatch (str vs str)
+      left=''  right='GENE1'
+  results.padded_ids.genes[1].short_name
+      mismatch (str vs str)
+      left=''  right='GENE2'
+  results.padded_ids.metabolite_ids[0]
+      mismatch (str vs str)
+      left='M_1'  right='M_0001'
+  results.padded_ids.metabolite_ids[1]
+      mismatch (str vs str)
+      left='M_2'  right='M_0002'
+  results.padded_ids.metabolites[0].formula
+      mismatch (str vs str)
+      left=''  right='C10H12N5O13P3'
+  results.padded_ids.metabolites[1].formula
+      mismatch (str vs str)
+      left=''  right='C6H12O6'
+  results.padded_ids.reactions[0].clauses
+      length mismatch
+      left=0  right=1
+  results.padded_ids.reactions[0].lower_bound
+      mismatch (float vs str)
+      left=0.0  right='-Infinity'
+  results.padded_ids.reactions[0].name
+      mismatch (str vs str)
+      left=''  right='hexokinase'
+  results.padded_ids.reactions[0].stoichiometry
+      length mismatch
+      left=0  right=2
+  results.padded_ids.reactions[0].upper_bound
+      mismatch (float vs str)
+      left=1000.0  right='Infinity'
+  results.padded_ids.reactions[1].clauses
+      length mismatch
+      left=0  right=1
+  results.padded_ids.reactions[1].lower_bound
+      mismatch (float vs str)
+      left=0.0  right='-Infinity'
+  results.padded_ids.reactions[1].name
+      mismatch (str vs str)
+      left=''  right='hexokinase'
+  results.padded_ids.reactions[1].stoichiometry
+      length mismatch
+      left=0  right=1
+  results.padded_ids.reactions[1].upper_bound
+      mismatch (float vs str)
+      left=1000.0  right='Infinity'
+  results.padded_ids.reactions[2].clauses
+      length mismatch
+      left=1  right=0
+  results.padded_ids.reactions[2].lower_bound
+      numeric mismatch (|delta| = 1000)
+      left=-1000.0  right=0
+  results.padded_ids.reactions[2].name
+      mismatch (str vs str)
+      left='hexokinase'  right=''
+  results.padded_ids.reactions[2].stoichiometry
+      length mismatch
+      left=2  right=0
+  results.padded_ids.reactions[3].clauses
+      length mismatch
+      left=1  right=0
+  results.padded_ids.reactions[3].lower_bound
+      numeric mismatch (|delta| = 1000)
+      left=-1000.0  right=0
+  results.padded_ids.reactions[3].name
+      mismatch (str vs str)
+      left='hexokinase'  right=''
+  results.padded_ids.reactions[3].stoichiometry
+      length mismatch
+      left=2  right=0
+  results.unpadded_ids.genes
+      present on the left only
+      left=[{'gene': 'G1', 'short_name': ''}, {'gene': 'G2', 'short_name': ''}]  right=None
+  ... and 7 more
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 0)
+--- python (PYTHONHASHSEED=1) vs matlab
+scenario: curate_tables_toy  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+
+32 difference(s):
+  results.padded_ids.genes[0].short_name
+      mismatch (str vs str)
+      left=''  right='GENE1'
+  results.padded_ids.genes[1].short_name
+      mismatch (str vs str)
+      left=''  right='GENE2'
+  results.padded_ids.metabolite_ids[0]
+      mismatch (str vs str)
+      left='M_1'  right='M_0001'
+  results.padded_ids.metabolite_ids[1]
+      mismatch (str vs str)
+      left='M_2'  right='M_0002'
+  results.padded_ids.metabolites[0].formula
+      mismatch (str vs str)
+      left=''  right='C10H12N5O13P3'
+  results.padded_ids.metabolites[1].formula
+      mismatch (str vs str)
+      left=''  right='C6H12O6'
+  results.padded_ids.reactions[0].clauses
+      length mismatch
+      left=0  right=1
+  results.padded_ids.reactions[0].lower_bound
+      mismatch (float vs str)
+      left=0.0  right='-Infinity'
+  results.padded_ids.reactions[0].name
+      mismatch (str vs str)
+      left=''  right='hexokinase'
+  results.padded_ids.reactions[0].stoichiometry
+      length mismatch
+      left=0  right=2
+  results.padded_ids.reactions[0].upper_bound
+      mismatch (float vs str)
+      left=1000.0  right='Infinity'
+  results.padded_ids.reactions[1].clauses
+      length mismatch
+      left=0  right=1
+  results.padded_ids.reactions[1].lower_bound
+      mismatch (float vs str)
+      left=0.0  right='-Infinity'
+  results.padded_ids.reactions[1].name
+      mismatch (str vs str)
+      left=''  right='hexokinase'
+  results.padded_ids.reactions[1].stoichiometry
+      length mismatch
+      left=0  right=1
+  results.padded_ids.reactions[1].upper_bound
+      mismatch (float vs str)
+      left=1000.0  right='Infinity'
+  results.padded_ids.reactions[2].clauses
+      length mismatch
+      left=1  right=0
+  results.padded_ids.reactions[2].lower_bound
+      numeric mismatch (|delta| = 1000)
+      left=-1000.0  right=0
+  results.padded_ids.reactions[2].name
+      mismatch (str vs str)
+      left='hexokinase'  right=''
+  results.padded_ids.reactions[2].stoichiometry
+      length mismatch
+      left=2  right=0
+  results.padded_ids.reactions[3].clauses
+      length mismatch
+      left=1  right=0
+  results.padded_ids.reactions[3].lower_bound
+      numeric mismatch (|delta| = 1000)
+      left=-1000.0  right=0
+  results.padded_ids.reactions[3].name
+      mismatch (str vs str)
+      left='hexokinase'  right=''
+  results.padded_ids.reactions[3].stoichiometry
+      length mismatch
+      left=2  right=0
+  results.unpadded_ids.genes
+      present on the left only
+      left=[{'gene': 'G1', 'short_name': ''}, {'gene': 'G2', 'short_name': ''}]  right=None
+  ... and 7 more
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 1)
+--- python (PYTHONHASHSEED=2) vs matlab
+scenario: curate_tables_toy  (python vs matlab)
+tolerance: rel=1e-06 abs=1e-09
+
+32 difference(s):
+  results.padded_ids.genes[0].short_name
+      mismatch (str vs str)
+      left=''  right='GENE1'
+  results.padded_ids.genes[1].short_name
+      mismatch (str vs str)
+      left=''  right='GENE2'
+  results.padded_ids.metabolite_ids[0]
+      mismatch (str vs str)
+      left='M_1'  right='M_0001'
+  results.padded_ids.metabolite_ids[1]
+      mismatch (str vs str)
+      left='M_2'  right='M_0002'
+  results.padded_ids.metabolites[0].formula
+      mismatch (str vs str)
+      left=''  right='C10H12N5O13P3'
+  results.padded_ids.metabolites[1].formula
+      mismatch (str vs str)
+      left=''  right='C6H12O6'
+  results.padded_ids.reactions[0].clauses
+      length mismatch
+      left=0  right=1
+  results.padded_ids.reactions[0].lower_bound
+      mismatch (float vs str)
+      left=0.0  right='-Infinity'
+  results.padded_ids.reactions[0].name
+      mismatch (str vs str)
+      left=''  right='hexokinase'
+  results.padded_ids.reactions[0].stoichiometry
+      length mismatch
+      left=0  right=2
+  results.padded_ids.reactions[0].upper_bound
+      mismatch (float vs str)
+      left=1000.0  right='Infinity'
+  results.padded_ids.reactions[1].clauses
+      length mismatch
+      left=0  right=1
+  results.padded_ids.reactions[1].lower_bound
+      mismatch (float vs str)
+      left=0.0  right='-Infinity'
+  results.padded_ids.reactions[1].name
+      mismatch (str vs str)
+      left=''  right='hexokinase'
+  results.padded_ids.reactions[1].stoichiometry
+      length mismatch
+      left=0  right=1
+  results.padded_ids.reactions[1].upper_bound
+      mismatch (float vs str)
+      left=1000.0  right='Infinity'
+  results.padded_ids.reactions[2].clauses
+      length mismatch
+      left=1  right=0
+  results.padded_ids.reactions[2].lower_bound
+      numeric mismatch (|delta| = 1000)
+      left=-1000.0  right=0
+  results.padded_ids.reactions[2].name
+      mismatch (str vs str)
+      left='hexokinase'  right=''
+  results.padded_ids.reactions[2].stoichiometry
+      length mismatch
+      left=2  right=0
+  results.padded_ids.reactions[3].clauses
+      length mismatch
+      left=1  right=0
+  results.padded_ids.reactions[3].lower_bound
+      numeric mismatch (|delta| = 1000)
+      left=-1000.0  right=0
+  results.padded_ids.reactions[3].name
+      mismatch (str vs str)
+      left='hexokinase'  right=''
+  results.padded_ids.reactions[3].stoichiometry
+      length mismatch
+      left=2  right=0
+  results.unpadded_ids.genes
+      present on the left only
+      left=[{'gene': 'G1', 'short_name': ''}, {'gene': 'G2', 'short_name': ''}]  right=None
+  ... and 7 more
+
+result:   DIFFER
+DIFFERS FROM MATLAB (seed 2)
+--- python seed 0 vs seed 1
+scenario: curate_tables_toy  (python vs python)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+--- python seed 0 vs seed 2
+scenario: curate_tables_toy  (python vs python)
+tolerance: rel=1e-06 abs=1e-09
+result:   MATCH
+end: 2026-10-22T09:12:06Z  status: DIFFER
