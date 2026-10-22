@@ -29,6 +29,7 @@ from parity.ledger import LedgerError, load_ledger, save_ledger
 from parity.scenarios import (
     ScenarioError,
     Tolerance,
+    build_context,
     collect_matlab,
     compare_results,
     list_scenarios,
@@ -64,7 +65,22 @@ def cmd_check(args: argparse.Namespace, config: Config) -> int:
         revisions = (describe(pair.matlab.path), describe(pair.python.path))
         print(render_check(result, strict=args.strict, revisions=revisions))
         failed = failed or not result.ok(strict=args.strict)
+        unresolved = _unresolved_scenario_inputs(config, pair)
+        for problem in unresolved:
+            print(f"scenario input: {problem}")
+        failed = failed or bool(unresolved)
     return 1 if failed else 0
+
+
+def _unresolved_scenario_inputs(config: Config, pair) -> list[str]:
+    """Scenarios of ``pair`` whose input paths point at files that do not exist."""
+    problems = []
+    for scenario in list_scenarios(_scenario_root(config), pair.name):
+        try:
+            build_context(scenario, config.root, pair)
+        except ScenarioError as error:
+            problems.append(f"{scenario.id}: {error}")
+    return problems
 
 
 def cmd_sync(args: argparse.Namespace, config: Config) -> int:

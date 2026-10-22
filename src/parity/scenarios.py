@@ -117,15 +117,23 @@ def build_context(scenario: Scenario, repo_root: Path, pair=None) -> dict:
     }
 
 
+_INPUT_PLACEHOLDERS = ("matlab_repo", "python_repo", "scenario_dir")
+
+
 def _resolve_input(value, scenario_dir: Path, substitutions: dict[str, str]):
     if not isinstance(value, str):
         return value
 
+    built_as_path = False
     if "{" in value:
         try:
-            value = value.format(**substitutions)
+            expanded = value.format(**substitutions)
         except KeyError as exc:
             raise ScenarioError(f"unknown placeholder {exc} in scenario input {value!r}") from None
+        # The placeholders of the code repositories and of the scenario folder name files
+        # that exist; {repo_root} also names files the scenarios write, so it is not checked.
+        built_as_path = any(f"{{{name}}}" in value for name in _INPUT_PLACEHOLDERS)
+        value = expanded
 
     candidate = Path(value)
     if not candidate.is_absolute():
@@ -140,6 +148,9 @@ def _resolve_input(value, scenario_dir: Path, substitutions: dict[str, str]):
         # MATLAB accepts forward slashes, so this is worth an upstream fix, but
         # the harness should not depend on one.
         return str(candidate.resolve())
+
+    if built_as_path:
+        raise ScenarioError(f"scenario input {value!r} does not exist")
 
     # Not a path --- a number-as-string, an identifier, a flag.
     return value
