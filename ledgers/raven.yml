@@ -1621,10 +1621,10 @@ entries:
       as an empty string. Aligned by CompMetEng/RAVEN#11 and CompMetEng/raven-toolbox#181: RAVEN writes the shortest
       digits that read back exactly (1/3 as 0.3333333333333333), as raven-toolbox does, and raven-toolbox warns on a
       metabolite with an empty name (RAVEN still refuses it). Covered by yaml_float_digits_smallyeast. edge_model_toy
-      shows three more differences: RAVEN refuses two metabolites with one name in one compartment and raven-toolbox
-      writes them; raven-toolbox writes defaultLB and defaultUB in the header, computed from the model''s bounds, where
-      RAVEN writes them only when the model stores them; raven-toolbox writes name: "" for a reaction without a name
-      where RAVEN omits the key.'
+      shows one more difference: RAVEN refuses two metabolites with one name in one compartment and raven-toolbox
+      writes them with a warning, as it does for an empty name. raven-toolbox omits the name of an unnamed
+      reaction and writes defaultLB and defaultUB only when the model stores them, as RAVEN does; RAVEN reads the
+      files raven-toolbox writes for an unnamed reaction and for duplicate names.'
   - python: raven_toolbox.analysis.CompareFluxesResult
     status: python-only
     reason: 'Result type. Wraps compare_fluxes'' changed-reaction DataFrame, the three id lists,
