@@ -621,6 +621,8 @@ entries:
   - matlab: ftINIT
     python: raven_toolbox.init.ftinit
     status: parity
+    scenarios:
+      - ftinit_toy
     notes: migration.md maps {ftINIT, prepINITModel, ftINITInternalAlg, getINITSteps} onto {raven_toolbox.init.ftinit,
       raven_toolbox.init.prep_init_model, raven_toolbox.init.run_ftinit, raven_toolbox.init.get_init_steps}
       as a group; pick the right counterpart
@@ -743,6 +745,8 @@ entries:
   - matlab: getBiomassFractions
     python: raven_toolbox.biomass.sum_biomass
     status: parity
+    scenarios:
+      - scale_biomass_toy
     notes: Mass fractions per biomass component class.
   - matlab: getBlast
     python: raven_toolbox.reconstruction.homology.run_blast
@@ -935,6 +939,8 @@ entries:
   - matlab: getUniProtScores
     python: raven_toolbox.localization.fetch_uniprot_localization
     status: parity
+    scenarios:
+      - uniprot_scores_toy
     notes: Fetches per-gene localisation evidence from UniProtKB.
   - matlab: groupRxnScores
     python: raven_toolbox.init.group_rxn_scores
@@ -1086,6 +1092,8 @@ entries:
   - matlab: parseScores
     python: raven_toolbox.localization.load_deeploc
     status: parity
+    scenarios:
+      - uniprot_scores_toy
     notes: from migration.md. DeepLoc 2 per-protein CSV (Protein_ID / Localizations / Signals + one column
       per compartment). compartment_map (e.g. DEFAULT_COMPARTMENT_MAP) renames labels to model ids.
   - matlab: parseTaskList
@@ -1129,6 +1137,8 @@ entries:
   - matlab: prepINITModel
     python: raven_toolbox.init.prep_init_model
     status: parity
+    scenarios:
+      - ftinit_toy
     notes: migration.md maps {ftINIT, prepINITModel, ftINITInternalAlg, getINITSteps} onto {raven_toolbox.init.ftinit,
       raven_toolbox.init.prep_init_model, raven_toolbox.init.run_ftinit, raven_toolbox.init.get_init_steps}
       as a group; pick the right counterpart
@@ -1351,6 +1361,8 @@ entries:
   - matlab: reporterMetabolites
     python: raven_toolbox.analysis.reporter_metabolites
     status: parity
+    scenarios:
+      - reporter_metabolites_toy
     notes: from migration.md. Exact closed-form background replaces RAVEN's Monte-Carlo (RM1 in IMPROVEMENTS).
   - matlab: rescaleModelForINIT
     status: subsumed
@@ -1411,10 +1423,14 @@ entries:
   - matlab: scaleBiomassFraction
     python: raven_toolbox.biomass.scale_biomass
     status: parity
+    scenarios:
+      - scale_biomass_toy
     notes: Rescale one component class to a target fraction.
   - matlab: scaleBiomassPseudoreaction
     python: raven_toolbox.biomass.rescale_pseudoreaction
     status: parity
+    scenarios:
+      - scale_biomass_toy
     notes: Rescale the pseudoreaction coefficients.
   - matlab: scoreModel
     python: raven_toolbox.init.score_reactions_from_genes
@@ -1450,6 +1466,8 @@ entries:
   - matlab: setGAM
     python: raven_toolbox.biomass.set_gam
     status: parity
+    scenarios:
+      - set_gam_toy
     notes: 'Both only rescale biomass-equation metabolites with a nonzero coefficient whose name is in the
       cofactor-name list, to sign(coefficient)*value --- algebraically identical (MATLAB''s direct S-matrix write
       vs. Python''s add_metabolites delta, cobra''s sparse dict already excluding zero-coefficient entries). NGAM

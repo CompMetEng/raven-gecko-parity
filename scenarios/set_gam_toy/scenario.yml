@@ -1,0 +1,162 @@
+id: set_gam_toy
+pair: raven
+description: >-
+  setGAM on a hand-written model with a biomass reaction and an ATP maintenance reaction. The cofactors of
+  the biomass reaction are set to a new value at several values, including ones whose coefficient is not
+  reproduced exactly by adding a difference (compared with a flag for exact equality as well as the value),
+  to a negative value and to zero. Other cases cover a cofactor name in two compartments and a metabolite
+  whose name differs only in case, cofactors that the biomass reaction lacks, an empty cofactor list, the
+  non-growth maintenance bounds given completely, in part or for a reaction the model lacks, and a biomass
+  reaction the model lacks.
+
+entries:
+  - setGAM
+
+inputs:
+  mets: &mets
+  - {id: atp_c, name: ATP, compartment: c}
+  - {id: adp_c, name: ADP, compartment: c}
+  - {id: h2o_c, name: H2O, compartment: c}
+  - {id: pi_c, name: phosphate, compartment: c}
+  - {id: h_c, name: H+, compartment: c}
+  - {id: atp_m, name: ATP, compartment: m}
+  - {id: atp2_c, name: atp, compartment: c}
+  - {id: prot_c, name: protein, compartment: c}
+  - {id: glu_c, name: glutamate, compartment: c}
+  reactions_base: &base
+  - id: BIO
+    lb: 0
+    ub: 1000
+    stoichiometry:
+    - {met: atp_c, coefficient: -90.2}
+    - {met: h2o_c, coefficient: -90.2}
+    - {met: adp_c, coefficient: 90.2}
+    - {met: pi_c, coefficient: 90.2}
+    - {met: h_c, coefficient: 90.2}
+    - {met: glu_c, coefficient: -0.5}
+    - {met: prot_c, coefficient: 1}
+  - id: ATPM
+    lb: 0
+    ub: 1000
+    stoichiometry:
+    - {met: atp_c, coefficient: -1}
+    - {met: h2o_c, coefficient: -1}
+    - {met: adp_c, coefficient: 1}
+    - {met: pi_c, coefficient: 1}
+    - {met: h_c, coefficient: 1}
+  reactions_compartments: &compartments
+  - id: BIO
+    lb: 0
+    ub: 1000
+    stoichiometry:
+    - {met: atp_c, coefficient: -50}
+    - {met: atp_m, coefficient: -10}
+    - {met: atp2_c, coefficient: -5}
+    - {met: adp_c, coefficient: 65}
+    - {met: glu_c, coefficient: -0.5}
+  - id: ATPM
+    lb: 0
+    ub: 1000
+    stoichiometry:
+    - {met: atp_c, coefficient: -1}
+    - {met: adp_c, coefficient: 1}
+  reactions_partial: &partial
+  - id: BIO
+    lb: 0
+    ub: 1000
+    stoichiometry:
+    - {met: atp_c, coefficient: -40}
+    - {met: h2o_c, coefficient: -40}
+    - {met: glu_c, coefficient: -0.5}
+  - id: ATPM
+    lb: 0
+    ub: 1000
+    stoichiometry:
+    - {met: atp_c, coefficient: -1}
+    - {met: adp_c, coefficient: 1}
+  cofactors: &cofactors [ATP, ADP, H2O, phosphate, H+]
+  cases:
+  - name: value_sweep
+    reactions: *base
+    biomass_rxn: BIO
+    cofactors: *cofactors
+    values: [0.1, 0.7, 3.209889, 46.5, 59.276, 90.2, 0.001]
+    ngam_rxn: null
+    ngam_value: null
+  - name: negative_value
+    reactions: *base
+    biomass_rxn: BIO
+    cofactors: *cofactors
+    values: [-3]
+    ngam_rxn: null
+    ngam_value: null
+  - name: zero_value
+    reactions: *base
+    biomass_rxn: BIO
+    cofactors: *cofactors
+    values: [0]
+    ngam_rxn: null
+    ngam_value: null
+  - name: compartments_and_case
+    reactions: *compartments
+    biomass_rxn: BIO
+    cofactors: [ATP]
+    values: [2]
+    ngam_rxn: null
+    ngam_value: null
+  - name: absent_cofactors
+    reactions: *partial
+    biomass_rxn: BIO
+    cofactors: *cofactors
+    values: [2]
+    ngam_rxn: null
+    ngam_value: null
+  - name: no_cofactors
+    reactions: *base
+    biomass_rxn: BIO
+    cofactors: []
+    values: [2]
+    ngam_rxn: null
+    ngam_value: null
+  - name: ngam_both
+    reactions: *base
+    biomass_rxn: BIO
+    cofactors: *cofactors
+    values: [2]
+    ngam_rxn: ATPM
+    ngam_value: 1.5
+  - name: ngam_zero
+    reactions: *base
+    biomass_rxn: BIO
+    cofactors: *cofactors
+    values: [2]
+    ngam_rxn: ATPM
+    ngam_value: 0
+  - name: ngam_rxn_only
+    reactions: *base
+    biomass_rxn: BIO
+    cofactors: *cofactors
+    values: [2]
+    ngam_rxn: ATPM
+    ngam_value: null
+  - name: ngam_value_only
+    reactions: *base
+    biomass_rxn: BIO
+    cofactors: *cofactors
+    values: [2]
+    ngam_rxn: null
+    ngam_value: 1.5
+  - name: ngam_missing_reaction
+    reactions: *base
+    biomass_rxn: BIO
+    cofactors: *cofactors
+    values: [2]
+    ngam_rxn: NOPE
+    ngam_value: 1.5
+  - name: missing_biomass_reaction
+    reactions: *base
+    biomass_rxn: NOPE
+    cofactors: *cofactors
+    values: [2]
+    ngam_rxn: null
+    ngam_value: null
