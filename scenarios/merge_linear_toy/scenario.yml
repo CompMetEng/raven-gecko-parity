@@ -1,0 +1,76 @@
+id: merge_linear_toy
+pair: raven
+description: mergeLinear on small hand-written models where the order in which metabolites are visited
+  can change which reactions merge, and on a linear chain and a mixed-direction chain as controls.
+entries: [mergeLinear]
+inputs:
+  cases:
+  - name: ml_a
+    model:
+    - &id003
+      id: R0
+      substrates: []
+      products: [M0]
+      lb: -1000
+      ub: 1000
+    - &id002
+      id: R1
+      substrates: [M1, M2]
+      products: [M0]
+      lb: -1000
+      ub: 1000
+    - &id001
+      id: R2
+      substrates: [M1]
+      products: [M0, M2]
+      lb: -1000
+      ub: 1000
+  - name: ml_a_reordered
+    model:
+    - *id001
+    - *id002
+    - *id003
+  - name: ml_chain
+    model:
+    - id: C0
+      substrates: []
+      products: [A]
+      lb: 0
+      ub: 1000
+    - id: C1
+      substrates: [A]
+      products: [B]
+      lb: 0
+      ub: 1000
+    - id: C2
+      substrates: [B]
+      products: [C]
+      lb: 0
+      ub: 1000
+    - id: C3
+      substrates: [C]
+      products: []
+      lb: 0
+      ub: 1000
+  - name: ml_mixed_direction
+    model:
+    - id: D0
+      substrates: []
+      products: [A]
+      lb: -1000
+      ub: 1000
+    - id: D1
+      substrates: [B]
+      products: [A]
+      lb: -1000
+      ub: 1000
+    - id: D2
+      substrates: [B]
+      products: [C]
+      lb: 0
+      ub: 1000
+    - id: D3
+      substrates: [C]
+      products: []
+      lb: -1000
+      ub: 1000

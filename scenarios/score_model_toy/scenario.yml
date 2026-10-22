@@ -1,0 +1,27 @@
+id: score_model_toy
+pair: raven
+description: >-
+  scoreModel on smallYeast with expression levels for its first six genes (sorted by id)
+  that are zero, missing, equal to the threshold or far from it. The same levels are
+  scored against a threshold of 1 and against a threshold of 0, so a zero reference level
+  and missing (NaN) levels are both exercised.
+
+entries:
+  - scoreModel
+
+inputs:
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
+  isozyme_scoring: max
+  complex_scoring: min
+  no_gene_score: -2
+  # null stands for a missing level.
+  cases:
+    - name: threshold_one
+      threshold: 1
+      levels: [0, null, 1, 2, 10, null]
+    - name: threshold_zero
+      threshold: 0
+      levels: [0, null, 1, 2, 10, null]
+    - name: all_missing
+      threshold: 1
+      levels: [null, null, null, null, null, null]

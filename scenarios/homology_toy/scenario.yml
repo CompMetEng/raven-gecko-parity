@@ -1,0 +1,148 @@
+id: homology_toy
+pair: raven
+description: 'getModelFromHomology on one-reaction templates with a fixed ortholog list: what happens
+  to an and-linked subunit without an ortholog under each complex policy, which template wins under each
+  preferred order, and what happens when two templates share a reaction id.'
+entries: [getModelFromHomology, makeFakeBlastStructure]
+inputs:
+  cases:
+  - name: hom_a1_flag
+    templates:
+    - id: T
+      reactions:
+      - {id: R1, rule: (A or B) and C}
+    pairs:
+    - {template: T, source: C, target: nC}
+    target: N
+    complex_policy: flag
+    preferred_order: []
+  - name: hom_a1_keep
+    templates:
+    - id: T
+      reactions:
+      - {id: R1, rule: (A or B) and C}
+    pairs:
+    - {template: T, source: C, target: nC}
+    target: N
+    complex_policy: keep
+    preferred_order: []
+  - name: hom_a1_drop
+    templates:
+    - id: T
+      reactions:
+      - {id: R1, rule: (A or B) and C}
+    pairs:
+    - {template: T, source: C, target: nC}
+    target: N
+    complex_policy: drop
+    preferred_order: []
+  - name: hom_a2_flag
+    templates:
+    - id: T
+      reactions:
+      - {id: R1, rule: A or (B and C)}
+    pairs:
+    - {template: T, source: A, target: nA}
+    - {template: T, source: C, target: nC}
+    target: N
+    complex_policy: flag
+    preferred_order: []
+  - name: hom_a2_keep
+    templates:
+    - id: T
+      reactions:
+      - {id: R1, rule: A or (B and C)}
+    pairs:
+    - {template: T, source: A, target: nA}
+    - {template: T, source: C, target: nC}
+    target: N
+    complex_policy: keep
+    preferred_order: []
+  - name: hom_a2_drop
+    templates:
+    - id: T
+      reactions:
+      - {id: R1, rule: A or (B and C)}
+    pairs:
+    - {template: T, source: A, target: nA}
+    - {template: T, source: C, target: nC}
+    target: N
+    complex_policy: drop
+    preferred_order: []
+  - name: hom_a3_flag
+    templates:
+    - id: T
+      reactions:
+      - {id: R1, rule: (A and B) or C}
+    pairs:
+    - {template: T, source: C, target: nC}
+    target: N
+    complex_policy: flag
+    preferred_order: []
+  - name: hom_a3_keep
+    templates:
+    - id: T
+      reactions:
+      - {id: R1, rule: (A and B) or C}
+    pairs:
+    - {template: T, source: C, target: nC}
+    target: N
+    complex_policy: keep
+    preferred_order: []
+  - name: hom_a3_drop
+    templates:
+    - id: T
+      reactions:
+      - {id: R1, rule: (A and B) or C}
+    pairs:
+    - {template: T, source: C, target: nC}
+    target: N
+    complex_policy: drop
+    preferred_order: []
+  - name: hom_b_none
+    templates: &id001
+    - id: T1
+      reactions:
+      - {id: R_T1, rule: Y}
+    - id: T2
+      reactions:
+      - {id: R_T2, rule: X}
+    pairs: &id002
+    - {template: T1, source: Y, target: N1}
+    - {template: T2, source: X, target: N1}
+    - {template: T2, source: X, target: N2}
+    target: N
+    complex_policy: flag
+    preferred_order: []
+  - name: hom_b_t1t2
+    templates: *id001
+    pairs: *id002
+    target: N
+    complex_policy: flag
+    preferred_order: [T1, T2]
+  - name: hom_b_t2t1
+    templates: *id001
+    pairs: *id002
+    target: N
+    complex_policy: flag
+    preferred_order: [T2, T1]
+  - name: hom_c_none
+    templates: &id003
+    - id: T1
+      reactions:
+      - {id: R1, rule: Y}
+    - id: T2
+      reactions:
+      - {id: R1, rule: X}
+    pairs: &id004
+    - {template: T1, source: Y, target: N1}
+    - {template: T2, source: X, target: N2}
+    target: N
+    complex_policy: flag
+    preferred_order: []
+  - name: hom_c_t2t1
+    templates: *id003
+    pairs: *id004
+    target: N
+    complex_policy: flag
+    preferred_order: [T2, T1]

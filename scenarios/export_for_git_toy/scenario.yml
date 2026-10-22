@@ -1,0 +1,36 @@
+id: export_for_git_toy
+pair: raven
+description: exportForGit on a four-reaction model with bounds that need many digits. The txt table is
+  compared line by line, the presence of the libSBML version in dependencies.txt and the files written by a call with the default
+  formats.
+entries: [exportForGit]
+inputs:
+  reactions:
+  - id: R_B
+    substrates: [glucose]
+    products: [g6p]
+    lb: -0.3333333333333333
+    ub: 1000
+    objective: 0
+    rule: G1 and G2
+  - id: R_A
+    substrates: [g6p]
+    products: [f6p]
+    lb: 0.1
+    ub: 0.30000000000000004
+    objective: 0
+    rule: G3
+  - id: R_C
+    substrates: [f6p]
+    products: []
+    lb: 0
+    ub: 1.0e-07
+    objective: 1
+    rule: ''
+  - id: R_D
+    substrates: []
+    products: [glucose]
+    lb: 0
+    ub: 1000
+    objective: 0
+    rule: ''
