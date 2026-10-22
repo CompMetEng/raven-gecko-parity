@@ -81,7 +81,8 @@ for j = 1:nR
     end
     reactions{j} = struct('name', newModel.rxnNames{j}, 'lower_bound', double(newModel.lb(j)), ...
         'upper_bound', double(newModel.ub(j)), 'clauses', {clauses}, 'stoichiometry', {entries});
-    keys{j} = sprintf('%s|%s|%s', newModel.rxnNames{j}, jsonencode(entries), jsonencode(clauses));
+    clauseText = cellfun(@(c) strjoin(c, ','), clauses, 'UniformOutput', false);
+    keys{j} = sprintf('%s|%s|%s', newModel.rxnNames{j}, strjoin(labels(rows)', ','), strjoin(clauseText, ';'));
 end
 [~, o] = sort(keys);
 reactions = reactions(o);

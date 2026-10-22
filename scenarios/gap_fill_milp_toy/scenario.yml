@@ -78,12 +78,12 @@ inputs:
       substrates: [A]
       products: [B]
       lb: 0
-      ub: 1000
+      ub: 3
     - id: T2
       substrates: [A]
       products: [C]
       lb: 0
-      ub: 1000
+      ub: 3
     objective: [BIO, BIO2]
     objective_coeffs: [1, 1]
     min_growth: 5

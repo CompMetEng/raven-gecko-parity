@@ -63,7 +63,15 @@ def curate(inputs, empty_reactions):
                 "stoichiometry": stoichiometry,
             }
         )
-    reactions.sort(key=lambda r: (r["name"], str(r["stoichiometry"]), str(r["clauses"])))
+    reactions.sort(
+        key=lambda r: "|".join(
+            [
+                r["name"],
+                ",".join(e["metabolite"] for e in r["stoichiometry"]),
+                ";".join(",".join(c) for c in r["clauses"]),
+            ]
+        )
+    )
     genes = sorted(
         ({"gene": g.id, "short_name": str(g.name or "")} for g in model.genes), key=lambda g: g["gene"]
     )
