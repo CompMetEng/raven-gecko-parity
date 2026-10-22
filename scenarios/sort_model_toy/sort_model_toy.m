@@ -94,7 +94,7 @@ for i = 1:m
     compartments{i} = char(mets{i}.compartment);
 end
 [model.comps, ~, model.metComps] = unique(compartments, 'stable');
-model.comps = model.comps(:)';
+model.comps = model.comps(:);
 model.compNames = model.comps;
 model.metComps = model.metComps(:);
 model.rxns = cell(n, 1);
