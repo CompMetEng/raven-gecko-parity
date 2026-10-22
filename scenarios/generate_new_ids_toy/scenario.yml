@@ -1,0 +1,21 @@
+id: generate_new_ids_toy
+pair: raven
+description: >-
+  generateNewIds on lists of existing identifiers: no id with the prefix, a normal increment, a wider explicit
+  width, a prefix that mixes widths (r_9 beside r_10), a non-numeric suffix, a prefix that is also a prefix of
+  another namespace, a quantity above one, and the metabolite namespace.
+
+entries:
+  - generateNewIds
+
+inputs:
+  cases:
+  - {name: none_with_prefix, type: rxns, ids: [x_0001], prefix: "r_", quantity: 2, num_length: 4}
+  - {name: normal_increment, type: rxns, ids: [r_0001, r_0002, r_0010], prefix: "r_", quantity: 3, num_length: 4}
+  - {name: wider_explicit_width, type: rxns, ids: [], prefix: "r_", quantity: 2, num_length: 6}
+  - {name: mixed_width, type: rxns, ids: [r_9, r_10, r_2], prefix: "r_", quantity: 2, num_length: 4}
+  - {name: mixed_width_zero_padded, type: rxns, ids: [r_0009, r_10], prefix: "r_", quantity: 1, num_length: 4}
+  - {name: non_numeric_suffix, type: rxns, ids: [r_abc, r_xyz], prefix: "r_", quantity: 1, num_length: 4}
+  - {name: partly_numeric_suffix, type: rxns, ids: [r_0003, r_abc], prefix: "r_", quantity: 1, num_length: 4}
+  - {name: prefix_without_underscore, type: rxns, ids: [r0001, r_0007, rx12], prefix: "r", quantity: 1, num_length: 4}
+  - {name: metabolites, type: mets, ids: [s_0001, s_0100, m_0500], prefix: "s_", quantity: 2, num_length: 4}

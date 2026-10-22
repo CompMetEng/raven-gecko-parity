@@ -1,0 +1,5 @@
+Gene	Gene name	Tissue	TPM
+ENSG2	BBB	liver	5.5
+ENSG1	AAA	liver	0
+ENSG1	AAA	brain	12.25
+ENSG3	CCC	brain	0.1

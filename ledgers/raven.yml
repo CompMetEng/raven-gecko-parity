@@ -356,6 +356,8 @@ entries:
   - matlab: contractModel
     python: raven_toolbox.manipulation.remove_duplicate_reactions
     status: parity
+    scenarios:
+      - contract_model_toy
     notes: 'Expand-then-contract is a lossless round trip on both sides. contractModel keeps the FIRST member of
       each duplicate set, strips the _EXP_N suffix (documented behaviour: the model is assumed to have come
       through expandModel) and merges the set''s grRules with "or", so HXK returns with "YCL040W or YFR053C or
@@ -402,6 +404,8 @@ entries:
   - matlab: defaultCompartmentMap
     python: raven_toolbox.localization.DEFAULT_COMPARTMENT_MAP
     status: parity
+    scenarios:
+      - default_compartment_map_toy
     notes: 'MATLAB''s containers.Map (built from parallel labels/ids arrays) and the Python dict constant carry
       the same 23 entries, same mapped ids, same declaration order.'
   - matlab: deleteUnusedGenes
@@ -628,6 +632,8 @@ entries:
   - matlab: FSEOF
     python: raven_toolbox.analysis.fseof
     status: parity
+    scenarios:
+      - fseof_toy
     notes: from migration.md. Regression slope + correlation, amplify/knockdown/knockout classes, gene aggregation
       (FS1–FS4 in IMPROVEMENTS).
   - matlab: ftINIT
@@ -730,6 +736,8 @@ entries:
   - matlab: generateNewIds
     python: raven_toolbox.utils.generate_new_ids
     status: parity
+    scenarios:
+      - generate_new_ids_toy
     notes: 'Generates the next free id in a model''s numbering scheme. Matches generateNewIds.m
       exactly, quirks included: the existing maximum and the numeric width to use are both taken
       from a string sort of the stripped ids, not an integer sort, so a prefix mixing widths
@@ -854,6 +862,8 @@ entries:
   - matlab: getINITSteps
     python: raven_toolbox.init.get_init_steps
     status: parity
+    scenarios:
+      - init_steps_toy
     notes: migration.md maps {ftINIT, prepINITModel, ftINITInternalAlg, getINITSteps} onto {raven_toolbox.init.ftinit,
       raven_toolbox.init.prep_init_model, raven_toolbox.init.run_ftinit, raven_toolbox.init.get_init_steps}
       as a group; pick the right counterpart
@@ -994,6 +1004,8 @@ entries:
   - matlab: hitsFromSuppOrth
     python: raven_toolbox.reconstruction.homology.hits_from_supporth
     status: parity
+    scenarios:
+      - hits_from_supporth_toy
     notes: Reads a SuppOrth suppOrth.tsv (consensus orthologs from several predictors) into the hits structure
       getModelFromHomology takes. MATLAB returns a blastStructure and a suppOrthInfo struct; Python returns the
       HIT_COLUMNS table. Name-value arguments map to keyword arguments (speciesToModel to species_to_model).
@@ -1003,6 +1015,8 @@ entries:
   - matlab: INITStepDesc
     python: raven_toolbox.init.InitStep
     status: parity
+    scenarios:
+      - init_steps_toy
     notes: Describes one step of the ftINIT schedule.
   - matlab: isDnfGrRule
     python: raven_toolbox.utils.is_dnf
@@ -1094,11 +1108,15 @@ entries:
   - matlab: parseHPA
     python: raven_toolbox.init.parse_hpa
     status: parity
+    scenarios:
+      - parse_hpa_toy
     notes: from migration.md. Pandas-tidy DataFrames; scoring adapters reuse score_reactions_from_genes (single
       source of truth for the GPR walk).
   - matlab: parseHPArna
     python: raven_toolbox.init.parse_hpa_rna
     status: parity
+    scenarios:
+      - parse_hpa_toy
     notes: 'migration.md says ported, but no matching export found: raven_toolbox.omics.parse_hpa, raven_toolbox.parse_hpa_rna,
       raven_toolbox.hpa_gene_scores, raven_toolbox.rna_gene_scores'
   - matlab: parseRAVENargs
@@ -1198,6 +1216,8 @@ entries:
   - matlab: randomSampling
     python: raven_toolbox.analysis.random_sampling
     status: parity
+    scenarios:
+      - random_sampling_toy
     notes: 'raven_toolbox.analysis.random_sampling takes the same three methods (achr, chrr, randomObjective). The sampling
       chains differ: Python wraps cobra''s ACHRSampler and has its own CHRR, RAVEN uses sampleACHR.m and sampleCHRR.m,
       so a seeded draw cannot match and only summary statistics can be compared. DIFFERENCES in the random-objective
@@ -1450,6 +1470,8 @@ entries:
   - matlab: sampleMaxVolEllipse
     python: raven_toolbox.analysis.max_volume_ellipsoid
     status: parity
+    scenarios:
+      - max_volume_ellipsoid_toy
     notes: The MVE core of CHRR. Per flux_sampling_algorithms.md the Python one is the numerically validated
       reference the MATLAB mirrors line-for-line --- a strong scenario candidate.
   - matlab: sampleWarmupPoints
@@ -1488,6 +1510,8 @@ entries:
   - matlab: setExchangeBounds
     python: raven_toolbox.manipulation.set_exchange_bounds
     status: parity
+    scenarios:
+      - set_exchange_bounds_toy
     notes: 'cobra''s model.medium covers the common single-direction, close-the-rest use case, but not
       everything setExchangeBounds does: independent lb and ub per metabolite (medium is reaction-id-keyed
       and sets only whichever one bound is "active" for that reaction, from a single scalar), the mediaOnly

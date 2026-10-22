@@ -1,0 +1,37 @@
+id: max_volume_ellipsoid_toy
+pair: raven
+description: >-
+  The maximum-volume inscribed ellipsoid of small polytopes {z : A z <= b}: a box (unit ball), a sheared box, a
+  triangle, a hexagon with a given interior point and the same hexagon with the Chebyshev centre as the start,
+  and an off-centre point in the box. Per case the centre, the rounding transform E, E times its transpose and the
+  convergence flag.
+
+entries:
+  - sampleMaxVolEllipse
+
+inputs:
+  cases:
+  - name: box
+    A: [[1, 0], [-1, 0], [0, 1], [0, -1]]
+    b: [1, 1, 1, 1]
+    x0: [0, 0]
+  - name: box_off_centre_start
+    A: [[1, 0], [-1, 0], [0, 1], [0, -1]]
+    b: [2, 1, 3, 1]
+    x0: [0.25, 0.5]
+  - name: sheared_box
+    A: [[1, 0.5], [-1, -0.5], [0, 1], [0, -1]]
+    b: [1, 1, 1, 1]
+    x0: [0, 0]
+  - name: triangle
+    A: [[-1, 0], [0, -1], [1, 1]]
+    b: [0, 0, 1]
+    x0: [0.3, 0.3]
+  - name: hexagon_given_start
+    A: [[1, 0], [-1, 0], [0.5, 0.8660254037844386], [-0.5, -0.8660254037844386], [0.5, -0.8660254037844386], [-0.5, 0.8660254037844386]]
+    b: [1, 1, 1, 1, 1, 1]
+    x0: [0.1, 0.05]
+  - name: hexagon_chebyshev_start
+    A: [[1, 0], [-1, 0], [0.5, 0.8660254037844386], [-0.5, -0.8660254037844386], [0.5, -0.8660254037844386], [-0.5, 0.8660254037844386]]
+    b: [1, 1, 1, 1, 1, 1]
+    x0: null
