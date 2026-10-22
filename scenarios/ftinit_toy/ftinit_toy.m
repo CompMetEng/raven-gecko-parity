@@ -67,7 +67,7 @@ flux = 0;
 if ~isempty(idx)
     m = res;
     m.c = zeros(numel(m.rxns), 1);
-    m.c(idx) = -1;
+    m.c(idx) = 1;
     sol = solveLP(m);
     if ~isempty(sol.x)
         flux = sol.x(idx);
@@ -92,8 +92,13 @@ for j = 1:numel(order)
     end
     rules{j} = struct('reaction', res.rxns{order(j)}, 'clauses', {clauses});
 end
+[~, bo] = sort(res.rxns);
+bounds = cell(1, numel(bo));
+for j = 1:numel(bo)
+    bounds{j} = struct('reaction', res.rxns{bo(j)}, 'lower_bound', double(res.lb(bo(j))), 'upper_bound', double(res.ub(bo(j))));
+end
 out = struct('prep', prep, 'model', struct( ...
-    'reactions', {sort_cellstr(res.rxns)}, 'genes', {sort_cellstr(res.genes)}, 'rules', {rules}, ...
+    'bounds', {bounds}, 'reactions', {sort_cellstr(res.rxns)}, 'genes', {sort_cellstr(res.genes)}, 'rules', {rules}, ...
     'has_objective', ~isempty(idx), 'objective_flux', flux));
 end
 

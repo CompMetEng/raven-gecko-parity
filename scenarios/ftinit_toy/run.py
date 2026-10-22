@@ -92,6 +92,10 @@ def run_case(inputs, case):
     if objective in out.reactions:
         out.objective = objective
         flux = float(out.slim_optimize())
+    bounds = [
+        {"reaction": r.id, "lower_bound": float(r.lower_bound), "upper_bound": float(r.upper_bound)}
+        for r in sorted(out.reactions, key=lambda r: r.id)
+    ]
     return {
         "prep": {
             "ref_reactions": sorted(r.id for r in prep.ref_model.reactions),
@@ -105,6 +109,7 @@ def run_case(inputs, case):
             "no_gpr": sorted(masks.no_gpr),
         },
         "model": {
+            "bounds": bounds,
             "reactions": sorted(r.id for r in out.reactions),
             "genes": sorted(g.id for g in out.genes),
             "rules": [
