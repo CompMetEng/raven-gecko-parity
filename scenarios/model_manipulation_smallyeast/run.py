@@ -45,6 +45,7 @@ def _irrev_checkpoint(model):
         "n_reactions": len(model.reactions),
         "n_reverse": len(added),
         "reverse_reactions": sorted(added),
+        **_order(model),
         "reactions": _reaction_records(model),
         "gene_rules": _gene_rules(model),
         "stoichiometry": _stoichiometry(model),
@@ -57,6 +58,7 @@ def _expand_checkpoint(model):
         "n_reactions": len(model.reactions),
         "n_added": len(added),
         "added_reactions": sorted(added),
+        **_order(model),
         "reactions": _reaction_records(model),
         "gene_rules": _gene_rules(model),
         "stoichiometry": _stoichiometry(model),
@@ -76,6 +78,15 @@ def _sorted_checkpoint(model):
         # model field, so they are emitted in key order; RAVEN's sortIdentifiers
         # sorts model.comps, which comes to the same thing when it works.
         "compartments": sorted(model.compartments),
+    }
+
+
+def _order(model):
+    """Reaction, metabolite and gene ids in model order: where expansion and splitting put things."""
+    return {
+        "reaction_order": [rxn.id for rxn in model.reactions],
+        "metabolite_order": [met.id for met in model.metabolites],
+        "gene_order": [gene.id for gene in model.genes],
     }
 
 

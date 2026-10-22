@@ -2,6 +2,7 @@
 
     parity check              validate the ledgers against both repos
     parity sync               add ledger rows for anything newly public
+    parity ledger-audit       parity rows must name the differences their scenarios show
     parity report             render the Markdown parity document
     parity mirror             what does my current change mean for the other side?
     parity docs render        compose CONTRIBUTING.md/AGENTS.md into each sibling
@@ -81,6 +82,21 @@ def _unresolved_scenario_inputs(config: Config, pair) -> list[str]:
         except ScenarioError as error:
             problems.append(f"{scenario.id}: {error}")
     return problems
+
+
+def cmd_ledger_audit(args: argparse.Namespace, config: Config) -> int:
+    from parity.audit import audit_ledger, read_results
+
+    results = read_results(Path(args.results)) if args.results else None
+    failed = False
+    for pair in _pairs(config, args.pair):
+        findings = audit_ledger(load_ledger(pair.ledger), list_scenarios(_scenario_root(config), pair.name), results)
+        for finding in findings:
+            print(f"{pair.name}: {finding.format()}")
+        if not findings:
+            print(f"{pair.name}: ledger audit clean")
+        failed = failed or bool(findings)
+    return 1 if failed else 0
 
 
 def cmd_sync(args: argparse.Namespace, config: Config) -> int:
@@ -360,6 +376,11 @@ def build_parser() -> argparse.ArgumentParser:
     check.add_argument("--pair", help="only this pair (default: all)")
     check.add_argument("--strict", action="store_true", help="also fail on warnings and unreviewed rows")
     check.set_defaults(func=cmd_check)
+
+    audit = sub.add_parser("ledger-audit", help="check that parity rows name the differences their scenarios show")
+    audit.add_argument("--pair", help="only this pair (default: all)")
+    audit.add_argument("--results", help="directory with the last results, <id>.txt or status/<id>.txt holding MATCH, DIFFER or ERROR")
+    audit.set_defaults(func=cmd_ledger_audit)
 
     sync = sub.add_parser("sync", help="add ledger rows for anything newly public")
     sync.add_argument("--pair", help="only this pair (default: all)")

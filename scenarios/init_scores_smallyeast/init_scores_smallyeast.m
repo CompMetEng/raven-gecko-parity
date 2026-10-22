@@ -17,21 +17,63 @@ modelGenes = sort(model.genes(:));
 
 [genes, levels] = read_expression(inputs.expression, modelGenes);
 
+results = score_table(model, modelGenes, genes, levels, double(inputs.threshold), inputs);
+
+results.variants = struct();
+if isfield(inputs, 'variants')
+    variants = as_list(inputs.variants);
+    for k = 1:numel(variants)
+        v = variants{k};
+        variantGenes = genes;
+        variantLevels = levels;
+        overrides = v.levels;
+        if isstruct(overrides)
+            for name = fieldnames(overrides)'
+                value = overrides.(name{1});
+                if ischar(value) || isstring(value)
+                    value = str2double(value);
+                end
+                i = find(strcmp(variantGenes, name{1}), 1);
+                if isempty(i)
+                    variantGenes{end + 1, 1} = name{1}; %#ok<AGROW>
+                    variantLevels(end + 1, 1) = double(value); %#ok<AGROW>
+                else
+                    variantLevels(i) = double(value);
+                end
+            end
+        end
+        results.variants.(char(v.name)) = score_table(model, modelGenes, variantGenes, variantLevels, double(v.threshold), inputs);
+    end
+end
+
+end
+
+
+function out = score_table(model, modelGenes, genes, levels, threshold, inputs)
 arrayData.genes = genes;
 arrayData.tissues = {'tutorial'};
 arrayData.celltypes = {'tutorial'};
 arrayData.levels = levels;
 % A scalar threshold is expanded to one per gene inside scoreModel.
-arrayData.threshold = double(inputs.threshold);
+arrayData.threshold = threshold;
 
 [rxnScores, geneScores] = scoreModel(model, [], arrayData, 'tutorial', ...
     'noGeneScore', double(inputs.no_gene_score), ...
     'isozymeScoring', char(inputs.isozyme_scoring), ...
     'complexScoring', char(inputs.complex_scoring));
 
-results.gene_scores = gene_score_checkpoint(model, modelGenes, geneScores);
-results.reaction_scores = reaction_score_checkpoint(model, rxnScores);
+out.gene_scores = gene_score_checkpoint(model, modelGenes, geneScores);
+out.reaction_scores = reaction_score_checkpoint(model, rxnScores);
+end
 
+
+function out = as_list(value)
+% jsondecode gives a struct array when every element has the same fields and a cell otherwise.
+if iscell(value)
+    out = value(:)';
+else
+    out = num2cell(value(:)');
+end
 end
 
 

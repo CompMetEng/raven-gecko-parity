@@ -29,6 +29,15 @@ end
 
 results.reactions = sort_cellstr(merged.rxns);
 
+% Model order, not sorted: the order of the merged lists is part of the result.
+results.reaction_order = row(merged.rxns);
+results.metabolite_order = row(merged.mets);
+if isfield(merged, 'genes')
+    results.gene_order = row(merged.genes);
+else
+    results.gene_order = {};
+end
+
 % By difference from the two inputs rather than by matching on a suffix, so a
 % reaction that already ended in the source model's id could not be miscounted.
 renamed = merged.rxns(~ismember(merged.rxns, originalIds));
@@ -129,6 +138,14 @@ end
 
 function out = sort_cellstr(values)
 out = reshape(sort(values(:)), 1, []);
+if isempty(out)
+    out = {};
+end
+end
+
+
+function out = row(values)
+out = reshape(values, 1, []);
 if isempty(out)
     out = {};
 end

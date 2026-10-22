@@ -63,6 +63,11 @@ def _checkpoint(inputs, declared, *, bounded):
         "n_genes_before": len(before_genes),
         "n_genes_after": len(after_genes),
         "added_reactions": added,
+        # Model order, not sorted: where an added reaction, metabolite or gene lands
+        # is part of the result.
+        "reaction_order": [rxn.id for rxn in model.reactions],
+        "metabolite_order": [met.id for met in model.metabolites],
+        "gene_order": [gene.id for gene in model.genes],
         "added_metabolites": sorted(after_mets - before_mets),
         "added_genes": sorted(after_genes - before_genes),
         # Only the added reactions, in detail: the rest of the model is
