@@ -48,7 +48,6 @@ def run(ctx):
             "n_reactions": int(values.shape[0]),
             "n_samples": int(values.shape[1]),
             "steady_state": bool(np.abs(s_matrix @ values).max() < 1e-6),
-            "max_residual": f"{np.abs(s_matrix @ values).max():.0e}",
             "steady_state_1e4": bool(np.abs(s_matrix @ values).max() < 1e-4),
             "within_bounds": bool(((values >= lb - 1e-6) & (values <= ub + 1e-6)).all()),
             "mean_near_centroid": bool(abs(mean[i1] - float(inputs["centroid"])) < float(inputs["band"])),
