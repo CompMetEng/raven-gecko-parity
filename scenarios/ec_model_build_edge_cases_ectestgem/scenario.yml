@@ -1,0 +1,67 @@
+id: ec_model_build_edge_cases_ectestgem
+pair: gecko
+description: >-
+  makeEcModel on variants of ecTestGEM that stress its edge cases: a complex with a subunit
+  missing from the databases, gene rules that are not in OR-of-ANDs form, a reaction that
+  can only run backwards, a multi-metabolite sink, reaction and metabolite ids that collide
+  with the names GECKO reserves, a compartment named differently from its id, an unknown
+  enzyme compartment and a model without genes.
+
+# Each case edits a fresh copy of the conventional ecTestGEM (the same edit on both sides),
+# builds a full and a light ecModel from it and reports a summary of each. A case where one
+# side refuses the model reports `raised: true` and an empty summary on that side; which
+# exception it was is not compared, only that there was one. The baseline case has no edit
+# and anchors the summary against ec_model_expansion_ectestgem.
+#
+# The cases and what each side does with them:
+#   baseline            no edit; both sides agree.
+#   partial_complex     R3 is catalysed by 'G4 and GX', GX being in neither uniprot.tsv nor
+#                       kegg.tsv. MATLAB leaves the R3 row of ec.rxnEnzMat empty, so the
+#                       reaction stays unconstrained (makeEcModel.m tests a vector in an
+#                       `if`); geckopy couples R3 to P4, the enzyme of the matched subunit,
+#                       and documents that as intended.
+#   nested_gpr          R2 is catalysed by 'G1 and (G2 or G3)'. The full model agrees. In the
+#                       light model MATLAB strips brackets and splits on ' or ', so the
+#                       second clause is P3 alone; geckopy expands to a DNF and couples the
+#                       second clause to P1 and P3.
+#   neg_bounds          R3 has bounds [-10, -1]. MATLAB leaves it unsplit; geckopy splits
+#                       it, the forward copy gets bounds [0, -1] and the model refuses it
+#                       (ValueError).
+#   multi_sink          SINK2 'm1c + m2c <=>' has no gene. MATLAB leaves it unsplit with
+#                       bounds [-1000, 1000]; geckopy splits it into SINK2 and SINK2_REV.
+#   rxn_id_rev_suffix, rxn_id_exp_suffix, rxn_id_usage_prefix, met_id_prot_prefix
+#                       ids that collide with GECKO's own naming. MATLAB refuses each of
+#                       them; geckopy builds the model.
+#   enzyme_comp_is_id   the compartment 'c' is named 'cytosol' and the adapter asks for 'c'.
+#                       MATLAB compares with the compartment names and refuses; geckopy
+#                       accepts a compartment id.
+#   enzyme_comp_unknown the adapter asks for a compartment the model does not have; both
+#                       sides refuse.
+#   no_genes            every gene rule removed. MATLAB refuses (no protein matches a gene);
+#                       geckopy returns a model with an empty ec.
+
+entries:
+  - makeEcModel
+
+inputs:
+  adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
+  fixture_dir: "{matlab_repo}/test/unit_tests/ecTestGEM"
+  adapter_python: "{python_repo}/examples/ecTestGEM"
+  cases:
+    - baseline
+    - partial_complex
+    - nested_gpr
+    - neg_bounds
+    - multi_sink
+    - rxn_id_rev_suffix
+    - rxn_id_exp_suffix
+    - rxn_id_usage_prefix
+    - met_id_prot_prefix
+    - enzyme_comp_is_id
+    - enzyme_comp_unknown
+    - no_genes
+
+# makeEcModel copies, negates and clamps; nothing is summed.
+tolerance:
+  rel: 0.0
+  abs: 0.0
