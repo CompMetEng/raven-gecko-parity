@@ -1,0 +1,26 @@
+id: curate_tables_annotation_toy
+pair: raven
+description: >-
+  curateModelFromTables on a model whose metabolites, genes and reaction carry MIRIAM annotations (kegg.compound
+  on x and y, ncbigene on G1 and G2, kegg.reaction on the two reactions), a confidence score on each reaction and short
+  names on the genes. The cases cover an empty MIRIAM cell of an existing entity (the namespace is removed when
+  another existing entity of the table has a value in that column, and kept with the option that keeps stored
+  values), a MIRIAM column without a value for any existing entity (kept), new metabolites and reactions whose
+  empty charge or confidence score is 0 when the column has a value in another row, table cells that read NA,
+  null or None (kept as text), and a rev column written as true and false. The curated content is compared by name.
+
+entries:
+  - curateModelFromTables
+
+inputs:
+  tables_dir: "{scenario_dir}/tables"
+  met_prefix: M_
+  rxn_prefix: R_
+  cases:
+    - {name: mets_values, mets: mets_values.tsv, genes: none, rxns: none, coeffs: none}
+    - {name: mets_values_kept, mets: mets_values.tsv, genes: none, rxns: none, coeffs: none, overwrite_with_empty: false}
+    - {name: mets_empty_column, mets: mets_empty_column.tsv, genes: none, rxns: none, coeffs: none}
+    - {name: genes_values, mets: none, genes: genes_values.tsv, rxns: none, coeffs: none}
+    - {name: genes_values_kept, mets: none, genes: genes_values.tsv, rxns: none, coeffs: none, overwrite_with_empty: false}
+    - {name: rxns_values, mets: none, genes: none, rxns: rxns_values.tsv, coeffs: rxns_coeffs.tsv}
+    - {name: rxns_values_kept, mets: none, genes: none, rxns: rxns_values.tsv, coeffs: rxns_coeffs.tsv, overwrite_with_empty: false}
