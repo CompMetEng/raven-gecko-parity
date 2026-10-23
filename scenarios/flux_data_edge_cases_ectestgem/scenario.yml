@@ -1,0 +1,44 @@
+id: flux_data_edge_cases_ectestgem
+pair: gecko
+description: >-
+  Edge cases of loadFluxData and constrainFluxData on ecTestGEM: a ragged row, a file with only
+  the three fixed columns, a header with nested parentheses, a missing file, a condition given
+  by name and one that is not in the file, an exchange reaction that is not in the model and an
+  invalid maxMinGrowth.
+
+entries:
+  - loadFluxData
+  - constrainFluxData
+
+inputs:
+  adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
+  adapter_python: "{python_repo}/examples/ecTestGEM"
+  fixture_dir: "{matlab_repo}/test/unit_tests/ecTestGEM"
+  data_dir: "{scenario_dir}/data"
+
+  matlab_solver: gurobi
+  python_solver: gurobi
+
+  # Only the bounds of S1, S2 and R5 are compared, so the kcats of the usual fixture are carried
+  # along without further meaning.
+  kcats:
+    R3: 15.0
+    R5: 200.0
+
+# Only bounds and parsed values are compared, no LP is solved. Every case records a raise as a
+# result; load_control and constrain_control return real content on both sides.
+tolerance:
+  rel: 1.0e-9
+  abs: 1.0e-12
+
+# Cases and what each side does (verdicts of the run):
+#   load_control, constrain_control, constrain_condition_by_name, constrain_unknown_condition:
+#     both sides agree (the unknown condition raises on both).
+#   load_missing_file: MATLAB warns and returns [] (reported as loaded=false); Python raises.
+#   load_fixed_columns_only: MATLAB returns empty exchange fields; Python raises.
+#   load_ragged_row: Python pads the missing cell with NaN; MATLAB raises.
+#   load_nested_parentheses_header: for 'X (EX_a(e))' MATLAB reads the metabolite 'X (EX_a' and the
+#     reaction 'e)'; Python reads the whole header as both.
+#   constrain_missing_exchange: MATLAB ignores the exchange that is not in the model; Python raises.
+#   constrain_invalid_max_min_growth: MATLAB skips the growth constraint (the biomass bound stays
+#     unbounded); Python raises.
