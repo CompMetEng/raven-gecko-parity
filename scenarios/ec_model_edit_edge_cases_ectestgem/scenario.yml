@@ -1,0 +1,83 @@
+id: ec_model_edit_edge_cases_ectestgem
+pair: gecko
+description: >-
+  addNewRxnsToEC with a nested gene rule, with a gene whose id contains 'or', and with no new
+  enzymes; mapRxnsToConv and ecFVA on a model whose reaction ids contain _REV or _EXP_ in the
+  middle.
+
+# Two groups of cases, each on a fresh copy of the full ecTestGEM ecModel. A call that raises
+# is reported as `raised: true` with an empty result; which exception it was is not compared.
+#
+# add_new_rxns: a new reaction RNEW 'm1[c] <=> e2[e]' with
+#   nested_gpr      the rule 'GNEW1 and (GNEW2 or GNEW3)' and three new enzymes. MATLAB splits
+#                   the rule on 'or' and brackets, so the second clause is GNEW3 alone;
+#                   geckopy expands to a DNF and couples the second clause to GNEW1 and
+#                   GNEW3.
+#   gene_with_or    the rule 'GNEW1 or orfX' (the gene id orfX contains 'or'). MATLAB splits
+#                   the rule on the text 'or' and raises; geckopy adds the reaction.
+#   no_new_enzymes  the rule 'G1', a gene the model already has an enzyme for, and no new
+#                   enzymes. MATLAB raises; geckopy adds the reaction.
+#
+# ids_with_suffix_text: R1 is renamed to R_REVX or to R_EXP_1X, ids that contain the
+# suffix text without ending in it, before the ecModel is built. mapRxnsToConv maps one
+# synthetic flux per ecModel reaction back to the conventional model, and ecFVA ranges over
+# it with the same kcats as ec_fva_ectestgem. ecFVA needs a solver and starts a parallel pool
+# on the MATLAB side.
+#   id_mid_rev      mapRxnsToConv replaces every '_REV' in the id of a reversed reaction, so
+#                   R_REVX_REV maps to a reaction that does not exist and its flux is lost:
+#                   R_REVX gets the forward flux only (8 against geckopy's forward minus
+#                   reverse, -1). ecFVA raises.
+#   id_mid_exp      mapRxnsToConv and ecFVA raise on MATLAB; geckopy handles the id.
+
+entries:
+  - addNewRxnsToEC
+  - mapRxnsToConv
+  - ecFVA
+
+inputs:
+  adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
+  adapter_python: "{python_repo}/examples/ecTestGEM"
+  fixture_dir: "{matlab_repo}/test/unit_tests/ecTestGEM"
+
+  matlab_solver: gurobi
+  python_solver: gurobi
+  python_n_proc: 1
+
+  new_reaction:
+    id: RNEW
+    name: RNEW
+    equation: "m1[c] <=> e2[e]"
+  add_cases:
+    - name: nested_gpr
+      gr_rule: "GNEW1 and (GNEW2 or GNEW3)"
+      enzymes:
+        - {enzyme: ENEW1, gene: GNEW1, mw: 15000.0}
+        - {enzyme: ENEW2, gene: GNEW2, mw: 25000.0}
+        - {enzyme: ENEW3, gene: GNEW3, mw: 35000.0}
+    - name: gene_with_or
+      gr_rule: "GNEW1 or orfX"
+      enzymes:
+        - {enzyme: ENEW1, gene: GNEW1, mw: 15000.0}
+        - {enzyme: ENEW2, gene: orfX, mw: 25000.0}
+    - name: no_new_enzymes
+      gr_rule: "G1"
+      enzymes: []
+
+  id_cases:
+    - {name: id_mid_rev, from: R1, to: R_REVX}
+    - {name: id_mid_exp, from: R1, to: R_EXP_1X}
+
+  # Same kcats as ec_fva_ectestgem, so R2's isozymes compete.
+  kcats:
+    R2_EXP_1: 50.0
+    R2_EXP_2: 10.0
+    R2_REV_EXP_1: 50.0
+    R2_REV_EXP_2: 10.0
+    R3: 20.0
+    R5: 100.0
+
+# Copies, negates and clamps; ecFVA solves LPs, so the tolerance is the one ec_fva_ectestgem
+# declares.
+tolerance:
+  rel: 1.0e-6
+  abs: 1.0e-6
