@@ -1,0 +1,3 @@
+rxnIdx	rxnNames	lb	ub	rev
+1	bounded	-5	7	0
+2	openub	0		1

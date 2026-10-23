@@ -389,9 +389,16 @@ entries:
     status: parity
     scenarios:
       - curate_tables_toy
+      - curate_tables_edge_toy
     notes: Table-driven batch curation. curate_tables_toy compares coefficient rows grouped by rxnIdx and name, RAVEN's
       header spellings, reactions added without bounds ((-Inf, Inf) on both sides) and new identifiers numbered from
-      the numerically largest existing id, in the width of that id.
+      the numerically largest existing id, in the width of that id. curate_tables_edge_toy compares headers in other
+      case and alias spellings (MATCH), new reactions with and without a rev column (MATCH), empty formula and charge
+      cells for existing metabolites (DIFFER) and an empty ub cell in a reaction row (DIFFER). RAVEN writes an empty
+      formula cell and a charge of 0 onto an existing metabolite (writeExistingField, curateModelFromTables.m line 133)
+      and stops with an error for an empty lb or ub cell (cellfun(@str2num, ...), line 244); Python skips empty cells
+      (_has_value, batch.py lines 241 to 244 and 434 to 437), so an existing formula and charge stay and an empty ub
+      cell leaves the bound at its default.
   - matlab: defaultCompartmentMap
     python: raven_toolbox.localization.DEFAULT_COMPARTMENT_MAP
     status: parity
@@ -632,9 +639,13 @@ entries:
     status: parity
     scenarios:
       - ftinit_toy
+      - init_output_model_smallyeast
     notes: migration.md maps {ftINIT, prepINITModel, ftINITInternalAlg, getINITSteps} onto {raven_toolbox.init.ftinit,
       raven_toolbox.init.prep_init_model, raven_toolbox.init.run_ftinit, raven_toolbox.init.get_init_steps}
-      as a group; pick the right counterpart
+      as a group; pick the right counterpart. init_output_model_smallyeast extracts a model from smallYeast after
+      prepINITModel with tasks; the 26 reactions, their bounds and equations MATCH (see prepINITModel for the kept
+      tasks). With the tasks of task_checking_smallyeast the MILP is infeasible on both sides for GLC_AER and GLC_ANA
+      alone.
   - matlab: ftINITFillGaps
     status: subsumed
     reason: Single-task variant. migration.md paired it with fill_tasks, but ftINIT.m actually calls fitTasks
@@ -1141,9 +1152,15 @@ entries:
     status: parity
     scenarios:
       - ftinit_toy
+      - init_output_model_smallyeast
     notes: migration.md maps {ftINIT, prepINITModel, ftINITInternalAlg, getINITSteps} onto {raven_toolbox.init.ftinit,
       raven_toolbox.init.prep_init_model, raven_toolbox.init.run_ftinit, raven_toolbox.init.get_init_steps}
-      as a group; pick the right counterpart
+      as a group; pick the right counterpart. init_output_model_smallyeast runs smallYeast with a task list in which an
+      infeasible task carries the id of a feasible one. The reference model keeps the template's bounds and
+      stoichiometry and the extracted model, its essential reactions and the bounds and equations of MDH1, PGK and ENO
+      MATCH on both sides. The kept tasks DIFFER. RAVEN removes the failed tasks by position
+      (taskStruct(taskReport.ok == false) = [], prepINITModel.m line 114), so the feasible ATP_GLC stays; Python
+      removes them by id (prep.py line 282), so both tasks with that id are dropped.
   - matlab: printFluxes
     status: matlab-only
     reason: Console formatting of a flux vector. Python users print a pandas Series or DataFrame; listed as

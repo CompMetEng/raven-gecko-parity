@@ -1,0 +1,5 @@
+	ID	DESCRIPTION	IN	IN LB	IN UB	OUT	OUT LB	OUT UB	EQU	EQU LB	EQU UB	SHOULD FAIL	COMMENTS
+	ATP_GLC	ATP regeneration from glucose	alpha-D-glucose[c];O2[c]	0	1000	CO2[c];ethanol[c];glycerol[c];acetate[c]	0	1000	ATP[c] => ADP[c] + phosphate[c]	1	1000		Exercises the EQU column
+	ETH_AER	Growth on ethanol as sole carbon source	ethanol[c];O2[c]	0	1000	biomass[c]	0.01	1000				1	smallYeast cannot consume ethanol; SHOULD FAIL
+						CO2[c];ethanol[c];glycerol[c];acetate[c]	0	1000					
+	ATP_GLC	ATP regeneration without a carbon source	O2[c]	0	1000	CO2[c];ethanol[c];glycerol[c];acetate[c]	0	1000	ATP[c] => ADP[c] + phosphate[c]	1	1000		Infeasible, not marked SHOULD FAIL, and carries the id of the feasible ATP_GLC

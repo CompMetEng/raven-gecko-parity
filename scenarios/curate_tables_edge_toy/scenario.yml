@@ -1,0 +1,23 @@
+id: curate_tables_edge_toy
+pair: raven
+description: >-
+  curateModelFromTables on a model with one reaction and two metabolites (x and y, both with a formula and a
+  charge), covering the table conventions rather than the content: headers written in other case and with
+  alias names (MetName, Comp, Formulas, Charges, GeneShortNames, Index, RxnNames), metabolite rows for
+  existing metabolites with empty formula and charge cells, a new reaction in a table without lb, ub or rev
+  columns, rev 0 and 1 without bounds, and explicit bounds with an empty ub cell. The content of the curated
+  model is compared by name.
+
+entries:
+  - curateModelFromTables
+
+inputs:
+  tables_dir: "{scenario_dir}/tables"
+  met_prefix: M_
+  rxn_prefix: R_
+  cases:
+    - {name: header_aliases, mets: alias_mets.tsv, genes: alias_genes.tsv, rxns: alias_rxns.tsv, coeffs: alias_coeffs.tsv}
+    - {name: existing_empty_cells, mets: exist_mets.tsv, genes: none, rxns: none, coeffs: none}
+    - {name: new_reaction_without_bounds, mets: none, genes: none, rxns: nb_rxns.tsv, coeffs: nb_coeffs.tsv}
+    - {name: rev_without_bounds, mets: none, genes: none, rxns: rev_rxns.tsv, coeffs: rev_coeffs.tsv}
+    - {name: explicit_bounds, mets: none, genes: none, rxns: bnd_rxns.tsv, coeffs: bnd_coeffs.tsv}

@@ -1,0 +1,32 @@
+id: init_output_model_smallyeast
+pair: raven
+description: >-
+  prepINITModel and ftINIT on RAVEN's smallYeast tutorial model with its boundary reactions opened (glcIN and
+  o2IN upper bound 1000) and a task list in which an infeasible task carries the id of a
+  feasible one (ATP_GLC). Genes alternate between a score of +1 and -1 in sorted order. The scenario records
+  which tasks the prepared data keeps, the merged essential reactions, how many reactions of the prepared
+  reference model differ from the template in bounds or stoichiometry, and the bounds and equations of MDH1,
+  PGK and ENO in the extracted model, which show whether the extracted model is built from the template or
+  from the oriented and tightened model.
+
+entries:
+  - prepINITModel
+  - ftINIT
+
+inputs:
+  model: "{matlab_repo}/tutorials/data/models/smallYeast.yml"
+  tasks: "init_tasks.txt"
+  matlab_solver: gurobi
+  python_solver: gurobi
+  ext_comp: c
+  tissue: a
+  threshold: 1
+  open_bounds: [glcIN, o2IN]
+  open_ub: 1000
+  gene_level_up: 1.2214027581601699
+  gene_level_down: 0.8187307530779818
+  reported_reactions: [MDH1, PGK, ENO]
+
+tolerance:
+  rel: 1.0e-9
+  abs: 1.0e-9
