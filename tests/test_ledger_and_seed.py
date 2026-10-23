@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import pytest
+
 from parity.inventory import build_inventory
-from parity.ledger import Entry, Ledger, dump_ledger, load_ledger, merge_entries, save_ledger
+from parity.ledger import Entry, Ledger, LedgerError, dump_ledger, load_ledger, merge_entries, save_ledger
 from parity.seed import discover, expand, normalise, sync_ledger
 
 
@@ -110,3 +112,23 @@ def test_sync_is_idempotent(fake_pair):
 
     _, added_again, _ = sync_ledger(fake_pair)
     assert added_again == 0
+
+
+def test_a_repeated_key_in_one_entry_is_refused(tmp_path):
+    # Two entries merged into one by a deleted "- matlab:" line repeat "status".
+    path = tmp_path / "broken.yml"
+    path.write_text(
+        "version: 1\npair: fake\nentries:\n"
+        "  - matlab: prepINITModel\n    status: parity\n"
+        "    status: matlab-only\n    reason: console output\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(LedgerError, match="status.*twice"):
+        load_ledger(path)
+
+
+def test_the_shipped_ledgers_have_no_repeated_key():
+    from pathlib import Path
+
+    for ledger in sorted((Path(__file__).resolve().parent.parent / "ledgers").glob("*.yml")):
+        load_ledger(ledger)

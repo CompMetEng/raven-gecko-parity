@@ -1,7 +1,8 @@
 """Python side of the task-metabolite scenario for prepINITModel.
 
-A four-metabolite model has the dead-end reaction R3 (B to T) as the only reaction of T, and one task names T
-as its output. The result records the metabolites and reactions of the prepared reference model, the tasks the
+A model has the dead-end reaction R3 (B to T) as the only reaction of T, a second metabolite T2 with the same
+name and compartment as T whose only reaction is the dead end R4, and tasks that name T as an output (MAKE_T)
+and in another letter case (MAKE_T_LOWER). The result records the metabolites and reactions of the prepared reference model, the tasks the
 prepared data keeps and the essential reactions.
 """
 
@@ -19,12 +20,14 @@ def build_model():
     mets = {}
     for name, comp in (("A", "e"), ("B", "c"), ("C", "c"), ("T", "c")):
         mets[name] = cobra.Metabolite(f"{name}_{comp}", name=name, compartment=comp)
+    mets["T2"] = cobra.Metabolite("T2_c", name="T", compartment="c")
     spec = [
         ("EXA", {"A": 1}),
         ("R1", {"A": -1, "B": 1}),
         ("R2", {"B": -1, "C": 1}),
         ("R3", {"B": -1, "T": 1}),
         ("EXC", {"C": -1}),
+        ("R4", {"B": -1, "T2": 1}),
     ]
     for rid, stoich in spec:
         rxn = cobra.Reaction(rid)
