@@ -29,9 +29,9 @@ entries:
 # dependency to do it.
 inputs:
   adapter_matlab: "{scenario_dir}/YeastGEMAdapterParity.m"
-  adapter_python: "{python_repo}/examples/yeast-GEM"
+  adapter_python: "{matlab_repo}/tutorials/full_ecModel"
   fixture_dir: "{matlab_repo}/tutorials/full_ecModel"
-  databases_dir: "{matlab_repo}/databases"
+  databases_dir: "{matlab_repo}/databases/brenda-2026.1-1"
 
   matlab_solver: gurobi
   python_solver: gurobi
@@ -42,14 +42,6 @@ inputs:
   # solve anywhere in this pipeline. The solver names are still declared, matching every
   # other scenario in this pair, since setProtPoolSize's caller conventionally expects
   # one configured even when it is never invoked.
-
-  # examples/yeast-GEM/model_adapter.toml carries f=0.4461, a different value than
-  # YeastGEMAdapter.m's own f=0.5 --- not a bug on either side (each is presumably a
-  # deliberately calibrated value for that project), but setProtPoolSize's bound is
-  # directly proportional to f, so leaving them different would show up as a
-  # protein-pool mismatch that has nothing to do with either implementation's own
-  # behaviour. run.py overrides Python's adapter to 0.5 so this scenario compares the
-  # pipeline, not a stale example config value.
 
 # geckopy's fill_eccodes_from_gem reads model.reactions[i].annotation['ec-code'], a
 # cobrapy convention; cobra.io.load_yaml_model (what load_conventional_gem calls for a
@@ -63,18 +55,13 @@ inputs:
 # before make_ec_model runs --- restoring parity input, not working around a divergence
 # in what is being compared.
 
-# GECKO's databases/ (databases_dir, above) now ships kcat.tsv / mw.tsv / sa.tsv
-# directly --- the same files, same format, geckopy's load_brenda_data already reads,
-# produced by geckopy's own `brenda-refresh` CLI and vendored into GECKO unchanged (see
-# databases/README.md in the GECKO checkout). No format conversion is needed or done
-# here; both sides now read the identical BRENDA snapshot. This was not always so: GECKO
-# used to ship its own max_KCAT.txt / max_MW.txt / max_SA.txt snapshot in a different
-# layout, and this scenario carried a run-time converter for it. That converter silently
-# went stale --- raven-gecko-parity#100 --- once GECKO's databases/ moved to the shared
-# format and those three files stopped existing at all, which is why this scenario
-# reported ERROR (FileNotFoundError) rather than a result for a stretch. kcat_chain_ectestgem
-# is unaffected by any of this: its own five-row BRENDA fixture is hand-written directly
-# in geckopy's format on both sides, not read from GECKO's databases/ directory.
+# GECKO does not ship BRENDA data: fetchBrendaAsset downloads the toolbox-assets release
+# brenda-2026.1-1 into databases/brenda-2026.1-1 on first use, the same kcat.tsv / mw.tsv /
+# sa.tsv files that geckopy's load_brenda_data reads. databases_dir names that folder; the
+# MATLAB side reaches it through ModelAdapter.getBrendaDBFolder. Run any GECKO function that
+# loads BRENDA (or fetchBrendaAsset) once before this scenario so the folder exists.
+# kcat_chain_ectestgem is unaffected: its own five-row BRENDA fixture is hand-written
+# directly in geckopy's format on both sides.
 
 # fuzzyKcatMatching's organism-phylogenetic-distance escalation needs a real KEGG
 # taxonomy artefact (RAVEN's external/kegg/keggPhylDist.mat) that this repo does not
@@ -101,32 +88,18 @@ inputs:
 #     hundreds of yeast-GEM reactions, mostly toward smaller, more plausible values.
 #     [GECKO #434], merged.
 #
-# Both are fixed in the develop4 branches these PRs target; this scenario's own MATLAB
-# result was generated against a worktree with both fixes applied ahead of merge, so it
-# already reflects the corrected behaviour.
+# Both are fixed in GECKO develop.
 #
-# Two confirmed, asserted divergences remain even with both fixes applied:
-#
-#   1. EC-code validation strictness. fill_eccodes_from_gem validates each EC string
-#      against a strict `<n|-`.`<n|-`.`<n|-`.`<n|-` pattern (four purely-numeric-or-`-`
-#      levels); yeast-GEM's own annotations include BRENDA/KEGG "new/undefined subclass"
-#      codes like `1.1.1.n12` (a real, if unusual, EC convention), which fail that
-#      pattern and are dropped *entirely*, along with any other, valid EC code joined to
-#      them in the same `;`-separated string. getECfromGEM.m has no equivalent
-#      validation and keeps them. Confirmed by direct execution: 36 reactions get a kcat
-#      on the MATLAB side that geckopy's stricter validation excludes.
-#   2. A further ~119 reactions (of 4671) get a *different*, not-missing, kcat value on
-#      each side. The most likely explanation, consistent with (but not exhaustively
-#      confirmed for every one of these 119 cases): this scenario's own necessarily
-#      sparse two-organism PhylDist.mat stand-in (see YeastGEMAdapterParity.m) makes the
-#      organism-closeness escalation tier of fuzzy matching close to arbitrary at genome
-#      scale, where real BRENDA rows carry thousands of distinct real organism names that
-#      a real KEGG taxonomy tree would otherwise rank by phylogenetic distance --- both
-#      implementations' organism-filtering logic were read side by side and are faithful
-#      ports of each other (filter_by_organism / extract_indexes both drop any BRENDA row
-#      whose organism cannot be resolved against the (here, tiny) PhylDist struct), so the
-#      likely cause is fixture poverty rather than a third algorithmic difference. Left
-#      open rather than asserted as a specific mechanism.
+# One divergence remains, in 8 of 4671 kcats (r_2324 to r_2331, the acyl-DHAP reductases of
+# EC 1.1.1.101): Python gives 11920.0 (wildcard level 1, origin 3), MATLAB 0.0021615
+# (wildcard level 0, origin 5, a kcat derived from a specific activity and a molecular
+# weight). geckopy's load_brenda_data drops a BRENDA row whose kcat is more than four orders
+# of magnitude below the median of its EC (filter_outlier_kcats=True, the default);
+# loadBRENDAdata.m has no such filter. Running the Python side on r_2324 with
+# filter_outlier_kcats=False returns 0.002162, the MATLAB value. The EC-code counts
+# (3799 reactions with an EC), the number of reactions with a kcat (3799), the protein pool
+# bound and every other kcat agree. fill_eccodes_from_gem skips 36 EC strings that fail its
+# format check (for example '1.1.1.n12;4.2.1.119'); the counts above include that effect.
 tolerance:
   rel: 1.0e-9
   abs: 1.0e-12
