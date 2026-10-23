@@ -1,0 +1,354 @@
+!!omap
+- metaData: !!omap
+  - id: testModel
+  - name: testModel
+  - date: "2026-10-23"
+  - defaultLB: -.inf
+  - defaultUB: .inf
+  - description: Enzyme-constrained model of testModel
+  - geckopy_version: 4.0.0b1
+- metabolites:
+  - !!omap
+    - id: e1e
+    - name: e1
+    - compartment: e
+    - charge: 0.0
+    - annotation: !!omap
+      - sbo: SBO:0000247
+  - !!omap
+    - id: e2e
+    - name: e2
+    - compartment: e
+    - charge: 0.0
+    - annotation: !!omap
+      - sbo: SBO:0000247
+  - !!omap
+    - id: m1c
+    - name: m1
+    - compartment: c
+    - charge: 0.0
+    - annotation: !!omap
+      - sbo: SBO:0000247
+  - !!omap
+    - id: m2c
+    - name: m2
+    - compartment: c
+    - charge: 0.0
+    - annotation: !!omap
+      - sbo: SBO:0000247
+  - !!omap
+    - id: prot_P1
+    - name: prot_P1
+    - compartment: c
+    - annotation: !!omap
+      - sbo: SBO:0000252
+    - notes: Enzyme-usage pseudometabolite
+  - !!omap
+    - id: prot_P2
+    - name: prot_P2
+    - compartment: c
+    - annotation: !!omap
+      - sbo: SBO:0000252
+    - notes: Enzyme-usage pseudometabolite
+  - !!omap
+    - id: prot_P3
+    - name: prot_P3
+    - compartment: c
+    - annotation: !!omap
+      - sbo: SBO:0000252
+    - notes: Enzyme-usage pseudometabolite
+  - !!omap
+    - id: prot_P4
+    - name: prot_P4
+    - compartment: c
+    - annotation: !!omap
+      - sbo: SBO:0000252
+    - notes: Enzyme-usage pseudometabolite
+  - !!omap
+    - id: prot_P5
+    - name: prot_P5
+    - compartment: c
+    - annotation: !!omap
+      - sbo: SBO:0000252
+    - notes: Enzyme-usage pseudometabolite
+  - !!omap
+    - id: prot_pool
+    - name: prot_pool
+    - compartment: c
+    - notes: Enzyme-usage protein pool
+- reactions:
+  - !!omap
+    - id: R1
+    - name: R1
+    - metabolites: !!omap
+      - e1e: -1.0
+      - m1c: 1.0
+    - lower_bound: 0.0
+    - upper_bound: .inf
+    - annotation: !!omap
+      - sbo: SBO:0000176
+  - !!omap
+    - id: R1_REV
+    - name: R1 (reversible)
+    - metabolites: !!omap
+      - e1e: 1.0
+      - m1c: -1.0
+    - lower_bound: 0.0
+    - upper_bound: .inf
+    - annotation: !!omap
+      - sbo: SBO:0000176
+  - !!omap
+    - id: R2_EXP_1
+    - name: R2
+    - metabolites: !!omap
+      - m1c: -1.0
+      - m2c: 1.0
+    - lower_bound: 0.0
+    - upper_bound: .inf
+    - gene_reaction_rule: G1 and G2
+    - annotation: !!omap
+      - ec-code:
+        - 1.1.1.1
+      - sbo: SBO:0000176
+  - !!omap
+    - id: R2_EXP_2
+    - name: R2
+    - metabolites: !!omap
+      - m1c: -1.0
+      - m2c: 1.0
+    - lower_bound: 0.0
+    - upper_bound: .inf
+    - gene_reaction_rule: G3
+    - annotation: !!omap
+      - ec-code:
+        - 1.1.1.1
+      - sbo: SBO:0000176
+  - !!omap
+    - id: R2_REV_EXP_1
+    - name: R2 (reversible)
+    - metabolites: !!omap
+      - m1c: 1.0
+      - m2c: -1.0
+    - lower_bound: 0.0
+    - upper_bound: .inf
+    - gene_reaction_rule: G1 and G2
+    - annotation: !!omap
+      - ec-code:
+        - 1.1.1.1
+      - sbo: SBO:0000176
+  - !!omap
+    - id: R2_REV_EXP_2
+    - name: R2 (reversible)
+    - metabolites: !!omap
+      - m1c: 1.0
+      - m2c: -1.0
+    - lower_bound: 0.0
+    - upper_bound: .inf
+    - gene_reaction_rule: G3
+    - annotation: !!omap
+      - ec-code:
+        - 1.1.1.1
+      - sbo: SBO:0000176
+  - !!omap
+    - id: R3
+    - name: R3
+    - metabolites: !!omap
+      - m1c: -1.0
+      - m2c: 1.0
+    - lower_bound: 0.0
+    - upper_bound: .inf
+    - gene_reaction_rule: G4
+    - annotation: !!omap
+      - ec-code:
+        - 1.1.2.1
+      - sbo: SBO:0000176
+  - !!omap
+    - id: R4
+    - name: R4
+    - metabolites: !!omap
+      - m1c: -1.0
+      - m2c: 1.0
+    - lower_bound: 0.0
+    - upper_bound: .inf
+    - annotation: !!omap
+      - sbo: SBO:0000176
+  - !!omap
+    - id: R5
+    - name: R5
+    - metabolites: !!omap
+      - e2e: 1.0
+      - m2c: -1.0
+    - lower_bound: 0.0
+    - upper_bound: .inf
+    - gene_reaction_rule: G5
+    - objective_coefficient: 1.0
+    - annotation: !!omap
+      - ec-code:
+        - 1.1.1.3
+      - sbo: SBO:0000176
+  - !!omap
+    - id: S1
+    - name: S1
+    - metabolites: !!omap
+      - e1e: -1.0
+    - lower_bound: -.inf
+    - upper_bound: .inf
+    - annotation: !!omap
+      - sbo: SBO:0000176
+  - !!omap
+    - id: S2
+    - name: S2
+    - metabolites: !!omap
+      - e2e: -1.0
+    - lower_bound: -.inf
+    - upper_bound: .inf
+    - annotation: !!omap
+      - sbo: SBO:0000176
+  - !!omap
+    - id: usage_prot_P1
+    - name: usage_prot_P1
+    - metabolites: !!omap
+      - prot_P1: 1.0
+      - prot_pool: -1.0
+    - lower_bound: 0.0
+    - upper_bound: 1000.0
+    - gene_reaction_rule: G1
+    - subsystem:
+      - Protein usage
+  - !!omap
+    - id: usage_prot_P2
+    - name: usage_prot_P2
+    - metabolites: !!omap
+      - prot_P2: 1.0
+      - prot_pool: -1.0
+    - lower_bound: 0.0
+    - upper_bound: 1000.0
+    - gene_reaction_rule: G2
+    - subsystem:
+      - Protein usage
+  - !!omap
+    - id: usage_prot_P3
+    - name: usage_prot_P3
+    - metabolites: !!omap
+      - prot_P3: 1.0
+      - prot_pool: -1.0
+    - lower_bound: 0.0
+    - upper_bound: 1000.0
+    - gene_reaction_rule: G3
+    - subsystem:
+      - Protein usage
+  - !!omap
+    - id: usage_prot_P4
+    - name: usage_prot_P4
+    - metabolites: !!omap
+      - prot_P4: 1.0
+      - prot_pool: -1.0
+    - lower_bound: 0.0
+    - upper_bound: 1000.0
+    - gene_reaction_rule: G4
+    - subsystem:
+      - Protein usage
+  - !!omap
+    - id: usage_prot_P5
+    - name: usage_prot_P5
+    - metabolites: !!omap
+      - prot_P5: 1.0
+      - prot_pool: -1.0
+    - lower_bound: 0.0
+    - upper_bound: 1000.0
+    - gene_reaction_rule: G5
+    - subsystem:
+      - Protein usage
+  - !!omap
+    - id: prot_pool_exchange
+    - name: prot_pool_exchange
+    - metabolites: !!omap
+      - prot_pool: 1.0
+    - lower_bound: 0.0
+    - upper_bound: 1000.0
+    - subsystem:
+      - Protein usage
+- genes:
+  - !!omap
+    - id: G1
+    - annotation: !!omap
+      - sbo: SBO:0000243
+  - !!omap
+    - id: G2
+    - annotation: !!omap
+      - sbo: SBO:0000243
+  - !!omap
+    - id: G3
+    - annotation: !!omap
+      - sbo: SBO:0000243
+  - !!omap
+    - id: G4
+    - annotation: !!omap
+      - sbo: SBO:0000243
+  - !!omap
+    - id: G5
+    - annotation: !!omap
+      - sbo: SBO:0000243
+- compartments: !!omap
+  - c: c
+  - e: e
+- gecko_light: false
+- ec-rxns:
+  - !!omap
+    - id: R2_EXP_1
+    - kcat: 0.0
+    - enzymes: !!omap
+      - P1: 1.0
+      - P2: 1.0
+  - !!omap
+    - id: R2_EXP_2
+    - kcat: 0.0
+    - enzymes: !!omap
+      - P3: 1.0
+  - !!omap
+    - id: R2_REV_EXP_1
+    - kcat: 0.0
+    - enzymes: !!omap
+      - P1: 1.0
+      - P2: 1.0
+  - !!omap
+    - id: R2_REV_EXP_2
+    - kcat: 0.0
+    - enzymes: !!omap
+      - P3: 1.0
+  - !!omap
+    - id: R3
+    - kcat: 0.0
+    - enzymes: !!omap
+      - P4: 1.0
+  - !!omap
+    - id: R5
+    - kcat: 0.0
+    - enzymes: !!omap
+      - P5: 1.0
+- ec-enzymes:
+  - !!omap
+    - genes: G1
+    - enzymes: P1
+    - mw: 10000.0
+    - sequence: MRAL
+  - !!omap
+    - genes: G2
+    - enzymes: P2
+    - mw: 20000.0
+    - sequence: MNTD
+  - !!omap
+    - genes: G3
+    - enzymes: P3
+    - mw: 30000.0
+    - sequence: MSYN
+  - !!omap
+    - genes: G4
+    - enzymes: P4
+    - mw: 40000.0
+    - sequence: MDFM
+  - !!omap
+    - genes: G5
+    - enzymes: P5
+    - mw: 50000.0
+    - sequence: MLFK
