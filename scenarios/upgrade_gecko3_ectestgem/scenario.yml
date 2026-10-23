@@ -1,0 +1,52 @@
+id: upgrade_gecko3_ectestgem
+pair: gecko
+description: >-
+  Bringing a GECKO 3 ecModel and project to the GECKO 4 layout, on ecTestGEM. upgradeEcModel /
+  upgrade_ec_model turn the reverse protein usage and pool reactions forward (stoichiometry,
+  bounds, objective coefficient); the same models written to YAML and read back by each side's
+  own reader show what the readers do before the upgrade runs (geckopy's reader turns reactions
+  with a negative lower bound forward, MATLAB's reader does not). upgradeGECKOproject /
+  upgrade_project are run on copies of the ecTestGEM project folder (dry run, with and without
+  the ecModel, applied twice, a saved ecModel in either direction, a project with an adapter
+  class instead of model_adapter.toml). convertCustomKcats / convert_custom_kcats are run on
+  the stock customKcats.tsv and on one with an empty notes cell and two rows for one reaction.
+  The stored DLKcat.tsv of the projects is one that matches the model, except in one case that
+  keeps the stock file (it holds yeast substrates). The note about the ecModel argument is
+  normalised (MATLAB names it 'ecModel', geckopy ec_model). A raise is a value on both sides.
+  Nothing reaches the network.
+
+# Differences this scenario reports (the run decides, the sources explain):
+#   * convert_custom.empty_note_and_duplicate: MATLAB's applyCustomKcats appends ', ' plus the
+#     note even when the note is empty, so convertCustomKcats writes ', ' for a row without a
+#     note and ', , second' for a later row's note; convert_custom_kcats keeps '' and 'second'.
+#   * yaml_round_trip: geckopy's reader (raven-toolbox _flip_legacy_prot_direction) turns every
+#     usage_prot_* / prot_pool_exchange reaction with a negative lower bound forward while it
+#     reads and leaves the objective alone; MATLAB's readYAMLmodel leaves the model as written
+#     and upgradeEcModel then turns it, objective coefficients included. After the upgrade the
+#     objective of a GECKO 3 model keeps its GECKO 3 sign in Python and not in MATLAB.
+#   * projects.forward_model_negative_lb: a GECKO 4 model with a negative lower bound on one
+#     usage reaction is turned by geckopy's reader and back by upgrade_ec_model, so the model
+#     comes out unchanged, but upgrade_project reports '2 protein reactions turned forward' and
+#     rewrites the file; upgradeGECKOproject reports nothing.
+#   * projects.no_toml: upgradeGECKOproject converts an adapter class; upgrade_project lists the
+#     adapter 'by hand' and skips the custom kcats and predictions even when the ecModel is given
+#     (its note then asks for the ecModel).
+#   * projects.stored_dlkcat_foreign_substrates: kcatsFromDLKcat raises when the DLKcat output
+#     names substrates that are not in model.metNames; kcats_from_dlkcat drops those rows.
+
+entries:
+  - upgradeEcModel
+  - upgradeGECKOproject
+  - convertCustomKcats
+
+inputs:
+  project_template: "{python_repo}/examples/ecTestGEM"
+  class_adapter: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
+  custom_stock: "{scenario_dir}/data/customKcats_stock.tsv"
+  custom_edge: "{scenario_dir}/data/customKcats_edge.tsv"
+  dlkcat_valid: "{scenario_dir}/data/DLKcat_valid.tsv"
+  scratch: "{repo_root}/results/.upgrade_gecko3"
+
+tolerance:
+  rel: 1.0e-9
+  abs: 1.0e-12
