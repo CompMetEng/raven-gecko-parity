@@ -12,6 +12,7 @@ for k = 1:numel(cases)
     if ~isempty(c.mets)
         args = {'mets', reshape(cellfun(@char, as_list(c.mets), 'UniformOutput', false), [], 1)};
     end
+    fprintf('contract case %s\n', char(c.name));
     state = warning('off', 'all');
     [out, removed] = contractModel(model, args{:});
     warning(state);

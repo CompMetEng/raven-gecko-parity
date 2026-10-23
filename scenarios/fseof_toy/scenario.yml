@@ -3,7 +3,7 @@ pair: raven
 description: >-
   FSEOF on a hand-written model in which a product competes with biomass for one substrate and reaches the product
   through a reversible reaction that carries negative flux. Settings: the defaults, five iterations at a coefficient
-  of 0.5, and a correlation threshold of 1. Per case the reactions found as amplification, knockdown and knockout
+  of 0.5, and a correlation threshold of 0.99. Per case the reactions found as amplification, knockdown and knockout
   targets and their slopes.
 
 entries:
@@ -29,4 +29,4 @@ inputs:
   cases:
   - {name: defaults, iterations: 10, coefficient: 0.9, threshold: 0.9}
   - {name: five_iterations_half, iterations: 5, coefficient: 0.5, threshold: 0.9}
-  - {name: threshold_one, iterations: 10, coefficient: 0.9, threshold: 1}
+  - {name: threshold_high, iterations: 10, coefficient: 0.9, threshold: 0.99}

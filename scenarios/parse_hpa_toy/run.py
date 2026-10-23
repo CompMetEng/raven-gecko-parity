@@ -10,7 +10,7 @@ def run(ctx):
     results = {}
     for case in inputs["protein"]:
         try:
-            data = parse_hpa(case["file"])
+            data = parse_hpa(f"{inputs['data_dir']}/{case['file']}")
         except (ValueError, KeyError):
             results[case["name"]] = {"error": True}
             continue
@@ -23,7 +23,7 @@ def run(ctx):
         }
     for case in inputs["rna"]:
         try:
-            data = parse_hpa_rna(case["file"])
+            data = parse_hpa_rna(f"{inputs['data_dir']}/{case['file']}")
         except (ValueError, KeyError):
             results[case["name"]] = {"error": True}
             continue

@@ -14,7 +14,7 @@ for k = 1:numel(cases)
     slopes = struct();
     anyTarget = targets.amplify | targets.knockdown | targets.knockout;
     for i = find(anyTarget(:))'
-        slopes.(model.rxns{i}) = targets.slope(i);
+        slopes.(model.rxns{i}) = round(targets.slope(i), 4);
     end
     out.amplify = sort(model.rxns(targets.amplify))';
     out.knockdown = sort(model.rxns(targets.knockdown))';

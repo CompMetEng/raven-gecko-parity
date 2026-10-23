@@ -18,7 +18,7 @@ inputs:
   - {name: min_support_two, organism: bug, species_to_model: null, min_support: 2, require_tools: [], min_identity: null, max_evalue: null, use_gene_map: false}
   - {name: require_broccoli, organism: bug, species_to_model: null, min_support: 1, require_tools: [broccoli], min_identity: null, max_evalue: null, use_gene_map: false}
   - {name: identity_filter, organism: bug, species_to_model: null, min_support: 1, require_tools: [], min_identity: 80, max_evalue: null, use_gene_map: false}
-  - {name: evalue_filter, organism: bug, species_to_model: null, min_support: 1, require_tools: [], min_identity: null, max_evalue: 1e-70, use_gene_map: false}
+  - {name: evalue_filter, organism: bug, species_to_model: null, min_support: 1, require_tools: [], min_identity: null, max_evalue: 1.0e-70, use_gene_map: false}
   - {name: other_left_out_with_gene_map, organism: bug, species_to_model: {bug: bug, templateGEM: templateGEM, other: null}, min_support: 1, require_tools: [], min_identity: null, max_evalue: null, use_gene_map: true}
   - {name: unknown_organism, organism: nothing, species_to_model: null, min_support: 1, require_tools: [], min_identity: null, max_evalue: null, use_gene_map: false}
   - {name: unknown_tool, organism: bug, species_to_model: null, min_support: 1, require_tools: [oma], min_identity: null, max_evalue: null, use_gene_map: false}

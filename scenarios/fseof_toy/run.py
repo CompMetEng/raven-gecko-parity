@@ -38,7 +38,7 @@ def run(ctx):
         out = {"amplify": [], "knockdown": [], "knockout": [], "slopes": {}}
         for row in table.itertuples():
             out[row.target_type].append(row.reaction)
-            out["slopes"][row.reaction] = float(row.slope)
+            out["slopes"][row.reaction] = round(float(row.slope), 4)
         for key in ("amplify", "knockdown", "knockout"):
             out[key] = sorted(out[key])
         results[case["name"]] = out

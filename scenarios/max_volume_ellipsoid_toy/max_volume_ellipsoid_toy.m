@@ -16,7 +16,7 @@ for k = 1:numel(cases)
         x0 = double(c.x0(:));
     end
     [x, E, converged] = sampleMaxVolEllipse(A, b, x0);
-    results.(char(c.name)) = struct('centre', x(:)', 'E', rows(E), 'E_Et', rows(E * E'), 'converged', logical(converged));
+    results.(char(c.name)) = struct('centre', x(:)', 'E', {rows(E)}, 'E_Et', {rows(E * E')}, 'converged', logical(converged));
 end
 end
 

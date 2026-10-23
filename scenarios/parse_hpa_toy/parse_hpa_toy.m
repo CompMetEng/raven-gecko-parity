@@ -7,7 +7,7 @@ protein = as_list(inputs.protein);
 for k = 1:numel(protein)
     c = protein{k};
     try
-        data = parseHPA(char(c.file));
+        data = parseHPA(fullfile(char(inputs.data_dir), char(c.file)));
     catch
         results.(char(c.name)) = struct('error', true);
         continue
@@ -24,7 +24,7 @@ rna = as_list(inputs.rna);
 for k = 1:numel(rna)
     c = rna{k};
     try
-        data = parseHPArna(char(c.file));
+        data = parseHPArna(fullfile(char(inputs.data_dir), char(c.file)));
     catch
         results.(char(c.name)) = struct('error', true);
         continue
