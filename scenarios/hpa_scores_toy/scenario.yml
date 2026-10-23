@@ -6,7 +6,10 @@ description: >-
   score over the cell types. Six genes of smallYeast (sorted by id) carry hand-written
   levels: genes measured in one or two cell types, a gene detected in one cell type and not
   detected in the other (best and average differ), a gene measured only in another tissue,
-  and a gene whose level is "None", which RAVEN's default level table scores as -8.
+  and a gene whose level is "None", which RAVEN's default level table scores as -8. Further cases
+  give the tissue and cell type in another letter case, a custom level table with names that differ
+  only in case (the first one is used), and a level in another tissue that the table lacks (an
+  error whichever tissue is scored). A case may carry extra_rows and a table of level names and scores.
 
 entries:
   - scoreModel
@@ -29,6 +32,41 @@ inputs:
     - {name: liver_average, tissue: liver, celltype: "", multiple: average}
     - {name: liver_hepatocytes, tissue: liver, celltype: hepatocytes, multiple: best}
     - {name: kidney_best, tissue: kidney, celltype: "", multiple: best}
+    - {name: liver_upper_case, tissue: LIVER, celltype: Hepatocytes, multiple: best}
+    - name: table_first_of_case_duplicates
+      tissue: liver
+      celltype: ""
+      multiple: best
+      table:
+        - {name: High, score: 1}
+        - {name: HIGH, score: 2}
+        - {name: Medium, score: 3}
+        - {name: Low, score: 4}
+        - {name: None, score: 5}
+        - {name: Strong, score: 6}
+        - {name: Moderate, score: 7}
+        - {name: Weak, score: 8}
+        - {name: Not detected, score: 9}
+    - name: table_first_of_case_duplicates_reversed
+      tissue: liver
+      celltype: ""
+      multiple: best
+      table:
+        - {name: HIGH, score: 2}
+        - {name: High, score: 1}
+        - {name: Medium, score: 3}
+        - {name: Low, score: 4}
+        - {name: None, score: 5}
+        - {name: Strong, score: 6}
+        - {name: Moderate, score: 7}
+        - {name: Weak, score: 8}
+        - {name: Not detected, score: 9}
+    - name: level_missing_from_table_in_another_tissue
+      tissue: liver
+      celltype: ""
+      multiple: best
+      extra_rows:
+        - {gene: 5, tissue: kidney, celltype: tubules, level: Mixed}
 
 tolerance:
   rel: 0.0

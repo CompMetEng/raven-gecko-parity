@@ -69,6 +69,9 @@ def curate(inputs, case):
     except Exception:
         return {"error": True}
 
+    def bound(value):
+        return "Inf" if value == float("inf") else "-Inf" if value == float("-inf") else float(value)
+
     def annotation(entity, namespace):
         return str(entity.annotation.get(namespace, ""))
 
@@ -91,6 +94,8 @@ def curate(inputs, case):
                 "kegg_reaction": annotation(r, "kegg.reaction"),
                 "metacyc": annotation(r, "metacyc"),
                 "confidence_score": float(r.notes["confidence_score"]) if "confidence_score" in r.notes else "NaN",
+                "lb": bound(r.lower_bound),
+                "ub": bound(r.upper_bound),
             }
             for r in model.reactions
         ),

@@ -1,0 +1,4 @@
+rxnIdx	rxnNames	lb	ub	rev	kegg.reaction
+1	renamed	NaN		TRUE	
+2	boundtext	TRUE	1e3	FALSE	
+3	comma	1,000	Inf		

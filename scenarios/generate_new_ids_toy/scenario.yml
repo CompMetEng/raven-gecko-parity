@@ -3,7 +3,7 @@ pair: raven
 description: >-
   generateNewIds on lists of existing identifiers: no id with the prefix, a normal increment, a wider explicit
   width, a prefix that mixes widths (r_9 beside r_10), a non-numeric suffix, a prefix that is also a prefix of
-  another namespace, a quantity above one, and the metabolite namespace.
+  another namespace, a quantity above one, suffixes of 2^52 or more (not numbers), and the metabolite namespace.
 
 entries:
   - generateNewIds
@@ -25,4 +25,8 @@ inputs:
   - {name: overflowing_suffix, type: rxns, ids: [r_1e400, r_5], prefix: "r_", quantity: 1, num_length: 4}
   - {name: whole_exponent_suffix, type: rxns, ids: [r_1e2, r_007], prefix: "r_", quantity: 1, num_length: 4}
   - {name: d_exponent_suffix, type: rxns, ids: [r_1d2, r_0003], prefix: "r_", quantity: 1, num_length: 4}
+  - {name: beyond_double_precision, type: rxns, ids: [r_9007199254740993], prefix: "r_", quantity: 2, num_length: 4}
+  - {name: at_2_to_the_52, type: rxns, ids: [r_4503599627370496, r_0003], prefix: "r_", quantity: 1, num_length: 4}
+  - {name: below_2_to_the_52, type: rxns, ids: [r_4503599627370495], prefix: "r_", quantity: 1, num_length: 4}
+  - {name: large_exponent, type: rxns, ids: [r_1e20, r_0003], prefix: "r_", quantity: 1, num_length: 4}
   - {name: metabolites, type: mets, ids: [s_0001, s_0100, m_0500], prefix: "s_", quantity: 2, num_length: 4}

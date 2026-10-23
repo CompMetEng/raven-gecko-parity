@@ -91,7 +91,8 @@ for j = 1:nR
     if isfield(newModel, 'rxnConfidenceScores'), score = double(newModel.rxnConfidenceScores(j)); end
     reactions{j} = struct('name', newModel.rxnNames{j}, ...
         'kegg_reaction', annotation(newModel, 'rxnMiriams', j, 'kegg.reaction'), ...
-        'metacyc', annotation(newModel, 'rxnMiriams', j, 'metacyc'), 'confidence_score', score);
+        'metacyc', annotation(newModel, 'rxnMiriams', j, 'metacyc'), 'confidence_score', score, ...
+        'lb', bound(newModel.lb(j)), 'ub', bound(newModel.ub(j)));
     names{j} = newModel.rxnNames{j};
 end
 [~, o] = sort(names);
@@ -107,6 +108,18 @@ for k = 1:numel(o)
 end
 
 results = struct('error', false, 'metabolites', {metabolites}, 'reactions', {reactions}, 'genes', {genes});
+end
+
+
+function value = bound(x)
+% Infinite bounds as text, so that both sides write the same JSON.
+if x == Inf
+    value = 'Inf';
+elseif x == -Inf
+    value = '-Inf';
+else
+    value = double(x);
+end
 end
 
 

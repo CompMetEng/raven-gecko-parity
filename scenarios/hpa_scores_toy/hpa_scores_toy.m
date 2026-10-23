@@ -5,9 +5,53 @@ inputs = ctx.inputs;
 model = readYAMLmodel(inputs.model);
 genes = sort(model.genes(:));
 genes = genes(1:6);
-rows = as_list(inputs.rows);
+baseRows = as_list(inputs.rows);
 cases = as_list(inputs.cases);
 
+results = struct();
+for k = 1:numel(cases)
+    c = cases{k};
+    rows = baseRows;
+    if isfield(c, 'extra_rows')
+        rows = [rows, as_list(c.extra_rows)];
+    end
+    hpaData = build_hpa(rows, genes);
+    multiple = 'average';
+    if strcmp(char(c.multiple), 'best')
+        multiple = 'max';
+    end
+    args = {'multipleCellScoring', multiple};
+    if ~isempty(char(c.celltype))
+        args = [args, {'celltype', char(c.celltype)}]; %#ok<AGROW>
+    end
+    if isfield(c, 'table')
+        entries = as_list(c.table);
+        levelScores = struct('names', {cellfun(@(e) char(e.name), entries, 'UniformOutput', false)}, ...
+            'scores', cellfun(@(e) double(e.score), entries));
+        args = [args, {'hpaLevelScores', levelScores}]; %#ok<AGROW>
+    end
+    try
+        [~, ~, hpaScores] = scoreModel(model, hpaData, [], char(c.tissue), args{:});
+    catch
+        results.(char(c.name)) = struct('error', true);
+        continue;
+    end
+    records = cell(1, numel(genes));
+    for g = 1:numel(genes)
+        i = find(strcmp(model.genes, genes{g}), 1);
+        has = isfinite(hpaScores(i));
+        score = 0;
+        if has
+            score = double(hpaScores(i));
+        end
+        records{g} = struct('gene', genes{g}, 'has_score', has, 'score', score);
+    end
+    results.(char(c.name)) = records;
+end
+end
+
+
+function hpaData = build_hpa(rows, genes)
 nRows = numel(rows);
 tissueOf = cell(nRows, 1); celltypeOf = cell(nRows, 1); levelOf = cell(nRows, 1); geneOf = zeros(nRows, 1);
 for i = 1:nRows
@@ -30,31 +74,6 @@ hpaData.tissues = tissueOf(firstIdx)';
 hpaData.celltypes = celltypeOf(firstIdx)';
 hpaData.levels = levels;
 hpaData.gene2Level = sparse(gene2Level);
-
-results = struct();
-for k = 1:numel(cases)
-    c = cases{k};
-    multiple = 'average';
-    if strcmp(char(c.multiple), 'best')
-        multiple = 'max';
-    end
-    args = {'multipleCellScoring', multiple};
-    if ~isempty(char(c.celltype))
-        args = [args, {'celltype', char(c.celltype)}]; %#ok<AGROW>
-    end
-    [~, ~, hpaScores] = scoreModel(model, hpaData, [], char(c.tissue), args{:});
-    records = cell(1, numel(genes));
-    for g = 1:numel(genes)
-        i = find(strcmp(model.genes, genes{g}), 1);
-        has = isfinite(hpaScores(i));
-        score = 0;
-        if has
-            score = double(hpaScores(i));
-        end
-        records{g} = struct('gene', genes{g}, 'has_score', has, 'score', score);
-    end
-    results.(char(c.name)) = records;
-end
 end
 
 

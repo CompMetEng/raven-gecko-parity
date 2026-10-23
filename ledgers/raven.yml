@@ -399,13 +399,20 @@ entries:
       0) and with overwriteWithEmpty false (stored values stay), an existing reaction whose lb and ub cells are empty
       (no bound given, so the stored bounds stay), and a new reaction with an empty ub cell (the model's defaultUB,
       Inf when none is stored); all MATCH. Both sides take the option as overwriteWithEmpty (RAVEN) and
-      overwrite_with_empty (Python), default true, and both reject a value that is not a logical (RAVEN:badInput,
-      TypeError). An empty gene rule, lb or ub cell never changes an existing entity. An empty MIRIAM cell of an
+      overwrite_with_empty (Python), default true. RAVEN accepts a logical or a numeric 0 or 1 and raises RAVEN:badInput
+      for any other value; Python requires a bool or numpy.bool_ and raises TypeError otherwise. A cell with only blanks
+      counts as empty on both sides, in both modes. An empty gene rule, lb or ub cell never changes an existing entity. An empty MIRIAM cell of an
       existing entity removes that namespace when another existing entity of the table has a value in the column,
       and a column without a value for any existing entity is not written; with overwriteWithEmpty false the stored
       annotation stays. A new metabolite or reaction whose charge or confidence score cell is empty takes 0 when the
       column has a value in another row. Python reads a table file as text, so NA, null and None are text.
-      curate_tables_annotation_toy compares these cases and gives MATCH.
+      The lb, ub, rev, charge and confidence score cells are read as numbers on both sides and nothing is evaluated; true
+      and false in any case are 1 and 0, an empty cell or NaN is not given, and any other text (abc, NA, None) raises
+      (RAVEN:badInput, ValueError), for a column cell of a row that would otherwise be ignored as well. Python also
+      reads a thousands separator, an exponent and Inf as str2double does, but not hexadecimal or complex text. RAVEN sets
+      the rev field of an existing reaction from the rev column; Python checks the column and derives reversibility from
+      the bounds, so the scenario compares bounds and not rev. curate_tables_annotation_toy compares these cases and
+      gives MATCH.
   - matlab: defaultCompartmentMap
     python: raven_toolbox.localization.DEFAULT_COMPARTMENT_MAP
     status: parity
@@ -737,7 +744,7 @@ entries:
     scenarios:
       - generate_new_ids_toy
     notes: >-
-      Generates the next free id in a model's numbering scheme. Both sides take the largest id numerically and the width of that id (generateNewIds.m, str2double and max); a non-numeric suffix is only used when no id is numeric. generate_new_ids_toy covers r_9, r_10, r_2, r_0003 beside r_abc and a prefix without underscore beside ids that start with a letter. batch_curate_from_tsv uses the same rule through utils.ids.next_ids. A suffix that is not a finite whole number (inf, 1e400, 2.5, 1d2) does not count as a number on either side; a whole number in exponent form (1e2) does.
+      Generates the next free id in a model's numbering scheme. Both sides take the largest id numerically and the width of that id (generateNewIds.m, str2double and max); a non-numeric suffix is only used when no id is numeric. generate_new_ids_toy covers r_9, r_10, r_2, r_0003 beside r_abc and a prefix without underscore beside ids that start with a letter. batch_curate_from_tsv uses the same rule through utils.ids.next_ids. A suffix counts as a number only when it is a finite whole number of absolute value below 2^52 (flintmax/2): inf, 1e400, 1e20, 2.5, 1d2 and 9007199254740993 do not count on either side, and a whole number in exponent form (1e2) does. Python does not read hexadecimal, a thousands separator or complex text, which str2double reads as numbers.
   - matlab: getAllowedBounds
     status: via-dependency
     reason: 'cobrapy covers this: cobra.flux_analysis.flux_variability_analysis.'
@@ -853,7 +860,7 @@ entries:
     scenarios:
       - init_steps_toy
     notes: >-
-      migration.md maps {ftINIT, prepINITModel, ftINITInternalAlg, getINITSteps} onto {raven_toolbox.init.ftinit, raven_toolbox.init.prep_init_model, raven_toolbox.init.run_ftinit, raven_toolbox.init.get_init_steps} as a group; pick the right counterpart init_steps_toy: the series 1+1, 2+1, 1+0 and 2+0 match step for step (previous-result mode, ignore mask, flags, MILP gaps, time limits and absolute gaps) and an unknown series raises on both sides. Series full is one MILP run on both sides (gap 0.0004, 10000 s, absolute gap 10). RAVEN passes [] for metsToIgnore in that series and Python passes the caller's mets_to_ignore.
+      migration.md maps {ftINIT, prepINITModel, ftINITInternalAlg, getINITSteps} onto {raven_toolbox.init.ftinit, raven_toolbox.init.prep_init_model, raven_toolbox.init.run_ftinit, raven_toolbox.init.get_init_steps} as a group; pick the right counterpart init_steps_toy: the series 1+1, 2+1, 1+0 and 2+0 match step for step (previous-result mode, ignore mask, flags, MILP gaps, time limits and absolute gaps) and an unknown series raises on both sides. Series full is one MILP run on both sides (gap 0.0004, 10000 s, absolute gap 10). Both sides ignore no metabolites in that series, whatever metabolites the caller lists (RAVEN passes [] for metsToIgnore, Python passes ()); init_steps_toy does not pass metabolites to ignore, and a Python unit test covers it.
   - matlab: getKEGGModelForOrganism
     python: raven_toolbox.reconstruction.kegg.get_kegg_model_for_organism
     status: parity
@@ -1168,11 +1175,10 @@ entries:
       and ENO MATCH on both sides. A task list in which two tasks share an id is refused by both sides (RAVEN:badInput
       in RAVEN, ValueError in Python). After the first simplification both sides remove every gene that no reaction
       uses (the removeReactions call with removeUnusedGenes in prepINITModel, prep_init_model).
-      init_task_metabolites_toy gives DIFFER. A metabolite named by a task whose last reaction the first
-      simplification removes stays in RAVEN's reference model (the task metabolites are excluded from the removal
-      of unused metabolites), while Python removes it with the reaction. RAVEN then keeps the task whose output is
-      that metabolite, because its output bound starts at 0, and Python drops it.
-  - matlab: printFluxes
+      init_task_metabolites_toy covers a metabolite named by a task as its output, whose only reaction the first simplification
+      removes, stays in the reference model on both sides (RAVEN removes the unused metabolites that no task names after
+      the task check, and prep_init_model restores the metabolites that tasks name, matched by exact name[compartment],
+      in the order of the template), so the task that outputs it is kept by both. The scenario gives MATCH.
     status: matlab-only
     reason: Console formatting of a flux vector. Python users print a pandas Series or DataFrame; listed as
       MATLAB-only in todo.md.
@@ -1491,8 +1497,11 @@ entries:
       of its own; the HPA path''s median/average aggregators do not. score_model_toy compares expression data against
       a threshold: a zero reference (a positive level scores +10, 0 against 0 scores -5), a missing level (the gene
       gets no score) and a rule whose genes have no score (-2). hpa_scores_toy compares the HPA gene scores (best
-      and average over cell types, one cell type, another tissue): they agree, including the level "None",
-      which both sides score -8.'
+      and average over cell types, one cell type, another tissue, tissue and cell type in another letter case, a level
+      table with names that differ only in case, where the first is used, and a level missing from the table in
+      another tissue, which raises on both sides): they agree, including the level "None", which both sides score
+      -8. RAVEN raises when a tissue is in neither the HPA nor the array data; hpa_gene_scores sees only the HPA data
+      and returns an empty result for a tissue it does not contain.'
   - matlab: setExchangeBounds
     python: raven_toolbox.manipulation.set_exchange_bounds
     status: parity
@@ -1555,9 +1564,11 @@ entries:
       remove_orphans False in Python), while groupLinear removes all gene information on both sides
       (simplifyModel.m sets genes, rxnGeneMat and grRules empty; group_linear_reactions drops every gene).
       model_simplification_smallyeast records the genes before and after each checkpoint, including one in which two
-      reactions with gene rules are locked at zero flux and removed, and gives MATCH. Python removes the orphan
-      metabolites of the first simplification in prep_init_model before the task check, RAVEN keeps the metabolites
-      that tasks name (init_task_metabolites_toy).'
+      reactions with gene rules are locked at zero flux and removed, and gives MATCH. In the first
+      simplification of prepINITModel RAVEN keeps all metabolites through the task check and removes the unused ones
+      that no task names afterwards; Python prunes the orphan metabolites inside simplify_model and prep_init_model
+      puts back the ones that tasks name, so both reference models hold the same metabolites
+      (init_task_metabolites_toy).'
   - matlab: solveLP
     status: via-dependency
     reason: 'cobrapy covers this: model.optimize().'
@@ -2047,7 +2058,9 @@ entries:
     status: subsumed
     reason: 'RAVEN has the same computation, but inside scoreModel''s HPA branch rather than as its own entry
       point. hpa_scores_toy compares the two on six genes for the best and average score over cell types, one
-      cell type, and a second tissue: they agree. The level "None" scores -8 on both sides.'
+      cell type, a second tissue, tissue and cell type in another letter case, level names that differ only in case (the
+      first is used) and a level missing from the table (an error whichever tissue is scored): they agree. The level
+      "None" scores -8 on both sides.'
     scenarios:
       - hpa_scores_toy
   - python: raven_toolbox.init.rna_gene_scores
