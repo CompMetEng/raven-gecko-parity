@@ -1,0 +1,4 @@
+# BRENDA release 2026.1 review fixture
+ec	substrate	substrate_inchikey	organism	taxid	uniprot	seq_id	kcat	temperature	ph	pmid
+1.1.1.1	m1	K1	Testus	1	Q1	h1	3			
+2.7.1.1	m1	K1	Testus	1	Q2	h2	50			

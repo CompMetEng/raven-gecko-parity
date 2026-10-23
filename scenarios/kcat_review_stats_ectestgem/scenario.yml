@@ -1,0 +1,50 @@
+id: kcat_review_stats_ectestgem
+pair: gecko
+description: >-
+  The BRENDA summaries behind the kcat review and the review itself. ecStatsFromBrenda /
+  ec_stats_from_brenda summarise a six-row BRENDA folder per EC number (kcat rows, maximum,
+  median, the set of values, specific-activity rows; an EC with a lowercase letter, 3.5.1.n3, and
+  an EC with specific-activity rows only; a second folder whose mw.tsv and sa.tsv hold a lowercase
+  EC, 3.5.1.n4). reviewKcatAssignment / review_assignment run on one set
+  of assignments twice: with hand-built statistics, so only the review logic is compared, and with
+  the statistics each side builds from the BRENDA folder, so the loader differences show up in the
+  findings. A second call reports the optional checks. loadBrendaMeasurements /
+  load_brenda_measurements read folders with measurements.tsv only, measurements.tsv.xz only and
+  both (different content). The `detail` text of the findings is not compared. A raise is a value
+  on both sides. Nothing reaches the network.
+
+# Differences this scenario reports (the run decides, the sources explain):
+#   * ec_stats: ecStatsFromBrenda always gives kcatMedian NaN (loadBRENDAdata hands over one
+#     aggregate column; ecStatsFromBrenda.m: 'kcatMedian',NaN) and holds the per-triple values
+#     of that column only; ec_stats_from_brenda gives the median of the medians and holds
+#     maxima and medians in `values`. MATLAB upper-cases the EC keys ('3.5.1.N3'), Python keeps
+#     them ('3.5.1.n3'), and reviewKcatAssignment looks the model's EC up as written.
+#   * review_loader_stats: with those statistics MATLAB cannot flag ec-maximum (needs a finite
+#     median), flags no custom value that equals a median, and finds no statistics for an EC
+#     with a lowercase letter.
+#   * review_hand_stats: with identical statistics the review differs in the case of the source
+#     only: MATLAB compares 'custom' and 'standard' with strcmpi, Python exactly, so 'Custom'
+#     is checked for a duplicate and 'STANDARD' is treated as the fallback in MATLAB only.
+#   * lowercase_ec_in_mw: loadBRENDAdata builds its mw.tsv index with upper-cased keys and looks
+#     the rows up as written, so an EC with a lowercase letter in mw.tsv raises in MATLAB.
+#   * measurements: MATLAB reads measurements.tsv only; Python prefers measurements.tsv.xz and
+#     falls back to measurements.tsv, so a folder with only the .xz file raises in MATLAB and a
+#     folder with both gives different tables.
+
+entries:
+  - ecStatsFromBrenda
+  - reviewKcatAssignment
+  - loadBrendaMeasurements
+
+inputs:
+  project_template: "{python_repo}/examples/ecTestGEM"
+  brenda_dir: "{scenario_dir}/data/brenda"
+  brenda_lower_mw_dir: "{scenario_dir}/data/brenda_lower_mw"
+  meas_tsv: "{scenario_dir}/data/meas_tsv"
+  meas_xz: "{scenario_dir}/data/meas_xz"
+  meas_both: "{scenario_dir}/data/meas_both"
+  scratch: "{repo_root}/results/.kcat_review_stats"
+
+tolerance:
+  rel: 1.0e-9
+  abs: 1.0e-12
