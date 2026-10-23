@@ -537,8 +537,8 @@ entries:
       mode is cobra.gapfill. RAVEN''s default glpk cannot solve a MILP at all; gapfill_connect_smallyeast names Gurobi
       on both sides (scenario.yml:56-57), so it needs that licence to run. gap_fill_toy compares the defaults on hand-written
       models: the flux a reaction must exceed to count as unblocked (1), the flux forced through a rescuable reaction
-      (0.1), net production in the checks, and reaction scores, where a score that is not negative takes the least negative
-      penalty.'
+      (0.1), net production in the checks, reaction scores, where a score that is not negative takes the least negative
+      penalty, and a template reaction whose id is also in the draft (renamed <id>_<template id>).'
   - matlab: findDuplicateRxns
     python: raven_toolbox.manipulation.find_duplicate_reactions
     status: parity

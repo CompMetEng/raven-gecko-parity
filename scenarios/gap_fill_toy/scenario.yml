@@ -2,7 +2,8 @@ id: gap_fill_toy
 pair: raven
 description: 'Connectivity gap-filling on small hand-written models: which template reactions are added,
   which draft reactions get connected and which cannot be. Covers the blocked-reaction threshold, the
-  flux forced through a blocked reaction, net production and reaction scores (including a positive score).'
+  flux forced through a blocked reaction, net production, reaction scores (including a positive score)
+  and a template reaction whose id is also in the draft.'
 entries: [fillGaps]
 inputs:
   matlab_solver: gurobi
@@ -193,3 +194,23 @@ inputs:
     template: *id002
     net_production: false
     scores: [-2, -1, 0]
+  - name: fill_e_renamed
+    draft:
+    - id: R1
+      substrates: [a]
+      products: [b]
+      lb: 0
+      ub: 1000
+    - id: Rname
+      substrates: [b]
+      products: []
+      lb: 0
+      ub: 1000
+    template:
+    - id: Rname
+      substrates: []
+      products: [a]
+      lb: 0
+      ub: 1000
+    net_production: false
+    scores: []
