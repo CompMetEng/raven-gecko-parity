@@ -357,7 +357,7 @@ entries:
     scenarios:
       - contract_model_toy
     notes: >-
-      Expand-then-contract is a lossless round trip on both sides. contractModel keeps the FIRST member of each duplicate set, strips the _EXP_N suffix (documented behaviour: the model is assumed to have come through expandModel) and merges the set's grRules with "or", so HXK returns with "YCL040W or YFR053C or YGL253W". remove_duplicate_reactions does the same: keep=rxns[0], a _merge_gene_reaction_rules helper combining every survivor's top-level OR-clauses (via cobra's own GPR AST, not hand-rolled bracket parsing), and the _EXP_ suffix stripped when every duplicate in the group carries one.  Detection is a different function on both sides --- see findDuplicateRxns. contract_model_toy: both sides group reactions by stoichiometry and reversibility and merge a group to the widest bounds and the largest objective coefficient (with a warning). Differences that remain: Python takes reversible as lower_bound < 0 < upper_bound where RAVEN uses lb < 0, and a duplicate written in the opposite direction is merged without mirroring its bounds. The merged gene rules, the survivor and the _EXP_ suffix handling match.
+      Expand-then-contract is a lossless round trip on both sides. contractModel keeps the FIRST member of each duplicate set, strips the _EXP_N suffix (documented behaviour: the model is assumed to have come through expandModel) and merges the set's grRules with "or", so HXK returns with "YCL040W or YFR053C or YGL253W". remove_duplicate_reactions does the same: keep=rxns[0], a _merge_gene_reaction_rules helper combining every survivor's top-level OR-clauses (via cobra's own GPR AST, not hand-rolled bracket parsing), and the _EXP_ suffix stripped when every duplicate in the group carries one.  Detection is a different function on both sides --- see findDuplicateRxns. contract_model_toy: both sides group reactions by stoichiometry and reversibility and merge a group to the widest bounds and the largest objective coefficient (with a warning). Differences that remain: Python takes reversible as lower_bound < 0 < upper_bound where RAVEN uses lb < 0, and a duplicate written in the opposite direction is merged without mirroring its bounds. Python ignores reserved reactions for duplicates as RAVEN does (a reserved reaction is merged away like any other). The merged gene rules, the survivor and the _EXP_ suffix handling match.
   - matlab: convertCharArray
     status: internal
     reason: MATLAB argument-validation glue. Python uses ordinary keyword arguments and type hints.
@@ -626,7 +626,7 @@ entries:
     scenarios:
       - fseof_toy
     notes: >-
-      from migration.md. Regression slope + correlation, amplify/knockdown/knockout classes, gene aggregation (FS1–FS4 in IMPROVEMENTS). fseof_toy compares both sides on the absolute flux, so a reversible reaction that carries growing negative flux has slope +1 on both. One difference stays documented in the flux_eps docstring: RAVEN selects any reaction with std > 0 whose correlation passes the threshold, so a flux that is constant up to solver noise (the substrate uptake, slope 1e-6) is an amplification target; Python skips fluxes with a spread below flux_eps (1e-6). The target sets and slopes otherwise match for the defaults, five iterations at coefficient 0.5 and a threshold of 0.99.
+      from migration.md. Regression slope + correlation, amplify/knockdown/knockout classes, gene aggregation (FS1–FS4 in IMPROVEMENTS). fseof_toy compares both sides on the absolute flux, so a reversible reaction that carries growing negative flux has slope +1 on both. Python classifies a track as FSEOF.m does: any track with some absolute flux above 1e-10, a standard deviation above 0, a non-zero slope and a correlation that reaches the threshold is selected, and a negative slope is a knockout when the last absolute flux is at most 1e-8, a knockdown otherwise. The target sets and slopes match for the defaults (five iterations at coefficient 0.5, threshold 0.99) except for the substrate uptake EX_S, whose flux is constant: RAVEN's solver returns it with rounding noise, so RAVEN lists it as an amplification target with a slope of about 0, and Python's solution has a standard deviation of exactly 0, so Python omits it. The scenario gives DIFFER on all three seeds for this reason (results.defaults.amplify has 5 entries in RAVEN and 4 in Python, and the same for the other settings); the difference follows the solver output, not the classification rule.
   - matlab: ftINIT
     python: raven_toolbox.init.ftinit
     status: parity
@@ -1120,13 +1120,8 @@ entries:
       case) as false, trims the items of a '';'' list and drops empty ones, matches headers ignoring case and
       whitespace, and stores an empty CHANGED LB or UB as NaN (leave the bound unchanged), which raven-toolbox
       now does too (None) instead of defaulting to -1000 and 1000. A .xls task list is read by RAVEN only;
-      raven-toolbox raises a clear error. Covered by task_list_edge_cases. Until both are merged the
-      differences above hold.
-      task_list_parsing edge_cases still differ: RAVEN raises on a task list with the ID in the first column
-      or a comment as the first row, and Python parses both; a lowercase header gives RAVEN bounds of 0 where
-      Python uses the defaults; RAVEN keeps an orphan continuation row as an extra task and Python skips it
-      with a warning; a bad number is read by RAVEN into the comments and raises in Python; a .xls file is read
-      by RAVEN and refused by Python.'
+      raven-toolbox raises a clear error. Covered by task_list_edge_cases. task_list_parsing and
+      task_list_edge_cases give MATCH on three seeds with RAVEN 298670c and raven-toolbox b0e6176.'
   - matlab: parseYAML
     status: subsumed
     reason: The RAVEN YAML tokeniser; inside io.read_yaml_model.
@@ -1186,7 +1181,7 @@ entries:
     scenarios:
       - random_sampling_toy
     notes: >-
-      raven_toolbox.analysis.random_sampling takes the same three methods (achr, chrr, randomObjective). The sampling chains differ: Python wraps cobra's ACHRSampler and has its own CHRR, RAVEN uses sampleACHR.m and sampleCHRR.m, so a seeded draw cannot match and only summary statistics can be compared. DIFFERENCES in the random-objective method: replaceBoundsWithInf defaults to true in RAVEN and replace_max_bound to False in Python (randomSampling.m:150-152, sampling.py:69); RAVEN finds the reactions to optimise from getAllowedBounds with a 0.999 cut on the model's own extreme bounds and Python from a loopless FVA; n_samples <= 0 raises ValueError in Python. random_sampling_toy compares properties that do not depend on the generator (shape, steady state, bounds, mean of a parallel reaction against the centroid of the region): RAVEN's sampleACHR projects the step direction onto the null space of S (RAVEN commit ab606ff), so the steady-state residual stays at rounding level along the chain; before that the residual grew along the chain (the last of 2000 samples had a residual of 0.55). Python's ACHR and both CHRR implementations stay below 1e-6. The verdict of random_sampling_toy with the projection has not been rerun.
+      raven_toolbox.analysis.random_sampling takes the same three methods (achr, chrr, randomObjective). The sampling chains differ: Python wraps cobra's ACHRSampler and has its own CHRR, RAVEN uses sampleACHR.m and sampleCHRR.m, so a seeded draw cannot match and only summary statistics can be compared. DIFFERENCES in the random-objective method: replaceBoundsWithInf defaults to true in RAVEN and replace_max_bound to False in Python (randomSampling.m:150-152, sampling.py:69); RAVEN finds the reactions to optimise from getAllowedBounds with a 0.999 cut on the model's own extreme bounds and Python from a loopless FVA; n_samples <= 0 raises ValueError in Python. random_sampling_toy compares properties that do not depend on the generator (shape, steady state, bounds, mean of a parallel reaction against the centroid of the region): RAVEN's sampleACHR projects the step direction onto the null space of S (RAVEN commit ab606ff), so the steady-state residual stays at rounding level along the chain; before that the residual grew along the chain (the last of 2000 samples had a residual of 0.55). Python's ACHR and both CHRR implementations stay below 1e-6. random_sampling_toy gives MATCH on three seeds with RAVEN 298670c.
   - matlab: ravenCobraWrapper
     status: matlab-only
     reason: cobra is the canonical object in raven-toolbox --- there is no parallel RAVEN struct to convert
@@ -1528,10 +1523,9 @@ entries:
       match RAVEN''s bounds-blind check; the scenario''s dead_end_alone checkpoint covers it running alone, not
       just composed. deleteDuplicates is the contractModel divergence; deleteUnconstrained has no Python analogue
       (cobra models carry boundary reactions, not an unconstrained field). simplify_order_toy compares the
-      model order and differs on four points: RAVEN keeps the lowest-index reaction of a linear chain (R1)
-      where Python keeps R3; RAVEN constrains reversible reactions before grouping and Python groups first;
-      Python removes a reserved zero-bounded reaction and its gene (reserved is ignored by the zero-interval
-      pass) where RAVEN keeps them; Python keeps an orphan metabolite that RAVEN removes.'
+      model order (which reaction survives a linear merge, the order of the modes, whether reserved reactions,
+      genes and unused metabolites survive a zero-interval pass) and gives MATCH on three seeds with RAVEN
+      298670c and raven-toolbox b0e6176.'
   - matlab: solveLP
     status: via-dependency
     reason: 'cobrapy covers this: model.optimize().'
