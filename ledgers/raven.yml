@@ -506,7 +506,7 @@ entries:
       number as an integer, the rest the shortest exact text), padded nowhere. dependencies.txt on the Python side lists
       python, cobra, libSBML, ruamel.yaml, scipy, openpyxl and raven_toolbox in a fixed order, then the model's version
       and date; RAVEN lists MATLAB, libSBML, RAVEN and the fields of model.modelVersion. The .mat and .xlsx files hold the RAVEN
-      model structure on both sides. Both sides have the mainBranchFlag option (main_branch_flag in Python, keyword-only), which raises when the toolbox checkout is on a branch other than main or master. Python checks raven_toolbox only; RAVEN also checks GECKO for enzyme-constrained models. Both sides refuse a text value for mainBranchFlag and subDirs (RAVEN:badInput, TypeError); a logical is accepted on both. MATLAB also accepts 0 and 1 and an empty value for the default, which Python (bool only) does not; the scenario compares text and logical values.
+      model structure on both sides. Both sides have the mainBranchFlag option (main_branch_flag in Python, keyword-only), which raises when the toolbox checkout is on a branch other than main or master. Python checks raven_toolbox only; RAVEN also checks GECKO for enzyme-constrained models. Both sides refuse a text value for mainBranchFlag and subDirs (RAVEN:badInput, TypeError); a logical is accepted on both. MATLAB also accepts 0 and 1 and an empty value for the default, which Python (bool only) does not; the scenario compares text and logical values. Both sides create the output folder, with missing parent folders, when it does not exist, with and without the per-format subfolders.
   - matlab: exportModel
     status: via-dependency
     reason: 'cobrapy covers this: cobra.io.write_sbml_model.'
