@@ -472,7 +472,7 @@ entries:
       missing-annotation error.'
   - matlab: editMiriam
     status: matlab-only
-    reason: 'cobra''s .annotation is already a {namespace: id(s)} dict — read/write it directly.'
+    reason: 'cobra''s .annotation is already a {namespace: id(s)} dict; read and write it directly.'
     notes: no obvious Python counterpart; decide whether one is needed
   - matlab: expandModel
     python: raven_toolbox.manipulation.expand_model
@@ -525,7 +525,7 @@ entries:
       equivalent fallback.'
   - matlab: extractMiriam
     status: matlab-only
-    reason: 'cobra''s .annotation is already a {namespace: id(s)} dict — read/write it directly.'
+    reason: 'cobra''s .annotation is already a {namespace: id(s)} dict; read and write it directly.'
     notes: no obvious Python counterpart; decide whether one is needed
   - matlab: fillGaps
     python: raven_toolbox.gapfilling.connect_blocked_reactions
