@@ -9,7 +9,8 @@ description: >-
   empty charge or confidence score is 0 when the column has a value in another row, table cells that read NA,
   null or None (kept as text), and a rev column written as true and false. Bound cells are NaN (not given), true or
   false in any case (read as 1 and 0), a number with a thousands separator or exponent, or Inf; a cell that is not a number
-  (a bound, a rev, a charge or a confidence score) makes both sides stop with an error. A cell with only blanks counts as empty in both modes. The curated content is compared by
+  (a bound, a rev, a charge or a confidence score) makes both sides stop with an error, and a charge cell reading NaN
+  counts as not given. A cell with only blanks counts as empty in both modes. The curated content is compared by
   name; it includes the bounds of the reactions but not their rev field, which Python derives from the bounds.
 
 entries:
@@ -32,5 +33,7 @@ inputs:
     - {name: rev_not_a_number, mets: none, genes: none, rxns: rxns_bad_rev.tsv, coeffs: rxns_bad_rev_coeffs.tsv}
     - {name: score_not_a_number, mets: none, genes: none, rxns: rxns_text_score.tsv, coeffs: rxns_one_coeffs.tsv}
     - {name: charge_not_a_number, mets: mets_text_charge.tsv, genes: none, rxns: none, coeffs: none}
+    - {name: charge_nan_not_given, mets: mets_nan_charge.tsv, genes: none, rxns: none, coeffs: none}
+    - {name: charge_nan_not_given_kept, mets: mets_nan_charge.tsv, genes: none, rxns: none, coeffs: none, overwrite_with_empty: false}
     - {name: blank_miriam_cell, mets: mets_blank_cell.tsv, genes: none, rxns: none, coeffs: none}
     - {name: blank_miriam_cell_kept, mets: mets_blank_cell.tsv, genes: none, rxns: none, coeffs: none, overwrite_with_empty: false}

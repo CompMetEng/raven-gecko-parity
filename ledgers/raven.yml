@@ -407,9 +407,10 @@ entries:
       annotation stays. A new metabolite or reaction whose charge or confidence score cell is empty takes 0 when the
       column has a value in another row. Python reads a table file as text, so NA, null and None are text.
       The lb, ub, rev, charge and confidence score cells are read as numbers on both sides and nothing is evaluated; true
-      and false in any case are 1 and 0, an empty cell or NaN is not given, and any other text (abc, NA, None) raises
-      (RAVEN:badInput, ValueError), for a column cell of a row that would otherwise be ignored as well. A bound or rev cell reading NaN is not given on both sides; a charge cell reading NaN stays NaN in RAVEN, and Python counts it
-      as empty (a charge of 0, or the stored charge with overwriteWithEmpty false), a difference that no scenario covers. Python also
+      and false in any case are 1 and 0, an empty cell is not given, and any other text (abc, NA, None) raises
+      (RAVEN:badInput, ValueError), for a column cell of a row that would otherwise be ignored as well. A bound, rev or charge cell reading NaN is not given on both sides; a charge cell reading NaN is treated like an empty
+      charge cell (a charge of 0 when the column has a value in another row, or the stored charge with overwriteWithEmpty false). A confidence score cell reading NaN is stored as NaN by
+      RAVEN and counts as empty in Python (a score of 0, or the stored score with the option off), a difference that no scenario covers. Python also
       reads a thousands separator, an exponent and Inf as str2double does, but not hexadecimal or complex text. RAVEN sets
       the rev field of an existing reaction from the rev column; Python checks the column and derives reversibility from
       the bounds, so the scenario compares bounds and not rev. curate_tables_annotation_toy compares these cases and
