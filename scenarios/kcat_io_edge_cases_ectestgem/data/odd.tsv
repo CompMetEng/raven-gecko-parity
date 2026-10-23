@@ -1,0 +1,11 @@
+# source: odd
+# generator: handmade
+# parameters: {}
+# data: 
+# kind: gathered
+# created: 2026-01-01T00:00:00Z
+rxn	enzymes	substrate	kcat	log10_sd	source	detail	ec_code	note
+R3	P4	m1	25		odd	wc=0; origin=1		
+"# a comment that was quoted
+""	""	""	""	""	""	""	""	""
+R5	P5	m2	30		odd			
