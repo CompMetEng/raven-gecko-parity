@@ -1,0 +1,23 @@
+# BRENDA release 2026.1 tree fixture
+ec	substrate	substrate_inchikey	organism	taxid	uniprot	seq_id	kcat	temperature	ph	pmid
+1.1.1.1	m1	K1	Testus	1	Q1	h1	10			
+1.1.1.1	m1	K1	Testus	1	Q1	h1	20			
+1.1.1.1	m1	K1	Testus	1	Q1	h1	40			
+1.1.1.2	m1	K1	Testus	1	Q1	h1	5			
+1.1.2.1	m1	K1	Testus	1	Q1	h1	1			
+1.1.2.1	m1	K1	Testus	1	Q1	h1	2			
+1.1.2.1	m1	K1	Testus	1	Q1	h1	4			
+1.1.2.1	m1	K1	Testus	1	Q1	h1	8			
+1.1.2.1	m1	K1	Testus	1	Q1	h1	16			
+1.1.2.1	m1	K1	Testus	1	Q1	h1	32			
+2.7.1.1	m1	K1	Testus	1	Q1	h1	100			
+2.7.1.1	m1	K1	Testus	1	Q1	h1	300			
+2.7.1.2	m1	K1	Testus	1	Q1	h1	1000			
+2.7.1.2	m1	K1	Testus	1	Q1	h1	2000			
+2.7.1.2	m1	K1	Testus	1	Q1	h1	4000			
+2.7.1.2	m1	K1	Testus	1	Q1	h1	8000			
+4.1.1.1	m1	K1	Testus	1	Q1	h1	0.5			
+4.1.1.1	m1	K1	Testus	1	Q1	h1	1			
+4.1.1.1	m1	K1	Testus	1	Q1	h1	2			
+4.1.1.1	m1	K1	Testus	1	Q1	h1	4			
+3.5.1.n3	m1	K1	Testus	1	Q1	h1	7			

@@ -1,0 +1,50 @@
+id: kcat_assignment_pipeline_ectestgem
+pair: gecko
+description: >-
+  The kcat assignment pipeline on ecTestGEM, from hand-written kcat source files. kcatAssignmentConfig /
+  kcat_assignment_config read twelve variants of [kcat_assignment] and [kcat_sources] from
+  model_adapter.toml (no table, a preset, stages, an unknown key, a stage whose sources is a string,
+  an empty preset, capitalised values, unknown OKP methods, a preset together with stages, an unknown
+  preset). collectKcats / collect_kcats decide kcats with a select stage over custom, database_top,
+  dlkcat and database_bottom (the files complete, dlkcat.tsv without rows, no custom.tsv with the
+  legacy customKcats.tsv left, isozymes and the standard kcat on) and with the ec_tree_homologs
+  preset, whose combine stage uses the kcatCombineParams.tsv of the BRENDA release (homologs.tsv
+  complete and without rows); assignKcats / assign_kcats apply the decisions. ecTreeEstimate and
+  ECTree.estimate estimate kcats from a measurement table for EC lists with one or several codes, an
+  unknown code, a lowercase code, ties and shrinkage constants including 0 and NaN, and on a table with
+  a NaN kcat; kcatsFromECTree / kcats_from_ec_tree run on the ecModel for all reactions, a subset, a
+  subset with a repeated reaction and an empty subset. A raise is a value on both sides. Nothing
+  reaches the network.
+
+# Differences this scenario reports (the run decides, the sources explain):
+#   * config: geckopy validates [kcat_assignment] with a schema, MATLAB reads what is there. A
+#     capitalised criteria ('Median'), an empty preset ('') and a stage whose sources is a string
+#     raise in geckopy; kcatAssignmentConfig accepts them (validatestring, the default preset
+#     for an empty one, a char turned into a cell).
+#   * collect.select_*: with database_top and database_bottom in one stage, MATLAB's decisions
+#     report twice the candidates geckopy reports (2 for a reaction with one BRENDA row, 4 for
+#     two), presumably because collectKcats keeps both copies of the brenda list (its
+#     duplicate test uses isequal, which is false for lists holding NaN). The kcat and the
+#     spread agree. ec.source reads 'brenda (wc=0, origin=1)' in geckopy and 'brenda' in MATLAB
+#     for a value chosen from brenda.tsv; the combine stage agrees on kcat, sd and n.
+#   * ec_tree.k_nan: ECTree accepts k = NaN and returns NaN estimates; ecTreeEstimate raises.
+#   * ec_tree_model: an empty ec_rxns list raises in kcats_from_ec_tree and means every
+#     reaction in kcatsFromECTree; a repeated reaction gives one row per mention in MATLAB
+#     (it indexes the list) and one row in geckopy (it tests membership).
+
+entries:
+  - kcatAssignmentConfig
+  - collectKcats
+  - assignKcats
+  - ecTreeEstimate
+  - kcatsFromECTree
+
+inputs:
+  project_template: "{python_repo}/examples/ecTestGEM"
+  kcats_dir: "{scenario_dir}/data/kcats"
+  brenda_dir: "{scenario_dir}/data/brenda"
+  scratch: "{repo_root}/results/.kcat_assignment_pipeline"
+
+tolerance:
+  rel: 1.0e-9
+  abs: 1.0e-12
