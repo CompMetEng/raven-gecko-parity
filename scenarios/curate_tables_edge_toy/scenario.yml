@@ -4,7 +4,9 @@ description: >-
   curateModelFromTables on a model with one reaction and two metabolites (x and y, both with a formula and a
   charge), covering the table conventions rather than the content: headers written in other case and with
   alias names (MetName, Comp, Formulas, Charges, GeneShortNames, Index, RxnNames), metabolite rows for
-  existing metabolites with empty formula and charge cells, a new reaction in a table without lb, ub or rev
+  existing metabolites with empty formula and charge cells (overwritten, and kept with the option that keeps
+  stored values), an existing reaction whose lb and ub cells are empty (no bound given, with and without that
+  option), a new reaction in a table without lb, ub or rev
   columns, rev 0 and 1 without bounds, and explicit bounds with an empty ub cell. The content of the curated
   model is compared by name.
 
@@ -18,6 +20,9 @@ inputs:
   cases:
     - {name: header_aliases, mets: alias_mets.tsv, genes: alias_genes.tsv, rxns: alias_rxns.tsv, coeffs: alias_coeffs.tsv}
     - {name: existing_empty_cells, mets: exist_mets.tsv, genes: none, rxns: none, coeffs: none}
+    - {name: existing_empty_cells_kept, mets: exist_mets.tsv, genes: none, rxns: none, coeffs: none, overwrite_with_empty: false}
+    - {name: existing_reaction_empty_bounds, mets: none, genes: none, rxns: ex_rxns.tsv, coeffs: ex_coeffs.tsv}
+    - {name: existing_reaction_empty_bounds_kept, mets: none, genes: none, rxns: ex_rxns.tsv, coeffs: ex_coeffs.tsv, overwrite_with_empty: false}
     - {name: new_reaction_without_bounds, mets: none, genes: none, rxns: nb_rxns.tsv, coeffs: nb_coeffs.tsv}
     - {name: rev_without_bounds, mets: none, genes: none, rxns: rev_rxns.tsv, coeffs: rev_coeffs.tsv}
     - {name: explicit_bounds, mets: none, genes: none, rxns: bnd_rxns.tsv, coeffs: bnd_coeffs.tsv}

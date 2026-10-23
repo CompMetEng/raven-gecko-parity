@@ -48,6 +48,7 @@ def curate(inputs, case):
             rxns_coeffs_tsv=table("coeffs"),
             met_id_prefix=str(inputs["met_prefix"]),
             rxn_id_prefix=str(inputs["rxn_prefix"]),
+            overwrite_with_empty=bool(case.get("overwrite_with_empty", True)),
         )
     except Exception:
         return {"error": True}

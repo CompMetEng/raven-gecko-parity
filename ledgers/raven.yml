@@ -393,12 +393,13 @@ entries:
     notes: Table-driven batch curation. curate_tables_toy compares coefficient rows grouped by rxnIdx and name, RAVEN's
       header spellings, reactions added without bounds ((-Inf, Inf) on both sides) and new identifiers numbered from
       the numerically largest existing id, in the width of that id. curate_tables_edge_toy compares headers in other
-      case and alias spellings (MATCH), new reactions with and without a rev column (MATCH), empty formula and charge
-      cells for existing metabolites (DIFFER) and an empty ub cell in a reaction row (DIFFER). RAVEN writes an empty
-      formula cell and a charge of 0 onto an existing metabolite (writeExistingField, curateModelFromTables.m line 133)
-      and stops with an error for an empty lb or ub cell (cellfun(@str2num, ...), line 244); Python skips empty cells
-      (_has_value, batch.py lines 241 to 244 and 434 to 437), so an existing formula and charge stay and an empty ub
-      cell leaves the bound at its default.
+      case and alias spellings, new reactions with and without a rev column, empty formula and charge cells for
+      existing metabolites with the default overwriteWithEmpty (the stored formula is cleared and the charge becomes
+      0) and with overwriteWithEmpty false (stored values stay), an existing reaction whose lb and ub cells are empty
+      (no bound given, so the stored bounds stay), and a new reaction with an empty ub cell (the model's defaultUB,
+      Inf when none is stored); all MATCH. Both sides take the option as overwriteWithEmpty (RAVEN) and
+      overwrite_with_empty (Python), default true. An empty gene rule, lb, ub or MIRIAM cell never changes an
+      existing entity.
   - matlab: defaultCompartmentMap
     python: raven_toolbox.localization.DEFAULT_COMPARTMENT_MAP
     status: parity
@@ -1155,12 +1156,11 @@ entries:
       - init_output_model_smallyeast
     notes: migration.md maps {ftINIT, prepINITModel, ftINITInternalAlg, getINITSteps} onto {raven_toolbox.init.ftinit,
       raven_toolbox.init.prep_init_model, raven_toolbox.init.run_ftinit, raven_toolbox.init.get_init_steps}
-      as a group; pick the right counterpart. init_output_model_smallyeast runs smallYeast with a task list in which an
-      infeasible task carries the id of a feasible one. The reference model keeps the template's bounds and
-      stoichiometry and the extracted model, its essential reactions and the bounds and equations of MDH1, PGK and ENO
-      MATCH on both sides. The kept tasks DIFFER. RAVEN removes the failed tasks by position
-      (taskStruct(taskReport.ok == false) = [], prepINITModel.m line 114), so the feasible ATP_GLC stays; Python
-      removes them by id (prep.py line 282), so both tasks with that id are dropped.
+      as a group; pick the right counterpart. init_output_model_smallyeast runs smallYeast with a task list that has an infeasible task. The reference model keeps the template's bounds and
+      stoichiometry, and the kept tasks, the extracted model, its essential reactions, its gene count and the bounds and equations of MDH1, PGK
+      and ENO MATCH on both sides. A task list in which two tasks share an id is refused by both sides (RAVEN:badInput
+      in RAVEN, ValueError in Python). After the first simplification both sides remove every gene that no reaction
+      uses (prepINITModel.m line 84, prep_init_model).
   - matlab: printFluxes
     status: matlab-only
     reason: Console formatting of a flux vector. Python users print a pandas Series or DataFrame; listed as
@@ -1541,8 +1541,10 @@ entries:
       just composed. deleteDuplicates is the contractModel divergence; deleteUnconstrained has no Python analogue
       (cobra models carry boundary reactions, not an unconstrained field). simplify_order_toy compares the
       model order (which reaction survives a linear merge, the order of the modes, whether reserved reactions,
-      genes and unused metabolites survive a zero-interval pass) and gives MATCH on three seeds with RAVEN
-      298670c and raven-toolbox b0e6176.'
+      genes and unused metabolites survive a zero-interval pass) and gives MATCH on three seeds. No mode removes
+      genes on either side (removeReactions with its defaults; remove_orphans False in Python); model_simplification_smallyeast
+      records the genes before and after each checkpoint, including one in which two reactions with gene rules are locked at zero
+      flux and removed, and gives MATCH.'
   - matlab: solveLP
     status: via-dependency
     reason: 'cobrapy covers this: model.optimize().'

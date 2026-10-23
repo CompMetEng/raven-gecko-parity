@@ -23,6 +23,10 @@ def run(ctx):
     dead_end = read_yaml_model(path)
     dead_end_alone = read_yaml_model(path)
 
+    locked = read_yaml_model(path)
+    for rid in cascade_removed:
+        locked.reactions.get_by_id(rid).bounds = (0, 0)
+
     cascade = read_yaml_model(path)
     cascade.remove_reactions(cascade_removed)
 
@@ -35,19 +39,25 @@ def run(ctx):
             cascade, delete_zero_interval=True, delete_dead_end=True
         ),
         "dead_end_alone": _checkpoint(dead_end_alone, delete_dead_end=True),
+        "zero_interval_locked_gene_reactions": _checkpoint(locked, delete_zero_interval=True),
     }
 
 
 def _checkpoint(model, **modes):
     before_rxns = {rxn.id for rxn in model.reactions}
     before_mets = {met.id for met in model.metabolites}
+    before_genes = {gene.id for gene in model.genes}
 
     simplify_model(model, **modes)
 
     after_rxns = {rxn.id for rxn in model.reactions}
     after_mets = {met.id for met in model.metabolites}
+    after_genes = {gene.id for gene in model.genes}
 
     return {
+        "n_genes_before": len(before_genes),
+        "n_genes_after": len(after_genes),
+        "removed_genes": sorted(before_genes - after_genes),
         "n_reactions_before": len(before_rxns),
         "n_reactions_after": len(after_rxns),
         "n_metabolites_before": len(before_mets),

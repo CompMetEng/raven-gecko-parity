@@ -1,10 +1,11 @@
 """Python side of the prepINITModel and ftINIT scenario on smallYeast with a task list.
 
-The template is read, its boundary reactions are opened and a task list with a duplicated task id is
+The template is read, its boundary reactions are opened and a task list is
 prepared. ``ftinit`` then extracts a model from gene levels that alternate between a score of +1 and -1
 in sorted gene order. The result records the tasks the prepared data keeps, the merged essential
 reactions, the number of reference-model reactions whose bounds or stoichiometry differ from the template,
-and the bounds and equation of three reactions in the extracted model.
+and the bounds and equation of three reactions in the extracted model, and the number of genes of the
+reference model and the extracted model. A task list with a repeated task id is refused.
 """
 
 import cobra
@@ -31,6 +32,12 @@ def run(ctx):
     for rid in inputs["open_bounds"]:
         model.reactions.get_by_id(str(rid)).upper_bound = float(inputs["open_ub"])
     template = {r.id: (float(r.lower_bound), float(r.upper_bound), equation(r)) for r in model.reactions}
+
+    try:
+        prep_init_model(model, parse_task_list(inputs["tasks_duplicate"]), ext_comp=str(inputs["ext_comp"]))
+        duplicate_error = False
+    except Exception:
+        duplicate_error = True
 
     tasks = parse_task_list(inputs["tasks"])
     prep = prep_init_model(model, tasks, ext_comp=str(inputs["ext_comp"]))
@@ -73,7 +80,10 @@ def run(ctx):
         "n_tasks_parsed": len(tasks),
         "kept_tasks": [{"id": str(t.id), "description": str(t.description)} for t in prep.tasks],
         "essential_reactions": sorted(prep.essential_rxns),
+        "duplicate_task_ids_refused": duplicate_error,
         "n_ref_reactions": len(prep.ref_model.reactions),
+        "n_ref_genes": len(prep.ref_model.genes),
+        "n_output_genes": len(out.genes),
         "n_ref_reactions_differing_from_template": n_diff,
         "n_output_reactions": len(out.reactions),
         "output_reactions": sorted(r.id for r in out.reactions),

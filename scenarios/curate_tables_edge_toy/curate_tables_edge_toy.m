@@ -50,6 +50,9 @@ if ~strcmp(metsInfo, 'none')
     metsInfo = fullfile(folder, metsInfo);
 end
 args = [args, {'metPrefix', char(inputs.met_prefix), 'rxnPrefix', char(inputs.rxn_prefix)}];
+if isfield(c, 'overwrite_with_empty')
+    args = [args, {'overwriteWithEmpty', logical(c.overwrite_with_empty)}];
+end
 
 try
     evalc('newModel = curateModelFromTables(model, metsInfo, args{:});');

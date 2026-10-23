@@ -20,7 +20,9 @@ inputs:
     - PGI
     - ZWF
 
-# Four checkpoints, all solver-free:
+# Five checkpoints, all solver-free. Each records the genes before and after as well as the
+# reactions and metabolites: simplifyModel removes reactions with removeReactions and its defaults, so
+# no checkpoint removes a gene.
 #
 #   zero_interval     reactions with lb = ub = 0 only. smallYeast ships glcIN,
 #                     o2IN and ethIN shut, so all three go.
@@ -42,6 +44,9 @@ inputs:
 #                     removed nothing. Fixed in raven-toolbox to match RAVEN's
 #                     bounds-blind check (raven-gecko-parity#69); this
 #                     checkpoint now covers that it stays fixed.
+#   zero_interval_locked_gene_reactions
+#                     PGI and ZWF, which carry gene rules, locked at zero flux on the intact model and removed
+#                     by the zero-interval mode: the reactions go and their genes stay.
 #
 # What simplifyModel's other modes do, and why they are not here:
 #

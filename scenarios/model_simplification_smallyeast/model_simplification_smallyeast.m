@@ -23,12 +23,18 @@ results.composed_cascade = checkpoint(cascadeModel, ...
     {'deleteZeroInterval', 'deleteInaccessible'});
 results.dead_end_alone = checkpoint(readYAMLmodel(modelPath), {'deleteInaccessible'});
 
+lockedNames = as_cellstr(inputs.cascade_removed_reactions);
+locked = setParam(readYAMLmodel(modelPath), 'lb', lockedNames, 0);
+locked = setParam(locked, 'ub', lockedNames, 0);
+results.zero_interval_locked_gene_reactions = checkpoint(locked, {'deleteZeroInterval'});
+
 end
 
 
 function out = checkpoint(model, modes)
 beforeRxns = model.rxns(:);
 beforeMets = model.mets(:);
+beforeGenes = model.genes(:);
 
 args = {'deleteUnconstrained', false};
 for k = 1:numel(modes)
@@ -38,6 +44,11 @@ reduced = simplifyModel(model, args{:});
 
 afterRxns = reduced.rxns(:);
 afterMets = reduced.mets(:);
+afterGenes = reduced.genes(:);
+
+out.n_genes_before = numel(beforeGenes);
+out.n_genes_after = numel(afterGenes);
+out.removed_genes = sort_cellstr(setdiff(beforeGenes, afterGenes));
 
 out.n_reactions_before = numel(beforeRxns);
 out.n_reactions_after = numel(afterRxns);

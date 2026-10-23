@@ -1,11 +1,12 @@
 function results = init_output_model_smallyeast(ctx)
 % MATLAB side of the prepINITModel and ftINIT scenario on smallYeast with a task list.
 %
-% The template is read, its boundary reactions are opened and a task list with a duplicated task id is
+% The template is read, its boundary reactions are opened and a task list is
 % prepared. ftINIT then extracts a model from gene levels that alternate between a score of +1 and -1 in
 % sorted gene order. The result records the tasks the prepared data keeps, the merged essential reactions,
 % the number of reference-model reactions whose bounds or stoichiometry differ from the template, and the
-% bounds and equation of three reactions in the extracted model.
+% bounds and equation of three reactions in the extracted model, and the number of genes of the reference
+% model and the extracted model. A task list with a repeated task id is refused.
 
 inputs = ctx.inputs;
 previousSolver = getpref('RAVEN', 'solver', '');
@@ -18,6 +19,13 @@ templateRxns = model.rxns;
 template = cell(numel(templateRxns), 1);
 for j = 1:numel(templateRxns)
     template{j} = struct('lb', model.lb(j), 'ub', model.ub(j), 'eq', {equation(model, j)});
+end
+
+duplicateError = false;
+try
+    evalc('prepINITModel(model, parseTaskList(char(inputs.tasks_duplicate)), ''extComp'', char(inputs.ext_comp));');
+catch
+    duplicateError = true;
 end
 
 tasks = parseTaskList(char(inputs.tasks));
@@ -72,7 +80,10 @@ results = struct();
 results.n_tasks_parsed = numel(tasks);
 results.kept_tasks = kept;
 results.essential_reactions = sort_cellstr(prepData.essentialRxns);
+results.duplicate_task_ids_refused = duplicateError;
 results.n_ref_reactions = numel(ref.rxns);
+results.n_ref_genes = numel(ref.genes);
+results.n_output_genes = numel(res.genes);
 results.n_ref_reactions_differing_from_template = nDiff;
 results.n_output_reactions = numel(res.rxns);
 results.output_reactions = sort_cellstr(res.rxns);
