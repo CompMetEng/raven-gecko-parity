@@ -357,7 +357,7 @@ entries:
     scenarios:
       - contract_model_toy
     notes: >-
-      Expand-then-contract is a lossless round trip on both sides. contractModel keeps the FIRST member of each duplicate set, strips the _EXP_N suffix (documented behaviour: the model is assumed to have come through expandModel) and merges the set's grRules with "or", so HXK returns with "YCL040W or YFR053C or YGL253W". remove_duplicate_reactions does the same: keep=rxns[0], a _merge_gene_reaction_rules helper combining every survivor's top-level OR-clauses (via cobra's own GPR AST, not hand-rolled bracket parsing), and the _EXP_ suffix stripped when every duplicate in the group carries one.  Detection is a different function on both sides --- see findDuplicateRxns. contract_model_toy: DIFFER. contractModel groups reactions by stoichiometry and reversibility, after orienting reversible reactions with sortModel, and merges a group to the widest bounds and the largest objective coefficient (with a warning). remove_duplicate_reactions groups by stoichiometry, bounds and objective coefficient and does not orient reversible reactions. For two reactions A -> B with upper bounds 10 and 20, or objective coefficients 0 and 1, or a reversible A <-> B written as B <-> A, RAVEN returns one reaction and Python returns both. The merged gene rules, the survivor and the _EXP_ suffix handling match in the cases that group on both sides.
+      Expand-then-contract is a lossless round trip on both sides. contractModel keeps the FIRST member of each duplicate set, strips the _EXP_N suffix (documented behaviour: the model is assumed to have come through expandModel) and merges the set's grRules with "or", so HXK returns with "YCL040W or YFR053C or YGL253W". remove_duplicate_reactions does the same: keep=rxns[0], a _merge_gene_reaction_rules helper combining every survivor's top-level OR-clauses (via cobra's own GPR AST, not hand-rolled bracket parsing), and the _EXP_ suffix stripped when every duplicate in the group carries one.  Detection is a different function on both sides --- see findDuplicateRxns. contract_model_toy: both sides group reactions by stoichiometry and reversibility and merge a group to the widest bounds and the largest objective coefficient (with a warning). Differences that remain: Python takes reversible as lower_bound < 0 < upper_bound where RAVEN uses lb < 0, and a duplicate written in the opposite direction is merged without mirroring its bounds. The merged gene rules, the survivor and the _EXP_ suffix handling match.
   - matlab: convertCharArray
     status: internal
     reason: MATLAB argument-validation glue. Python uses ordinary keyword arguments and type hints.
@@ -498,7 +498,7 @@ entries:
       number as an integer, the rest the shortest exact text), padded nowhere. dependencies.txt on the Python side lists
       python, cobra, libSBML, ruamel.yaml, scipy, openpyxl and raven_toolbox in a fixed order, then the model's version
       and date; RAVEN lists MATLAB, libSBML, RAVEN and the fields of model.modelVersion. The .mat and .xlsx files hold the RAVEN
-      model structure on both sides. RAVEN no longer has mainBranchFlag.
+      model structure on both sides. Both sides have the mainBranchFlag option (main_branch_flag in Python, keyword-only), which raises when the toolbox checkout is on a branch other than main or master. Python checks raven_toolbox only; RAVEN also checks GECKO for enzyme-constrained models.
   - matlab: exportModel
     status: via-dependency
     reason: 'cobrapy covers this: cobra.io.write_sbml_model.'
@@ -626,7 +626,7 @@ entries:
     scenarios:
       - fseof_toy
     notes: >-
-      from migration.md. Regression slope + correlation, amplify/knockdown/knockout classes, gene aggregation (FS1–FS4 in IMPROVEMENTS). fseof_toy: DIFFER. Python classifies on the signed slope for the threshold and reports it, RAVEN on the absolute flux: a reversible reaction that carries growing negative flux has slope -1 in Python and +1 in RAVEN (both call it an amplification target). RAVEN selects any reaction with std > 0 whose correlation passes the threshold, so a flux that is constant up to solver noise (the substrate uptake, slope 1e-6) is an amplification target; Python skips fluxes with a spread below flux_eps (1e-6). The target sets and slopes otherwise match for the defaults, five iterations at coefficient 0.5 and a threshold of 0.99.
+      from migration.md. Regression slope + correlation, amplify/knockdown/knockout classes, gene aggregation (FS1–FS4 in IMPROVEMENTS). fseof_toy compares both sides on the absolute flux, so a reversible reaction that carries growing negative flux has slope +1 on both. One difference stays documented in the flux_eps docstring: RAVEN selects any reaction with std > 0 whose correlation passes the threshold, so a flux that is constant up to solver noise (the substrate uptake, slope 1e-6) is an amplification target; Python skips fluxes with a spread below flux_eps (1e-6). The target sets and slopes otherwise match for the defaults, five iterations at coefficient 0.5 and a threshold of 0.99.
   - matlab: ftINIT
     python: raven_toolbox.init.ftinit
     status: parity
@@ -719,7 +719,7 @@ entries:
     scenarios:
       - generate_new_ids_toy
     notes: >-
-      Generates the next free id in a model's numbering scheme. RAVEN takes the largest id numerically and the width of that id (generateNewIds.m, str2double and max); a non-numeric suffix is only used when no id is numeric. Python still sorts the stripped ids as strings and takes the last (utils/ids.py), so generate_new_ids_toy: DIFFER for r_9, r_10, r_2 (Python r_10, RAVEN r_11), for r_0003 beside r_abc (Python r_001, RAVEN r_0004) and for a prefix without underscore beside ids that start with a letter (Python r001, RAVEN r0002). The cases without mixed widths or text match. add_transport_reactions and batch_curate_from_tsv keep their own narrower inline id logic rather than being refactored onto this; this is an additive, general-purpose port alongside them, not a replacement for either.
+      Generates the next free id in a model's numbering scheme. Both sides take the largest id numerically and the width of that id (generateNewIds.m, str2double and max); a non-numeric suffix is only used when no id is numeric. generate_new_ids_toy covers r_9, r_10, r_2, r_0003 beside r_abc and a prefix without underscore beside ids that start with a letter. batch_curate_from_tsv uses the same rule through utils.ids.next_ids. A number with a fractional part is truncated in Python.
   - matlab: getAllowedBounds
     status: via-dependency
     reason: 'cobrapy covers this: cobra.flux_analysis.flux_variability_analysis.'
@@ -835,7 +835,7 @@ entries:
     scenarios:
       - init_steps_toy
     notes: >-
-      migration.md maps {ftINIT, prepINITModel, ftINITInternalAlg, getINITSteps} onto {raven_toolbox.init.ftinit, raven_toolbox.init.prep_init_model, raven_toolbox.init.run_ftinit, raven_toolbox.init.get_init_steps} as a group; pick the right counterpart init_steps_toy: the series 1+1, 2+1, 1+0 and 2+0 match step for step (previous-result mode, ignore mask, flags, MILP gaps, time limits and absolute gaps) and an unknown series raises on both sides. DIFFER only for series full: RAVEN has one MILP run (gap 0.0004, 10000 s, absolute gap 10) and Python has none (the step solves once at the caller's gaps).
+      migration.md maps {ftINIT, prepINITModel, ftINITInternalAlg, getINITSteps} onto {raven_toolbox.init.ftinit, raven_toolbox.init.prep_init_model, raven_toolbox.init.run_ftinit, raven_toolbox.init.get_init_steps} as a group; pick the right counterpart init_steps_toy: the series 1+1, 2+1, 1+0 and 2+0 match step for step (previous-result mode, ignore mask, flags, MILP gaps, time limits and absolute gaps) and an unknown series raises on both sides. Series full is one MILP run on both sides (gap 0.0004, 10000 s, absolute gap 10). RAVEN passes [] for metsToIgnore in that series and Python passes the caller's mets_to_ignore.
   - matlab: getKEGGModelForOrganism
     python: raven_toolbox.reconstruction.kegg.get_kegg_model_for_organism
     status: parity
@@ -1087,7 +1087,7 @@ entries:
     scenarios:
       - parse_hpa_toy
     notes: >-
-      Python parse_hpa_rna reads the tidy layout (Gene, Gene name, Tissue, TPM) like RAVEN. parse_hpa_toy: DIFFER in four cases. (1) RAVEN reads the older layout with Sample and Value columns; Python takes Sample and Value as two tissue columns of the wide layout and returns the tissue 'Value' with the sample names lost, without an error. (2) A file with a Tissue column and no TPM or Value column raises in RAVEN; Python returns an empty table. (3) The wide layout (one column per tissue) is read by Python and raises in RAVEN. (4) For a repeated gene and tissue RAVEN keeps the last value and Python keeps both rows.
+      Python parse_hpa_rna reads the tidy layout (Gene, Gene name, Tissue, TPM) like RAVEN, and the older layout with Sample and Value columns. A file without a tissue or value column raises, and so does the wide layout (one column per tissue). For a repeated gene and tissue both sides keep the last value; Python warns.
   - matlab: parseRAVENargs
     status: internal
     reason: MATLAB argument-validation glue. Python uses ordinary keyword arguments and type hints.
@@ -1186,7 +1186,7 @@ entries:
     scenarios:
       - random_sampling_toy
     notes: >-
-      raven_toolbox.analysis.random_sampling takes the same three methods (achr, chrr, randomObjective). The sampling chains differ: Python wraps cobra's ACHRSampler and has its own CHRR, RAVEN uses sampleACHR.m and sampleCHRR.m, so a seeded draw cannot match and only summary statistics can be compared. DIFFERENCES in the random-objective method: replaceBoundsWithInf defaults to true in RAVEN and replace_max_bound to False in Python (randomSampling.m:150-152, sampling.py:69); RAVEN finds the reactions to optimise from getAllowedBounds with a 0.999 cut on the model's own extreme bounds and Python from a loopless FVA; n_samples <= 0 raises ValueError in Python. random_sampling_toy compares properties that do not depend on the generator (shape, steady state, bounds, mean of a parallel reaction against the centroid of the region): DIFFER for ACHR. RAVEN's sampleACHR returns samples whose steady-state residual grows along the chain (the first sample of 2000 satisfies S*v = 0, the last has a residual of 0.55 and the largest residual over the matrix is 1); Python's ACHR and both CHRR implementations stay below 1e-6. CHRR and the random-objective method match.
+      raven_toolbox.analysis.random_sampling takes the same three methods (achr, chrr, randomObjective). The sampling chains differ: Python wraps cobra's ACHRSampler and has its own CHRR, RAVEN uses sampleACHR.m and sampleCHRR.m, so a seeded draw cannot match and only summary statistics can be compared. DIFFERENCES in the random-objective method: replaceBoundsWithInf defaults to true in RAVEN and replace_max_bound to False in Python (randomSampling.m:150-152, sampling.py:69); RAVEN finds the reactions to optimise from getAllowedBounds with a 0.999 cut on the model's own extreme bounds and Python from a loopless FVA; n_samples <= 0 raises ValueError in Python. random_sampling_toy compares properties that do not depend on the generator (shape, steady state, bounds, mean of a parallel reaction against the centroid of the region): RAVEN's sampleACHR projects the step direction onto the null space of S (RAVEN commit ab606ff), so the steady-state residual stays at rounding level along the chain; before that the residual grew along the chain (the last of 2000 samples had a residual of 0.55). Python's ACHR and both CHRR implementations stay below 1e-6. The verdict of random_sampling_toy with the projection has not been rerun.
   - matlab: ravenCobraWrapper
     status: matlab-only
     reason: cobra is the canonical object in raven-toolbox --- there is no parallel RAVEN struct to convert
@@ -1375,8 +1375,8 @@ entries:
     reason: 'Numerical preconditioning inside the ftINIT preparation. Python has it as init.prep.rescale_for_init
       (not exported), called by prep_init_model. rescale_for_init_toy gives the same coefficients on both sides
       (cap at maxStoichDiff times the smallest coefficient, then mean 1) but the bounds differ: rescale_for_init
-      also resets every non-zero bound to +-1000, which RAVEN does in prepINITModel after the call, so a bound of
-      -500 or 800 comes back as -1000 or 1000 from Python and unchanged from rescaleModelForINIT.'
+      leaves the bounds unchanged, as rescaleModelForINIT does; prep_init_model resets every non-zero bound to
+      +-1000 after the call, as prepINITModel does.'
     scenarios:
       - rescale_for_init_toy
   - matlab: reverseRxns
@@ -1468,8 +1468,8 @@ entries:
       of its own; the HPA path''s median/average aggregators do not. score_model_toy compares expression data against
       a threshold: a zero reference (a positive level scores +10, 0 against 0 scores -5), a missing level (the gene
       gets no score) and a rule whose genes have no score (-2). hpa_scores_toy compares the HPA gene scores (best
-      and average over cell types, one cell type, another tissue): they agree except for the level "None", which
-      RAVEN scores -8 and hpa_gene_scores drops.'
+      and average over cell types, one cell type, another tissue): they agree, including the level "None",
+      which both sides score -8.'
   - matlab: setExchangeBounds
     python: raven_toolbox.manipulation.set_exchange_bounds
     status: parity
@@ -1635,8 +1635,8 @@ entries:
     notes: 'Generic {Header,Sequence} struct-array FASTA writer (briefly removed as unreferenced, then restored,
       SysBioChalmers/RAVEN#711, #728). The Python function takes a dict of id to sequence and adds DeepLoc
       batching and a check that ids contain no whitespace. Line wrapping is the same (RAVEN lineWidth, default 80;
-      Python wrap, default 60), and write_fasta_toy compares the file text at widths 10, 20 and 80. The two differ
-      for an empty sequence: RAVEN writes the header line only, Python writes the header and an empty line.'
+      Python wrap, default 60), and write_fasta_toy compares the file text at widths 10, 20 and 80. An empty
+      sequence gives the header line only on both sides.'
   - python: raven_toolbox.io.get_model_metadata
     status: python-only
     reason: 'MATLAB models carry version and date as struct fields (model.version, model.date), so there is
@@ -2021,8 +2021,7 @@ entries:
     status: subsumed
     reason: 'RAVEN has the same computation, but inside scoreModel''s HPA branch rather than as its own entry
       point. hpa_scores_toy compares the two on six genes for the best and average score over cell types, one
-      cell type, and a second tissue: they agree, with one divergence. RAVEN''s default level table has a
-      "None" level (-8); HPA_LEVEL_SCORES has no "None", so Python drops such a gene instead of scoring it -8.'
+      cell type, and a second tissue: they agree. The level "None" scores -8 on both sides.'
     scenarios:
       - hpa_scores_toy
   - python: raven_toolbox.init.rna_gene_scores
