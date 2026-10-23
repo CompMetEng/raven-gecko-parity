@@ -14,9 +14,9 @@ job for RAVEN.
 | `protein_pool_ectestgem` | `setProtPoolSize`, `calculateFfactor`, `loadProtData`, `fillEnzConcs`, `constrainEnzConcs` | match |
 | `molecular_weight_sequences` | `calculateMW` | **differs**, on purpose --- see below |
 | `ec_model_io_ectestgem` | `saveEcModel`, `loadEcModel` | match (content); **differs** (layout) |
-| `model_edits_ectestgem` | `addNewRxnsToEC`, `copyECtoGEM`, `setKcatForReactions`, `getReactionsFromEnzyme`, `mapRxnsToConv` | match, plus four small documented divergences --- see below |
-| `kcat_chain_ectestgem` | `fuzzyKcatMatching`, `loadBRENDAdata`, `writeDLKcatInput`, `readDLKcatOutput`, `mergeDLKcatAndFuzzyKcats`, `selectKcatValue`, `applyCustomKcats`, `getKcatAcrossIsozymes`, `getStandardKcat`, `removeStandardKcat`, `applyKcatConstraints` | match, plus three confirmed divergences --- see below |
-| `okp_kcat_ectestgem` | `findMetSmiles`, `writeOpenKineticsPredictorInput`, `readOpenKineticsPredictorOutput` | match, plus one confirmed divergence --- see below |
+| `model_edits_ectestgem` | `addNewRxnsToEC`, `copyECtoGEM`, `setKcatForReactions`, `getReactionsFromEnzyme`, `mapRxnsToConv` | match; the unknown-enzyme case is asserted on each side as a deliberate difference --- see below |
+| `kcat_chain_ectestgem` | `fuzzyKcatMatching`, `loadBRENDAdata`, `writeDLKcatInput`, `readDLKcatOutput`, `mergeDLKcatAndFuzzyKcats`, `selectKcatValue`, `applyCustomKcats`, `getKcatAcrossIsozymes`, `getStandardKcat`, `removeStandardKcat`, `applyKcatConstraints` | match |
+| `okp_kcat_ectestgem` | `findMetSmiles`, `writeOpenKineticsPredictorInput`, `readOpenKineticsPredictorOutput` | match |
 | `enzyme_usage_ectestgem` | `enzymeUsage`, `reportEnzymeUsage`, `getConcControlCoeffs` | match, plus one confirmed divergence --- see Tier 3 below |
 | `ec_fva_ectestgem` | `ecFVA` | match, plus one confirmed divergence --- see Tier 3 below |
 | `flexibilize_concs_ectestgem` | `loadFluxData`, `constrainFluxData`, `flexibilizeEnzConcs` | match, plus one confirmed divergence --- see Tier 3 below |
@@ -134,7 +134,7 @@ first stage that diverges is the one to fix.
 | `protein_pool_ectestgem` | `setProtPoolSize`, `calculateFfactor`, `loadProtData`, `fillEnzConcs`, `constrainEnzConcs` | done, matching |
 | `molecular_weight_sequences` | `calculateMW` | done, red on purpose --- see below |
 | `ec_model_io_ectestgem` | `saveEcModel`, `loadEcModel` | done, content matches, layout doesn't --- see below |
-| `model_edits_ectestgem` | `addNewRxnsToEC`, `copyECtoGEM`, `setKcatForReactions`, `getReactionsFromEnzyme`, `mapRxnsToConv` | done, matching (plus [GECKO #427]) --- see below |
+| `model_edits_ectestgem` | `addNewRxnsToEC`, `copyECtoGEM`, `setKcatForReactions`, `getReactionsFromEnzyme`, `mapRxnsToConv` | done, matching (plus [GECKO #427]); unknown-enzyme case neutralised --- see below |
 
 `molecular_weight_sequences` turned out to carry more than the one documented divergence.
 Eighteen sequences, each isolating one variable; all eighteen differ. The twenty standard
@@ -185,9 +185,7 @@ would test today's readers against a file that may carry the legacy quirks
 `smiles` field, reverse-direction `usage_prot_*` / `prot_pool_exchange`), none of which a
 freshly-built model exercises. Worth its own scenario later, not a substitute for this one.
 
-`model_edits_ectestgem` found the same shape of thing three times over: a real, previously
-unknown crash directly in one of its five target functions, plus four small, already-typical
-API-shape divergences the individual docstrings had already called out but nothing had run.
+`model_edits_ectestgem` found a real, previously unknown crash directly in one of its five target functions.
 
 The crash: `addNewRxnsToEC` raised `Index in position 2 is invalid` whenever more than one new
 reaction in a single call needed isozyme (OR-grRule) expansion --- including one *reversible*
@@ -204,30 +202,17 @@ geckopy's `add_new_rxns_to_ec` on the same input, the two agree on the reactions
 enzymes added, and every field --- reactions, gene associations, stoichiometry, every `ec.*`
 array --- of the resulting model.
 
-The four divergences, each confirmed on the parts that agree as well as the parts that don't:
+Every checkpoint of the scenario matches. The one remaining behavioural difference is deliberate and decided in
+raven-gecko-parity#70: for a protein id that is not in `ec.enzymes`, `getReactionsFromEnzyme` returns empty outputs and
+geckopy's `get_reactions_from_enzyme` raises `ValueError`. Each side asserts its own behaviour inside the scenario (the run
+fails if either changes) and reports the same empty result, so the checkpoint compares what both stand for.
 
-- `getReactionsFromEnzyme` / `get_reactions_from_enzyme`: the known-enzyme case matches
-  exactly. MATLAB matches protein ids case-insensitively and returns empty outputs for an
-  unknown one; geckopy is case-sensitive and raises `ValueError` for both a case-mismatched
-  known id and a genuinely unknown one.
-- `setKcatForReactions` / `set_kcat_for_reactions`: kcat values match exactly for a suffixed
-  id and for a base name broadcasting one scalar across its isozymes. `ec.source` reads
-  `'setKcatForReactions'` in MATLAB, `'manual'` in geckopy. And MATLAB accepts a per-isozyme
-  kcat list for an unsuffixed base name, relying on `ec.rxns` order to line the values up;
-  geckopy refuses this and asks for the suffixed ids explicitly.
-- `copyECtoGEM` / `copy_ec_to_gem`: filling an empty eccode, and leaving a populated one alone
-  under `overwrite=false`, both match exactly. Under `overwrite=true`, MATLAB clobbers an
-  existing annotation with an *empty* `ec.eccodes` entry; geckopy treats an empty entry as
-  nothing to propagate and never clobbers with emptiness, `overwrite=true` or not.
-- `mapRxnsToConv` / `map_rxns_to_conv`: matches exactly, no divergence --- checked with a
-  synthetic per-reaction flux vector keyed by id (the alphabetical rank of each ecModel
-  reaction's own id, so the comparison never assumes the two sides agree on row order,
-  only on the set of ids), rather than a solved flux distribution, keeping the whole
-  scenario solver-free.
-
-None of the four is new: every one is already a `MATLAB-COMPAT` comment in geckopy's own
-source. What this scenario adds is running the two side by side on the same input, which is
-what turns "documented in a comment" into "asserted, and fails if either side moves".
+The other checkpoints agree: `getReactionsFromEnzyme` matches protein ids case-insensitively on both sides;
+`setKcatForReactions` gives the same kcat values and the same `ec.source` string for a suffixed id, a base name with one
+scalar and a base name with a per-isozyme list; `copyECtoGEM` fills an empty eccode, leaves a populated one alone under
+`overwrite=false` and treats an empty `ec.eccodes` entry under `overwrite=true` the same way; `mapRxnsToConv` matches on a
+synthetic per-reaction flux vector keyed by id (the alphabetical rank of each ecModel reaction's own id, so the comparison
+never assumes the two sides agree on row order, only on the set of ids), keeping the whole scenario solver-free.
 
 `protein_pool_ectestgem` turned up two real bugs in `calculateFfactor`, both fixed and
 **merged** in [GECKO #426]: it called `loadDatabases` for its UniProt database
@@ -276,29 +261,18 @@ output both match MATLAB's exactly ---
 `R2a`, same GPR shape as `R2` but no EC code, so it has to go through DLKcat and isozyme-fill;
 `R6`, no GPR at all, the one shape the stock fixture lacks, needed for the
 new-standard-pseudo-protein path) walked through all eleven functions in pipeline order,
-checkpointed at each stage. Content matches exactly except three confirmed, asserted
-divergences:
+checkpointed at each stage. Content matches exactly at every checkpoint. The behaviours the
+checkpoints pin down:
 
-- **`applyCustomKcats`**, mode A (reaction id only, no protein listed): MATLAB only writes
-  `ec.kcat`, leaving `ec.source`/`ec.notes` at whatever they already were; geckopy shares one
-  write path across all three modes and always sets `source='custom'` and appends the note.
-  Not flagged as a MATLAB-COMPAT note upstream --- found by reading both implementations side
-  by side, not from any existing documentation.
-- **`selectKcatValue`**, `criteria='median'`/`'mean'`: dead code in MATLAB.
-  `[selectedKcats(i),j] = median(...)`/`mean(...)` requests a two-output form neither function
-  supports (only `max`/`min` do); confirmed by direct execution to error unconditionally with
-  *"Too many output arguments"*. GECKO's own `test/VerificationMatrix.tsv` already flags this
-  function as under-tested, and no call site anywhere in the codebase --- including the
-  function's own docstring example --- ever passes `criteria='median'`/`'mean'`. geckopy's
-  `apply_kcat_list` has no such restriction.
+- **`applyCustomKcats`**, mode A (reaction id only, no protein listed): both sides write the new
+  `ec.kcat`, set `ec.source` to `custom` and record the note.
+- **`selectKcatValue`**, `criteria='median'`/`'mean'`: both sides aggregate the matching kcats;
+  neither raises.
 - **`applyKcatConstraints`**, light formulation, partial isozyme coverage: when only some
-  isozymes of a reaction have a kcat, MATLAB corrects an unassigned isozyme's `Inf` cost
-  (`MW/0`) to `0` *before* taking `min()` across isozymes, so the fabricated zero always wins
-  --- silently writing a zero enzyme cost for the whole reaction even though another isozyme has
-  a real, valid kcat. geckopy skips invalid isozymes before the comparison instead. Not
-  reachable through the shared ecTestGEM fixture (every isozyme there ends up with a kcat by
-  the time constraints are applied), so this is a small, isolated, purpose-built model within
-  the scenario rather than a fixture addition.
+  isozymes of a reaction have a kcat, both sides skip the isozymes without a usable kcat before
+  taking the cheapest (GECKO#463). Not reachable through the shared ecTestGEM fixture (every
+  isozyme there ends up with a kcat by the time constraints are applied), so this is a small,
+  isolated, purpose-built model within the scenario rather than a fixture addition.
 
 Two more real divergences were found along the way but are not asserted by the scenario, since
 neither is reachable through the ecTestGEM fixture without a fixture change that would cost more
@@ -361,10 +335,8 @@ each independently claiming isolation, even though each side's own `reason` text
 function. Fixed by re-pairing them as `parity` rows (see `ledgers/gecko.yml`); this scenario then
 confirmed the pairing behaviourally.
 
-Content matches exactly except one confirmed, asserted divergence: MATLAB's `kcatSource` prefixes
-each entry's provenance with `OKP-` (e.g. `OKP-CataPro`, stripped of OKP's own leading
-`Prediction from `); geckopy's `parse_okp_output` keeps the same stripped value un-prefixed
-(`CataPro`). Confirmed by direct execution; recorded, not normalized away.
+Content matches exactly. Both sides prefix each entry's provenance with `OKP-` (e.g. `OKP-CataPro`,
+stripped of OKP's own leading `Prediction from `), and the checkpoint compares the source verbatim.
 
 Found and fixed one real MATLAB bug along the way, in the same family as `writeDLKcatInput.m`'s
 own subset-indexing bug above --- both functions build a CSV from a caller-chosen `ecRxns`
@@ -677,8 +649,7 @@ the raven nightly has already lived with since
    (`kcat_chain_ectestgem`), matching except three confirmed, asserted divergences; found and
    fixed four real MATLAB bugs along the way (`writeDLKcatInput.m`'s subset selection,
    `TestGEMAdapter.m`'s spontaneous-reaction detection twice over, `applyKcatConstraints.m`'s
-   duplicate-accession summation). ~~OKP.~~ Done (`okp_kcat_ectestgem`), matching except one
-   confirmed, asserted divergence; re-paired three ledger rows that were wrongly filed
+   duplicate-accession summation). ~~OKP.~~ Done (`okp_kcat_ectestgem`), matching; re-paired three ledger rows that were wrongly filed
    one-sided on both sides at once, and found and fixed a fifth real MATLAB bug, the same
    family as `writeDLKcatInput.m`'s own (`writeOpenKineticsPredictorInput.m`'s subset
    indexing, [GECKO #437]). Tier 2 is complete.
