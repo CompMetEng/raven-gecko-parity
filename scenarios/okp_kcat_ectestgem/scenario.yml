@@ -57,13 +57,10 @@ inputs:
 # MATLAB result was generated against a worktree with the fix applied ahead of merge, so
 # it already reflects the corrected behaviour regardless of merge status.
 #
-# One confirmed, asserted divergence remains: MATLAB's kcatList.kcatSource prefixes each
-# entry's provenance with 'OKP-' (e.g. 'OKP-CataPro', stripped of OKP's own leading
-# 'Prediction from '); geckopy's parse_okp_output keeps the same stripped value
-# un-prefixed ('CataPro'). Confirmed by direct execution against the vendored
-# okp_result.csv fixture above; the read_output checkpoint compares source as the
-# stripped-but-unprefixed token both sides agree on and records the prefixed MATLAB
-# value and the un-prefixed Python value side by side rather than hiding the split.
+# Both sides prefix each entry's provenance with 'OKP-' (e.g. 'OKP-CataPro', after
+# stripping OKP's own leading 'Prediction from '), which merge_kcats uses to recognise a
+# database row that came through OKP. The read_output checkpoint compares the source
+# string verbatim.
 tolerance:
   rel: 1.0e-9
   abs: 1.0e-12

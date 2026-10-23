@@ -111,10 +111,7 @@ kcatList = readOpenKineticsPredictorOutput(ecModel, 'outFile', inputs.okp_result
 n = numel(kcatList.rxns);
 records = cell(1, n);
 for k = 1:n
-    % MATLAB's kcatSource carries an 'OKP-' prefix geckopy's source column does not
-    % (see scenario.yml) --- recorded verbatim, not normalized to a shared token, so
-    % the split stays visible in the comparison rather than being hidden by the
-    % checkpoint itself.
+    % Recorded verbatim: 'OKP-CataPro', 'OKP-BRENDA' on both sides.
     records{k} = struct('reaction', kcatList.rxns{k}, 'gene', kcatList.genes{k}, ...
         'substrate', kcatList.substrates{k}, 'kcat', double(kcatList.kcats(k)), ...
         'source', kcatList.kcatSource{k});

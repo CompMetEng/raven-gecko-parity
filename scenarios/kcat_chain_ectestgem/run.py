@@ -249,12 +249,8 @@ def _checkpoint_selection(model, merged, inputs: dict):
     apply_kcat_list(model, merged, criteria="max")
     out["after_select_max"] = _kcat_rows(model, _all_ec_rxns(model))
 
-    # MATLAB's assignKcatValues.m computes [selectedKcats(i),j] = median(...)/mean(...)
-    # for these two criteria --- a two-output call standard MATLAB median/mean do not
-    # support (only max/min do). Confirmed by direct execution: this errors
-    # unconditionally with "Too many output arguments" whenever it reaches a
-    # reaction needing aggregation, i.e. on any non-empty kcatList. geckopy's
-    # apply_kcat_list has no such restriction. Asserted here rather than avoided.
+    # The 'median' criterion aggregates the matching kcats; the flag records whether
+    # either side raises for it (neither does).
     probe = model.copy()
     try:
         apply_kcat_list(probe, merged, criteria="median")
@@ -267,11 +263,7 @@ def _checkpoint_selection(model, merged, inputs: dict):
     out["after_isozyme_fill"] = _kcat_rows(model, _all_ec_rxns(model))
 
     # customKcats.tsv's only row targets R3 by reaction id alone (mode A: no protein
-    # listed). MATLAB's applyCustomKcats.m only ever writes ec.kcat in this branch,
-    # leaving ec.source/ec.notes at whatever they already were (here: 'brenda', from
-    # the fuzzy match). geckopy's apply_custom_kcats shares one write path across all
-    # three modes and always sets source='custom' and appends the note. Both sides
-    # apply the same new kcat; source/notes are the deliberately-asserted difference.
+    # listed). Both sides write the new kcat, set ec.source to 'custom' and record the note.
     apply_custom_kcats(model, Path(inputs["custom_kcats_path"]), apply=False)
     out["after_custom_kcats"] = _kcat_rows(model, ["R3"])
 

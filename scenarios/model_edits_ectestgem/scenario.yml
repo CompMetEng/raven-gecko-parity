@@ -24,9 +24,10 @@ inputs:
   adapter_python: "{python_repo}/examples/ecTestGEM"
 
   # getReactionsFromEnzyme: a known enzyme, a case-swapped spelling of it, and an unknown
-  # one. Both sides now match case-insensitively; MATLAB returns empty outputs for an
-  # unknown protein, geckopy raises. This checkpoint asserts the remaining difference
-  # rather than working around it.
+  # one. Both sides match case-insensitively. For an unknown protein MATLAB returns empty
+  # outputs and geckopy raises ValueError, a deliberate difference (raven-gecko-parity#70).
+  # Each side asserts its own behaviour and reports the same empty result, so the
+  # checkpoint compares what both stand for and fails if either side changes.
   known_enzyme: P1
   case_variant_enzyme: p1
   unknown_enzyme: NOSUCH
@@ -35,9 +36,8 @@ inputs:
   # R2_EXP_2 (see ec_model_expansion_ectestgem). Three cases: an explicit suffixed id (one
   # reaction, unambiguous on both sides), the base name with a single scalar kcat
   # (broadcasts to both isozymes on both sides), and the base name with a two-element kcat
-  # list --- MATLAB accepts this and assigns per ec.rxns order; geckopy refuses it and
-  # asks for the suffixed ids explicitly. A second, separately documented difference rides
-  # along for free: the string written to ec.source ('setKcatForReactions' vs 'manual').
+  # list --- both sides accept it and assign per ec.rxns order. ec.source reads
+  # 'setKcatForReactions' on both sides.
   kcat_suffixed:
     rxn: R2_EXP_1
     value: 12.5
@@ -53,8 +53,8 @@ inputs:
   # have none until this checkpoint fills them. Three cases: fill an empty slot (both
   # sides should agree), leave R2_EXP_1 alone under overwrite=false (both sides should
   # agree), and overwrite R2_EXP_1 with an *empty* ec.eccodes entry under overwrite=true
-  # --- MATLAB clobbers the existing annotation with emptiness; geckopy treats an empty
-  # entry as nothing to propagate and leaves the existing one alone.
+  # --- both sides treat an empty entry as nothing to propagate and leave the existing
+  # annotation alone.
   overwrite_target_rxn: R2_EXP_1
 
   # mapRxnsToConv: one synthetic value per ecModel reaction, keyed by reaction id so

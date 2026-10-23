@@ -146,12 +146,29 @@ def _reactions_from_enzyme_case(model, protein_id: str) -> dict:
     }
 
 
+def _unknown_enzyme_case(model, protein_id: str) -> dict:
+    """An unknown protein id, reported as the side-neutral 'no reactions'.
+
+    getReactionsFromEnzyme returns empty outputs for an id that is not in ec.enzymes;
+    geckopy raises ValueError, a deliberate difference (raven-gecko-parity#70). The raise
+    is asserted here, so the run fails if geckopy stops raising, and the compared value is
+    the empty result both sides stand for.
+    """
+    try:
+        get_reactions_from_enzyme(model, protein_id)
+    except ValueError:
+        return {"rxns": [], "kcat": []}
+    raise AssertionError(
+        f"get_reactions_from_enzyme({protein_id!r}) returned instead of raising ValueError"
+    )
+
+
 def _checkpoint_reactions_from_enzyme(adapter, conv, inputs: dict) -> dict:
     model = _fresh_ec_model(adapter, conv)
     return {
         "known": _reactions_from_enzyme_case(model, inputs["known_enzyme"]),
         "case_variant": _reactions_from_enzyme_case(model, inputs["case_variant_enzyme"]),
-        "unknown": _reactions_from_enzyme_case(model, inputs["unknown_enzyme"]),
+        "unknown": _unknown_enzyme_case(model, inputs["unknown_enzyme"]),
     }
 
 
@@ -231,7 +248,7 @@ def _checkpoint_copy_ec(adapter, conv, inputs: dict) -> dict:
 
     overwrite_empty = _fresh_ec_model(adapter, conv)
     # Blank the ec.eccodes entry for `target` before copying, so overwrite=True is asked to
-    # replace a real annotation with nothing --- the case MATLAB clobbers and geckopy does not.
+    # replace a real annotation with nothing; neither side lets an empty entry replace it.
     ec_index = {r: i for i, r in enumerate(overwrite_empty.ec.rxns)}
     if target in ec_index:
         overwrite_empty.ec.eccodes[ec_index[target]] = ""

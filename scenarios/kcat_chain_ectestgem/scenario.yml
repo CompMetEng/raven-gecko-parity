@@ -68,11 +68,7 @@ inputs:
 
   # One customKcats.tsv row, mode A (reaction id only, no protein): targets R3, which
   # already has a real BRENDA-derived kcat and source by this point in the pipeline.
-  # MATLAB's applyCustomKcats.m only ever writes ec.kcat in this branch, leaving
-  # ec.source/ec.notes at whatever they already were; geckopy's apply_custom_kcats
-  # shares one write path across all three modes and always sets source='custom' and
-  # appends the note. Confirmed by direct execution against GECKO develop4 --- asserted
-  # on purpose, not a bug on either side, see docs/gecko-behaviour-parity-plan.md.
+  # Both sides write the new kcat, set ec.source to 'custom' and record the note.
   custom_kcats_path: "{scenario_dir}/data/customKcats.tsv"
 
   uniprot_path: "{matlab_repo}/test/unit_tests/ecTestGEM/data/uniprot.tsv"
