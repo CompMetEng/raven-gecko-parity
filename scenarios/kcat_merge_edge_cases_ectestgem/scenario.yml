@@ -1,0 +1,68 @@
+id: kcat_merge_edge_cases_ectestgem
+pair: gecko
+description: >-
+  Edge cases of the steps between a kcat source and ec.kcat: reading a DLKcat output
+  (unknown substrate, unknown reaction with a missing kcat, inf, a malformed number, a file
+  without numbers), writing the DLKcat input (an empty selection, row order), BRENDA loading
+  (outlier filtering), fuzzy BRENDA matching (a code with no relative in BRENDA, a tie between
+  EC codes, a subset with a repeated reaction, an empty subset), merging kcat lists (the
+  default origin limit, OKP-prefixed sources) and selecting a kcat per reaction when a zero
+  row is dropped. Each case builds its own state. A raise is a value on both sides.
+
+entries:
+  - readDLKcatOutput
+  - writeDLKcatInput
+  - loadBRENDAdata
+  - fuzzyKcatMatching
+  - mergeKcats
+  - mergeDLKcatAndFuzzyKcats
+  - assignKcatValues
+
+# Differences this scenario reports (seed-independent, confirmed by running both sides; the
+# scenario stays DIFFER until the sides are aligned or the difference is recorded as intended):
+#   mergeKcats and mergeDLKcatAndFuzzyKcats: topOriginLimit defaults to 6 in MATLAB and 4 in
+#     Python, so a BRENDA match of origin 5 or 6 beats a DLKcat prediction in MATLAB only. MATLAB
+#     normalises 'OKP-BRENDA' to 'okp_brenda', which is neither a database source nor listed in
+#     the priority, so its rows are dropped; Python strips the prefix and keeps them as database
+#     rows.
+#   assignKcatValues: after rows with kcat 0 are removed, MATLAB indexes the unfiltered
+#     kcatSource, so a kept row takes the source of a removed one; Python filters the whole table.
+#   readDLKcatOutput: MATLAB raises on an unknown substrate and on an unknown reaction whose kcat
+#     is NA; Python skips the first and accepts the second. A kcat of 'inf' is kept by Python
+#     and dropped by MATLAB; '1.2.3' is kept as NaN by MATLAB and dropped by Python; a file with
+#     only 'None' raises in Python and returns an empty list in MATLAB.
+#   writeDLKcatInput: an empty selection raises in MATLAB and writes an empty file in Python;
+#     rows follow ec.rxns order in MATLAB and the order of the caller in Python.
+#   loadBRENDAdata: Python drops a row four decades below the median of its EC (when five or
+#     more values exist); MATLAB has no such filter.
+#   fuzzyKcatMatching: an EC code with no relative in BRENDA reaches a global wildcard level 4 in
+#     Python and gives kcat 0 in MATLAB; with two EC codes of equal kcat MATLAB reports the
+#     wildcard match and Python the exact one; a subset is returned in the order and with the
+#     repeats of the caller in Python and in model order without repeats in MATLAB; an empty
+#     subset means all reactions in MATLAB and none in Python.
+
+inputs:
+  adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
+  adapter_python: "{python_repo}/examples/ecTestGEM"
+  fixture_dir: "{matlab_repo}/test/unit_tests/ecTestGEM"
+
+  # Hand-built BRENDA fixture in both formats (see kcat_chain_ectestgem for why both are
+  # needed). Both 1.1.1.1 substrates carry the same kcat, so an EC code reached by wildcard
+  # can tie with a directly matched one. MATLAB resolves the BRENDA folder and the
+  # evolutionary distances through the adapter's params.path, so a copy of the adapter is
+  # redirected to scenario_root (ModelAdapter is a value class); Python takes explicit paths.
+  scenario_root: "{scenario_dir}"
+  brenda_dir: "{scenario_dir}/data"
+  phyl_dist_path: "{scenario_dir}/data/PhylDist.mat"
+
+  # Seven measurements of 1.1.1.1 (six near 10, one at 1e-4), for the outlier filter of
+  # load_brenda_data, which has no counterpart in loadBRENDAdata.
+  outlier_root: "{scenario_dir}/outlier"
+  outlier_brenda_dir: "{scenario_dir}/outlier/data"
+
+  data_dir: "{scenario_dir}/data"
+  dlkcat_write_target: "{repo_root}/results/.kcat_merge_dlkcat_input.tsv"
+
+tolerance:
+  rel: 1.0e-9
+  abs: 1.0e-12
