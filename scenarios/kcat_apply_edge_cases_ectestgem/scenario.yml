@@ -1,0 +1,54 @@
+id: kcat_apply_edge_cases_ectestgem
+pair: gecko
+description: >-
+  Edge cases of the functions that write kcats into ec.kcat and into the S matrix:
+  applyKcatConstraints (light-model subsets, an isozyme row without enzymes, re-applying
+  after every kcat was set to zero, an empty or unknown update list), setKcatForReactions
+  (default apply, letter case, unknown and base ids), getKcatAcrossIsozymes (NaN and zero
+  siblings, default apply) and applyCustomKcats (empty notes, a blank kcat, letter case,
+  protein-only rows, a quoted reaction list, a partial complex, a light model). Each case
+  builds its own state, so the verdicts are independent. A raise is a value on both sides.
+
+entries:
+  - applyKcatConstraints
+  - setKcatForReactions
+  - getKcatAcrossIsozymes
+  - applyCustomKcats
+
+# Differences this scenario reports (seed-independent, confirmed by running both sides; the
+# scenario stays DIFFER until the sides are aligned or the difference is recorded as intended):
+#   applyKcatConstraints, light model: MATLAB takes the reaction (cobra id) and lets every isozyme
+#     compete for the cheapest cost; Python takes ec rows and lets only the named rows compete,
+#     so re-applying one tuned isozyme writes its cost even when another isozyme is cheaper.
+#     MATLAB gives an isozyme row with a kcat but no enzymes a cost of 0 (it wins the minimum and
+#     leaves the reaction unconstrained); Python skips such a row. MATLAB accepts cobra ids and
+#     rejects ec ids in updateRxns; Python is the other way round.
+#   applyKcatConstraints, full model: with every kcat 0 MATLAB returns before clearing, so the old
+#     coefficients stay; Python clears them. An empty update list means all reactions in MATLAB
+#     and none in Python.
+#   setKcatForReactions: Python applies the constraints by default, MATLAB never does; MATLAB
+#     matches ids case-insensitively and ignores an unknown id, Python needs an exact id and
+#     raises; a base id of a light model matches the ec rows in Python only.
+#   getKcatAcrossIsozymes: a NaN kcat is filled from known siblings in Python and left alone in
+#     MATLAB; Python rewrites S for the filled rows by default.
+#   applyCustomKcats: MATLAB writes a NaN kcat for a blank cell (with source and notes), appends
+#     ', ' for empty notes, matches protein ids case-insensitively and strips quotes from a
+#     quoted reaction list; Python skips blank rows, leaves empty notes alone, needs exact ids
+#     and keeps the quotes (so the quoted list matches nothing). A protein-only row on a light
+#     model is applied in Python and ignored in MATLAB.
+
+inputs:
+  adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
+  adapter_python: "{python_repo}/examples/ecTestGEM"
+  fixture_dir: "{matlab_repo}/test/unit_tests/ecTestGEM"
+
+  # One customKcats.tsv per case, each applied to a fresh full ecTestGEM model. MATLAB
+  # reads the file through the path given to applyCustomKcats and Python through its path
+  # argument, so both read the same bytes.
+  custom_dir: "{scenario_dir}/data"
+
+# The values compared are copies of kcats and divisions of fixed numbers (MW / kcat / 3600),
+# so the usual tolerance is honest.
+tolerance:
+  rel: 1.0e-9
+  abs: 1.0e-12

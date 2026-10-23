@@ -1,0 +1,3 @@
+proteins	genes	gene_name	kcat	rxns	notes	stoicho
+p4			300		lowercase protein	
+			400	r5	lowercase reaction	
