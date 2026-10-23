@@ -106,7 +106,6 @@ checks = struct();
 for k = 1:numel(flagCases)
     c = flagCases{k};
     target = fullfile(workdir, char(c.name));
-    mkdir(target);
     try
         evalc('exportForGit(model, ''path'', target, ''formats'', {''txt''}, names.(char(c.flag)), c.value)');
         checks.(char(c.name)) = struct('rejected', false);

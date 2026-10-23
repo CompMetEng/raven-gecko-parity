@@ -44,10 +44,8 @@ def flag_checks(model, flag_cases):
     checks = {}
     with tempfile.TemporaryDirectory(prefix="parity_flags_") as workdir:
         for case in flag_cases:
-            target = Path(workdir) / str(case["name"])
-            target.mkdir()
             try:
-                export_for_git(model, target, formats=("txt",),
+                export_for_git(model, Path(workdir) / str(case["name"]), formats=("txt",),
                                **{str(case["flag"]): case["value"]})
             except TypeError:
                 checks[str(case["name"])] = {"rejected": True}
