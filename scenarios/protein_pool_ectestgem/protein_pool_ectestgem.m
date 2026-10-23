@@ -27,7 +27,9 @@ poolSize.full  = pool_size_checkpoint(model, false, adapter, override);
 poolSize.light = pool_size_checkpoint(model, true,  adapter, override);
 results.pool_size = poolSize;
 
-protData = loadProtData(1, [], [], adapter);
+% Name-value form, so filterData is true as on the Python side: a positional call with []
+% for filterData assigns [] literally, which is false and would skip the filters.
+protData = loadProtData(1, 'filterData', true, 'modelAdapter', adapter);
 results.prot_data.uniprot_ids = reshape(protData.uniprotIDs, 1, []);
 results.prot_data.abundances  = reshape(double(protData.abundances(:, 1)), 1, []);
 

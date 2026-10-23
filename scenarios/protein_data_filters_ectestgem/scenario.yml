@@ -1,0 +1,155 @@
+id: protein_data_filters_ectestgem
+pair: gecko
+description: loadProtData / load_prot_data on replicate proteomics, one filter at a time.
+
+# protein_pool_ectestgem reads GECKO's one-replicate proteomics fixture, where the RSD filter,
+# the missing-value filter and the lowest-percent cut have nothing to act on. This scenario
+# feeds both loaders vendored replicate tables built so that each filter has something to
+# remove, and switches the filters on one at a time (the other thresholds are set so they
+# cannot interfere), so a difference points at the filter that causes it.
+#
+# data/proteomics_3rep.tsv: one condition of three replicates, 36 well-behaved proteins
+# (N01..N36, RSD about 3.5%) and five edge rows: X1 [1, 1, 10] and X5 [20, 1, 1] have an RSD
+# above 1 (the filter must drop the whole row), X2 [5, NA, NA] has one measurement, X3 is all
+# NA, X4 [2, 2, 0] has two positive of three; one more row has an empty UniProt id.
+# data/proteomics_2cond.tsv: two conditions (three and two replicates) for a per-condition
+# maxMissing vector.
+#
+# No model is involved: loadProtData only needs the adapter to resolve its default data path,
+# and every case passes an explicit file. Each case records whether the call raised, so a
+# validation difference (a column count that does not match the replicate counts) shows up as
+# a flag and not as a crash of one side.
+
+# Known differences, so this scenario reports DIFFER until one side changes:
+#   * RSD filter. MATLAB blanks a high-RSD row with condAbund(remData) = nan, a logical
+#     index over the rows applied to the whole matrix, which hits only the first replicate
+#     (the row form is condAbund(remData,:) used by the maxMissing filter). X1 [1, 1, 10]
+#     survives with 11.86 (the mean and standard deviation of [NaN, 1, 10] added) and X5
+#     [20, 1, 1] with 1; Python drops both rows.
+#   * cutLowest. MATLAB parses cutLowest but removes a fixed floor(5% of the proteins), so
+#     cut_lowest 0 still removes N01 and cut_lowest 20 removes one protein; Python removes
+#     floor(cut_lowest percent), none for 0 and seven for 20.
+#   * Column count. Python raises when the replicate counts do not add up to the columns of
+#     the file; MATLAB reads the first columns and ignores the rest without a message.
+# Everything else agrees: addStdevs, minVal, the per-condition maxMissing vector, filterData
+# false, and the row with an empty UniProt id (dropped by both).
+
+entries:
+  - loadProtData
+
+inputs:
+  adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
+
+  # The folder of the vendored tables. Placeholders are resolved in top-level inputs only, so
+  # the cases below name their file relative to this folder.
+  data_dir: "{scenario_dir}/data"
+
+  # Every case names all parameters, so both sides pass the same values. cut_lowest is a
+  # percentage, max_missing a fraction (a list gives one value per condition), and repl the
+  # replicate count of each condition. maxRSD 100 and cutLowest 0 switch a filter off.
+  cases:
+    default:
+      file: proteomics_3rep.tsv
+      repl: [3]
+      filter_data: true
+      min_val: 0
+      max_rsd: 1
+      max_missing: 0.6666666666666666
+      cut_lowest: 5
+      add_stdevs: 1
+    rsd_only:
+      file: proteomics_3rep.tsv
+      repl: [3]
+      filter_data: true
+      min_val: 0
+      max_rsd: 1
+      max_missing: 0
+      cut_lowest: 0
+      add_stdevs: 1
+    cut_lowest_0:
+      file: proteomics_3rep.tsv
+      repl: [3]
+      filter_data: true
+      min_val: 0
+      max_rsd: 100
+      max_missing: 0.6666666666666666
+      cut_lowest: 0
+      add_stdevs: 1
+    cut_lowest_20:
+      file: proteomics_3rep.tsv
+      repl: [3]
+      filter_data: true
+      min_val: 0
+      max_rsd: 100
+      max_missing: 0.6666666666666666
+      cut_lowest: 20
+      add_stdevs: 1
+    min_val:
+      file: proteomics_3rep.tsv
+      repl: [3]
+      filter_data: true
+      min_val: 3
+      max_rsd: 100
+      max_missing: 0.6666666666666666
+      cut_lowest: 0
+      add_stdevs: 1
+    add_stdevs_0:
+      file: proteomics_3rep.tsv
+      repl: [3]
+      filter_data: true
+      min_val: 0
+      max_rsd: 100
+      max_missing: 0.6666666666666666
+      cut_lowest: 0
+      add_stdevs: 0
+    add_stdevs_2:
+      file: proteomics_3rep.tsv
+      repl: [3]
+      filter_data: true
+      min_val: 0
+      max_rsd: 100
+      max_missing: 0.6666666666666666
+      cut_lowest: 0
+      add_stdevs: 2
+    max_missing_all:
+      file: proteomics_3rep.tsv
+      repl: [3]
+      filter_data: true
+      min_val: 0
+      max_rsd: 100
+      max_missing: 1
+      cut_lowest: 0
+      add_stdevs: 1
+    filter_off:
+      file: proteomics_3rep.tsv
+      repl: [3]
+      filter_data: false
+      min_val: 0
+      max_rsd: 1
+      max_missing: 0.6666666666666666
+      cut_lowest: 5
+      add_stdevs: 1
+    two_conditions:
+      file: proteomics_2cond.tsv
+      repl: [3, 2]
+      filter_data: true
+      min_val: 0
+      max_rsd: 100
+      max_missing: [1, 0.5]
+      cut_lowest: 0
+      add_stdevs: 1
+    column_count_mismatch:
+      file: proteomics_3rep.tsv
+      repl: [2]
+      filter_data: true
+      min_val: 0
+      max_rsd: 1
+      max_missing: 0.6666666666666666
+      cut_lowest: 5
+      add_stdevs: 1
+
+# The collapse is mean + k * std over a few replicates, summed in a different order by the
+# two languages: a relative tolerance, tight enough that nothing real hides behind it.
+tolerance:
+  rel: 1.0e-9
+  abs: 1.0e-12

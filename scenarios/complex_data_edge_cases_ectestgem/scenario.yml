@@ -1,0 +1,115 @@
+id: complex_data_edge_cases_ectestgem
+pair: gecko
+description: Complex-portal stoichiometry, f factor and enzyme concentrations on edge inputs, on GECKO's ecTestGEM.
+
+# enzyme_annotation_ectestgem and protein_pool_ectestgem use fixtures where nothing goes
+# wrong: one complex with its proteins listed in model order, proteomics with one clean
+# column. This scenario feeds the same functions inputs that exercise the code paths those
+# fixtures skip, one input per case, so a difference names its cause.
+#
+# applyComplexData: each file in data/ is a small ComplexPortal.json whose single complex (or
+# two) targets R2's isozyme complex (P1 and P2). reversed_order lists the proteins as P2, P1
+# with stoichiometry 2, 1, so the stoichiometry must follow the protein id and not the
+# position in the list; partial_zero gives [2, 0] (one subunit with no stated stoichiometry);
+# all_zero gives [0, 0] (every subunit defaults to 1); superset adds a protein the model does
+# not have (a proposal, nothing applied); two_exact lists the same complex twice with
+# different stoichiometries (the first wins); single_subunit gives P4 a stoichiometry of 3;
+# no_match names proteins the model lacks. The fixture's own file is the control.
+#
+# calculateFfactor: hand-made proteomics over P1..P5-style ids and proteins outside the
+# model, for a multi-sample table with a missing value, a zero total, an empty enzyme list
+# and a table without any model protein.
+#
+# fillEnzConcs: a negative abundance, a second data column, a protein the model lacks and a
+# duplicated id.
+
+# Known differences, so this scenario reports DIFFER until one side changes:
+#   * Stoichiometry by position. MATLAB's applyComplexData writes the complex's stochiometry
+#     vector into rxnEnzMat(i, modelProtsIdx), where the model proteins follow the order of
+#     ec.enzymes and the vector follows the order of the complex's protID list, so a complex
+#     listing P2, P1 with [2, 1] gives P1 2 and P2 1. Python assigns by protein id (P2 2, P1 1).
+#   * Partial stoichiometry. For P1, P2 with [2, 0], MATLAB counts only the non-zero entries
+#     as subunits, matches one of the two model proteins (50%) and applies nothing; Python
+#     counts both proteins, applies 2 for P1 and 1 for P2.
+#   * calculateFfactor. MATLAB averages the samples with mean(abundances, 2), so a protein
+#     with one missing sample drops out of both sums (f 0.375 for multi_sample_nan); Python
+#     averages the measured samples (0.444). A zero total is NaN in MATLAB and 0 in Python.
+#     An empty enzyme list means every model enzyme in MATLAB and none in Python (0.5 and 0).
+#   * fillEnzConcs. MATLAB stores a negative abundance (-0.5 for P1); Python skips it with a
+#     warning and leaves the concentration unset.
+# The other cases agree: the fixture's own file, an all-zero stoichiometry (every subunit 1),
+# a superset complex (proposed, nothing applied), two identical complexes (the first wins),
+# a single-subunit complex, a complex of unknown proteins, the second data column, a protein
+# the model lacks and a duplicated id (the last value wins). all_zero, superset and no_match
+# leave every coefficient at its default of 1, so they check that nothing was applied.
+
+entries:
+  - applyComplexData
+  - calculateFfactor
+  - fillEnzConcs
+
+inputs:
+  adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
+  fixture_dir: "{matlab_repo}/test/unit_tests/ecTestGEM"
+  adapter_python: "{python_repo}/examples/ecTestGEM"
+
+  # The vendored complex files. Placeholders are resolved in top-level inputs only, so the
+  # cases are named and the files are looked up as <complex_dir>/<case>.json; the control
+  # case "fixture" is GECKO's own ComplexPortal.json, found in <fixture_dir>/data.
+  complex_dir: "{scenario_dir}/data"
+  complex_cases:
+    - fixture
+    - reversed_order
+    - partial_zero
+    - all_zero
+    - superset
+    - two_exact
+    - single_subunit
+    - no_match
+
+  # abundances is one row per protein and one column per sample; null is a missing value.
+  # empty_enzymes true passes an empty list as the enzymes counted as "in the model"; false
+  # leaves the argument out (jsondecode reads null and [] alike, hence the explicit flag).
+  f_factor_cases:
+    single_sample:
+      ids: [P1, P4, X1]
+      abundances: [[1], [1], [2]]
+      empty_enzymes: false
+    multi_sample_nan:
+      ids: [P1, P2, P3, X1, X2]
+      abundances: [[1, 3], [2, null], [4, 4], [10, 10], [null, null]]
+      empty_enzymes: false
+    zero_total:
+      ids: [P1, P2]
+      abundances: [[0], [0]]
+      empty_enzymes: false
+    empty_enzymes:
+      ids: [P1, P2, X1]
+      abundances: [[1], [2], [3]]
+      empty_enzymes: true
+    no_model_protein:
+      ids: [X1, X2]
+      abundances: [[1], [2]]
+      empty_enzymes: false
+
+  # data_col is 1-based (MATLAB's convention); the Python side subtracts one.
+  fill_cases:
+    negative:
+      ids: [P1, P2, P3]
+      abundances: [[-0.5], [0.2], [null]]
+      data_col: 1
+    second_column:
+      ids: [P1, P2, P4, X9]
+      abundances: [[1, 10], [2, 20], [3, 30], [4, 40]]
+      data_col: 2
+    duplicated_id:
+      ids: [P1, P1, P2]
+      abundances: [[1], [2], [3]]
+      data_col: 1
+
+# Coefficients are copied from the files and abundances are copied or averaged: a relative
+# tolerance for the f factor (sums of means), exact for the rest would also pass, so one
+# tolerance serves.
+tolerance:
+  rel: 1.0e-9
+  abs: 1.0e-12
