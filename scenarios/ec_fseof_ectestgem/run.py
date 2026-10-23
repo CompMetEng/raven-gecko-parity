@@ -1,8 +1,7 @@
 """Python side of the ecFSEOF scenario.
 
-Red on purpose --- see scenario.yml for the three confirmed, execution-measured
-divergences this checkpoint exists to demonstrate: the enforced-flux levels
-themselves, the candidate search space, and the target-selection criterion.
+Compares the enforced production levels and the set of target reactions with ecFSEOF.
+See scenario.yml for what is and is not compared.
 """
 
 import importlib.util
@@ -72,8 +71,7 @@ def run(ctx):
 
     # target_type is not compared: MATLAB's rxnTargets/transportTargets output does not
     # carry the OE/KD/KO label at all (only geneTargets does, in a different id space),
-    # so there is nothing on the MATLAB side to compare it against. The target *set*
-    # already demonstrates the divergence this scenario exists to show.
+    # so there is nothing on the MATLAB side to compare it against.
     targets = sorted(str(row.reaction) for row in result.targets.itertuples())
 
     return {

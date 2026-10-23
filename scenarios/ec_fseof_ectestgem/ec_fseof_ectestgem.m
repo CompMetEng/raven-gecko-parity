@@ -1,9 +1,8 @@
 function results = ec_fseof_ectestgem(ctx)
 % MATLAB side of the ecFSEOF scenario.
 %
-% Red on purpose --- see scenario.yml for the three confirmed, execution-measured
-% divergences this checkpoint exists to demonstrate: the enforced-flux levels
-% themselves, the candidate search space, and the target-selection criterion.
+% Compares the enforced production levels and the set of target reactions with
+% geckopy's ec_fseof. See scenario.yml for what is and is not compared.
 
 previousSolver = getpref('RAVEN', 'solver', '');
 restoreSolver = onCleanup(@() restore_solver(previousSolver));
@@ -36,8 +35,7 @@ results.enforced_levels = num2cell(reshape(double(fseof.alpha), 1, []));
 
 % target_type is not compared: rxnTargets/transportTargets do not carry the OE/KD/KO
 % label at all (only geneTargets does, in a different id space --- genes, not
-% reactions), so there is nothing here to compare it against. The target *set* already
-% demonstrates the divergence this scenario exists to show.
+% reactions), so there is nothing here to compare it against.
 allTargets = [fseof.rxnTargets(:,1); fseof.transportTargets(:,1)];
 results.targets = sort(reshape(allTargets, 1, []));
 
