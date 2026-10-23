@@ -1,0 +1,121 @@
+id: evotune_edge_cases_ectestgem
+pair: gecko
+description: >-
+  Edge cases of the evotune functions on ecTestGEM's single-route ecModel with a binding protein pool: the
+  leverage screen (screenKcatLeverage) with source groups, a weight on the max-growth data and zero-flux
+  reactions, the tunable mask selection, the stopping rule of the CMA-ES tuning on a flat objective, and the
+  pure helpers nChanged, parsimonyFrontier and bestParsimonious.
+
+entries:
+  - screenKcatLeverage
+  - selectTunableMask
+  - cmaesKcatTuning
+  - nChanged
+  - parsimonyFrontier
+  - bestParsimonious
+
+inputs:
+  adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
+  adapter_python: "{python_repo}/examples/ecTestGEM"
+  fixture_dir: "{matlab_repo}/test/unit_tests/ecTestGEM"
+
+  matlab_solver: gurobi
+  python_solver: gurobi
+
+  bio_rxn: R5
+
+  flux_two_columns_file: "{scenario_dir}/data/flux_two_columns.tsv"
+  flux_one_column_file: "{scenario_dir}/data/flux_one_column.tsv"
+  max_growth_file: "{scenario_dir}/data/max_growth.tsv"
+
+  # R2 and R4 are blocked and R3 is the only route from m1 to m2. The protein pool is 20 mg/gDCW (Ptot 0.04,
+  # f 1, sigma 0.5), so with the uptake of e1 capped at 10 by the flux data the pool limits growth to 8.7.
+  # R3 (kcat 5) costs 2.22 mg per unit of flux, R5 (kcat 200) 0.069. R2_EXP_1 and R2_EXP_2 belong to the
+  # blocked R2 and have no leverage on the fit.
+  pool:
+    p_tot: 0.04
+    f: 1.0
+    sigma: 0.5
+
+  # ec.source per reaction in the control screen. brenda and custom are source groups; "unlisted" is in no group.
+  kcats:
+    R3: 5.0
+    R5: 200.0
+    R2_EXP_1: 10.0
+    R2_EXP_2: 20.0
+  control_sources:
+    R3: brenda
+    R5: custom
+    R2_EXP_1: brenda
+    R2_EXP_2: unlisted
+
+  # suffix case: the source of R3 carries a bracketed detail after a group name, the form collectKcats writes.
+  suffix_sources:
+    R3: "combined (sd=0.10, n=2)"
+    R5: custom
+    R2_EXP_1: brenda
+    R2_EXP_2: unlisted
+
+  # evotune parameters. Source groups: brenda, custom and combined.
+  evotune:
+    source_groups: [brenda, custom, combined]
+    sigma0_log_source: [0.2, 0.1, 0.3]
+    sigma0_log_default: 0.5
+    max_growth_weight: 1.0
+    heavy_max_growth_weight: 2.0
+    max_generations: 15
+    rmse_threshold: -1.0
+
+  zero_flux_known: [S2]
+  zero_flux_unknown: [S2, NOSUCH]
+  target_impact_shares: [0.5, 0.9, 1.0]
+  flat_mask: [R2_EXP_1, R2_EXP_2]
+  seed: 1
+
+  # pure helpers: tuned kcat, prior, prior sigma
+  helper_kcat: [1.5, 2.02, 40.0, 7.0]
+  helper_kcat0: [1.0, 2.0, 4.0, 8.0]
+  helper_sigma0_log: [0.5, 0.5, 0.2, 0.2]
+  helper_points_rmse: [1.0, 1.0, 1.005]
+  helper_points_n_changed: [5, 3, 2]
+  helper_nan_index: 1
+
+# Cases and what they exercise
+#
+# screen_control: leverage of R3, R5 and the two blocked R2 isozymes. The order of the rows and the rows sorted by
+#   reaction are both reported, so the order of tied rows (R2_EXP_1 and R2_EXP_2 both have leverage 0) is separate.
+# screen_no_formulas: the screen of screen_control on a model without metFormulas. fillCarbonNum reads model.metFormulas,
+#   so the MATLAB side runs the other cases on a copy with empty formulas, which weights every exchange 1 as geckopy does
+#   for a metabolite without a formula.
+# screen_source_suffix: the source of R3 is "combined (sd=0.10, n=2)" and the group is "combined".
+# screen_max_growth_weight: the same screen with a weight of 2 on the max-growth data.
+# screen_zero_flux_*: the flux data has one column (S1); S2 is listed as a reaction without flux, and a second list
+#   adds a reaction id that the model does not have.
+# select_mask_*: the tunable mask from the control screen at three impact shares.
+# cmaes_flat: the tunable set is the two blocked R2 isozymes, so the objective is flat. cmaesKcatTuning stops at
+#   max_generations or at the RMSE threshold; geckopy hands the search to cma, whose own stopping criteria apply too.
+# helpers: nChanged, parsimonyFrontier with a score of the mean absolute log distance to the tuned vector, and
+#   bestParsimonious on that frontier and on three points of which the one at helper_nan_index has an RMSE of NaN.
+
+# Differences confirmed by direct execution (seeds 0, 1 and 2 agree):
+#
+# The leverage, rank and sigma0_log of the screens agree, including with the weight 2 on the max-growth data, and so do the
+# masks selected at the three impact shares.
+#
+# order: the rows with equal rank are in a different order (R2_EXP_1 and R2_EXP_2, both with leverage 0). screenKcatLeverage
+#   sorts with the stable sort of MATLAB, screen_kcat_leverage with pandas sort_values, which is not stable.
+# screen_source_suffix: resolveTunableContext matches the whole ec.source against the group names (strcmpi), so
+#   "combined (sd=0.10, n=2)" is unlabelled with sigma0log 0.5. classify_kcat_source in geckopy compares the name before the
+#   bracket, so the source is in group combined with sigma0_log 0.3.
+# screen_no_formulas: fillCarbonNum reads model.metFormulas (line 56), which ecTestGEM does not have, so screenKcatLeverage
+#   raises. screen_kcat_leverage gives every exchange without a formula the carbon weight 1.
+# screen_zero_flux_unknown: both sides raise for a zero-flux id that the model does not have.
+# cmaes_flat: with a flat objective cmaesKcatTuning runs all max_generations (15) generations; cmaes_kcat_tuning hands the
+#   search to cma, whose stopping criteria apply as well, and stops after 1 generation. Neither changes a kcat.
+# helpers: bestParsimonious takes min(rmses), which skips NaN, and returns the point with the fewest changes among those within
+#   tolerance. best_parsimonious takes min over the points, which returns NaN when the first RMSE is NaN, so no point is within
+#   tolerance and it raises ValueError.
+
+tolerance:
+  rel: 1.0e-6
+  abs: 1.0e-9
