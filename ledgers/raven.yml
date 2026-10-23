@@ -408,7 +408,8 @@ entries:
       column has a value in another row. Python reads a table file as text, so NA, null and None are text.
       The lb, ub, rev, charge and confidence score cells are read as numbers on both sides and nothing is evaluated; true
       and false in any case are 1 and 0, an empty cell or NaN is not given, and any other text (abc, NA, None) raises
-      (RAVEN:badInput, ValueError), for a column cell of a row that would otherwise be ignored as well. Python also
+      (RAVEN:badInput, ValueError), for a column cell of a row that would otherwise be ignored as well. A bound or rev cell reading NaN is not given on both sides; a charge cell reading NaN stays NaN in RAVEN, and Python counts it
+      as empty (a charge of 0, or the stored charge with overwriteWithEmpty false), a difference that no scenario covers. Python also
       reads a thousands separator, an exponent and Inf as str2double does, but not hexadecimal or complex text. RAVEN sets
       the rev field of an existing reaction from the rev column; Python checks the column and derives reversibility from
       the bounds, so the scenario compares bounds and not rev. curate_tables_annotation_toy compares these cases and
