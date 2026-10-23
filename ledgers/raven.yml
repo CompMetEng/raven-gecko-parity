@@ -506,7 +506,7 @@ entries:
       number as an integer, the rest the shortest exact text), padded nowhere. dependencies.txt on the Python side lists
       python, cobra, libSBML, ruamel.yaml, scipy, openpyxl and raven_toolbox in a fixed order, then the model's version
       and date; RAVEN lists MATLAB, libSBML, RAVEN and the fields of model.modelVersion. The .mat and .xlsx files hold the RAVEN
-      model structure on both sides. Both sides have the mainBranchFlag option (main_branch_flag in Python, keyword-only), which raises when the toolbox checkout is on a branch other than main or master. Python checks raven_toolbox only; RAVEN also checks GECKO for enzyme-constrained models.
+      model structure on both sides. Both sides have the mainBranchFlag option (main_branch_flag in Python, keyword-only), which raises when the toolbox checkout is on a branch other than main or master. Python checks raven_toolbox only; RAVEN also checks GECKO for enzyme-constrained models. Both sides refuse a text value for mainBranchFlag and subDirs (RAVEN:badInput, TypeError); a logical is accepted on both. MATLAB also accepts 0 and 1 and an empty value for the default, which Python (bool only) does not; the scenario compares text and logical values.
   - matlab: exportModel
     status: via-dependency
     reason: 'cobrapy covers this: cobra.io.write_sbml_model.'
@@ -731,7 +731,7 @@ entries:
     scenarios:
       - generate_new_ids_toy
     notes: >-
-      Generates the next free id in a model's numbering scheme. Both sides take the largest id numerically and the width of that id (generateNewIds.m, str2double and max); a non-numeric suffix is only used when no id is numeric. generate_new_ids_toy covers r_9, r_10, r_2, r_0003 beside r_abc and a prefix without underscore beside ids that start with a letter. batch_curate_from_tsv uses the same rule through utils.ids.next_ids. A number with a fractional part is truncated in Python.
+      Generates the next free id in a model's numbering scheme. Both sides take the largest id numerically and the width of that id (generateNewIds.m, str2double and max); a non-numeric suffix is only used when no id is numeric. generate_new_ids_toy covers r_9, r_10, r_2, r_0003 beside r_abc and a prefix without underscore beside ids that start with a letter. batch_curate_from_tsv uses the same rule through utils.ids.next_ids. A suffix that is not a finite whole number (inf, 1e400, 2.5, 1d2) does not count as a number on either side; a whole number in exponent form (1e2) does.
   - matlab: getAllowedBounds
     status: via-dependency
     reason: 'cobrapy covers this: cobra.flux_analysis.flux_variability_analysis.'
@@ -1508,8 +1508,9 @@ entries:
     notes: 'Both only rescale biomass-equation metabolites with a nonzero coefficient whose name is in the
       cofactor-name list, to sign(coefficient)*value --- algebraically identical (MATLAB''s direct S-matrix write
       vs. Python''s add_metabolites delta, cobra''s sparse dict already excluding zero-coefficient entries). NGAM
-      handling matches: both require the reaction id and the value non-null before fixing that reaction''s bounds
-      to (value, value). A missing biomassRxn errors explicitly on both sides. Only difference is calling
+      handling matches: both fix the bounds of the reaction to (value, value) when the id and the value are given,
+      leave them when only the id is given (the id must exist in the model) and raise when a value comes without an
+      id; an empty id counts as not given. A missing biomassRxn errors explicitly on both sides. Only difference is calling
       convention (Python''s extra arguments are keyword-only).'
   - matlab: setParam
     python: raven_toolbox.manipulation.set_variance_bounds

@@ -95,6 +95,27 @@ results.header = strsplit(lines{1}, sprintf('\t'), 'CollapseDelimiters', false);
 results.rows = rows;
 results.libsbml_recorded = any(strcmp(names, 'libSBML'));
 results.files_written = reshape(sort(written), 1, []);
+results.flag_checks = flag_checks(model, as_list(ctx.inputs.flag_cases), workdir);
+end
+
+
+function checks = flag_checks(model, flagCases, workdir)
+% Whether a call with one flag value is refused as RAVEN:badInput; text is refused, a logical is not.
+names = struct('main_branch_flag', 'mainBranchFlag', 'sub_dirs', 'subDirs');
+checks = struct();
+for k = 1:numel(flagCases)
+    c = flagCases{k};
+    target = fullfile(workdir, char(c.name));
+    try
+        evalc('exportForGit(model, ''path'', target, ''formats'', {''txt''}, names.(char(c.flag)), c.value)');
+        checks.(char(c.name)) = struct('rejected', false);
+    catch ME
+        if ~strcmp(ME.identifier, 'RAVEN:badInput')
+            rethrow(ME);
+        end
+        checks.(char(c.name)) = struct('rejected', true);
+    end
+end
 end
 
 

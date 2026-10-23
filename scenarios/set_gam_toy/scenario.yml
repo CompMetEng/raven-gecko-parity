@@ -6,7 +6,7 @@ description: >-
   reproduced exactly by adding a difference (compared with a flag for exact equality as well as the value),
   to a negative value and to zero. Other cases cover a cofactor name in two compartments and a metabolite
   whose name differs only in case, cofactors that the biomass reaction lacks, an empty cofactor list, the
-  non-growth maintenance bounds given completely, in part or for a reaction the model lacks, and a biomass
+  non-growth maintenance bounds given completely, in part, as a value without a reaction, with an empty reaction id or for a reaction the model lacks, and a biomass
   reaction the model lacks.
 
 entries:
@@ -146,6 +146,20 @@ inputs:
     values: [2]
     ngam_rxn: null
     ngam_value: 1.5
+  - name: ngam_empty_rxn_with_value
+    reactions: *base
+    biomass_rxn: BIO
+    cofactors: *cofactors
+    values: [2]
+    ngam_rxn: ""
+    ngam_value: 1.5
+  - name: ngam_empty_rxn_only
+    reactions: *base
+    biomass_rxn: BIO
+    cofactors: *cofactors
+    values: [2]
+    ngam_rxn: ""
+    ngam_value: null
   - name: ngam_missing_reaction
     reactions: *base
     biomass_rxn: BIO

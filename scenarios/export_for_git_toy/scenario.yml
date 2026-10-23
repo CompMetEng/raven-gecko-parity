@@ -2,9 +2,17 @@ id: export_for_git_toy
 pair: raven
 description: exportForGit on a four-reaction model with bounds that need many digits. The txt table is
   compared line by line, the presence of the libSBML version in dependencies.txt and the files written by a call with the default
-  formats.
+  formats. Flag cases pass text and logical values for mainBranchFlag and subDirs and record whether the call is refused.
 entries: [exportForGit]
 inputs:
+  flag_cases:
+  - {name: string_false_main_branch, flag: main_branch_flag, value: "false"}
+  - {name: string_true_main_branch, flag: main_branch_flag, value: "true"}
+  - {name: string_false_sub_dirs, flag: sub_dirs, value: "false"}
+  - {name: string_true_sub_dirs, flag: sub_dirs, value: "true"}
+  - {name: bool_false_main_branch, flag: main_branch_flag, value: false}
+  - {name: bool_true_sub_dirs, flag: sub_dirs, value: true}
+  - {name: bool_false_sub_dirs, flag: sub_dirs, value: false}
   reactions:
   - id: R_B
     substrates: [glucose]

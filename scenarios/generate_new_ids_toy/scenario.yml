@@ -18,4 +18,11 @@ inputs:
   - {name: non_numeric_suffix, type: rxns, ids: [r_abc, r_xyz], prefix: "r_", quantity: 1, num_length: 4}
   - {name: partly_numeric_suffix, type: rxns, ids: [r_0003, r_abc], prefix: "r_", quantity: 1, num_length: 4}
   - {name: prefix_without_underscore, type: rxns, ids: [r0001, r_0007, rx12], prefix: "r", quantity: 1, num_length: 4}
+  - {name: infinite_suffix, type: rxns, ids: [r_inf, r_0003], prefix: "r_", quantity: 1, num_length: 4}
+  - {name: only_infinite_suffix, type: rxns, ids: [r_inf], prefix: "r_", quantity: 2, num_length: 4}
+  - {name: fractional_suffix, type: rxns, ids: [r_2.5, r_9], prefix: "r_", quantity: 2, num_length: 4}
+  - {name: only_fractional_suffix, type: rxns, ids: [r_2.5], prefix: "r_", quantity: 1, num_length: 4}
+  - {name: overflowing_suffix, type: rxns, ids: [r_1e400, r_5], prefix: "r_", quantity: 1, num_length: 4}
+  - {name: whole_exponent_suffix, type: rxns, ids: [r_1e2, r_007], prefix: "r_", quantity: 1, num_length: 4}
+  - {name: d_exponent_suffix, type: rxns, ids: [r_1d2, r_0003], prefix: "r_", quantity: 1, num_length: 4}
   - {name: metabolites, type: mets, ids: [s_0001, s_0100, m_0500], prefix: "s_", quantity: 2, num_length: 4}

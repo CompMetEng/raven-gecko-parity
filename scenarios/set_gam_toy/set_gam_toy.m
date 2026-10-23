@@ -25,7 +25,7 @@ function out = run_one(mets, c, value)
 model = toy_model(mets, as_list(c.reactions));
 cofactors = as_cellstr(c.cofactors);
 args = {};
-if ~isempty(c.ngam_rxn)
+if ~(isnumeric(c.ngam_rxn) && isempty(c.ngam_rxn))
     args = [args, {'ngamRxn', char(c.ngam_rxn)}]; %#ok<AGROW>
 end
 if ~isempty(c.ngam_value)

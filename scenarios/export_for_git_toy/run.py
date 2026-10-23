@@ -39,6 +39,21 @@ def build(reactions):
     return model
 
 
+def flag_checks(model, flag_cases):
+    """Whether a call with one flag value is refused as a type error; text is refused, a bool is not."""
+    checks = {}
+    with tempfile.TemporaryDirectory(prefix="parity_flags_") as workdir:
+        for case in flag_cases:
+            try:
+                export_for_git(model, Path(workdir) / str(case["name"]), formats=("txt",),
+                               **{str(case["flag"]): case["value"]})
+            except TypeError:
+                checks[str(case["name"])] = {"rejected": True}
+            else:
+                checks[str(case["name"])] = {"rejected": False}
+    return checks
+
+
 def run(ctx):
     model = build(ctx["inputs"]["reactions"])
     with tempfile.TemporaryDirectory(prefix="parity_export_") as workdir:
@@ -71,4 +86,5 @@ def run(ctx):
         "rows": rows,
         "libsbml_recorded": any(line.split("\t")[0] == "libSBML" for line in dependencies),
         "files_written": written,
+        "flag_checks": flag_checks(model, ctx["inputs"]["flag_cases"]),
     }
