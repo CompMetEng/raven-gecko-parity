@@ -68,10 +68,9 @@ entries:
       kcat is excluded before selecting the cheapest isozyme on both sides (GECKO#463).'
   - matlab: bestParsimonious
     status: python-pending
-    notes: 'Picks the sparsest CMA-ES kcat-tuning result within tolerance of the best RMSE on a parsimony
-      frontier. geckopy''s kcat_tuning.evotune.parsimony module (geckopy#51) implements the same frontier
-      sweep, but only on geckopy''s develop branch --- not yet on main, the ref this ledger tracks, and
-      best_parsimonious itself is an internal helper there, not re-exported as public API.'
+    notes: Picks the sparsest CMA-ES kcat-tuning result within tolerance of the best RMSE on a parsimony
+      frontier. geckopy's kcat_tuning.evotune.parsimony module (geckopy#51) implements the same frontier
+      sweep; best_parsimonious itself is an internal helper there, not exported through __all__.
   - matlab: cmaesKcatTuning
     python: geckopy.kcat_tuning.evotune.cmaes_kcat_tuning
     status: parity
@@ -115,16 +114,15 @@ entries:
   - matlab: resolveTunableContext
     status: subsumed
     reason: Resolves the tunable kcat subset, source-group tiers, and tie groups shared by screenKcatLeverage
-      and cmaesKcatTuning. geckopy has the same capability (on its develop branch, not yet on main), but
+      and cmaesKcatTuning. geckopy has the same capability, but
       split across kcat_tuning.evotune.priors.classify_kcat_source(s)/build_sigma0_log and
       kcat_tuning.evotune.tying.isozyme_tie_map rather than one function of its own.
   - matlab: reviewKcatAssignment
     status: python-pending
     issue: CompMetEng/raven-gecko-parity#123
-    notes: 'Flags kcat assignments (largest corrections, biggest outliers) that deserve curator review. Its
-      own docstring says it "ports geckopy''s gather_kcats/review.py" (review_assignment), citing the same two
-      design choices (rank by leverage, report a parameter once for tied isozymes) --- but review_assignment
-      is not yet re-exported as geckopy public API.'
+    notes: Flags kcat assignments (largest corrections, biggest outliers) that deserve curator review.
+      geckopy has review_assignment (gather_kcats/review.py), which is not exported through __all__.
+      Both rank by leverage and report a parameter once for tied isozymes.
   - matlab: screenKcatLeverage
     python: geckopy.kcat_tuning.evotune.screen_kcat_leverage
     status: parity
@@ -141,114 +139,98 @@ entries:
     notes: 'Sweeps priorPenaltyWeight across seeds, reporting fit vs. cross-seed reproducibility. Matches
       kcat_tuning.evotune.tuning.tune_prior_penalty_weight (geckopy#51).'
   - matlab: fetchBrendaAsset
-    status: python-pending
-    issue: CompMetEng/geckopy#68
-    notes: Downloads (once) the BRENDA files of the toolbox-assets release and returns their folder. Implemented as
-      geckopy's databases.fetch_brenda_asset on geckopy develop (geckopy#68), not yet on main, the ref this
-      ledger tracks.
+    python: geckopy.databases.fetch_brenda_asset
+    status: parity
+    notes: Downloads (once) the BRENDA files of the toolbox-assets release and returns their folder.
   - matlab: resolveKcatAggregation
-    status: python-pending
-    issue: CompMetEng/geckopy#68
-    notes: Settles which BRENDA aggregate the kcat sources read. geckopy develop has no function of this name; the
-      choice is made where the sources are read.
+    status: subsumed
+    reason: 'Settles which BRENDA aggregate (max or median) the kcat sources read. geckopy has no
+      function of this name: kcats_from_brenda reads adapter.params.kcat_aggregate_brenda, lower-cases
+      it and accepts only max or median where the source is gathered.'
   - matlab: assignKcats
-    status: python-pending
-    issue: CompMetEng/geckopy#68
-    notes: Decides one kcat per reaction from the kcat source files and applies them to the ecModel. Implemented as
-      geckopy's assign_kcats on geckopy develop (geckopy#68), not yet on main, the ref this ledger tracks.
+    python: geckopy.assign_kcats
+    status: parity
+    notes: Decides one kcat per reaction from the kcat source files and applies them to the ecModel.
+      MATLAB returns a model copy plus the decisions and the report; geckopy works in place and returns
+      (decisions, report).
   - matlab: collectKcats
-    status: python-pending
-    issue: CompMetEng/geckopy#68
-    notes: Decides one kcat per reaction from the kcat source files in data/kcats, without applying them.
-      Implemented as geckopy's collect_kcats on geckopy develop (geckopy#68), not yet on main, the ref this
-      ledger tracks.
+    python: geckopy.collect_kcats
+    status: parity
+    notes: Decides one kcat per reaction from the kcat source files in data/kcats, without applying
+      them.
   - matlab: convertCustomKcats
-    status: python-pending
-    issue: CompMetEng/geckopy#68
-    notes: Converts a GECKO 3 data/customKcats.tsv into the curated source file data/kcats/custom.tsv. Implemented
-      as geckopy's convert_custom_kcats on geckopy develop (geckopy#68), not yet on main, the ref this ledger
-      tracks.
+    python: geckopy.convert_custom_kcats
+    status: parity
+    notes: Converts a GECKO 3 data/customKcats.tsv into the curated source file data/kcats/custom.tsv.
   - matlab: ecTreeEstimate
     status: python-pending
     issue: CompMetEng/geckopy#68
-    notes: EC-tree kcat estimates for a list of EC numbers, from the median log10 kcat of the measurements up the
-      tree. Implemented as geckopy's ECTree.estimate (gather_kcats/ec_tree.py) on geckopy develop (geckopy#68),
-      not yet on main, the ref this ledger tracks.
+    notes: EC-tree kcat estimates for a list of EC numbers, from the median log10 kcat of the
+      measurements up the tree. geckopy has the same estimate as ECTree.estimate
+      (gather_kcats/ec_tree.py), a method of a class that is not exported through __all__, so there is
+      no public function to pair with.
   - matlab: extractEnzymeSubstratePairs
-    status: python-pending
-    issue: CompMetEng/geckopy#68
-    notes: Lists the enzymes and substrates of each model.ec reaction, the input of the DLKcat, OKP and homolog
-      sources. Implemented as geckopy's extract_enzyme_substrate_pairs (gather_kcats/write_dlkcat_input.py) on
-      geckopy develop (geckopy#68), not yet on main, the ref this ledger tracks.
+    python: geckopy.gather_kcats.extract_enzyme_substrate_pairs
+    status: parity
+    notes: Lists the enzymes and substrates of each model.ec reaction, the input of the DLKcat, OKP and
+      homolog sources.
   - matlab: getEcRxnKeys
-    status: python-pending
-    issue: CompMetEng/geckopy#68
-    notes: Build-independent keys of the model.ec reactions, which kcat source files use to identify a reaction.
-      Implemented as geckopy's ec_rxn_keys (gather_kcats/kcat_sources.py) on geckopy develop (geckopy#68), not
-      yet on main, the ref this ledger tracks.
+    python: geckopy.gather_kcats.ec_rxn_keys
+    status: parity
+    notes: Build-independent keys of the model.ec reactions, which kcat source files use to identify a
+      reaction.
   - matlab: kcatAssignmentConfig
     status: python-pending
     issue: CompMetEng/geckopy#68
-    notes: Reads [kcat_assignment] and [kcat_sources.*] of model_adapter.toml. Implemented as geckopy's
-      kcat_assignment_config on geckopy develop (geckopy#68), not yet on main, the ref this ledger tracks.
+    notes: Reads [kcat_assignment] and [kcat_sources.*] of model_adapter.toml. geckopy has the same
+      reader as kcat_assignment_config (gather_kcats/kcat_assignment.py), which is not exported through
+      __all__.
   - matlab: kcatsFromBrenda
-    status: python-pending
-    issue: CompMetEng/geckopy#68
-    notes: Gathers kcats from BRENDA by fuzzy matching and keeps them as a source file. Implemented as geckopy's
-      kcats_from_brenda on geckopy develop (geckopy#68), not yet on main, the ref this ledger tracks.
+    python: geckopy.kcats_from_brenda
+    status: parity
+    notes: Gathers kcats from BRENDA by fuzzy matching and keeps them as a source file.
   - matlab: kcatsFromDLKcat
-    status: python-pending
-    issue: CompMetEng/geckopy#68
-    notes: Predicts kcats with DLKcat and keeps them as a source file. Implemented as geckopy's kcats_from_dlkcat on
-      geckopy develop (geckopy#68), not yet on main, the ref this ledger tracks.
+    python: geckopy.kcats_from_dlkcat
+    status: parity
+    notes: Predicts kcats with DLKcat and keeps them as a source file.
   - matlab: kcatsFromECTree
-    status: python-pending
-    issue: CompMetEng/geckopy#68
-    notes: Estimates kcats from the EC tree and keeps them as a source file. Implemented as geckopy's
-      kcats_from_ec_tree on geckopy develop (geckopy#68), not yet on main, the ref this ledger tracks.
+    python: geckopy.kcats_from_ec_tree
+    status: parity
+    notes: Estimates kcats from the EC tree and keeps them as a source file.
   - matlab: kcatsFromHomologs
-    status: python-pending
-    issue: CompMetEng/geckopy#68
-    notes: Estimates kcats from measured homologs (DIAMOND) and keeps them as a source file. Implemented as
-      geckopy's kcats_from_homologs on geckopy develop (geckopy#68), not yet on main, the ref this ledger
-      tracks.
+    python: geckopy.kcats_from_homologs
+    status: parity
+    notes: Estimates kcats from measured homologs (DIAMOND) and keeps them as a source file.
   - matlab: kcatsFromOKP
-    status: python-pending
-    issue: CompMetEng/geckopy#68
-    notes: Gathers kcats from OpenKineticsPredictor and keeps them as a source file. Implemented as geckopy's
-      kcats_from_okp on geckopy develop (geckopy#68), not yet on main, the ref this ledger tracks.
+    python: geckopy.kcats_from_okp
+    status: parity
+    notes: Gathers kcats from OpenKineticsPredictor and keeps them as a source file.
   - matlab: loadBrendaMeasurements
-    status: python-pending
-    issue: CompMetEng/geckopy#68
-    notes: Loads measurements.tsv from the BRENDA database folder. Implemented as geckopy's
-      databases.load_brenda_measurements on geckopy develop (geckopy#68), not yet on main, the ref this ledger
-      tracks.
+    python: geckopy.databases.load_brenda_measurements
+    status: parity
+    notes: Loads measurements.tsv from the BRENDA database folder. geckopy prefers measurements.tsv.xz
+      when it is present; MATLAB reads only measurements.tsv.
   - matlab: loadKcatSource
-    status: python-pending
-    issue: CompMetEng/geckopy#68
-    notes: Reads a kcat source file and maps its rows to an ecModel. Implemented as geckopy's load_kcat_source on
-      geckopy develop (geckopy#68), not yet on main, the ref this ledger tracks.
+    python: geckopy.load_kcat_source
+    status: parity
+    notes: Reads a kcat source file and maps its rows to an ecModel. geckopy also exports
+      read_kcat_source, which reads the file without a model.
   - matlab: saveKcatSource
-    status: python-pending
-    issue: CompMetEng/geckopy#68
-    notes: Writes a kcatList to a kcat source file of the project. Implemented as geckopy's save_kcat_source on
-      geckopy develop (geckopy#68), not yet on main, the ref this ledger tracks.
+    python: geckopy.save_kcat_source
+    status: parity
+    notes: Writes a kcatList to a kcat source file of the project.
   - matlab: updateKcatSources
-    status: python-pending
-    issue: CompMetEng/geckopy#68
-    notes: Gathers the kcat source files that [kcat_assignment] in model_adapter.toml needs. Implemented as
-      geckopy's update_kcat_sources on geckopy develop (geckopy#68), not yet on main, the ref this ledger
-      tracks.
+    python: geckopy.update_kcat_sources
+    status: parity
+    notes: Gathers the kcat source files that [kcat_assignment] in model_adapter.toml needs.
   - matlab: upgradeEcModel
-    status: python-pending
-    issue: CompMetEng/geckopy#68
-    notes: Brings an ecModel made with GECKO 3 to the GECKO 4 format. Implemented as geckopy's upgrade_ec_model on
-      geckopy develop (geckopy#68), not yet on main, the ref this ledger tracks.
+    python: geckopy.upgrade_ec_model
+    status: parity
+    notes: Brings an ecModel made with GECKO 3 to the GECKO 4 format.
   - matlab: upgradeGECKOproject
-    status: python-pending
-    issue: CompMetEng/geckopy#68
-    notes: Brings a GECKO 3 project to the GECKO 4 layout (dry run by default). Implemented as geckopy's
-      upgrade_project on geckopy develop (geckopy#68), not yet on main, the ref this ledger tracks.
+    python: geckopy.upgrade_project
+    status: parity
+    notes: Brings a GECKO 3 project to the GECKO 4 layout (dry run by default).
   - matlab: TomlAdapter
     status: subsumed
     reason: geckopy.ModelAdapter.from_folder is already configured by model_adapter.toml. This is the MATLAB class
@@ -500,20 +482,22 @@ entries:
   - matlab: getSubsetEcModel
     python: geckopy.get_subset_ec_model
     status: parity
-    notes: '[Py] returns a new EcModel; the input is not mutated. MATLAB''s same-starting-GEM mismatch
-      error path calls dispEM, a RAVEN utility RAVEN#659 deleted (already on develop3) --- crashes with
-      "Undefined function ''dispEM''" instead of naming the mismatched reactions.'
+    notes: '[Py] returns a new EcModel; the input is not mutated. When smallGEM holds reactions that
+      bigEcModel lacks (after stripping _REV and _EXP_n), MATLAB raises an error that lists every one of
+      them and geckopy raises ValueError that gives the count and the first five.'
   - matlab: loadBRENDAdata
     python: geckopy.load_brenda_data
     status: parity
     scenarios:
       - kcat_chain_ectestgem
       - fuzzy_kcat_coefficient_ectestgem
-    notes: 'MATLAB uses kcat.tsv/mw.tsv/sa.tsv, the same filenames and format geckopy''s own brenda-refresh
-      CLI produces and ships in geckopy''s src/geckopy/data/brenda/, so pointing both toolboxes'' BRENDA
-      folder at the same directory works. Not ported: the opt-in median aggregation geckopy''s
-      load_brenda_data exposes via adapter.params.kcat_aggregate_brenda --- MATLAB still uses the max column
-      only.'
+    notes: MATLAB uses kcat.tsv/mw.tsv/sa.tsv, the same filenames and format geckopy's own
+      brenda-refresh CLI produces and ships in geckopy's src/geckopy/data/brenda/, so pointing both
+      toolboxes' BRENDA folder at the same directory works. Both select the max or the median column
+      (kcatAggregation, kcat_aggregate_brenda). geckopy drops by default a BRENDA row whose kcat is more
+      than four orders of magnitude below the median of its EC (filter_outlier_kcats=True);
+      loadBRENDAdata.m has no such filter. On the brenda-2026.1-1 release this changes 8 kcats of the
+      yeast-GEM ecModel (ec_model_full_yeastgem).
   - matlab: loadConventionalGEM
     python: geckopy.load_conventional_gem
     status: parity
@@ -897,9 +881,6 @@ entries:
     status: python-only
     reason: Loaded-data type. MATLAB GECKO passes parallel cell arrays and structs; geckopy wraps them in
       a dataclass.
-  - python: geckopy.gather_kcats.extract_enzyme_substrate_pairs
-    status: python-only
-    reason: Helper exported alongside write_dlkcat_input; MATLAB keeps it inline in writeDLKcatInput.m.
   - python: geckopy.gather_kcats.format_kcat_source
     status: python-only
     reason: Helper exported alongside apply_kcat_list; MATLAB keeps it inline in assignKcatValues.m.
@@ -984,11 +965,13 @@ entries:
   - matlab: getPfbaEnzymes
     python: geckopy.pfba_enzymes
     status: parity
-    notes: 'pFBA variant minimising total usage_prot_* flux (enzyme mass) instead of all fluxes, with a
-      deliberate ~1e-6 relative safety margin borrowed from solveLP''s own minFlux=1 technique. Reports a
-      primal solution (fluxes), which is stable across repeated runs, unlike getEnzymeBottlenecks''
-      dual-degeneracy finding. usage_prot_<id> reactions with lb<0 (reverse flux) are rejected rather than
-      silently minimised incorrectly --- not reachable through any real GECKO 3 ecModel today.'
+    notes: pFBA variant minimising total usage_prot_* flux (enzyme mass) instead of all fluxes. MATLAB
+      fixes the objective at 0.999999 times its target (1.000001 for a negative one), the margin
+      solveLP's minFlux=1 technique uses; geckopy fixes it at exactly fraction_of_optimum times the
+      optimum (cobra's fix_objective_as_constraint). Reports a primal solution (fluxes), which is stable
+      across repeated runs, unlike getEnzymeBottlenecks' dual-degeneracy finding. usage_prot_<id>
+      reactions with lb<0 (reverse flux) are rejected rather than silently minimised incorrectly --- not
+      reachable through any real GECKO 3 ecModel today.
   - python: geckopy.PhylDist
     status: python-only
     reason: Loaded-data type. MATLAB GECKO passes parallel cell arrays and structs; geckopy wraps them in
@@ -1037,3 +1020,50 @@ entries:
     status: python-only
     reason: Loaded-data type. MATLAB GECKO passes parallel cell arrays and structs; geckopy wraps them in
       a dataclass.
+  - python: geckopy.ComplexFamilies
+    status: python-only
+    reason: Return type of complex_families. GECKO has no complex levelling.
+  - python: geckopy.LevelComplexResult
+    status: python-only
+    reason: Return type of level_complex_concs. GECKO has no complex levelling.
+  - python: geckopy.complex_families
+    status: python-only
+    reason: Groups the enzymes of multi-subunit reactions into complexes. GECKO has no function for it.
+  - python: geckopy.level_complex_abundances
+    status: python-only
+    reason: Levels molar abundances to one abundance per complex. GECKO has no function for it.
+  - python: geckopy.level_complex_concs
+    status: python-only
+    reason: Gives every complex in model.ec.concs one abundance. GECKO has no function for it.
+  - python: geckopy.relax_enz_concs
+    status: python-only
+    reason: Raises the measured enzyme caps by the least total fold increase in one LP.
+      relaxProteomicsGreedy and flexibilizeEnzConcs relax one enzyme at a time; GECKO has no one-LP
+      function.
+  - python: geckopy.kcat_tuning.evotune.MaskSizePoint
+    status: python-only
+    reason: Return type of sweep_tunable_mask_size. GECKO has no mask-size sweep.
+  - python: geckopy.kcat_tuning.evotune.sweep_tunable_mask_size
+    status: python-only
+    reason: Tunes at each of several target impact shares and reports the fit. GECKO has
+      selectTunableMask for one share and no sweep.
+  - python: geckopy.kcat_tuning.evotune.recommend_target_impact_share
+    status: python-only
+    reason: Picks the smallest target impact share past which tuning stops paying for itself. GECKO has
+      no equivalent.
+  - python: geckopy.databases.download_phyl_dist
+    status: python-only
+    reason: Downloads the KEGG phylogenetic distance file that is distributed with RAVEN. MATLAB reads
+      the file RAVEN ships (ModelAdapter.getPhylDistStructPath) and GECKO has no download function.
+  - python: geckopy.databases.met_smiles
+    status: internal
+    reason: Returns the SMILES of a metabolite whatever shape its annotation is in; helper of
+      find_met_smiles.
+  - python: geckopy.databases.BRENDA_ASSET
+    status: internal
+    reason: Name of the BRENDA release fetch_brenda_asset downloads; MATLAB keeps it inside
+      fetchBrendaAsset.
+  - python: geckopy.read_kcat_source
+    status: python-only
+    reason: Reads a kcat source file without a model. MATLAB reads the file inside loadKcatSource, which
+      then maps the rows.
