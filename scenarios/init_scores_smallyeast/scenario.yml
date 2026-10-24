@@ -33,6 +33,27 @@ inputs:
   complex_scoring: min
   no_gene_score: -2.0
 
+  # Variants of the same table, each scored on its own. A level is a number or
+  # "NaN". The base run above is unchanged; these add the cases it cannot reach:
+  #
+  #   zero_reference   the reference level is 0 for every gene: a positive level
+  #                    scores +10 (the clamp), and a level of 0 against 0 scores -5.
+  #   zero_level       YBR196C has level 0 against the reference 0.1: -5.
+  #   nan_level        YLR377C has no level (NaN) and is the only gene of its
+  #                    reaction, so that reaction takes the no-gene score. YBR196C
+  #                    is a single-gene reaction too, with a NaN level in the same
+  #                    variant, and YCR073W-A stays absent from the table.
+  variants:
+    - name: zero_reference
+      threshold: 0
+      levels: {}
+    - name: zero_level
+      threshold: 0.1
+      levels: {YBR196C: 0}
+    - name: nan_level
+      threshold: 0.1
+      levels: {YLR377C: NaN, YBR196C: NaN}
+
 # Two checkpoints, so a divergence is located rather than merely observed. The
 # plan's ftINIT chain starts here for a reason: a difference in `gene_scores`
 # explains every difference downstream of it, and one that appears only in

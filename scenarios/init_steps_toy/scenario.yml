@@ -1,0 +1,19 @@
+id: init_steps_toy
+pair: raven
+description: >-
+  The ftINIT step schedules of getINITSteps for every series, as INITStepDesc objects: per step the way the previous
+  result is used, the 8-bit ignore mask, the positive-reversible and secretion flags and the MILP schedule (relative
+  gap, time limit, absolute gap per run). An unknown series is a case of its own.
+
+entries:
+  - getINITSteps
+  - INITStepDesc
+
+inputs:
+  cases:
+  - {name: series_1p1, series: "1+1"}
+  - {name: series_2p1, series: "2+1"}
+  - {name: series_1p0, series: "1+0"}
+  - {name: series_2p0, series: "2+0"}
+  - {name: series_full, series: full}
+  - {name: series_unknown, series: nonsense}

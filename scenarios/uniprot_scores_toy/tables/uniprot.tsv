@@ -1,0 +1,8 @@
+Entry	Gene Names (ordered locus)	Subcellular location [CC]
+P00003	Y3	SUBCELLULAR LOCATION: Cytoplasm {ECO:0000269|PubMed:1}. Nucleus {ECO:0000269|PubMed:2}.
+P00001	Y1	SUBCELLULAR LOCATION: Cytoplasmic vesicle membrane {ECO:0000269|PubMed:3}.
+P00002	Y2	SUBCELLULAR LOCATION: [Isoform 1]: Mitochondrion. Note=Imported. [Isoform 2]: Nucleus.
+P00004	Y4	SUBCELLULAR LOCATION: Endoplasmic reticulum membrane; Golgi apparatus; Vacuole; Peroxisome; Mitochondrion; Cytoplasm.
+P00005	Y5	
+P00006	Y6	SUBCELLULAR LOCATION: Secreted. Note=Found in the nucleus and the vacuole.
+P00007	Y7	SUBCELLULAR LOCATION: Lipid droplet. Cell membrane.

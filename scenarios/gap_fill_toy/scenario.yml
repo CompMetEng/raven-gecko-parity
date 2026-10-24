@@ -1,0 +1,216 @@
+id: gap_fill_toy
+pair: raven
+description: 'Connectivity gap-filling on small hand-written models: which template reactions are added,
+  which draft reactions get connected and which cannot be. Covers the blocked-reaction threshold, the
+  flux forced through a blocked reaction, net production, reaction scores (including a positive score)
+  and a template reaction whose id is also in the draft.'
+entries: [fillGaps]
+inputs:
+  matlab_solver: gurobi
+  python_solver: gurobi
+  cases:
+  - name: fill_a
+    draft:
+    - id: EX_A
+      substrates: []
+      products: [A]
+      lb: 0
+      ub: 0.5
+    - id: R1
+      substrates: [A]
+      products: [B]
+      lb: 0
+      ub: 1000
+    - id: EX_B
+      substrates: [B]
+      products: []
+      lb: 0
+      ub: 1000
+    - id: R2
+      substrates: [C]
+      products: [D]
+      lb: 0
+      ub: 1000
+    - id: EX_D
+      substrates: [D]
+      products: []
+      lb: 0
+      ub: 1000
+    - id: R3
+      substrates: [E]
+      products: [F]
+      lb: 0
+      ub: 1000
+    - id: EX_F
+      substrates: [F]
+      products: []
+      lb: 0
+      ub: 1000
+    template:
+    - id: T1
+      substrates: [A]
+      products: [C]
+      lb: 0
+      ub: 1000
+    - id: T2
+      substrates: [B]
+      products: [E]
+      lb: 0
+      ub: 1000
+    net_production: false
+    scores: []
+  - name: fill_b
+    draft:
+    - id: EX_A
+      substrates: []
+      products: [A]
+      lb: 0
+      ub: 1.5
+    - id: R1
+      substrates: [A]
+      products: [B]
+      lb: 0
+      ub: 1000
+    - id: EX_B
+      substrates: [B]
+      products: []
+      lb: 0
+      ub: 1000
+    - id: R2
+      substrates: [C]
+      products: [D]
+      lb: 0
+      ub: 1000
+    - id: EX_D
+      substrates: [D]
+      products: []
+      lb: 0
+      ub: 1000
+    - id: R3
+      substrates: [E]
+      products: [F]
+      lb: 0
+      ub: 1000
+    - id: EX_F
+      substrates: [F]
+      products: []
+      lb: 0
+      ub: 1000
+    template:
+    - id: T1
+      substrates: [A]
+      products: [C]
+      lb: 0
+      ub: 1000
+    - id: T2
+      substrates: [A]
+      products: [E]
+      lb: 0
+      ub: 1000
+    net_production: false
+    scores: []
+  - name: fill_c
+    draft:
+    - id: EX_A
+      substrates: []
+      products: [A]
+      lb: 0
+      ub: 1000
+    - id: R1
+      substrates: [A]
+      products: [B]
+      lb: 0
+      ub: 1000
+    - id: EX_B
+      substrates: [B]
+      products: []
+      lb: 0
+      ub: 1000
+    - id: R2
+      substrates: [C]
+      products: [D]
+      lb: 0
+      ub: 1000
+    template:
+    - id: T1
+      substrates: [A]
+      products: [C]
+      lb: 0
+      ub: 1000
+    net_production: true
+    scores: []
+  - name: fill_d_noscores
+    draft: &id001
+    - id: EX_A
+      substrates: []
+      products: [A]
+      lb: 0
+      ub: 1000
+    - id: R1
+      substrates: [A]
+      products: [B]
+      lb: 0
+      ub: 1000
+    - id: EX_B
+      substrates: [B]
+      products: []
+      lb: 0
+      ub: 1000
+    - id: R2
+      substrates: [C]
+      products: [D]
+      lb: 0
+      ub: 1000
+    - id: EX_D
+      substrates: [D]
+      products: []
+      lb: 0
+      ub: 1000
+    template: &id002
+    - id: T1
+      substrates: [A]
+      products: [C]
+      lb: 0
+      ub: 1000
+    - id: T2
+      substrates: [B]
+      products: [C]
+      lb: 0
+      ub: 1000
+    - id: T3
+      substrates: [D]
+      products: [B]
+      lb: 0
+      ub: 1000
+    net_production: false
+    scores: []
+  - name: fill_d_scores1
+    draft: *id001
+    template: *id002
+    net_production: false
+    scores: [-1, -1, 0.5]
+  - name: fill_d_scores2
+    draft: *id001
+    template: *id002
+    net_production: false
+    scores: [-2, -1, 0]
+  - name: fill_e_renamed
+    draft:
+    - id: R1
+      substrates: [a]
+      products: [b]
+      lb: 0
+      ub: 1000
+    - id: Rname
+      substrates: [b]
+      products: []
+      lb: 0
+      ub: 1000
+    template:
+    - id: Rname
+      substrates: []
+      products: [a]
+      lb: 0
+      ub: 1000
+    net_production: false
+    scores: []

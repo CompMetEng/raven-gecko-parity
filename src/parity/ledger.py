@@ -94,12 +94,42 @@ class Ledger:
         return out
 
 
+class _UniqueKeyLoader(yaml.SafeLoader):
+    """A safe loader that refuses a mapping with a repeated key.
+
+    ``yaml.safe_load`` keeps the last value of a repeated key, so a deleted ``- matlab:`` line
+    would merge two entries into one without any message. Merge keys (``<<``) are expanded as
+    ``yaml.safe_load`` expands them, and a key written next to a merge overrides the merged value
+    without being a repetition; only keys written in the mapping itself are compared. A key that
+    cannot be hashed is left to PyYAML, which raises its own error for it.
+    """
+
+    def construct_mapping(self, node, deep=False):
+        seen: set = set()
+        for key_node, _ in node.value:
+            if key_node.tag == "tag:yaml.org,2002:merge":
+                continue
+            key = self.construct_object(key_node, deep=True)
+            try:
+                if key in seen:
+                    raise LedgerError(
+                        f"line {key_node.start_mark.line + 1}: key {key!r} appears twice in one mapping"
+                    )
+                seen.add(key)
+            except TypeError:
+                break
+        return super().construct_mapping(node, deep)
+
+
 def load_ledger(path: Path) -> Ledger:
     """Read a ledger YAML file."""
     if not path.is_file():
         raise LedgerError(f"ledger not found: {path}")
 
-    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    try:
+        data = yaml.load(path.read_text(encoding="utf-8"), Loader=_UniqueKeyLoader) or {}
+    except LedgerError as exc:
+        raise LedgerError(f"{path}: {exc}") from None
     if not isinstance(data, dict):
         raise LedgerError(f"{path}: expected a mapping at the top level")
 

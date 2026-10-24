@@ -1,0 +1,38 @@
+id: set_exchange_bounds_toy
+pair: raven
+description: >-
+  setExchangeBounds on a hand-written model with exchange reactions for three extracellular metabolites and a sink
+  reaction on a cytosolic one. Cases cover the default (every exchanged metabolite), metabolites given by name
+  (case-insensitive) and by id, one bound per metabolite, closeOthers off, a metabolite that is absent or not
+  exchanged, mediaOnly with the sink, and a model whose exchange reactions point in different directions.
+
+entries:
+  - setExchangeBounds
+
+inputs:
+  compartments: {c: cytosol, e: extracellular}
+  mets: &mets
+  - {id: A_e, name: Glucose, compartment: e}
+  - {id: B_e, name: O2, compartment: e}
+  - {id: D_e, name: Ethanol, compartment: e}
+  - {id: C_c, name: Pyruvate, compartment: c}
+  reactions_base: &base
+  - {id: EX_A, lb: -1000, ub: 1000, stoichiometry: [{met: A_e, coefficient: -1}]}
+  - {id: EX_B, lb: -1000, ub: 1000, stoichiometry: [{met: B_e, coefficient: -1}]}
+  - {id: EX_D, lb: -1000, ub: 1000, stoichiometry: [{met: D_e, coefficient: -1}]}
+  - {id: SINK_C, lb: -1000, ub: 1000, stoichiometry: [{met: C_c, coefficient: -1}]}
+  - {id: R1, lb: 0, ub: 1000, stoichiometry: [{met: A_e, coefficient: -1}, {met: B_e, coefficient: -1}, {met: C_c, coefficient: 1}]}
+  - {id: R2, lb: 0, ub: 1000, stoichiometry: [{met: C_c, coefficient: -1}, {met: D_e, coefficient: 1}]}
+  reactions_mixed: &mixed
+  - {id: EX_A, lb: -1000, ub: 1000, stoichiometry: [{met: A_e, coefficient: -1}]}
+  - {id: EX_D, lb: -1000, ub: 1000, stoichiometry: [{met: D_e, coefficient: 1}]}
+  - {id: R2, lb: 0, ub: 1000, stoichiometry: [{met: A_e, coefficient: -1}, {met: D_e, coefficient: 1}]}
+  cases:
+  - {name: all_default, reactions: *base, mets: null, lb: null, ub: null, close_others: true, media_only: false}
+  - {name: all_given_bounds, reactions: *base, mets: null, lb: -5, ub: 7, close_others: true, media_only: false}
+  - {name: by_name_case_insensitive, reactions: *base, mets: [glucose, o2], lb: -10, ub: 1000, close_others: true, media_only: false}
+  - {name: by_id_vector_bounds, reactions: *base, mets: [A_e, B_e], lb: [-5, -3], ub: [2, 4], close_others: true, media_only: false}
+  - {name: keep_others, reactions: *base, mets: [A_e], lb: -10, ub: 1000, close_others: false, media_only: false}
+  - {name: unused_metabolites, reactions: *base, mets: [A_e, nothing, C_c], lb: -10, ub: 1000, close_others: true, media_only: false}
+  - {name: media_only, reactions: *base, mets: [A_e], lb: -10, ub: 1000, close_others: true, media_only: true}
+  - {name: mixed_directions, reactions: *mixed, mets: [A_e], lb: -10, ub: 1000, close_others: true, media_only: false}

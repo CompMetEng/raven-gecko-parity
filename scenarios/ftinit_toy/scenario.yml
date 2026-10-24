@@ -1,0 +1,79 @@
+id: ftinit_toy
+pair: raven
+description: >-
+  prepINITModel and ftINIT on RAVEN's own ten-reaction test model (tINIT.m getTstModel), run with
+  RAVEN's input: gene expression in one tissue, scored by scoreModel inside ftINIT. Six cases:
+  no tasks, two spontaneous reactions, a metabolic task, a complex and an isozyme rule with
+  removeGenes on and off, and the single-step "full" series. Each case records the prepared data
+  (reaction categories, merged-model size, essential reactions) and the extracted model (reactions,
+  genes, rules, and the flux through the objective).
+
+entries:
+  - prepINITModel
+  - ftINIT
+
+inputs:
+  matlab_solver: gurobi
+  python_solver: gurobi
+
+  # Compartment s is the external compartment on both sides (extComp / ext_comp).
+  ext_comp: s
+  objective: R8
+  tissue: a
+
+  metabolites:
+    - {id: as, name: a, compartment: s}
+    - {id: ac, name: a, compartment: c}
+    - {id: bc, name: b, compartment: c}
+    - {id: cc, name: c, compartment: c}
+    - {id: dc, name: d, compartment: c}
+    - {id: ec, name: e, compartment: c}
+    - {id: es, name: e, compartment: s}
+    - {id: fc, name: f, compartment: c}
+  reactions:
+    - {id: R1, equation: '=> a[s]', lb: 0, ub: 1000, rule: ''}
+    - {id: R2, equation: 'a[s] <=> a[c]', lb: -1000, ub: 1000, rule: ''}
+    - {id: R3, equation: 'a[c] <=> b[c] + c[c]', lb: -1000, ub: 1000, rule: 'G3'}
+    - {id: R4, equation: 'a[c] <=> 2 d[c]', lb: -1000, ub: 1000, rule: 'G4'}
+    - {id: R5, equation: 'b[c] + c[c] => e[c]', lb: 0, ub: 1000, rule: 'G5'}
+    - {id: R6, equation: '2 d[c] => e[c]', lb: 0, ub: 1000, rule: 'G6'}
+    - {id: R7, equation: 'e[c] => e[s]', lb: 0, ub: 1000, rule: 'G7'}
+    - {id: R8, equation: 'e[s] =>', lb: 0, ub: 1000, rule: ''}
+    - {id: R9, equation: 'a[c] <=> f[c]', lb: -1000, ub: 1000, rule: 'G9'}
+    - {id: R10, equation: 'f[c] <=> e[c]', lb: -1000, ub: 1000, rule: 'G10'}
+
+  # One level per gene in the single tissue, with the threshold 1, so the score of a gene is
+  # 5*ln(level): the model's reaction scores are -2 (no gene), -1, 7, 0.5, 0.5, -1, -2, -3, 3.5
+  # for R3..R10 as in tINIT.m getTstModelRxnScores. G11 (level 0.2, score -5) and G12 (level e,
+  # score 5) only occur in the rules of the genes_* cases.
+  threshold: 1
+  levels:
+    G3: 0.8187307530779818
+    G4: 4.0551999668446745
+    G5: 1.1051709180756477
+    G6: 1.1051709180756477
+    G7: 0.8187307530779818
+    G9: 0.5488116360940264
+    G10: 2.0137527074704766
+    G11: 0.2
+    G12: 2.718281828459045
+
+  # The task of tINIT.m getTstModelTasks: e[s] is made from a[s], one unit out. The input has no upper
+  # bound (both sides set it to infinity).
+  task:
+    id: Gen e[s] from a[s]
+    description: Gen e[s] from a[s]
+    inputs: [{metabolite: 'a[s]', lb: 0}]
+    outputs: [{metabolite: 'e[s]', lb: 1, ub: 1}]
+
+  # The rules of R4 and R6 in the genes_* cases: an isozyme with a low-expression partner, and a
+  # complex whose second subunit scores high enough to leave the reaction score at 0.5.
+  rule_overrides: {R4: G4 or G11, R6: G6 and G12}
+
+  cases:
+    - {name: no_tasks, series: '1+1', spontaneous: [], with_task: false, overrides: false, remove_genes: true}
+    - {name: spontaneous, series: '1+1', spontaneous: [R7, R10], with_task: false, overrides: false, remove_genes: true}
+    - {name: with_task, series: '1+1', spontaneous: [], with_task: true, overrides: false, remove_genes: true}
+    - {name: genes_removed, series: '1+1', spontaneous: [], with_task: false, overrides: true, remove_genes: true}
+    - {name: genes_kept, series: '1+1', spontaneous: [], with_task: false, overrides: true, remove_genes: false}
+    - {name: full_series, series: full, spontaneous: [], with_task: false, overrides: false, remove_genes: true}

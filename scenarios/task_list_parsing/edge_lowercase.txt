@@ -1,0 +1,2 @@
+	id	description	in	out
+	T1	d	A[c]	B[c]

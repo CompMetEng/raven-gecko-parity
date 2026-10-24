@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import pytest
+
 from parity.inventory import build_inventory
-from parity.ledger import Entry, Ledger, dump_ledger, load_ledger, merge_entries, save_ledger
+from parity.ledger import Entry, Ledger, LedgerError, dump_ledger, load_ledger, merge_entries, save_ledger
 from parity.seed import discover, expand, normalise, sync_ledger
 
 
@@ -110,3 +112,67 @@ def test_sync_is_idempotent(fake_pair):
 
     _, added_again, _ = sync_ledger(fake_pair)
     assert added_again == 0
+
+
+def test_a_repeated_key_in_one_entry_is_refused(tmp_path):
+    # Two entries merged into one by a deleted "- matlab:" line repeat "status".
+    path = tmp_path / "broken.yml"
+    path.write_text(
+        "version: 1\npair: fake\nentries:\n"
+        "  - matlab: prepINITModel\n    status: parity\n"
+        "    status: matlab-only\n    reason: console output\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(LedgerError, match="status.*twice"):
+        load_ledger(path)
+
+
+def _ledger_file(tmp_path, body):
+    path = tmp_path / "ledger.yml"
+    path.write_text("version: 1\npair: fake\n" + body, encoding="utf-8")
+    return path
+
+
+def test_a_repeated_top_level_key_is_refused_and_named(tmp_path):
+    path = _ledger_file(tmp_path, "entries: []\nentries: []\n")
+    with pytest.raises(LedgerError, match=r"key 'entries' appears twice in one mapping"):
+        load_ledger(path)
+
+
+def test_merge_keys_are_expanded_as_safe_load_does(tmp_path):
+    path = _ledger_file(
+        tmp_path,
+        "base: &base\n  status: parity\n  reason: shared\n"
+        "entries:\n"
+        "  - matlab: a\n    <<: *base\n"
+        "  - matlab: b\n    <<: *base\n    status: matlab-only\n"
+        "  - matlab: c\n    <<: [*base]\n    <<: *base\n",
+    )
+    ledger = load_ledger(path)
+    assert [(e.matlab, e.status) for e in ledger.entries] == [
+        ("a", "parity"), ("b", "matlab-only"), ("c", "parity")]
+
+
+def test_a_repeated_key_next_to_a_merge_key_is_still_refused(tmp_path):
+    path = _ledger_file(
+        tmp_path,
+        "base: &base\n  reason: shared\nentries:\n"
+        "  - matlab: a\n    <<: *base\n    status: parity\n    status: matlab-only\n",
+    )
+    with pytest.raises(LedgerError, match="status.*twice"):
+        load_ledger(path)
+
+
+def test_an_unhashable_key_raises_the_error_of_pyyaml(tmp_path):
+    import yaml
+
+    path = _ledger_file(tmp_path, "entries:\n  - ? [a, b]\n    : parity\n")
+    with pytest.raises(yaml.YAMLError, match="unhashable"):
+        load_ledger(path)
+
+
+def test_the_shipped_ledgers_have_no_repeated_key():
+    from pathlib import Path
+
+    for ledger in sorted((Path(__file__).resolve().parent.parent / "ledgers").glob("*.yml")):
+        load_ledger(ledger)

@@ -1,0 +1,131 @@
+id: curate_tables_layout_toy
+pair: raven
+description: >-
+  curateModelFromTables on a model with two metabolites (x and y in compartment c), two reactions and twelve genes (G1 to G4, G1.1, G2-3, G_1, G:2, 10, 100, RAND1 and ORF2), from
+  table files whose layout is varied. Each case records the metabolites by name and compartment with formula and
+  charge, and the reactions by name with bounds and stoichiometry by metabolite name; an error case records that both
+  sides stop and, where the words of the two messages agree, the kind of the error. The cases cover a trailing tab on
+  every row (ignored), a row with one more cell than the header (both sides stop), spaces before a cell (dropped, also
+  before an opening quote; spaces after a cell stay), a quote directly followed by text, blank lines (skipped), quoted
+  header names, a column with an empty header (ignored), a core header that two columns spell (the first column is used,
+  for metNames, formula, comps and lb), a metabolite row of tabs only (both sides stop), coefficient rows of the same
+  metabolite in one reaction (added up), coefficient rows without a reaction index, reaction name, metabolite name and
+  compartment (ignored, whatever else they hold), a reaction row of tabs only (ignored), reaction tables that hold only
+  a header (nothing happens; next to coefficient rows both sides stop), reaction indices written as 1, 1.0 and 2e0 (the
+  same index), a reaction index that two rows of the reaction table use, written as 1 and 1 or as 1 and 1.0 (both sides stop), header names with spaces inside their quotes (ignored), a reaction that only one of the two reaction tables has (both sides stop), a row with content and no
+  reaction index (both sides stop), a zero or infinite coefficient (both sides stop), true or false in a coefficient,
+  reaction index, confidence score or charge cell (both sides stop), two rows that update one reaction (applied one
+  after the other), the gene rule of a new reaction that names a gene the model has (accepted) and one that nothing
+  defines (both sides stop), 52 gene rules, each on a new reaction of its own, valid ones (operators in any case or as
+  &, &&, | and ||, parentheses with and without spaces, a gene id with a dot, dash, colon, underscore or digits only)
+  and malformed ones (unbalanced parentheses, an operator without two operands, empty parentheses, two genes without
+  an operator) for which both sides stop, and the genes the accepted rules give the reaction are compared, a gene that
+  the genes table lists twice (new or already in the model; both sides stop), and lower and upper bounds that are valid
+  only as a pair (2000 and 3000 on an existing reaction whose upper bound is 1000). Not cases, because the two sides
+  differ: a lower bound above the upper bound (RAVEN writes it and solveLP rejects the model when it runs, a cobra
+  reaction cannot hold it), two rows that leave one reaction with a lower bound above its upper bound, a blank first line (both sides stop, with
+  different messages).
+
+entries:
+  - curateModelFromTables
+
+inputs:
+  tables_dir: "{scenario_dir}/tables"
+  met_prefix: M_
+  rxn_prefix: R_
+  cases:
+    - {name: bounds_together_on_an_existing_reaction, mets: none, rxns: rxns_bounds_together.tsv, coeffs: coeffs_existing.tsv}
+    - {name: mets_trailing_tab, mets: mets_trailing_tab.tsv, rxns: none, coeffs: none}
+    - {name: mets_extra_cell, mets: mets_extra_field.tsv, rxns: none, coeffs: none, ignore_error_class: true}
+    - {name: mets_spaces_before_cells, mets: mets_leading_spaces.tsv, rxns: none, coeffs: none}
+    - {name: mets_quoted_cells, mets: mets_quoted.tsv, rxns: none, coeffs: none}
+    - {name: mets_quote_then_text, mets: mets_quote_then_text.tsv, rxns: none, coeffs: none}
+    - {name: mets_blank_lines, mets: mets_blank_lines.tsv, rxns: none, coeffs: none}
+    - {name: mets_row_of_tabs, mets: mets_tabs_only.tsv, rxns: none, coeffs: none}
+    - {name: coefficient_rows_spaces_before_cells, mets: none, rxns: rxns_fresh.tsv, coeffs: coeffs_leading_spaces.tsv}
+    - {name: coefficient_rows_for_one_metabolite_add_up, mets: none, rxns: rxns_fresh.tsv, coeffs: coeffs_duplicate.tsv}
+    - {name: coefficient_rows_without_content_are_ignored, mets: none, rxns: rxns_fresh.tsv, coeffs: coeffs_ignored_rows.tsv}
+    - {name: reaction_row_of_tabs_is_ignored, mets: none, rxns: rxns_tabs_only_row.tsv, coeffs: coeffs_fresh.tsv}
+    - {name: indices_compared_by_value, mets: none, rxns: rxns_idx_text_pairs.tsv, coeffs: coeffs_idx_text_pairs.tsv}
+    - {name: coefficients_without_a_reaction, mets: none, rxns: rxns_fresh.tsv, coeffs: coeffs_unmatched_extra.tsv}
+    - {name: reaction_without_coefficients, mets: none, rxns: rxns_unmatched_extra.tsv, coeffs: coeffs_fresh.tsv}
+    - {name: rxn_index_missing_in_rxns, mets: none, rxns: rxns_blank_idx.tsv, coeffs: coeffs_fresh.tsv}
+    - {name: rxn_index_missing_in_coeffs, mets: none, rxns: rxns_fresh.tsv, coeffs: coeffs_blank_idx.tsv}
+    - {name: coefficient_zero, mets: none, rxns: rxns_fresh.tsv, coeffs: coeffs_zero.tsv}
+    - {name: coefficient_infinite, mets: none, rxns: rxns_fresh.tsv, coeffs: coeffs_infinite.tsv}
+    - {name: coefficient_true, mets: none, rxns: rxns_fresh.tsv, coeffs: coeffs_true.tsv}
+    - {name: rxn_index_true, mets: none, rxns: rxns_idx_true.tsv, coeffs: coeffs_idx_true.tsv}
+    - {name: score_true, mets: none, rxns: rxns_score_true.tsv, coeffs: coeffs_fresh.tsv}
+    - {name: malformed_gene_rule_of_a_new_reaction, mets: none, rxns: rxns_and_and.tsv, coeffs: coeffs_fresh.tsv}
+    - {name: charge_true, mets: mets_charge_true.tsv, rxns: none, coeffs: none}
+    - {name: repeated_rxn_idx_in_rxns, mets: none, rxns: rxns_idx_repeated.tsv, coeffs: coeffs_idx_repeated.tsv}
+    - {name: repeated_rxn_idx_in_rxns_as_1_and_1_0, mets: none, rxns: rxns_idx_repeated_float.tsv, coeffs: coeffs_idx_repeated.tsv}
+    - {name: header_padded_inside_its_quotes, mets: mets_header_padded.tsv, rxns: none, coeffs: none}
+    - {name: header_only_reaction_tables, mets: none, rxns: rxns_header_only.tsv, coeffs: coeffs_header_only.tsv}
+    - {name: header_only_reaction_table_beside_coefficient_rows, mets: none, rxns: rxns_header_only.tsv, coeffs: coeffs_fresh.tsv}
+    - {name: two_rows_update_one_reaction, mets: none, rxns: rxns_two_rows.tsv, coeffs: coeffs_two_rows.tsv}
+    - {name: core_header_metnames_twice, mets: mets_metnames_twice.tsv, rxns: none, coeffs: none}
+    - {name: core_header_formula_spelled_twice, mets: mets_formula_twice.tsv, rxns: none, coeffs: none}
+    - {name: core_header_comps_spelled_twice, mets: mets_comps_twice.tsv, rxns: none, coeffs: none}
+    - {name: core_header_lb_spelled_twice, mets: none, rxns: rxns_lb_twice.tsv, coeffs: coeffs_existing.tsv}
+    - {name: column_with_an_empty_header_is_ignored, mets: mets_empty_header.tsv, rxns: none, coeffs: none}
+    - {name: quoted_header_names, mets: mets_quoted_header.tsv, rxns: none, coeffs: none}
+    - {name: new_reaction_with_a_known_gene, mets: none, rxns: rxns_known_gene.tsv, coeffs: coeffs_fresh.tsv}
+    - {name: new_reaction_with_an_unknown_gene, mets: none, rxns: rxns_unknown_gene.tsv, coeffs: coeffs_fresh.tsv}
+    - {name: genes_new_gene_listed_twice, mets: none, genes: genes_new_twice.tsv, rxns: none, coeffs: none}
+    - {name: genes_existing_gene_listed_twice, mets: none, genes: genes_existing_twice.tsv, rxns: none, coeffs: none}
+    - {name: genes_new_genes_listed_once, mets: none, genes: genes_new_once.tsv, rxns: none, coeffs: none}
+  model_genes: ["G1", "G2", "G3", "G4", "G1.1", "G2-3", "G_1", "G:2", "10", "100", "RAND1", "ORF2"]
+  gene_rules:
+    - "G1"
+    - "(G1 and G2) or G3"
+    - "G1 AND G2"
+    - "(G1)"
+    - "G1 or G2"
+    - "G1 OR G2"
+    - "G1 And G2"
+    - "G1 & G2"
+    - "G1 && G2"
+    - "G1 | G2"
+    - "G1 || G2"
+    - "((G1 and G2) or (G3 and G4))"
+    - "G1 and (G2 or G3)"
+    - "G1.1 and G2-3"
+    - "G_1 or G:2"
+    - "10 and 100"
+    - "RAND1 or ORF2"
+    - "G1 and G2 or G3"
+    - "  G1  "
+    - "(G1 or G2) and (G3 or G4)"
+    - "((G1))"
+    - "G1 and G2 and G3"
+    - "G1 or G2 or G3"
+    - "G1 AND G2 OR G3"
+    - "G1 and(G2 or G3)"
+    - "(G1)and(G2)"
+    - "G1 and and ("
+    - "(G1 or G2"
+    - "G1 G2"
+    - "and G1"
+    - "G1 or"
+    - "()"
+    - "G1 and (G2 or )"
+    - "(G1 and G2"
+    - "G1)"
+    - "G1 and or G2"
+    - "or"
+    - "and"
+    - "("
+    - ")"
+    - "G1 or ("
+    - "(G1) (G2)"
+    - "G1 (G2)"
+    - "(G1 and G2) G3"
+    - "G1 and ()"
+    - "G1 xor G2"
+    - "G1 and G2)"
+    - "((G1 and G2)"
+    - "G1 && || G2"
+    - "& G1"
+    - "G1 |"
+    - "(G1 and) G2"

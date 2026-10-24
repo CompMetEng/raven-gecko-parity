@@ -28,9 +28,26 @@ def run(ctx):
     inputs = ctx["inputs"]
     model = read_yaml_model(inputs["model"])
     model_genes = sorted(gene.id for gene in model.genes)
-
     expression = _read_expression(inputs["expression"], set(model_genes))
-    gene_scores = gene_scores_from_expression(expression, float(inputs["threshold"]))
+
+    result = _score(model, model_genes, expression, float(inputs["threshold"]), inputs)
+    result["variants"] = {}
+    for variant in _as_list(inputs.get("variants")):
+        levels = dict(expression)
+        for gene, level in (variant.get("levels") or {}).items():
+            levels[str(gene)] = float(level)
+        result["variants"][str(variant["name"])] = _score(
+            model, model_genes, levels, float(variant["threshold"]), inputs
+        )
+    return result
+
+
+def _as_list(value):
+    return list(value) if value else []
+
+
+def _score(model, model_genes, expression, threshold, inputs):
+    gene_scores = gene_scores_from_expression(expression, threshold)
 
     reaction_scores = score_reactions_from_genes(
         model,

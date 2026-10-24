@@ -1,0 +1,5 @@
+rxnIdx	rxnNames	metNames	comps	coefficient
+1	freshA	x	c	-2
+1	freshA	y	c	2
+1	freshB	x	c	-3
+1	freshB	y	c	3

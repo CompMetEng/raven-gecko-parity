@@ -1,0 +1,27 @@
+id: curate_tables_toy
+pair: raven
+description: >-
+  curateModelFromTables on a model of two empty reactions and four small tables: two
+  reactions that share a name and are told apart by rxnIdx, metabolites with a formula,
+  charge and ChEBI id, and a gene with a short name and a UniProt id. The content (names,
+  formulas, charges, stoichiometry, rules, annotations) is compared by name, and the new
+  identifiers separately, because each side numbers them its own way.
+
+entries:
+  - curateModelFromTables
+
+inputs:
+  mets_table: "{scenario_dir}/tables/mets.tsv"
+  genes_table: "{scenario_dir}/tables/genes.tsv"
+  rxns_table: "{scenario_dir}/tables/rxns.tsv"
+  coeffs_table: "{scenario_dir}/tables/coeffs.tsv"
+  # Two models of the same two empty reactions. RAVEN numbers a new identifier from the
+  # largest existing one after sorting the identifiers as text, so R_9 and R_10 make it
+  # reuse R_10; the padded identifiers do not.
+  cases:
+    - name: padded_ids
+      reactions: [R_0009, R_0010]
+    - name: unpadded_ids
+      reactions: [R_9, R_10]
+  met_prefix: M_
+  rxn_prefix: R_

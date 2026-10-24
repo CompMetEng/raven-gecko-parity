@@ -1,0 +1,2 @@
+	ID	DESCRIPTION	IN	IN LB	OUT
+	T1	d	A[c]	abc	B[c]

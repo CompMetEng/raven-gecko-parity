@@ -1,0 +1,5 @@
+rxnIdx	rxnNames	metNames	comps	coefficient
+1	renamed	x	c	-1
+1	renamed	y	c	1
+2	notarev	x	c	-2
+2	notarev	y	c	3

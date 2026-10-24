@@ -1,0 +1,31 @@
+id: reporter_metabolites_toy
+pair: raven
+description: 'Reporter metabolites on a hand-written model: metabolites that share a gene set (a tie in the
+  z-score, compared in the order the function returns), a metabolite with one neighbouring gene, metabolites
+  without a scored gene, p-values of 0 and 1, a gene that is not in the model and a NaN p-value. Three cases:
+  p-values only, mixed fold changes (a fold change of 0 counts as up), and fold changes that are all 0.
+  Neither side has a minimum-size option; the only options are the fold changes and, in RAVEN, printing.'
+entries: [reporterMetabolites]
+inputs:
+  reactions:
+  - {id: R1, substrates: [], products: [A], lb: 0, ub: 1000, rule: ''}
+  - {id: R2, substrates: [A], products: [B], lb: 0, ub: 1000, rule: g1}
+  - {id: R3, substrates: [B], products: [C], lb: 0, ub: 1000, rule: g2}
+  - {id: R4, substrates: [C], products: [D], lb: 0, ub: 1000, rule: g1}
+  - {id: R5, substrates: [D], products: [E], lb: 0, ub: 1000, rule: g3 or g5}
+  - {id: R6, substrates: [E], products: [], lb: 0, ub: 1000, rule: g4}
+  - {id: R7, substrates: [P], products: [Q], lb: 0, ub: 1000, rule: ''}
+  - {id: R8, substrates: [Q], products: [S], lb: 0, ub: 1000, rule: g9}
+  cases:
+  - name: pvalues_only
+    genes: [g1, g2, g3, g4, g5, gX]
+    pvalues: [0.01, 0.2, 1.0, 0.0, null, 0.5]
+    fold_changes: []
+  - name: mixed_fold_changes
+    genes: [g1, g2, g3, g4, g5, gX]
+    pvalues: [0.01, 0.2, 0.9, 0.001, null, 0.5]
+    fold_changes: [1.5, -0.5, 0, 2.0, 1.0, -1.0]
+  - name: zero_fold_changes
+    genes: [g1, g2, g3, g4]
+    pvalues: [0.01, 0.2, 0.9, 0.001]
+    fold_changes: [0, 0, 0, 0]

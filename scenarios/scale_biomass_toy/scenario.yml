@@ -1,0 +1,407 @@
+id: scale_biomass_toy
+pair: raven
+description: >-
+  scaleBiomassPseudoreaction, scaleBiomassFraction and getBiomassFractions on hand-written models with
+  protein, carbohydrate, DNA, RNA and aminoacyl pseudoreactions. The pseudoreaction cases rescale a component
+  by a factor and compare every coefficient, including the H+ coefficient that restores the charge balance,
+  with H+ among the substrates, a factor of zero and a negative factor, a metabolite without a charge, a model
+  without charges, a proton metabolite the model lacks, and an unknown component. The fraction cases scale a
+  component to a mass fraction, with and without a second component that balances the total, a target total,
+  a balancing component that cannot absorb the difference, and H+ in the scaled pseudoreaction, whose
+  coefficient changes the fraction that is scaled. The last cases compute the fractions with each mass
+  strategy and with an empty formula and an unknown element.
+
+entries:
+  - scaleBiomassPseudoreaction
+  - scaleBiomassFraction
+  - getBiomassFractions
+
+inputs:
+  reactions:
+  - id: P1
+    name: protein pseudoreaction
+    lb: 0
+    ub: 1000
+    stoichiometry:
+    - {met: a_c, coefficient: -0.3}
+    - {met: b_c, coefficient: -0.2}
+    - {met: prot_c, coefficient: 1}
+  - id: C1
+    name: carbohydrate pseudoreaction
+    lb: 0
+    ub: 1000
+    stoichiometry:
+    - {met: glc_c, coefficient: -2}
+    - {met: carb_c, coefficient: 1}
+  - id: D1
+    name: DNA pseudoreaction
+    lb: 0
+    ub: 1000
+    stoichiometry:
+    - {met: d_c, coefficient: -0.5}
+    - {met: dna_c, coefficient: 1}
+  - id: R1
+    name: RNA pseudoreaction
+    lb: 0
+    ub: 1000
+    stoichiometry:
+    - {met: ntp_c, coefficient: -0.4}
+    - {met: rna_c, coefficient: 1}
+  - id: A1
+    name: aaprotein pseudoreaction
+    lb: 0
+    ub: 1000
+    stoichiometry:
+    - {met: aat_c, coefficient: -0.6}
+    - {met: aap_c, coefficient: 1}
+  configs:
+    standard:
+    - {name: protein, pseudoreaction_name: protein pseudoreaction, mass_strategy: grams}
+    - {name: carbohydrate, pseudoreaction_name: carbohydrate pseudoreaction, mass_strategy: mw}
+    - {name: DNA, pseudoreaction_name: DNA pseudoreaction, mass_strategy: grams}
+    strategies:
+    - {name: carbohydrate, pseudoreaction_name: carbohydrate pseudoreaction, mass_strategy: mw}
+    - {name: RNA, pseudoreaction_name: RNA pseudoreaction, mass_strategy: mw_minus_water}
+    - {name: aaprotein, pseudoreaction_name: aaprotein pseudoreaction, mass_strategy: mw_minus_2h}
+    - {name: DNA, pseudoreaction_name: DNA pseudoreaction, mass_strategy: grams}
+    with_missing:
+    - {name: protein, pseudoreaction_name: protein pseudoreaction, mass_strategy: grams}
+    - {name: carbohydrate, pseudoreaction_name: carbohydrate pseudoreaction, mass_strategy: mw}
+    - {name: DNA, pseudoreaction_name: DNA pseudoreaction, mass_strategy: grams}
+    - {name: lipid, pseudoreaction_name: lipid pseudoreaction, mass_strategy: grams}
+  models:
+    neutral:
+    - {id: a_c, name: 'ala', formula: 'C3H7NO2', charge: 0, compartment: c}
+    - {id: b_c, name: 'gly', formula: 'C2H5NO2', charge: 0, compartment: c}
+    - {id: h_c, name: 'H+', formula: 'H', charge: 0, compartment: c}
+    - {id: prot_c, name: 'protein', formula: '', charge: 0, compartment: c}
+    - {id: glc_c, name: 'glucose', formula: 'C6H12O6', charge: 0, compartment: c}
+    - {id: carb_c, name: 'carbohydrate', formula: '', charge: 0, compartment: c}
+    - {id: d_c, name: 'dNMP', formula: 'C10H14N5O6P', charge: 0, compartment: c}
+    - {id: dna_c, name: 'DNA', formula: '', charge: 0, compartment: c}
+    - {id: ntp_c, name: 'NTP', formula: 'C10H16N5O13P3', charge: 0, compartment: c}
+    - {id: rna_c, name: 'RNA', formula: '', charge: 0, compartment: c}
+    - {id: aat_c, name: 'aa-tRNA', formula: 'C5H9NO2', charge: 0, compartment: c}
+    - {id: aap_c, name: 'aaprotein', formula: '', charge: 0, compartment: c}
+    charged:
+    - {id: a_c, name: 'ala', formula: 'C3H7NO2', charge: -1, compartment: c}
+    - {id: b_c, name: 'gly', formula: 'C2H5NO2', charge: -2, compartment: c}
+    - {id: h_c, name: 'H+', formula: 'H', charge: 1, compartment: c}
+    - {id: prot_c, name: 'protein', formula: '', charge: 0, compartment: c}
+    - {id: glc_c, name: 'glucose', formula: 'C6H12O6', charge: 0, compartment: c}
+    - {id: carb_c, name: 'carbohydrate', formula: '', charge: 0, compartment: c}
+    - {id: d_c, name: 'dNMP', formula: 'C10H14N5O6P', charge: -2, compartment: c}
+    - {id: dna_c, name: 'DNA', formula: '', charge: 0, compartment: c}
+    - {id: ntp_c, name: 'NTP', formula: 'C10H16N5O13P3', charge: -4, compartment: c}
+    - {id: rna_c, name: 'RNA', formula: '', charge: 0, compartment: c}
+    - {id: aat_c, name: 'aa-tRNA', formula: 'C5H9NO2', charge: -1, compartment: c}
+    - {id: aap_c, name: 'aaprotein', formula: '', charge: 0, compartment: c}
+  cases:
+  - name: rescale_neutral
+    op: rescale
+    model: neutral
+    config: standard
+    component: protein
+    factor: 2
+    new_value: null
+    balance_out: null
+    target_total: null
+    proton_in_protein: false
+    formula_overrides: []
+    charge_overrides: []
+    omit_charges: false
+    proton_met: h_c
+  - name: rescale_charged
+    op: rescale
+    model: charged
+    config: standard
+    component: protein
+    factor: 2
+    new_value: null
+    balance_out: null
+    target_total: null
+    proton_in_protein: false
+    formula_overrides: []
+    charge_overrides: []
+    omit_charges: false
+    proton_met: h_c
+  - name: rescale_charged_mw
+    op: rescale
+    model: charged
+    config: standard
+    component: carbohydrate
+    factor: 0.5
+    new_value: null
+    balance_out: null
+    target_total: null
+    proton_in_protein: false
+    formula_overrides: []
+    charge_overrides: []
+    omit_charges: false
+    proton_met: h_c
+  - name: rescale_proton_substrate
+    op: rescale
+    model: charged
+    config: standard
+    component: protein
+    factor: 3
+    new_value: null
+    balance_out: null
+    target_total: null
+    proton_in_protein: true
+    formula_overrides: []
+    charge_overrides: []
+    omit_charges: false
+    proton_met: h_c
+  - name: rescale_factor_zero
+    op: rescale
+    model: charged
+    config: standard
+    component: protein
+    factor: 0
+    new_value: null
+    balance_out: null
+    target_total: null
+    proton_in_protein: false
+    formula_overrides: []
+    charge_overrides: []
+    omit_charges: false
+    proton_met: h_c
+  - name: rescale_negative_factor
+    op: rescale
+    model: charged
+    config: standard
+    component: protein
+    factor: -1
+    new_value: null
+    balance_out: null
+    target_total: null
+    proton_in_protein: false
+    formula_overrides: []
+    charge_overrides: []
+    omit_charges: false
+    proton_met: h_c
+  - name: rescale_missing_charge
+    op: rescale
+    model: charged
+    config: standard
+    component: protein
+    factor: 2
+    new_value: null
+    balance_out: null
+    target_total: null
+    proton_in_protein: false
+    formula_overrides: []
+    charge_overrides: [{met: a_c, charge: null}]
+    omit_charges: false
+    proton_met: h_c
+  - name: rescale_no_charge_field
+    op: rescale
+    model: charged
+    config: standard
+    component: protein
+    factor: 2
+    new_value: null
+    balance_out: null
+    target_total: null
+    proton_in_protein: false
+    formula_overrides: []
+    charge_overrides: []
+    omit_charges: true
+    proton_met: h_c
+  - name: rescale_no_proton_met
+    op: rescale
+    model: charged
+    config: standard
+    component: protein
+    factor: 2
+    new_value: null
+    balance_out: null
+    target_total: null
+    proton_in_protein: false
+    formula_overrides: []
+    charge_overrides: []
+    omit_charges: false
+    proton_met: h_x
+  - name: rescale_unknown_component
+    op: rescale
+    model: charged
+    config: standard
+    component: lipid
+    factor: 2
+    new_value: null
+    balance_out: null
+    target_total: null
+    proton_in_protein: false
+    formula_overrides: []
+    charge_overrides: []
+    omit_charges: false
+    proton_met: h_c
+  - name: rescale_missing_pseudoreaction
+    op: rescale
+    model: charged
+    config: with_missing
+    component: lipid
+    factor: 2
+    new_value: null
+    balance_out: null
+    target_total: null
+    proton_in_protein: false
+    formula_overrides: []
+    charge_overrides: []
+    omit_charges: false
+    proton_met: h_c
+  - name: scale_balanced
+    op: scale
+    model: neutral
+    config: standard
+    component: protein
+    factor: null
+    new_value: 0.6
+    balance_out: DNA
+    target_total: 1
+    proton_in_protein: false
+    formula_overrides: []
+    charge_overrides: []
+    omit_charges: false
+    proton_met: h_c
+  - name: scale_no_balance
+    op: scale
+    model: neutral
+    config: standard
+    component: carbohydrate
+    factor: null
+    new_value: 0.5
+    balance_out: null
+    target_total: null
+    proton_in_protein: false
+    formula_overrides: []
+    charge_overrides: []
+    omit_charges: false
+    proton_met: h_c
+  - name: scale_target_total
+    op: scale
+    model: neutral
+    config: standard
+    component: protein
+    factor: null
+    new_value: 0.6
+    balance_out: DNA
+    target_total: 2
+    proton_in_protein: false
+    formula_overrides: []
+    charge_overrides: []
+    omit_charges: false
+    proton_met: h_c
+  - name: scale_balance_too_small
+    op: scale
+    model: neutral
+    config: standard
+    component: protein
+    factor: null
+    new_value: 5
+    balance_out: DNA
+    target_total: 1
+    proton_in_protein: false
+    formula_overrides: []
+    charge_overrides: []
+    omit_charges: false
+    proton_met: h_c
+  - name: scale_balance_proton
+    op: scale
+    model: charged
+    config: standard
+    component: protein
+    factor: null
+    new_value: 0.6
+    balance_out: DNA
+    target_total: 1
+    proton_in_protein: false
+    formula_overrides: []
+    charge_overrides: []
+    omit_charges: false
+    proton_met: h_c
+  - name: scale_zero_current
+    op: scale
+    model: neutral
+    config: with_missing
+    component: lipid
+    factor: null
+    new_value: 0.1
+    balance_out: null
+    target_total: null
+    proton_in_protein: false
+    formula_overrides: []
+    charge_overrides: []
+    omit_charges: false
+    proton_met: h_c
+  - name: scale_unknown_component
+    op: scale
+    model: neutral
+    config: standard
+    component: lipid
+    factor: null
+    new_value: 0.1
+    balance_out: null
+    target_total: null
+    proton_in_protein: false
+    formula_overrides: []
+    charge_overrides: []
+    omit_charges: false
+    proton_met: h_c
+  - name: fractions_standard
+    op: fractions
+    model: neutral
+    config: standard
+    component: protein
+    factor: null
+    new_value: null
+    balance_out: null
+    target_total: null
+    proton_in_protein: false
+    formula_overrides: []
+    charge_overrides: []
+    omit_charges: false
+    proton_met: h_c
+  - name: fractions_strategies
+    op: fractions
+    model: neutral
+    config: strategies
+    component: protein
+    factor: null
+    new_value: null
+    balance_out: null
+    target_total: null
+    proton_in_protein: false
+    formula_overrides: []
+    charge_overrides: []
+    omit_charges: false
+    proton_met: h_c
+  - name: fractions_empty_formula
+    op: fractions
+    model: neutral
+    config: standard
+    component: protein
+    factor: null
+    new_value: null
+    balance_out: null
+    target_total: null
+    proton_in_protein: false
+    formula_overrides: [{met: glc_c, formula: ''}]
+    charge_overrides: []
+    omit_charges: false
+    proton_met: h_c
+  - name: fractions_unknown_element
+    op: fractions
+    model: neutral
+    config: standard
+    component: protein
+    factor: null
+    new_value: null
+    balance_out: null
+    target_total: null
+    proton_in_protein: false
+    formula_overrides: [{met: glc_c, formula: C6Xx2}]
+    charge_overrides: []
+    omit_charges: false
+    proton_met: h_c

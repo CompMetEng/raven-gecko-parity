@@ -55,6 +55,11 @@ added = sort(setdiff(afterRxns, beforeRxns));
 addedMets = setdiff(afterMets, beforeMets);
 
 out.added_reactions = row(added);
+% Model order, not sorted: where an added reaction, metabolite or gene lands is
+% part of the result.
+out.reaction_order = row(afterRxns);
+out.metabolite_order = row(afterMets);
+out.gene_order = row(afterGenes);
 out.added_metabolites = sort_cellstr(addedMets);
 out.added_genes = sort_cellstr(setdiff(afterGenes, beforeGenes));
 out.added_detail = added_detail(model, added);

@@ -16,8 +16,19 @@ from raven_toolbox.tasks import parse_task_list
 
 
 def run(ctx):
-    tasks = parse_task_list(ctx["inputs"]["task_file"])
+    inputs = ctx["inputs"]
+    result = _parse(inputs["task_file"])
+    result["edge_cases"] = {str(name): _parse(inputs[str(name)]) for name in inputs["edge_cases"]}
+    return result
+
+
+def _parse(path):
+    try:
+        tasks = parse_task_list(path)
+    except Exception:  # noqa: BLE001 - any refusal counts; the messages differ by design
+        return {"error": True}
     return {
+        "error": False,
         "n_tasks": len(tasks),
         "tasks": [_task_record(task) for task in tasks],
     }
