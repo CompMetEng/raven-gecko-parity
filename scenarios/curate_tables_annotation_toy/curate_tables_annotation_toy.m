@@ -62,8 +62,8 @@ end
 
 try
     evalc('newModel = curateModelFromTables(model, metsInfo, args{:});');
-catch
-    results = struct('error', true);
+catch err
+    results = struct('error', true, 'error_class', error_class(err.message));
     return
 end
 
@@ -143,5 +143,19 @@ if iscell(value)
     out = value(:)';
 else
     out = num2cell(value(:)');
+end
+end
+
+
+function kind = error_class(message)
+% Kind of table error, from the words both sides use in their messages.
+words = {'finite whole number', 'charge'; '0, 1, true or false', 'rev'; 'at least 1', 'rxn_index'; ...
+    'coefficient', 'coefficient'; 'is not a number', 'not_a_number'};
+kind = 'other';
+for k = 1:size(words, 1)
+    if contains(message, words{k, 1})
+        kind = words{k, 2};
+        return
+    end
 end
 end

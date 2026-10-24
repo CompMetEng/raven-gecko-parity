@@ -411,14 +411,19 @@ entries:
       evaluated. True and false in any case are 1 and 0, an empty cell is not given, a plain decimal number
       (digits with an optional sign, decimal point and exponent), Inf and NaN (with an optional sign) are numbers,
       and any other text (abc, NA, None, 1,5, 0x10, 1d3, Infinity, non-ASCII digits) raises (RAVEN:badInput,
-      ValueError), for a column cell of a row that would otherwise be ignored as well. Both sides trim only the
-      characters that strtrim removes (space, tab, newline, carriage return, vertical tab, form feed, NUL), so a
-      non-breaking space is text. A bound, rev, charge or confidence score cell reading NaN is not given on both
+      ValueError), for a column cell of a row that would otherwise be ignored as well. Both sides trim a cell as MATLAB R2024b strtrim does
+      (code points 9 to 13, 28 to 32, 5760, 8192 to 8198, 8200 to 8202, 8232, 8233, 8287 and 12288), after dropping the
+      backspaces at its start as textscan does; NUL, the non-breaking space and the next line character stay in the text. The
+      scenario compares both sides on a leading and trailing space, an ideographic space, a file separator, a backspace, a
+      NUL, a non-breaking space, a next line character, a thin space and a figure space around a charge, and on a formula
+      cell with only an ideographic space. A bound, rev, charge or confidence score cell reading NaN is not given on both
       sides; a NaN charge or score is treated like an empty one (0 when the column has a value in another row, or
-      the stored value with overwriteWithEmpty false). RAVEN stores a charge that is not a whole number (0.5, 2.5)
-      or is infinite as read, whereas Python rounds a charge to a whole number (half to even) and raises
-      ValueError for Inf; no scenario covers these cases. RAVEN accepts an empty or NaN coefficient (what the
-      model receives was not checked), and Python raises ValueError. RAVEN sets the rev field of an existing
+      the stored value with overwriteWithEmpty false). A charge must be a finite whole number on both sides (2, -3,
+      2.0 and 2e0 are accepted; 0.5, 2.5 and Inf raise RAVEN:badInput and ValueError, and nothing is rounded). A rev
+      cell must be 0, 1, true or false on both sides (2, 0.5, Inf and -1 raise; an empty or NaN cell is not given),
+      although Python does not otherwise use the value. An rxnIdx cell must be a finite whole number of at least 1 on both
+      sides (1.5, Inf, 0 and -1 raise; an empty or NaN cell keeps its meaning). A row of the rxnsCoeffs table without any
+      content is ignored, and a row with content needs a coefficient (RAVEN:badInput, ValueError). RAVEN sets the rev field of an existing
       reaction from the rev column; Python checks the column and derives reversibility from the bounds, so the
       scenario compares bounds and not rev. curate_tables_annotation_toy compares these cases and gives MATCH.
   - matlab: defaultCompartmentMap
@@ -668,13 +673,12 @@ entries:
       group; pick the right counterpart. init_output_model_smallyeast extracts a model from smallYeast after
       prepINITModel with tasks; the 26 reactions, their bounds and equations MATCH (see prepINITModel for the kept
       tasks). With the tasks of task_checking_smallyeast the MILP is infeasible on both sides for GLC_AER and
-      GLC_ANA alone. ftinit_task_metabolites_toy gives DIFFER on the metabolite list of the extracted model, and
-      agrees on the reactions and the kept tasks. The reference model keeps a metabolite that a task names (U)
-      although the first simplification removed its only reaction. RAVEN builds the output with
-      removeReactions(refModel, rxns, true, true), which also removes every metabolite without a reaction, U
-      included. ftinit removes the reactions with cobra's remove_orphans, which removes only the metabolites that
-      the removal leaves without a reaction, so U stays in the Python output. A metabolite that tasks name and
-      whose reactions the extraction removes (T) is removed on both sides.
+      GLC_ANA alone. The reference model keeps a metabolite that a task names (U) although the first
+      simplification removed its only reaction. RAVEN builds the output with removeReactions(refModel, rxns, true,
+      true), which removes every metabolite without a reaction, U included, and ftinit does the same after the
+      reactions have been removed and the tasks gap-filled. A metabolite that tasks name and whose reactions the
+      extraction removes (T) is removed on both sides too. ftinit_task_metabolites_toy compares the metabolites,
+      reactions and kept tasks of the extracted model and gives MATCH.
   - matlab: ftINITFillGaps
     status: subsumed
     reason: Single-task variant. migration.md paired it with fill_tasks, but ftINIT.m actually calls fitTasks

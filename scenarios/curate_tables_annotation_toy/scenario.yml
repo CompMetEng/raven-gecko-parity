@@ -10,8 +10,11 @@ description: >-
   null or None (kept as text), and a rev column written as true and false. Bound cells are NaN (not given), true or
   false in any case (read as 1 and 0), a plain decimal number such as .5 or 1e3, or Inf; a cell that is not a number (a bound, a rev, a charge,
   a confidence score or a coefficient, including text with a comma, a hexadecimal number, the word Infinity and a
-  non-ASCII digit) makes both sides stop with an error, and a charge cell reading NaN
-  counts as not given. A cell with only blanks counts as empty in both modes. The curated content is compared by
+  non-ASCII digit) makes both sides stop with an error. A charge must be a finite whole number (2.0 and 2e0 are
+  accepted; 0.5 and Inf stop both sides), a rev cell must be 0, 1, true or false (2 and 0.5 stop both sides),
+  an rxnIdx cell must be a finite whole number of at least 1 (1.5 and 0 stop both sides), and a charge cell reading
+  NaN counts as not given. A cell with only blanks counts as empty in both modes. An error case records the kind of the error (charge, rev, rxn_index, coefficient, not_a_number or other), taken
+  from the words of the message, so that two different errors do not match each other. The curated content is compared by
   name; it includes the bounds of the reactions but not their rev field, which Python derives from the bounds.
 
 entries:
@@ -40,7 +43,26 @@ inputs:
     - {name: charge_hexadecimal, mets: mets_hex_charge.tsv, genes: none, rxns: none, coeffs: none}
     - {name: score_not_a_number, mets: none, genes: none, rxns: rxns_text_score.tsv, coeffs: rxns_one_coeffs.tsv}
     - {name: charge_not_a_number, mets: mets_text_charge.tsv, genes: none, rxns: none, coeffs: none}
+    - {name: charge_fractional, mets: mets_fractional_charge.tsv, genes: none, rxns: none, coeffs: none}
+    - {name: charge_infinite, mets: mets_infinite_charge.tsv, genes: none, rxns: none, coeffs: none}
+    - {name: charge_whole_notations, mets: mets_whole_charge.tsv, genes: none, rxns: none, coeffs: none}
+    - {name: rev_two, mets: none, genes: none, rxns: rxns_rev_two.tsv, coeffs: rxns_bad_rev_coeffs.tsv}
+    - {name: rev_half, mets: none, genes: none, rxns: rxns_rev_half.tsv, coeffs: rxns_bad_rev_coeffs.tsv}
+    - {name: rxn_index_fractional, mets: none, genes: none, rxns: rxns_idx_half.tsv, coeffs: rxns_bad_rev_coeffs.tsv}
+    - {name: rxn_index_zero, mets: none, genes: none, rxns: rxns_idx_zero.tsv, coeffs: rxns_bad_rev_coeffs.tsv}
     - {name: charge_nan_not_given, mets: mets_nan_charge.tsv, genes: none, rxns: none, coeffs: none}
     - {name: charge_nan_not_given_kept, mets: mets_nan_charge.tsv, genes: none, rxns: none, coeffs: none, overwrite_with_empty: false}
+    - {name: trim_leading_space, mets: mets_trim_leading_space.tsv, genes: none, rxns: none, coeffs: none}
+    - {name: trim_trailing_space, mets: mets_trim_trailing_space.tsv, genes: none, rxns: none, coeffs: none}
+    - {name: trim_ideographic_leading, mets: mets_trim_ideographic_leading.tsv, genes: none, rxns: none, coeffs: none}
+    - {name: trim_fs_leading, mets: mets_trim_fs_leading.tsv, genes: none, rxns: none, coeffs: none}
+    - {name: trim_backspace_leading, mets: mets_trim_backspace_leading.tsv, genes: none, rxns: none, coeffs: none}
+    - {name: trim_nul_trailing, mets: mets_trim_nul_trailing.tsv, genes: none, rxns: none, coeffs: none}
+    - {name: trim_nbsp_leading, mets: mets_trim_nbsp_leading.tsv, genes: none, rxns: none, coeffs: none}
+    - {name: trim_nel_leading, mets: mets_trim_nel_leading.tsv, genes: none, rxns: none, coeffs: none}
+    - {name: trim_thin_space_leading, mets: mets_trim_thin_space_leading.tsv, genes: none, rxns: none, coeffs: none}
+    - {name: trim_figure_space_leading, mets: mets_trim_figure_space_leading.tsv, genes: none, rxns: none, coeffs: none}
+    - {name: trim_ideographic_formula, mets: mets_trim_ideographic_formula.tsv, genes: none, rxns: none, coeffs: none}
+    - {name: trim_ideographic_formula_kept, mets: mets_trim_ideographic_formula.tsv, genes: none, rxns: none, coeffs: none, overwrite_with_empty: false}
     - {name: blank_miriam_cell, mets: mets_blank_cell.tsv, genes: none, rxns: none, coeffs: none}
     - {name: blank_miriam_cell_kept, mets: mets_blank_cell.tsv, genes: none, rxns: none, coeffs: none, overwrite_with_empty: false}

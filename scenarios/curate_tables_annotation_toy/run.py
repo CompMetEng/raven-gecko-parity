@@ -42,6 +42,16 @@ def build_model():
     return model
 
 
+def error_class(message):
+    """Kind of table error, from the words both sides use in their messages."""
+    for words, kind in (("finite whole number", "charge"), ("0, 1, true or false", "rev"),
+                        ("at least 1", "rxn_index"), ("coefficient", "coefficient"),
+                        ("is not a number", "not_a_number")):
+        if words in message:
+            return kind
+    return "other"
+
+
 def run(ctx):
     inputs = ctx["inputs"]
     return {str(case["name"]): curate(inputs, case) for case in inputs["cases"]}
@@ -66,8 +76,8 @@ def curate(inputs, case):
             rxn_id_prefix=str(inputs["rxn_prefix"]),
             overwrite_with_empty=bool(case.get("overwrite_with_empty", True)),
         )
-    except Exception:
-        return {"error": True}
+    except Exception as exc:
+        return {"error": True, "error_class": error_class(str(exc))}
 
     def bound(value):
         return "Inf" if value == float("inf") else "-Inf" if value == float("-inf") else float(value)
