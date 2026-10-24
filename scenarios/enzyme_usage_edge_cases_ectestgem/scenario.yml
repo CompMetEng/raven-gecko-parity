@@ -53,6 +53,6 @@ tolerance:
 #   tied_bottlenecks: with P4 and P5 both at their caps the LP has no unique dual. Python ranks
 #     P5 first (shadow price -14.4) and MATLAB P4 first (-1.35), so the ranking follows the
 #     dual the solver returns for a degenerate vertex.
-#   control_coeffs_pool_binding: Python reads the shadow price of prot_<id> and gives P4 and P5
-#     the same coefficient (1.234) when the protein pool binds; MATLAB perturbs the usage bound,
-#     which does not bind, and returns 0 for both.
+#   control_coeffs_pool_binding agrees: with the protein pool binding and no enzyme bound
+#     binding, both sides give P4 and P5 the coefficient 0. geckopy reads the reduced cost of each
+#     usage reaction's forward variable; MATLAB perturbs the usage bound.

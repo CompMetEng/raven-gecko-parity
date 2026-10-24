@@ -462,9 +462,13 @@ entries:
     scenarios:
       - enzyme_usage_ectestgem
       - enzyme_usage_edge_cases_ectestgem
-    notes: 'geckopy''s own MATLAB-COMPAT note documents a real algorithmic difference: MATLAB always runs a 2x
-      finite-difference probe, geckopy''s default instead reads the LP shadow price of the binding prot_<id>
-      constraint, which can differ from the probe by up to 4x at an LP active-set breakpoint.'
+    notes: >-
+      MATLAB raises each usage bound by a factor (default 2) and records the growth change per unit of bound.
+      geckopy reads the reduced cost of each usage reaction's forward variable from one LP solve and keeps it where
+      a 0.01 percent rise of the bound raises the optimum, so it reports the local derivative. Both give 0 for an
+      enzyme whose own bound does not bind, also while the protein pool binds (enzyme_usage_edge_cases_ectestgem).
+      They differ where the probe crosses an active-set breakpoint, by up to 4x. Where the solver exposes no
+      variable duals, or returns NaN, geckopy runs the finite-difference loop.
   - matlab: getECfromDatabase
     python: geckopy.fill_eccodes_from_database
     status: parity

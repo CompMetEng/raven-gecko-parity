@@ -422,8 +422,7 @@ so it can return fewer rows than requested. Both sides agree exactly on every en
 carry flux. [raven-gecko-parity #18].
 
 `getConcControlCoeffs` carries its own documented algorithmic difference (MATLAB's 2x
-finite-difference probe vs. geckopy's default LP-shadow-price read, see geckopy's own
-MATLAB-COMPAT note) that this fixture's one cleanly-binding enzyme does not expose --- both
+finite-difference probe vs. geckopy's default read of the reduced cost of each usage bound) that this fixture's one cleanly-binding enzyme does not expose --- both
 methods agree here because nothing else becomes binding within the probe's 2x range. Recorded
 on the ledger row rather than re-demonstrated by a second fixture.
 
@@ -458,7 +457,7 @@ all. Confirmed by direct execution: both the `'loose'` and percentage modes matc
 deriving a new one, since it already has exactly one unambiguous growth-limiting enzyme (P5) ---
 precisely what the "find the worst enzyme by control coefficient, relax it, repeat" loop needs
 to run a short, deterministic trajectory rather than risk depending on `getConcControlCoeffs`'s
-own separately-documented finite-difference-vs-shadow-price divergence. It didn't: both sides
+own finite-difference-vs-reduced-cost difference. It didn't: both sides
 flex exactly one protein (P5), the same number of times (1), from the same starting
 concentration. The divergence that did turn up is downstream of the loop, in the refinement
 pass that runs after it: MATLAB's refinement solve pins growth into a narrow band around
