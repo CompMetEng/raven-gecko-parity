@@ -10,10 +10,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
-
 from parity.cli import main
-from parity.config import ConfigError, load_config
+from parity.config import load_config
 
 CONFIG = """
 [pairs.demo]
