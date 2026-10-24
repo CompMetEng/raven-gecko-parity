@@ -441,16 +441,20 @@ entries:
       (RAVEN:badInput, ValueError). A reaction table that holds only a header is empty: nothing happens when both are empty,
       and next to coefficient rows both sides stop. A reaction of one table without a row in the other raises. Two
       coefficient rows of one reaction for the same metabolite add up. Several rxnsInfo rows may update one reaction; they
-      are applied one after the other. A metabolite row without a compartment raises. Gene rules: the gene rule of a new
-      reaction may name only genes of the model or of the genes table; RAVEN stops in addRxns (Not all genes were found in
-      model.genes) and Python raises ValueError before it changes anything. G1 and and ( on a new reaction stops both sides,
-      for different reasons, so the scenario does not compare the kind of the error. The rule (G1 or G2 is stored as text by
-      RAVEN when the genes exist and refused by Python, which raises ValueError for every malformed rule; the rule of an
-      existing reaction may name a gene the model does not have. Differences that remain: Python does not check that a
-      compartment exists in the model, takes a DataFrame without an rxnIdx column (the tables are then matched on the name),
-      and a lower bound above the upper bound is written by RAVEN, also when two rows leave one reaction with such bounds,
-      and raises ValueError in Python before anything is changed, because a cobra reaction cannot hold it. A gene listed
-      twice in the genes table is added twice by RAVEN and raises ValueError in Python. Python checks every table before it
+      are applied one after the other. A metabolite row without a compartment raises. Gene rules: a grRules cell must be
+      a well-formed gene rule in the grammar of parseGrRule (genes joined by and or or in any case, or by &, &&, | and ||,
+      with balanced parentheses); a rule with an operator that lacks an operand, empty parentheses or two genes without an
+      operator between them raises (RAVEN:badInput, ValueError) before anything is changed. The scenario compares 52 rules,
+      valid and malformed, on both sides. RAVEN writes a valid rule in its standard format before it applies it, and Python
+      rewrites the operator spellings that cobra does not read (And, &&, ||) as and and or. The gene rule of a new reaction
+      may name only genes of the model or of the genes table; RAVEN stops in addRxns (Not all genes were found in
+      model.genes) and Python raises ValueError; the rule of an existing reaction may name a gene the model does not have.
+      A gene id that the genes table lists more than once raises on both sides (RAVEN:badInput, ValueError), whether the
+      model has the gene or not. A lower bound above the upper bound is written by RAVEN as given, also when two rows
+      leave one reaction with such bounds, and solveLP rejects the model when it runs (Invalid set of bounds for
+      reaction(s): ...); Python raises ValueError before anything is changed, because a cobra reaction cannot hold it.
+      Differences that remain: Python does not check that a compartment exists in the model and takes a DataFrame without
+      an rxnIdx column (the tables are then matched on the name). Python checks every table before it
       changes the model; RAVEN builds a new model, so a failing call leaves its input unchanged as well. RAVEN sets the rev
       field of an existing reaction from the rev column; Python derives reversibility from the bounds, so the scenarios
       compare bounds and not rev.

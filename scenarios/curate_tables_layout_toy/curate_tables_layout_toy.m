@@ -12,6 +12,19 @@ results = struct();
 for k = 1:numel(cases)
     results.(char(cases{k}.name)) = curate(inputs, cases{k});
 end
+% One new reaction per gene rule, written to a table of its own; the model holds every gene the rules name.
+rules = as_list(inputs.gene_rules);
+scratch = tempname;
+mkdir(scratch);
+cleanup = onCleanup(@() rmdir(scratch, 's'));
+for n = 1:numel(rules)
+    rxnsFile = fullfile(scratch, sprintf('rxns_%d.tsv', n));
+    fid = fopen(rxnsFile, 'w');
+    fprintf(fid, 'rxnIdx\trxnNames\tgrRules\n1\tfresh\t%s\n', char(rules{n}));
+    fclose(fid);
+    c = struct('name', sprintf('gene_rule_%02d', n), 'mets', 'none', 'rxns', rxnsFile, 'coeffs', 'coeffs_fresh.tsv');
+    results.(c.name) = curate(inputs, c);
+end
 end
 
 
@@ -33,16 +46,21 @@ model.b = zeros(2, 1);
 model.comps = {'c'};
 model.compNames = {'c'};
 model.metComps = [1; 1];
-model.genes = {'G1'};
+modelGenes = as_list(inputs.model_genes);
+model.genes = cellfun(@char, modelGenes(:), 'UniformOutput', false);
 model.grRules = {''; ''};
-model.rxnGeneMat = sparse(2, 1);
+model.rxnGeneMat = sparse(2, numel(modelGenes));
 
 folder = char(inputs.tables_dir);
 args = {};
-names = {'rxns', 'rxnsInfo'; 'coeffs', 'rxnsCoeffs'};
+names = {'rxns', 'rxnsInfo'; 'coeffs', 'rxnsCoeffs'; 'genes', 'genesInfo'};
 for q = 1:size(names, 1)
     if isfield(c, names{q, 1}) && ~strcmp(char(c.(names{q, 1})), 'none')
-        args = [args, {names{q, 2}, fullfile(folder, char(c.(names{q, 1})))}]; %#ok<AGROW>
+        file = char(c.(names{q, 1}));
+        if ~(numel(file) > 0 && (file(1) == '/' || (numel(file) > 1 && file(2) == ':')))
+            file = fullfile(folder, file);
+        end
+        args = [args, {names{q, 2}, file}]; %#ok<AGROW>
     end
 end
 metsInfo = 'none';
@@ -88,14 +106,16 @@ for j = 1:nR
     for q = 1:numel(rows)
         stoich{q} = struct('metabolite', labels{rows(q)}, 'coefficient', full(double(newModel.S(rows(q), j))));
     end
+    ruleGenes = sort(newModel.genes(newModel.rxnGeneMat(j, :) ~= 0));
     reactions{j} = struct('name', newModel.rxnNames{j}, 'lb', bound(newModel.lb(j)), 'ub', bound(newModel.ub(j)), ...
-        'stoichiometry', {stoich});
+        'genes', {reshape(ruleGenes, 1, [])}, 'stoichiometry', {stoich});
     rxnNames{j} = newModel.rxnNames{j};
 end
 [~, o] = sort(rxnNames);
 reactions = reactions(o);
 
-results = struct('error', false, 'metabolites', {metabolites}, 'reactions', {reactions});
+results = struct('error', false, 'metabolites', {metabolites}, 'reactions', {reactions}, ...
+    'model_genes', {reshape(sort(newModel.genes), 1, [])});
 end
 
 
@@ -126,7 +146,8 @@ function kind = error_class(message)
 words = {'finite whole number', 'charge'; '0, 1, true or false', 'rev'; 'rxnIdx is empty', 'rxn_index_missing'; ...
     'at least 1', 'rxn_index'; 'no matching row', 'reaction_not_matched'; 'not matched', 'reaction_not_matched'; ...
     'has no compartment', 'compartment'; 'must match model.comps', 'compartment'; ...
-    'cells but the header has', 'extra_cell'; 'Not all genes', 'unknown_gene'; 'coefficient', 'coefficient'; ...
+    'cells but the header has', 'extra_cell'; 'not a valid gene rule', 'gene_rule'; 'more than once', 'repeated_gene'; ...
+    'Not all genes', 'unknown_gene'; 'coefficient', 'coefficient'; ...
     'is not a number', 'not_a_number'};
 kind = 'other';
 for k = 1:size(words, 1)

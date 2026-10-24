@@ -8,6 +8,7 @@ quotes, blank lines), rows without content, repeated coefficient rows, reaction 
 notations, reactions that only one of the two reaction tables has, and cells that are refused.
 """
 
+import tempfile
 from pathlib import Path
 
 import cobra
@@ -15,7 +16,7 @@ import cobra
 from raven_toolbox.curation import batch_curate_from_tsv
 
 
-def build_model():
+def build_model(gene_ids=("G1",)):
     model = cobra.Model("toy")
     model.compartments = {"c": "c"}
     x = cobra.Metabolite("x_c", name="x", compartment="c", formula="CH4", charge=1)
@@ -30,7 +31,8 @@ def build_model():
     model.add_reactions([second])
     second.add_metabolites({x: 1, y: -1})
     second.bounds = (0, 1000)
-    model.genes.append(cobra.Gene("G1"))
+    for gene_id in gene_ids:
+        model.genes.append(cobra.Gene(str(gene_id)))
     return model
 
 
@@ -44,6 +46,8 @@ def error_class(message):
         (("no matching row", "not matched"), "reaction_not_matched"),
         (("has no compartment", "must match model.comps"), "compartment"),
         (("cells but the header has",), "extra_cell"),
+        (("not a valid gene rule",), "gene_rule"),
+        (("more than once",), "repeated_gene"),
         (("Not all genes", "not in the model or in genes_df"), "unknown_gene"),
         (("coefficient",), "coefficient"),
         (("is not a number",), "not_a_number"),
@@ -55,7 +59,15 @@ def error_class(message):
 
 def run(ctx):
     inputs = ctx["inputs"]
-    return {str(case["name"]): curate(inputs, case) for case in inputs["cases"]}
+    results = {str(case["name"]): curate(inputs, case) for case in inputs["cases"]}
+    # One new reaction per gene rule, written to a table of its own; the model holds every gene the rules name.
+    with tempfile.TemporaryDirectory() as scratch:
+        for number, rule in enumerate(inputs["gene_rules"], start=1):
+            rxns = Path(scratch) / f"rxns_{number}.tsv"
+            rxns.write_text(f"rxnIdx\trxnNames\tgrRules\n1\tfresh\t{rule}\n", encoding="utf-8")
+            case = {"name": f"gene_rule_{number:02d}", "mets": "none", "rxns": str(rxns), "coeffs": "coeffs_fresh.tsv"}
+            results[case["name"]] = curate(inputs, case)
+    return results
 
 
 def curate(inputs, case):
@@ -63,13 +75,16 @@ def curate(inputs, case):
 
     def table(key):
         name = str(case.get(key, "none"))
-        return None if name == "none" else folder / name
+        if name == "none":
+            return None
+        return Path(name) if Path(name).is_absolute() else folder / name
 
-    model = build_model()
+    model = build_model(inputs["model_genes"])
     try:
         batch_curate_from_tsv(
             model,
             mets_tsv=table("mets"),
+            genes_tsv=table("genes"),
             rxns_tsv=table("rxns"),
             rxns_coeffs_tsv=table("coeffs"),
             met_id_prefix=str(inputs["met_prefix"]),
@@ -98,6 +113,7 @@ def curate(inputs, case):
                 "name": str(r.name or ""),
                 "lb": bound(r.lower_bound),
                 "ub": bound(r.upper_bound),
+                "genes": sorted(g.id for g in r.genes),
                 "stoichiometry": sorted(
                     ({"metabolite": f"{m.name}[{m.compartment}]", "coefficient": float(c)}
                      for m, c in r.metabolites.items()),
@@ -108,4 +124,9 @@ def curate(inputs, case):
         ),
         key=lambda r: r["name"],
     )
-    return {"error": False, "metabolites": metabolites, "reactions": reactions}
+    return {
+        "error": False,
+        "metabolites": metabolites,
+        "reactions": reactions,
+        "model_genes": sorted(g.id for g in model.genes),
+    }
