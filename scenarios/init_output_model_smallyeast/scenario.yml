@@ -8,7 +8,7 @@ description: >-
   reactions of the reference model differ from the template in bounds or stoichiometry, and the bounds and
   equations of MDH1, PGK and ENO in the extracted model, which show whether the extracted model is built from
   the template or from the oriented and tightened model. A second task list in which two tasks share an id
-  (one feasible, one infeasible) is refused by both sides.
+  (one feasible, one infeasible) is accepted by both sides, and the one that can be performed stays.
 
 entries:
   - prepINITModel

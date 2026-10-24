@@ -6,7 +6,7 @@ function results = init_output_model_smallyeast(ctx)
 % sorted gene order. The result records the tasks the prepared data keeps, the merged essential reactions,
 % the number of reference-model reactions whose bounds or stoichiometry differ from the template, and the
 % bounds and equation of three reactions in the extracted model, and the number of genes of the reference
-% model and the extracted model. A task list with a repeated task id is refused.
+% model and the extracted model. A task list in which two tasks share an id keeps the one that can be performed.
 
 inputs = ctx.inputs;
 previousSolver = getpref('RAVEN', 'solver', '');
@@ -21,11 +21,11 @@ for j = 1:numel(templateRxns)
     template{j} = struct('lb', model.lb(j), 'ub', model.ub(j), 'eq', {equation(model, j)});
 end
 
-duplicateError = false;
-try
-    evalc('prepINITModel(model, parseTaskList(char(inputs.tasks_duplicate)), ''extComp'', char(inputs.ext_comp));');
-catch
-    duplicateError = true;
+% A task list in which two tasks share an id: the infeasible one is removed by its position.
+evalc('repeatedData = prepINITModel(model, parseTaskList(char(inputs.tasks_duplicate)), ''extComp'', char(inputs.ext_comp));');
+repeatedKept = cell(1, numel(repeatedData.taskStruct));
+for q = 1:numel(repeatedData.taskStruct)
+    repeatedKept{q} = struct('id', char(repeatedData.taskStruct(q).id), 'description', char(repeatedData.taskStruct(q).description));
 end
 
 tasks = parseTaskList(char(inputs.tasks));
@@ -80,7 +80,7 @@ results = struct();
 results.n_tasks_parsed = numel(tasks);
 results.kept_tasks = kept;
 results.essential_reactions = sort_cellstr(prepData.essentialRxns);
-results.duplicate_task_ids_refused = duplicateError;
+results.repeated_id_kept_tasks = repeatedKept;
 results.n_ref_reactions = numel(ref.rxns);
 results.n_ref_genes = numel(ref.genes);
 results.n_output_genes = numel(res.genes);

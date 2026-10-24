@@ -5,7 +5,7 @@ prepared. ``ftinit`` then extracts a model from gene levels that alternate betwe
 in sorted gene order. The result records the tasks the prepared data keeps, the merged essential
 reactions, the number of reference-model reactions whose bounds or stoichiometry differ from the template,
 and the bounds and equation of three reactions in the extracted model, and the number of genes of the
-reference model and the extracted model. A task list with a repeated task id is refused.
+reference model and the extracted model. A task list in which two tasks share an id keeps the one that can be performed.
 """
 
 import cobra
@@ -33,11 +33,8 @@ def run(ctx):
         model.reactions.get_by_id(str(rid)).upper_bound = float(inputs["open_ub"])
     template = {r.id: (float(r.lower_bound), float(r.upper_bound), equation(r)) for r in model.reactions}
 
-    try:
-        prep_init_model(model, parse_task_list(inputs["tasks_duplicate"]), ext_comp=str(inputs["ext_comp"]))
-        duplicate_error = False
-    except Exception:
-        duplicate_error = True
+    # A task list in which two tasks share an id: the infeasible one is removed by its position.
+    repeated = prep_init_model(model, parse_task_list(inputs["tasks_duplicate"]), ext_comp=str(inputs["ext_comp"]))
 
     tasks = parse_task_list(inputs["tasks"])
     prep = prep_init_model(model, tasks, ext_comp=str(inputs["ext_comp"]))
@@ -80,7 +77,7 @@ def run(ctx):
         "n_tasks_parsed": len(tasks),
         "kept_tasks": [{"id": str(t.id), "description": str(t.description)} for t in prep.tasks],
         "essential_reactions": sorted(prep.essential_rxns),
-        "duplicate_task_ids_refused": duplicate_error,
+        "repeated_id_kept_tasks": [{"id": str(t.id), "description": str(t.description)} for t in repeated.tasks],
         "n_ref_reactions": len(prep.ref_model.reactions),
         "n_ref_genes": len(prep.ref_model.genes),
         "n_output_genes": len(out.genes),

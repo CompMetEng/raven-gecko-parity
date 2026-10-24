@@ -1187,7 +1187,7 @@ entries:
     scenarios:
       - task_list_parsing
       - task_list_edge_cases
-    notes: 'from migration.md. check_tasks reuses one model across the task list (no per-task model copy) ---
+    notes: 'from migration.md. Task ids may repeat (Human-GEM uses category codes as ids), and each group of rows that starts with a non-empty id is one task. check_tasks reuses one model across the task list (no per-task model copy) ---
       at genome scale ~12x faster than the copy-per-task implementation it replaced.
       Confirmed on MATLAB (RAVEN 79a7d8c, cluster batch 2026-10-21) - three differences in edge cases. SHOULD
       FAIL and PRINT FLUX set to 0 count as set in RAVEN (only an empty cell is false), and as false in
@@ -1227,8 +1227,9 @@ entries:
       group; pick the right counterpart. init_output_model_smallyeast runs smallYeast with a task list that has an
       infeasible task. The reference model keeps the template's bounds and stoichiometry, and the kept tasks, the
       extracted model, its essential reactions, its gene count and the bounds and equations of MDH1, PGK and ENO
-      MATCH on both sides. A task list in which two tasks share an id is refused by both sides (RAVEN:badInput in
-      RAVEN, ValueError in Python). After the first simplification both sides remove every gene that no reaction
+      MATCH on both sides. A task list in which two tasks share an id is accepted by both sides, and the task that cannot be
+      performed is removed by its position, so the task with the same id that can be performed stays
+      (repeated_id_kept_tasks). Human-GEM's essential-task list uses its ID column as a category code, so ids repeat there. After the first simplification both sides remove every gene that no reaction
       uses (the removeReactions call with removeUnusedGenes in prepINITModel, prep_init_model). RAVEN removes
       reactions in the first simplification but keeps every metabolite through the task check, and removes the
       unused metabolites afterwards, except for each name[compartment] that a task names (failed tasks included)
