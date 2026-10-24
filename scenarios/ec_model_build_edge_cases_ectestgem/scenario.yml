@@ -16,14 +16,9 @@ description: >-
 # The cases and what each side does with them:
 #   baseline            no edit; both sides agree.
 #   partial_complex     R3 is catalysed by 'G4 and GX', GX being in neither uniprot.tsv nor
-#                       kegg.tsv. MATLAB leaves the R3 row of ec.rxnEnzMat empty, so the
-#                       reaction stays unconstrained (makeEcModel.m tests a vector in an
-#                       `if`); geckopy couples R3 to P4, the enzyme of the matched subunit,
-#                       and documents that as intended.
-#   nested_gpr          R2 is catalysed by 'G1 and (G2 or G3)'. The full model agrees. In the
-#                       light model MATLAB strips brackets and splits on ' or ', so the
-#                       second clause is P3 alone; geckopy expands to a DNF and couples the
-#                       second clause to P1 and P3.
+#                       kegg.tsv. Both sides couple R3 to P4, the enzyme of the matched subunit.
+#   nested_gpr          R2 is catalysed by 'G1 and (G2 or G3)'. Both sides expand it to the
+#                       isozymes {G1,G2} and {G1,G3}.
 #   neg_bounds          R3 has bounds [-10, -1]. MATLAB leaves it unsplit; geckopy splits
 #                       it, the forward copy gets bounds [0, -1] and the model refuses it
 #                       (ValueError).

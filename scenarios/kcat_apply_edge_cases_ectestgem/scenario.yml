@@ -20,8 +20,7 @@ entries:
 #   applyKcatConstraints, light model: MATLAB takes the reaction (cobra id) and lets every isozyme
 #     compete for the cheapest cost; Python takes ec rows and lets only the named rows compete,
 #     so re-applying one tuned isozyme writes its cost even when another isozyme is cheaper.
-#     MATLAB gives an isozyme row with a kcat but no enzymes a cost of 0 (it wins the minimum and
-#     leaves the reaction unconstrained); Python skips such a row. MATLAB accepts cobra ids and
+#     Both sides skip an isozyme row with a kcat but no enzymes. MATLAB accepts cobra ids and
 #     rejects ec ids in updateRxns; Python is the other way round.
 #   applyKcatConstraints, full model: with every kcat 0 MATLAB returns before clearing, so the old
 #     coefficients stay; Python clears them. An empty update list means all reactions in MATLAB

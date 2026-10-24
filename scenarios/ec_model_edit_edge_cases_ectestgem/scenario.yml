@@ -9,12 +9,10 @@ description: >-
 # is reported as `raised: true` with an empty result; which exception it was is not compared.
 #
 # add_new_rxns: a new reaction RNEW 'm1[c] <=> e2[e]' with
-#   nested_gpr      the rule 'GNEW1 and (GNEW2 or GNEW3)' and three new enzymes. MATLAB splits
-#                   the rule on 'or' and brackets, so the second clause is GNEW3 alone;
-#                   geckopy expands to a DNF and couples the second clause to GNEW1 and
-#                   GNEW3.
-#   gene_with_or    the rule 'GNEW1 or orfX' (the gene id orfX contains 'or'). MATLAB splits
-#                   the rule on the text 'or' and raises; geckopy adds the reaction.
+#   nested_gpr      the rule 'GNEW1 and (GNEW2 or GNEW3)' and three new enzymes. Both sides
+#                   expand it to the isozymes 'GNEW1 and GNEW2' and 'GNEW1 and GNEW3'.
+#   gene_with_or    the rule 'GNEW1 or orfX' (the gene id orfX contains 'or'). Both sides
+#                   read the gene ids as whole words and add the reaction.
 #   no_new_enzymes  the rule 'G1', a gene the model already has an enzyme for, and no new
 #                   enzymes. MATLAB raises; geckopy adds the reaction.
 #
@@ -23,11 +21,9 @@ description: >-
 # synthetic flux per ecModel reaction back to the conventional model, and ecFVA ranges over
 # it with the same kcats as ec_fva_ectestgem. ecFVA needs a solver and starts a parallel pool
 # on the MATLAB side.
-#   id_mid_rev      mapRxnsToConv replaces every '_REV' in the id of a reversed reaction, so
-#                   R_REVX_REV maps to a reaction that does not exist and its flux is lost:
-#                   R_REVX gets the forward flux only (8 against geckopy's forward minus
-#                   reverse, -1). ecFVA raises.
-#   id_mid_exp      mapRxnsToConv and ecFVA raise on MATLAB; geckopy handles the id.
+#   id_mid_rev      both sides strip the suffixes only at the end of an id, so R_REVX_REV
+#                   maps back to R_REVX with its flux subtracted and ecFVA ranges over it.
+#   id_mid_exp      both sides map and range over the reaction R_EXP_1X.
 
 entries:
   - addNewRxnsToEC
