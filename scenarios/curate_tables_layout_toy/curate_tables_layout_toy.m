@@ -33,9 +33,9 @@ model.b = zeros(2, 1);
 model.comps = {'c'};
 model.compNames = {'c'};
 model.metComps = [1; 1];
-model.genes = cell(0, 1);
+model.genes = {'G1'};
 model.grRules = {''; ''};
-model.rxnGeneMat = sparse(2, 0);
+model.rxnGeneMat = sparse(2, 1);
 
 folder = char(inputs.tables_dir);
 args = {};
@@ -126,7 +126,8 @@ function kind = error_class(message)
 words = {'finite whole number', 'charge'; '0, 1, true or false', 'rev'; 'rxnIdx is empty', 'rxn_index_missing'; ...
     'at least 1', 'rxn_index'; 'no matching row', 'reaction_not_matched'; 'not matched', 'reaction_not_matched'; ...
     'has no compartment', 'compartment'; 'must match model.comps', 'compartment'; ...
-    'cells but the header has', 'extra_cell'; 'coefficient', 'coefficient'; 'is not a number', 'not_a_number'};
+    'cells but the header has', 'extra_cell'; 'Not all genes', 'unknown_gene'; 'coefficient', 'coefficient'; ...
+    'is not a number', 'not_a_number'};
 kind = 'other';
 for k = 1:size(words, 1)
     if contains(message, words{k, 1})

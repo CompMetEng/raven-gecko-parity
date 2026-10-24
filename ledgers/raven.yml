@@ -411,31 +411,49 @@ entries:
       are numbers on both sides and nothing is evaluated. An empty cell and NaN (any case, optional sign) are not given; a
       plain decimal number (digits with an optional sign, decimal point and exponent) and Inf (optional sign) are numbers;
       true and false in any case are 1 and 0 in the lb, ub and rev columns only; any other text (abc, NA, 1,5, 0x10, 1d3,
-      Infinity, non-ASCII digits, true in a charge cell) raises (RAVEN:badInput, ValueError), also for a cell of a row that
-      would otherwise be ignored. A charge must be a finite whole number (0.5, 2.5 and Inf raise; nothing is rounded). A rev
+      Infinity, non-ASCII digits, true in a charge cell) raises (RAVEN:badInput, ValueError); a cell of a row that is
+      ignored is not read. A charge must be a finite whole number (0.5, 2.5 and Inf raise; nothing is rounded). A rev
       cell must be 0, 1, true or false, although Python does not otherwise use the value. An rxnIdx must be a finite whole
       number of at least 1. A coefficient must be finite and not 0. Cell trimming: a numeric cell and every blank test use
       the trim of MATLAB R2024b strtrim (code points 9 to 13, 28 to 32, 5760, 8192 to 8198, 8200 to 8202, 8232, 8233, 8287
       and 12288), after the backspaces at the start of the cell are dropped as textscan does; NUL, the non-breaking space
-      and the next line character stay in the text. A table file is read like textscan reads it: the spaces before a cell,
-      also before its opening quote, are dropped from every cell (a space after a cell stays), a quote followed by text
-      reads as the text without the quote, a trailing tab on a row is ignored, a line without text is skipped, and a cell of
-      any length is read. A backspace before a text cell is dropped by RAVEN and kept by Python. Reaction tables: the
-      rxnsInfo and rxnsCoeffs tables are matched on the index and the name, and the index is compared by value (1, 1.0 and
-      1e0 are the same). A row of the rxnsCoeffs table without an index, reaction name, metabolite name and compartment is
-      ignored whatever else it holds; a row of the rxnsInfo table without any value is ignored; any other row needs an
-      rxnIdx, and a coefficient row needs a coefficient (RAVEN:badInput, ValueError). A reaction of one table without a row
-      in the other raises. Two coefficient rows of one reaction for the same metabolite add up. A metabolite row without a
-      compartment raises. A file row with more non-empty cells than the header raises on both sides; the kind of the error
-      differs, so the scenario compares only that an error occurs. Differences that remain. Python does not check that a
-      compartment exists in the model, takes a DataFrame without an rxnIdx column (the tables are then matched on the name)
-      and stores a repeated header under the name with .1 appended, where RAVEN replaces the annotation in the order of the
-      columns. A lower bound above the upper bound is written by RAVEN, also against the stored bound of an existing
-      reaction, and raises ValueError in Python before anything is changed, because a cobra reaction cannot hold it. A
-      malformed gene rule raises ValueError in Python; RAVEN stops for some malformed rules of new reactions (G1 and and ()
-      and stores others as text ((G1 or G2). Python checks every table before it changes the model; RAVEN builds a new
-      model, so a failing call leaves its input unchanged as well. RAVEN sets the rev field of an existing reaction from the
-      rev column; Python derives reversibility from the bounds, so the scenarios compare bounds and not rev.
+      and the next line character stay in the text. The same trim applies to the cells of a numeric column and to the blank
+      test of every cell; the spaces before any cell of a table file are dropped by the reader (see below), and a space
+      after a text cell stays. A table file is read like readCurationTable reads it. The first line is the header, also when
+      it is blank: it is split at the tabs, each name is trimmed and one pair of surrounding double quotes is removed (a
+      name padded inside the quotes keeps its padding in RAVEN, and Python matches it without the padding), and a column
+      with an empty header is ignored. When two columns match one core name (metNames twice, formula and metFormulas, Comps
+      and comps, LB and lb) the first column is used and the others are ignored on both sides. A repeated name of another
+      column gets .1, .2 and so on appended in Python, where RAVEN uses both columns and the later one replaces the
+      annotation. The rest is read as textscan reads it: the spaces before a cell, also before its opening quote, are
+      dropped (a space after a cell stays), a quote followed by text reads as the text without the quote, a trailing tab on
+      a row is ignored, a cell of any length is read, and a NUL stays in the text. A line without text is skipped in Python;
+      RAVEN makes an empty row from a line that holds only a pair of quotes or from a row that ends in two or more tabs, and
+      a blank first line is the header, so both sides stop for it with different messages. A row with more non-empty cells
+      than the header has columns raises in Python; RAVEN wraps the extra cell into a new row, so the metabolite table stops
+      later and a genes table row with an extra cell adds a gene named after the cell. A backspace before a text cell is
+      dropped by RAVEN and kept by Python. Reaction tables: a coefficient row belongs to the reaction with the same index
+      and name in Python; RAVEN builds the stoichiometry from the index alone, so the rxnsInfo rows 1 A and 1 B with
+      coefficient rows for A and for B give two reactions that both take all coefficients of index 1, and Python takes the
+      coefficients by name. The index is compared by value (1, 1.0 and 1e0 are the same). A row of the rxnsCoeffs table
+      without an index, reaction name, metabolite name and compartment is ignored whatever else it holds; a row of the
+      rxnsInfo table without any value is ignored; any other row needs an rxnIdx, and a coefficient row needs a coefficient
+      (RAVEN:badInput, ValueError). A reaction table that holds only a header is empty: nothing happens when both are empty,
+      and next to coefficient rows both sides stop. A reaction of one table without a row in the other raises. Two
+      coefficient rows of one reaction for the same metabolite add up. Several rxnsInfo rows may update one reaction; they
+      are applied one after the other. A metabolite row without a compartment raises. Gene rules: the gene rule of a new
+      reaction may name only genes of the model or of the genes table; RAVEN stops in addRxns (Not all genes were found in
+      model.genes) and Python raises ValueError before it changes anything. G1 and and ( on a new reaction stops both sides,
+      for different reasons, so the scenario does not compare the kind of the error. The rule (G1 or G2 is stored as text by
+      RAVEN when the genes exist and refused by Python, which raises ValueError for every malformed rule; the rule of an
+      existing reaction may name a gene the model does not have. Differences that remain: Python does not check that a
+      compartment exists in the model, takes a DataFrame without an rxnIdx column (the tables are then matched on the name),
+      and a lower bound above the upper bound is written by RAVEN, also when two rows leave one reaction with such bounds,
+      and raises ValueError in Python before anything is changed, because a cobra reaction cannot hold it. A gene listed
+      twice in the genes table is added twice by RAVEN and raises ValueError in Python. Python checks every table before it
+      changes the model; RAVEN builds a new model, so a failing call leaves its input unchanged as well. RAVEN sets the rev
+      field of an existing reaction from the rev column; Python derives reversibility from the bounds, so the scenarios
+      compare bounds and not rev.
   - matlab: defaultCompartmentMap
     python: raven_toolbox.localization.DEFAULT_COMPARTMENT_MAP
     status: parity

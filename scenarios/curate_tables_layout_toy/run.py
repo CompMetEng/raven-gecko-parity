@@ -30,6 +30,7 @@ def build_model():
     model.add_reactions([second])
     second.add_metabolites({x: 1, y: -1})
     second.bounds = (0, 1000)
+    model.genes.append(cobra.Gene("G1"))
     return model
 
 
@@ -43,6 +44,7 @@ def error_class(message):
         (("no matching row", "not matched"), "reaction_not_matched"),
         (("has no compartment", "must match model.comps"), "compartment"),
         (("cells but the header has",), "extra_cell"),
+        (("Not all genes", "not in the model or in genes_df"), "unknown_gene"),
         (("coefficient",), "coefficient"),
         (("is not a number",), "not_a_number"),
     ):
