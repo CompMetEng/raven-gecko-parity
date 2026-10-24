@@ -391,41 +391,51 @@ entries:
       - curate_tables_toy
       - curate_tables_edge_toy
       - curate_tables_annotation_toy
-    notes: Table-driven batch curation. curate_tables_toy compares coefficient rows grouped by rxnIdx and name, RAVEN's
-      header spellings, reactions added without bounds ((-Inf, Inf) on both sides) and new identifiers numbered
-      from the numerically largest existing id, in the width of that id. curate_tables_edge_toy compares headers
-      in other case and alias spellings, new reactions with and without a rev column, empty formula and charge
-      cells for existing metabolites with the default overwriteWithEmpty (the stored formula is cleared and the
-      charge becomes 0) and with overwriteWithEmpty false (stored values stay), an existing reaction whose lb and
-      ub cells are empty (no bound given, so the stored bounds stay), and a new reaction with an empty ub cell
-      (the model's defaultUB, Inf when none is stored); all MATCH. Both sides take the option as
-      overwriteWithEmpty (RAVEN) and overwrite_with_empty (Python), default true. RAVEN accepts a logical or a
-      numeric 0 or 1 and raises RAVEN:badInput for any other value; Python requires a bool or numpy.bool_ and
-      raises TypeError otherwise. A cell with only blanks counts as empty on both sides, in both modes. An empty
-      gene rule, lb or ub cell never changes an existing entity. An empty MIRIAM cell of an existing entity
-      removes that namespace when another existing entity of the table has a value in the column, and a column
-      without a value for any existing entity is not written; with overwriteWithEmpty false the stored annotation
-      stays. A new metabolite or reaction whose charge or confidence score cell is empty takes 0 when the column
-      has a value in another row. Python reads a table file as text, so NA, null and None are text. The lb, ub,
-      rev, charge, confidence score, rxnIdx and coefficient cells are read as numbers on both sides and nothing is
-      evaluated. True and false in any case are 1 and 0, an empty cell is not given, a plain decimal number
-      (digits with an optional sign, decimal point and exponent), Inf and NaN (with an optional sign) are numbers,
-      and any other text (abc, NA, None, 1,5, 0x10, 1d3, Infinity, non-ASCII digits) raises (RAVEN:badInput,
-      ValueError), for a column cell of a row that would otherwise be ignored as well. Both sides trim a cell as MATLAB R2024b strtrim does
-      (code points 9 to 13, 28 to 32, 5760, 8192 to 8198, 8200 to 8202, 8232, 8233, 8287 and 12288), after dropping the
-      backspaces at its start as textscan does; NUL, the non-breaking space and the next line character stay in the text. The
-      scenario compares both sides on a leading and trailing space, an ideographic space, a file separator, a backspace, a
-      NUL, a non-breaking space, a next line character, a thin space and a figure space around a charge, and on a formula
-      cell with only an ideographic space. A bound, rev, charge or confidence score cell reading NaN is not given on both
-      sides; a NaN charge or score is treated like an empty one (0 when the column has a value in another row, or
-      the stored value with overwriteWithEmpty false). A charge must be a finite whole number on both sides (2, -3,
-      2.0 and 2e0 are accepted; 0.5, 2.5 and Inf raise RAVEN:badInput and ValueError, and nothing is rounded). A rev
-      cell must be 0, 1, true or false on both sides (2, 0.5, Inf and -1 raise; an empty or NaN cell is not given),
-      although Python does not otherwise use the value. An rxnIdx cell must be a finite whole number of at least 1 on both
-      sides (1.5, Inf, 0 and -1 raise; an empty or NaN cell keeps its meaning). A row of the rxnsCoeffs table without any
-      content is ignored, and a row with content needs a coefficient (RAVEN:badInput, ValueError). RAVEN sets the rev field of an existing
-      reaction from the rev column; Python checks the column and derives reversibility from the bounds, so the
-      scenario compares bounds and not rev. curate_tables_annotation_toy compares these cases and gives MATCH.
+      - curate_tables_layout_toy
+    notes: >-
+      Table-driven batch curation. curate_tables_toy compares coefficient rows grouped by rxnIdx and name, RAVEN's header
+      spellings, reactions added without bounds ((-Inf, Inf) on both sides) and new identifiers numbered from the
+      numerically largest existing id, in the width of that id. curate_tables_edge_toy compares headers in other case and
+      alias spellings, new reactions with and without a rev column, empty formula and charge cells for existing metabolites
+      with and without the option that keeps stored values, an existing reaction whose lb and ub cells are empty (the stored
+      bounds stay) and a new reaction with an empty ub cell (the model's defaultUB, Inf when none is stored).
+      curate_tables_annotation_toy compares MIRIAM annotations, gene short names, confidence scores, text cells such as NA,
+      the numeric cell rules and the trimming of a cell. curate_tables_layout_toy compares the layout of the files and the
+      rules for the reaction tables. All four give MATCH. Option: RAVEN overwriteWithEmpty accepts a logical or a numeric 0
+      or 1 and raises RAVEN:badInput for any other value; Python overwrite_with_empty requires a bool or numpy.bool_ and
+      raises TypeError. Default true on both sides. An empty gene rule, lb or ub cell never changes an existing entity. An
+      empty MIRIAM cell of an existing entity removes that namespace when another existing entity of the table has a value
+      in the column, and a column without a value for any existing entity is not written; with the option off the stored
+      annotation stays. A new metabolite or reaction whose charge or confidence score cell is empty or NaN takes 0 when the
+      column has a value in another row. Numeric cells: lb, ub, rev, charge, confidence score, rxnIdx and coefficient cells
+      are numbers on both sides and nothing is evaluated. An empty cell and NaN (any case, optional sign) are not given; a
+      plain decimal number (digits with an optional sign, decimal point and exponent) and Inf (optional sign) are numbers;
+      true and false in any case are 1 and 0 in the lb, ub and rev columns only; any other text (abc, NA, 1,5, 0x10, 1d3,
+      Infinity, non-ASCII digits, true in a charge cell) raises (RAVEN:badInput, ValueError), also for a cell of a row that
+      would otherwise be ignored. A charge must be a finite whole number (0.5, 2.5 and Inf raise; nothing is rounded). A rev
+      cell must be 0, 1, true or false, although Python does not otherwise use the value. An rxnIdx must be a finite whole
+      number of at least 1. A coefficient must be finite and not 0. Cell trimming: a numeric cell and every blank test use
+      the trim of MATLAB R2024b strtrim (code points 9 to 13, 28 to 32, 5760, 8192 to 8198, 8200 to 8202, 8232, 8233, 8287
+      and 12288), after the backspaces at the start of the cell are dropped as textscan does; NUL, the non-breaking space
+      and the next line character stay in the text. A table file is read like textscan reads it: the spaces before a cell,
+      also before its opening quote, are dropped from every cell (a space after a cell stays), a quote followed by text
+      reads as the text without the quote, a trailing tab on a row is ignored, a line without text is skipped, and a cell of
+      any length is read. A backspace before a text cell is dropped by RAVEN and kept by Python. Reaction tables: the
+      rxnsInfo and rxnsCoeffs tables are matched on the index and the name, and the index is compared by value (1, 1.0 and
+      1e0 are the same). A row of the rxnsCoeffs table without an index, reaction name, metabolite name and compartment is
+      ignored whatever else it holds; a row of the rxnsInfo table without any value is ignored; any other row needs an
+      rxnIdx, and a coefficient row needs a coefficient (RAVEN:badInput, ValueError). A reaction of one table without a row
+      in the other raises. Two coefficient rows of one reaction for the same metabolite add up. A metabolite row without a
+      compartment raises. A file row with more non-empty cells than the header raises on both sides; the kind of the error
+      differs, so the scenario compares only that an error occurs. Differences that remain. Python does not check that a
+      compartment exists in the model, takes a DataFrame without an rxnIdx column (the tables are then matched on the name)
+      and stores a repeated header under the name with .1 appended, where RAVEN replaces the annotation in the order of the
+      columns. A lower bound above the upper bound is written by RAVEN, also against the stored bound of an existing
+      reaction, and raises ValueError in Python before anything is changed, because a cobra reaction cannot hold it. A
+      malformed gene rule raises ValueError in Python; RAVEN stops for some malformed rules of new reactions (G1 and and ()
+      and stores others as text ((G1 or G2). Python checks every table before it changes the model; RAVEN builds a new
+      model, so a failing call leaves its input unchanged as well. RAVEN sets the rev field of an existing reaction from the
+      rev column; Python derives reversibility from the bounds, so the scenarios compare bounds and not rev.
   - matlab: defaultCompartmentMap
     python: raven_toolbox.localization.DEFAULT_COMPARTMENT_MAP
     status: parity
@@ -668,17 +678,19 @@ entries:
       - ftinit_toy
       - init_output_model_smallyeast
       - ftinit_task_metabolites_toy
-    notes: migration.md maps {ftINIT, prepINITModel, ftINITInternalAlg, getINITSteps} onto {raven_toolbox.init.ftinit,
-      raven_toolbox.init.prep_init_model, raven_toolbox.init.run_ftinit, raven_toolbox.init.get_init_steps} as a
-      group; pick the right counterpart. init_output_model_smallyeast extracts a model from smallYeast after
-      prepINITModel with tasks; the 26 reactions, their bounds and equations MATCH (see prepINITModel for the kept
-      tasks). With the tasks of task_checking_smallyeast the MILP is infeasible on both sides for GLC_AER and
-      GLC_ANA alone. The reference model keeps a metabolite that a task names (U) although the first
-      simplification removed its only reaction. RAVEN builds the output with removeReactions(refModel, rxns, true,
-      true), which removes every metabolite without a reaction, U included, and ftinit does the same after the
-      reactions have been removed and the tasks gap-filled. A metabolite that tasks name and whose reactions the
-      extraction removes (T) is removed on both sides too. ftinit_task_metabolites_toy compares the metabolites,
-      reactions and kept tasks of the extracted model and gives MATCH.
+    notes: >-
+      migration.md maps {ftINIT, prepINITModel, ftINITInternalAlg, getINITSteps} onto {raven_toolbox.init.ftinit,
+      raven_toolbox.init.prep_init_model, raven_toolbox.init.run_ftinit, raven_toolbox.init.get_init_steps} as a group; pick
+      the right counterpart. init_output_model_smallyeast extracts a model from smallYeast after prepINITModel with tasks;
+      the 26 reactions, their bounds and equations MATCH (see prepINITModel for the kept tasks). With the tasks of
+      task_checking_smallyeast the MILP is infeasible on both sides for GLC_AER and GLC_ANA alone. The reference model keeps
+      a metabolite that a task names (U) although the first simplification removed its only reaction. RAVEN builds the
+      output with removeReactions(refModel, rxns, true, true), which removes every metabolite without a reaction, U
+      included, and ftinit does the same after the reactions have been removed and the tasks gap-filled. The same call
+      removes every gene without a reaction, one that had none in the reference model included (prep_init_model with
+      simplify false keeps such genes), and ftinit does the same. A metabolite that tasks name and whose reactions the
+      extraction removes (T) is removed on both sides too. ftinit_task_metabolites_toy compares the metabolites, reactions
+      and kept tasks of the extracted model and gives MATCH.
   - matlab: ftINITFillGaps
     status: subsumed
     reason: Single-task variant. migration.md paired it with fill_tasks, but ftINIT.m actually calls fitTasks

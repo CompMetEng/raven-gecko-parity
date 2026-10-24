@@ -1,0 +1,5 @@
+rxnIdx	rxnNames	metNames	comps	coefficient
+1.0	first	x	c	-2
+1.0	first	y	c	2
+2	second	x	c	-3
+2	second	y	c	3
