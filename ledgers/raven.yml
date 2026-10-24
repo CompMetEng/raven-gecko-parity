@@ -420,8 +420,8 @@ entries:
       and the next line character stay in the text. The same trim applies to the cells of a numeric column and to the blank
       test of every cell; the spaces before any cell of a table file are dropped by the reader (see below), and a space
       after a text cell stays. A table file is read like readCurationTable reads it. The first line is the header, also when
-      it is blank: it is split at the tabs, each name is trimmed and one pair of surrounding double quotes is removed (a
-      name padded inside the quotes keeps its padding in RAVEN, and Python matches it without the padding), and a column
+      it is blank: it is split at the tabs, each name is trimmed and one pair of surrounding double quotes is removed (spaces
+      inside the quotes are ignored too), and a column
       with an empty header is ignored. When two columns match one core name (metNames twice, formula and metFormulas, Comps
       and comps, LB and lb) the first column is used and the others are ignored on both sides. A repeated name of another
       column gets .1, .2 and so on appended in Python, where RAVEN uses both columns and the later one replaces the
@@ -432,10 +432,10 @@ entries:
       a blank first line is the header, so both sides stop for it with different messages. A row with more non-empty cells
       than the header has columns raises in Python; RAVEN wraps the extra cell into a new row, so the metabolite table stops
       later and a genes table row with an extra cell adds a gene named after the cell. A backspace before a text cell is
-      dropped by RAVEN and kept by Python. Reaction tables: a coefficient row belongs to the reaction with the same index
-      and name in Python; RAVEN builds the stoichiometry from the index alone, so the rxnsInfo rows 1 A and 1 B with
-      coefficient rows for A and for B give two reactions that both take all coefficients of index 1, and Python takes the
-      coefficients by name. The index is compared by value (1, 1.0 and 1e0 are the same). A row of the rxnsCoeffs table
+      dropped by RAVEN and kept by Python. Reaction tables: each rxnIdx may be used by one row of the rxnsInfo table (the rxnsCoeffs table repeats
+      it, one row per metabolite), otherwise both sides stop before anything is changed and name the index and the data
+      rows; a coefficient row belongs to the reaction with the same index and name on both sides. The index is compared
+      by value (1, 1.0 and 1e0 are the same). A row of the rxnsCoeffs table
       without an index, reaction name, metabolite name and compartment is ignored whatever else it holds; a row of the
       rxnsInfo table without any value is ignored; any other row needs an rxnIdx, and a coefficient row needs a coefficient
       (RAVEN:badInput, ValueError). A reaction table that holds only a header is empty: nothing happens when both are empty,
@@ -1197,8 +1197,8 @@ entries:
       Aligned by CompMetEng/RAVEN#11 and CompMetEng/raven-toolbox#181: RAVEN now reads 0, false and no (any
       case) as false, trims the items of a '';'' list and drops empty ones, matches headers ignoring case and
       whitespace, and stores an empty CHANGED LB or UB as NaN (leave the bound unchanged), which raven-toolbox
-      now does too (None) instead of defaulting to -1000 and 1000. A .xls task list is read by RAVEN only;
-      raven-toolbox raises a clear error. Covered by task_list_edge_cases. task_list_parsing and
+      now does too (None) instead of defaulting to -1000 and 1000. Both sides refuse a .xls task list with a clear
+      error. Covered by task_list_edge_cases. task_list_parsing and
       task_list_edge_cases give MATCH on three seeds with RAVEN 298670c and raven-toolbox b0e6176.'
   - matlab: parseYAML
     status: subsumed

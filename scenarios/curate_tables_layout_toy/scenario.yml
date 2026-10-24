@@ -12,7 +12,7 @@ description: >-
   metabolite in one reaction (added up), coefficient rows without a reaction index, reaction name, metabolite name and
   compartment (ignored, whatever else they hold), a reaction row of tabs only (ignored), reaction tables that hold only
   a header (nothing happens; next to coefficient rows both sides stop), reaction indices written as 1, 1.0 and 2e0 (the
-  same index), a reaction that only one of the two reaction tables has (both sides stop), a row with content and no
+  same index), a reaction index that two rows of the reaction table use, written as 1 and 1 or as 1 and 1.0 (both sides stop), header names with spaces inside their quotes (ignored), a reaction that only one of the two reaction tables has (both sides stop), a row with content and no
   reaction index (both sides stop), a zero or infinite coefficient (both sides stop), true or false in a coefficient,
   reaction index, confidence score or charge cell (both sides stop), two rows that update one reaction (applied one
   after the other), the gene rule of a new reaction that names a gene the model has (accepted) and one that nothing
@@ -23,8 +23,7 @@ description: >-
   the genes table lists twice (new or already in the model; both sides stop), and lower and upper bounds that are valid
   only as a pair (2000 and 3000 on an existing reaction whose upper bound is 1000). Not cases, because the two sides
   differ: a lower bound above the upper bound (RAVEN writes it and solveLP rejects the model when it runs, a cobra
-  reaction cannot hold it), two rows that leave one reaction with a lower bound above its upper bound, a header with
-  padding inside its quotes (Python matches the name, RAVEN does not) and a blank first line (both sides stop, with
+  reaction cannot hold it), two rows that leave one reaction with a lower bound above its upper bound, a blank first line (both sides stop, with
   different messages).
 
 entries:
@@ -59,6 +58,9 @@ inputs:
     - {name: score_true, mets: none, rxns: rxns_score_true.tsv, coeffs: coeffs_fresh.tsv}
     - {name: malformed_gene_rule_of_a_new_reaction, mets: none, rxns: rxns_and_and.tsv, coeffs: coeffs_fresh.tsv}
     - {name: charge_true, mets: mets_charge_true.tsv, rxns: none, coeffs: none}
+    - {name: repeated_rxn_idx_in_rxns, mets: none, rxns: rxns_idx_repeated.tsv, coeffs: coeffs_idx_repeated.tsv}
+    - {name: repeated_rxn_idx_in_rxns_as_1_and_1_0, mets: none, rxns: rxns_idx_repeated_float.tsv, coeffs: coeffs_idx_repeated.tsv}
+    - {name: header_padded_inside_its_quotes, mets: mets_header_padded.tsv, rxns: none, coeffs: none}
     - {name: header_only_reaction_tables, mets: none, rxns: rxns_header_only.tsv, coeffs: coeffs_header_only.tsv}
     - {name: header_only_reaction_table_beside_coefficient_rows, mets: none, rxns: rxns_header_only.tsv, coeffs: coeffs_fresh.tsv}
     - {name: two_rows_update_one_reaction, mets: none, rxns: rxns_two_rows.tsv, coeffs: coeffs_two_rows.tsv}

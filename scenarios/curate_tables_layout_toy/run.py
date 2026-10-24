@@ -39,6 +39,7 @@ def build_model(gene_ids=("G1",)):
 def error_class(message):
     """Kind of table error, from the words both sides use in their messages."""
     for words, kind in (
+        (("needs its own index",), "repeated_rxn_index"),
         (("finite whole number",), "charge"),
         (("0, 1, true or false",), "rev"),
         (("rxnIdx is empty",), "rxn_index_missing"),
