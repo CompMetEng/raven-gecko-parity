@@ -24,10 +24,6 @@ description: Complex-portal stoichiometry, f factor and enzyme concentrations on
 # duplicated id.
 
 # Known differences, so this scenario reports DIFFER until one side changes:
-#   * Stoichiometry by position. MATLAB's applyComplexData writes the complex's stochiometry
-#     vector into rxnEnzMat(i, modelProtsIdx), where the model proteins follow the order of
-#     ec.enzymes and the vector follows the order of the complex's protID list, so a complex
-#     listing P2, P1 with [2, 1] gives P1 2 and P2 1. Python assigns by protein id (P2 2, P1 1).
 #   * Partial stoichiometry. For P1, P2 with [2, 0], MATLAB counts only the non-zero entries
 #     as subunits, matches one of the two model proteins (50%) and applies nothing; Python
 #     counts both proteins, applies 2 for P1 and 1 for P2.
@@ -37,7 +33,9 @@ description: Complex-portal stoichiometry, f factor and enzyme concentrations on
 #     An empty enzyme list means every model enzyme in MATLAB and none in Python (0.5 and 0).
 #   * fillEnzConcs. MATLAB stores a negative abundance (-0.5 for P1); Python skips it with a
 #     warning and leaves the concentration unset.
-# The other cases agree: the fixture's own file, an all-zero stoichiometry (every subunit 1),
+# The other cases agree: the fixture's own file, a complex that lists its proteins in another
+# order than ec.enzymes (reversed_order: both sides assign the stoichiometry by protein id, P2
+# 2 and P1 1), an all-zero stoichiometry (every subunit 1),
 # a superset complex (proposed, nothing applied), two identical complexes (the first wins),
 # a single-subunit complex, a complex of unknown proteins, the second data column, a protein
 # the model lacks and a duplicated id (the last value wins). all_zero, superset and no_match

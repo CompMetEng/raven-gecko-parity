@@ -21,18 +21,13 @@ description: loadProtData / load_prot_data on replicate proteomics, one filter a
 # a flag and not as a crash of one side.
 
 # Known differences, so this scenario reports DIFFER until one side changes:
-#   * RSD filter. MATLAB blanks a high-RSD row with condAbund(remData) = nan, a logical
-#     index over the rows applied to the whole matrix, which hits only the first replicate
-#     (the row form is condAbund(remData,:) used by the maxMissing filter). X1 [1, 1, 10]
-#     survives with 11.86 (the mean and standard deviation of [NaN, 1, 10] added) and X5
-#     [20, 1, 1] with 1; Python drops both rows.
-#   * cutLowest. MATLAB parses cutLowest but removes a fixed floor(5% of the proteins), so
-#     cut_lowest 0 still removes N01 and cut_lowest 20 removes one protein; Python removes
-#     floor(cut_lowest percent), none for 0 and seven for 20.
 #   * Column count. Python raises when the replicate counts do not add up to the columns of
 #     the file; MATLAB reads the first columns and ignores the rest without a message.
-# Everything else agrees: addStdevs, minVal, the per-condition maxMissing vector, filterData
-# false, and the row with an empty UniProt id (dropped by both).
+# Everything else agrees: the RSD filter (a row above maxRSD is dropped in every replicate, so
+# X1 [1, 1, 10] and X5 [20, 1, 1] are gone on both sides), cutLowest (floor of that percent of
+# the values of a condition is removed: none for 0, seven for 20), addStdevs, minVal, the
+# per-condition maxMissing vector, filterData false, and the row with an empty UniProt id
+# (dropped by both).
 
 entries:
   - loadProtData

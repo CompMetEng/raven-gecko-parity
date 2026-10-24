@@ -25,8 +25,6 @@ entries:
 #     normalises 'OKP-BRENDA' to 'okp_brenda', which is neither a database source nor listed in
 #     the priority, so its rows are dropped; Python strips the prefix and keeps them as database
 #     rows.
-#   assignKcatValues: after rows with kcat 0 are removed, MATLAB indexes the unfiltered
-#     kcatSource, so a kept row takes the source of a removed one; Python filters the whole table.
 #   readDLKcatOutput: MATLAB raises on an unknown substrate and on an unknown reaction whose kcat
 #     is NA; Python skips the first and accepts the second. A kcat of 'inf' is kept by Python
 #     and dropped by MATLAB; '1.2.3' is kept as NaN by MATLAB and dropped by Python; a file with
@@ -40,6 +38,8 @@ entries:
 #     wildcard match and Python the exact one; a subset is returned in the order and with the
 #     repeats of the caller in Python and in model order without repeats in MATLAB; an empty
 #     subset means all reactions in MATLAB and none in Python.
+# assignKcatValues agrees: rows with kcat 0 are removed together with their kcatSource, so a
+# kept row keeps its own source.
 
 inputs:
   adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"

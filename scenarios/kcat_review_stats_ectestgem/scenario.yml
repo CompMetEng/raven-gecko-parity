@@ -25,8 +25,8 @@ description: >-
 #   * review_hand_stats: with identical statistics the review differs in the case of the source
 #     only: MATLAB compares 'custom' and 'standard' with strcmpi, Python exactly, so 'Custom'
 #     is checked for a duplicate and 'STANDARD' is treated as the fallback in MATLAB only.
-#   * lowercase_ec_in_mw: loadBRENDAdata builds its mw.tsv index with upper-cased keys and looks
-#     the rows up as written, so an EC with a lowercase letter in mw.tsv raises in MATLAB.
+#   * lowercase_ec_in_mw: both sides load an mw.tsv with a lowercase EC; the statistics then
+#     differ as in ec_stats (median, values and the case of the EC key).
 #   * measurements: MATLAB reads measurements.tsv only; Python prefers measurements.tsv.xz and
 #     falls back to measurements.tsv, so a folder with only the .xz file raises in MATLAB and a
 #     folder with both gives different tables.
