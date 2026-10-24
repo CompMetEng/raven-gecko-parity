@@ -45,10 +45,9 @@ tolerance:
 #   flex_control, flex_usage_bound_above_target: both sides agree. In the second case P5's usage
 #     bound starts at 10 times its concentration, P4 and P5 are flexed 2 and 6 times, and the
 #     final bounds and growth are identical.
-#   flex_growth_capped_by_uptake: with R1's upper bound capping growth at 2.3659, MATLAB resets
-#     the target to the growth it reached and settles at the low edge of its band (growth 2.35995,
-#     P5 ratio 1.047375); Python keeps the target and ends at the cap (2.36587, ratio 1.05). Both
-#     solves are feasible.
+#   flex_growth_capped_by_uptake: with R1's upper bound capping growth at 2.3659, both sides use
+#     the growth they reached as the target of the final pass and settle at the low edge of its
+#     band (growth 2.35995, P5 ratio 1.047375).
 #   flex_infeasible_start: Python raises; MATLAB skips the loop and returns an empty flexEnz.
 #   constrain_prior_lower_bound: MATLAB resets the lower bound to 0 and the pool coefficient to
 #     -1 before setting the bound; Python leaves the lower bound, so setting the upper bound

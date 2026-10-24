@@ -41,7 +41,7 @@ tolerance:
 # Cases and what each side does (verdicts of the run; the scenario stays DIFFER while any of
 # these differences stands):
 #   control_*: usage, report and bottleneck tables agree. control_pfba does not: see pfba_*.
-#   zero_ub_enzyme: capUsage of an enzyme whose upper bound is 0 is NaN in MATLAB and 0 in Python.
+#   zero_ub_enzyme: capUsage of an enzyme whose upper bound is 0 is NaN on both sides.
 #   usage_exclude_zero: getEnzymeUsage with zero=false works on both sides, but MATLAB's
 #     reportEnzymeUsage then raises on the filtered table, which it indexes by the position in
 #     ec.enzymes; Python reports the two enzymes that carry flux.
