@@ -2,11 +2,10 @@
 - metaData: !!omap
   - id: testModel
   - name: testModel
-  - date: "2026-10-23"
-  - defaultLB: -.inf
-  - defaultUB: .inf
+  - date: "2026-10-24"
   - description: Enzyme-constrained model of testModel
-  - geckopy_version: 4.0.0b1
+  - gecko_format: "4"
+  - generator: geckopy 4.0.0b1
 - metabolites:
   - !!omap
     - id: e1e
@@ -107,8 +106,7 @@
     - upper_bound: .inf
     - gene_reaction_rule: G1 and G2
     - annotation: !!omap
-      - ec-code:
-        - 1.1.1.1
+      - ec-code: 1.1.1.1
       - sbo: SBO:0000176
   - !!omap
     - id: R2_EXP_2
@@ -120,8 +118,7 @@
     - upper_bound: .inf
     - gene_reaction_rule: G3
     - annotation: !!omap
-      - ec-code:
-        - 1.1.1.1
+      - ec-code: 1.1.1.1
       - sbo: SBO:0000176
   - !!omap
     - id: R2_REV_EXP_1
@@ -133,8 +130,7 @@
     - upper_bound: .inf
     - gene_reaction_rule: G1 and G2
     - annotation: !!omap
-      - ec-code:
-        - 1.1.1.1
+      - ec-code: 1.1.1.1
       - sbo: SBO:0000176
   - !!omap
     - id: R2_REV_EXP_2
@@ -146,8 +142,7 @@
     - upper_bound: .inf
     - gene_reaction_rule: G3
     - annotation: !!omap
-      - ec-code:
-        - 1.1.1.1
+      - ec-code: 1.1.1.1
       - sbo: SBO:0000176
   - !!omap
     - id: R3
@@ -159,8 +154,7 @@
     - upper_bound: .inf
     - gene_reaction_rule: G4
     - annotation: !!omap
-      - ec-code:
-        - 1.1.2.1
+      - ec-code: 1.1.2.1
       - sbo: SBO:0000176
   - !!omap
     - id: R4
@@ -183,8 +177,7 @@
     - gene_reaction_rule: G5
     - objective_coefficient: 1.0
     - annotation: !!omap
-      - ec-code:
-        - 1.1.1.3
+      - ec-code: 1.1.1.3
       - sbo: SBO:0000176
   - !!omap
     - id: S1

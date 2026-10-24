@@ -173,9 +173,9 @@ the same key order and quoting, identical `ec-rxns`, `ec-enzymes` and `gecko_lig
 and differ in content: 354 lines / 6844 characters from `save_ec_model` against 295 / 5447
 from `saveEcModel`. None of the differences touches the `ec` data. They are:
 
-- `metaData`: `save_ec_model` also writes `defaultLB`, `defaultUB`, `description` and
-  `geckopy_version`; `saveEcModel` writes none of them, because `writeYAMLmodel` has no slot
-  for a model description.
+- `metaData`: both writers record `gecko_format` and a `generator` line (GECKO in the MATLAB
+  file, geckopy in the Python file); `save_ec_model` also writes a `description`, which
+  `saveEcModel` cannot, because `writeYAMLmodel` has no slot for a model description.
 - `charge: 0.0` on four metabolites in the Python file: the SBML fixture sets no charge and
   cobra's SBML import fills in 0; the MATLAB import leaves it unset and the writer omits it.
 - SBO terms on metabolites, reactions and genes in the Python file: cobra keeps the `sboTerm`

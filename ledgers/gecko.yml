@@ -666,7 +666,7 @@ entries:
       - ec_model_io_ectestgem
       - ec_model_io_crossload_ectestgem
     notes: >-
-      Each side reads back its own file unchanged. The written files have the same layout and identical ec-* sections. They differ in metaData (defaultLB, defaultUB, description and geckopy_version are written only by geckopy), charge, SBO terms, the protein-pool subsystem and gene names, each from the import conventions of cobra and RAVEN (ec_model_io_ectestgem). Both sides write a single ec-code as a list.
+      Each side reads back its own file unchanged. The written files have the same layout and identical ec-* sections. Both write gecko_format and a generator line to metaData (naming GECKO in the MATLAB file and geckopy in the Python file). They differ in metaData by the description that only geckopy writes, and in charge, SBO terms, the protein-pool subsystem and gene names, each from the import conventions of cobra and RAVEN (ec_model_io_ectestgem). Both sides write a single ec-code as a list.
   - matlab: assignKcatValues
     python: geckopy.apply_kcat_list
     status: parity

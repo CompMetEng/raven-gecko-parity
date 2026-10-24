@@ -9,8 +9,8 @@ description: >-
 # their own docstrings). The `direct` and `roundtrip` checkpoints show that each side reads
 # back its own file unchanged. The `written` checkpoint differs in content, not in layout:
 # the two files have the same indent, key order and quoting, and identical `ec-rxns`,
-# `ec-enzymes` and `gecko_light` blocks. What differs is `metaData` (defaultLB, defaultUB,
-# description and geckopy_version only in the Python file), `charge: 0.0` on four metabolites
+# `ec-enzymes` and `gecko_light` blocks. What differs is `metaData` (both files record
+# gecko_format and a generator line; only the Python file has a description), `charge: 0.0` on four metabolites
 # (cobra's SBML import fills in 0 where the SBML sets none), SBO terms on metabolites,
 # reactions and genes (kept by cobra, dropped by the MATLAB import when one term covers a whole
 # entity type), `subsystem: Protein usage` on the protein-pool reactions (always set by

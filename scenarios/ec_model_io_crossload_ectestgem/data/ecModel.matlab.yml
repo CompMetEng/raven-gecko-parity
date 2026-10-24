@@ -2,7 +2,9 @@
 - metaData: !!omap
   - id: testModel
   - name: testModel
-  - date: "2026-10-23"
+  - date: "2026-10-24"
+  - gecko_format: "4"
+  - generator: GECKO 4.0.0b1
 - metabolites:
   - !!omap
     - id: e1e
