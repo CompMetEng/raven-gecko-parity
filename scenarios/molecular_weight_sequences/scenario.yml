@@ -1,99 +1,61 @@
 id: molecular_weight_sequences
 pair: gecko
 description: >-
-  Molecular weight from an amino-acid sequence, for a fixed list of
-  sequences chosen to separate the ways the two implementations used to
-  disagree rather than to look like real proteins. No model, no adapter, no
-  file on either side --- calculateMW / calculate_mw take a bare string, so
-  the sequences are the fixture.
+  Molecular weight from an amino-acid sequence, for a fixed list of sequences
+  chosen to isolate one variable each rather than to look like real proteins.
+  No model, no adapter, no file on either side: calculateMW and calculate_mw
+  take a bare string, so the sequences are the fixture.
 
 entries:
   - calculateMW
 
-# This scenario used to be expected to fail: three real, small numeric
-# divergences between the two mass tables, plus one behavioural one, none of
-# which "confirmed against the migration doc" had caught because nothing had
-# run the two functions against the same input before. GECKO#459 reconciled
-# calculateMW.m to match calculate_mw on all four points, closing
-# raven-gecko-parity#11 --- every sequence below now agrees exactly between
-# the two sides. See docs/gecko-behaviour-parity-plan.md for the original
-# write-up.
-#
-# Each sequence below isolates one variable that used to differ. Comments
-# describe what that variable was and record it as a regression fixture ---
-# a result that stops matching (i.e. a delta reappears) is itself a finding.
+# Both sides agree exactly on every sequence below. Each sequence isolates one variable, and a
+# delta that appears is itself a finding.
 inputs:
   sequences:
-    # No residues at all: MATLAB's loop finds nothing to add and returns its
-    # starting water mass. Before GECKO#459 that was 18 (a real 18 Da
-    # "protein"); it's now 18.01528, and calculateMW returns NaN in this
-    # case instead, matching calculate_mw's NaN-for-no-residues design
-    # exactly. Two routes to zero residues, so the fix is shown to be
-    # general rather than specific to the empty string.
+    # No residues at all: both sides return NaN. Two routes to zero residues (the empty string
+    # and a string of digits and a space), so the rule is shown to be general.
     - ""
     - "007 42"
 
-    # One standard residue, isolating the water-mass constant on its own:
-    # both sides now start from 18.01528.
+    # One standard residue, isolating the water-mass constant: both sides start from 18.01528.
     - "A"
 
-    # All twenty standard residues once each. Both tables agree to the
-    # gram-mole on every one of them --- if this sequence's delta is ever
-    # not exactly zero, the standard table itself has drifted, which is a
-    # bigger problem than any of the cases below.
+    # All twenty standard residues once each. If this sequence's delta is ever not exactly
+    # zero, the standard mass table has drifted.
     - "ACDEFGHIKLMNPQRSTVWY"
 
-    # X ("any residue"): GECKO MATLAB used to hard-code 126.50, an unsourced
-    # historical value; it now computes the unweighted mean of its own
-    # twenty standard masses, same as geckopy, both landing on 118.885. Two
-    # occurrences, so the fix is confirmed per-residue, not just as a
-    # one-off.
+    # X ("any residue"): the unweighted mean of the twenty standard masses on both sides,
+    # 118.885. Two occurrences, so the rule holds per residue.
     - "X"
     - "XX"
 
-    # B ("D or N"): not documented as a divergence until this scenario found
-    # it. GECKO MATLAB used to hard-code a pre-rounded 114.60; it now
-    # averages its own D and N entries live, 114.595, same as geckopy.
+    # B ("D or N"): the average of the D and N masses on both sides, 114.595.
     - "B"
 
-    # J, O, U, Z: the other four non-standard codes. Unlike B and X, these
-    # four agreed exactly between the tables even before the fix ---
-    # confirmed here rather than assumed, so that a future edit to either
-    # table has something to break.
+    # J, O, U, Z: the other four non-standard codes, which have the same mass in both tables.
     - "J"
     - "O"
     - "U"
     - "Z"
 
-    # Case: GECKO MATLAB used to match amino acid codes with strfind, which
-    # is case-sensitive, so a lowercase letter was "extra", ignored exactly
-    # like a digit or a space. calculateMW now upper-cases the sequence
-    # first, same as calculate_mw, so the same lowercase letter is a real
-    # residue on both sides.
+    # Case: both sides upper-case the sequence first, so a lowercase letter is a real residue.
     - "AaAa"
 
-    # A sequence with digits and a space mixed in among real residues,
-    # rather than replacing them: both sides document ignoring "extra
-    # things", and this is the case that confirms it.
+    # Digits and a space mixed in among real residues are ignored on both sides.
     - "MRA1 L2"
 
-    # The five sequences ecTestGEM actually ships, in
-    # test/unit_tests/ecTestGEM/data/uniprot.tsv. None contains X, B, or a
-    # lowercase letter --- the adversarial cases above are what a real
-    # sequence essentially never exercises, which is worth seeing stated
-    # plainly rather than assumed.
+    # The five sequences ecTestGEM ships in test/unit_tests/ecTestGEM/data/uniprot.tsv. None
+    # contains X, B or a lowercase letter.
     - "MRAL"
     - "MNTD"
     - "MSYN"
     - "MDFM"
     - "MLFK"
 
-# Not zero: calculateMW sums many terms, and MATLAB's own aa_MWs table is
-# already given to two decimal places, so the last bit of a float can
-# legitimately differ by rounding even where the formula is now identical.
-# Tight enough that none of the divergences this scenario used to find could
-# hide behind it --- the smallest, B's former gap, was over 300 000 times
-# this bound.
+# Not zero: calculateMW sums many terms, and the last bit of a float can differ by rounding
+# even where the formula is identical. Tight enough that no difference between the mass
+# tables could hide behind it.
 tolerance:
   rel: 1.0e-9
   abs: 1.0e-12

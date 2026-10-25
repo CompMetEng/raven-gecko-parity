@@ -22,9 +22,11 @@ entries:
 # scenario stays DIFFER until the sides are aligned or the difference is recorded as intended):
 #   mergeKcats and mergeDLKcatAndFuzzyKcats: topOriginLimit defaults to 6 in MATLAB and 4 in
 #     Python, so a BRENDA match of origin 5 or 6 beats a DLKcat prediction in MATLAB only. MATLAB
-#     normalises 'OKP-BRENDA' to 'okp_brenda', which is neither a database source nor listed in
-#     the priority, so its rows are dropped; Python strips the prefix and keeps them as database
-#     rows.
+#     normalises 'OKP-BRENDA' and 'OKP-CataPro' to 'okp_brenda' and 'okp_catapro', which are
+#     neither database sources nor listed in the priority, so those rows are dropped and the
+#     reactions take the DLKcat value 9; Python strips the okp_ prefix for matching, so
+#     'OKP-BRENDA' routes to the database tiers and 'OKP-CataPro' matches 'catapro', and the
+#     rows keep their OKP- label (kcat 3 and 4).
 #   readDLKcatOutput: MATLAB raises on an unknown substrate and on an unknown reaction whose kcat
 #     is NA; Python skips the first and accepts the second. A kcat of 'inf' is kept by Python
 #     and dropped by MATLAB; '1.2.3' is kept as NaN by MATLAB and dropped by Python; a file with

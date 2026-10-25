@@ -108,9 +108,9 @@ cross-check was real but insufficient: it confirmed *which flag* each local orig
 what number the outer function assigns to that flag afterwards. Only running `fuzzyKcatMatching`
 end to end surfaces the second renumbering. Recorded here as the reason this document exists at
 all rather than a one-line "confirmed" note --- the wrong reading was plausible enough to have
-shipped in a less careful pass, and the fixture-only ecTestGEM data (all `sa_max` / `kcat_max`
-join to nothing, see [brenda-reconciliation.md](brenda-reconciliation.md)) can't be used to catch
-it, since it never reaches the org-SA level at all.
+shipped in a less careful pass, and the hand-built scenario fixtures (their `sa.tsv` has no rows, see
+[brenda-reconciliation.md](brenda-reconciliation.md)) can't be used to catch it, since they never
+reach the org-SA level at all.
 
 ## What this means for the kcat chain
 
@@ -121,9 +121,9 @@ at that checkpoint, precisely because it is derived through the confusing double
 own comment invites) could easily fix the *local* numbering while leaving the *external* one
 unchanged, or vice versa, and only a scenario that checks the actual returned value would notice.
 
-The ecTestGEM fixture does not exercise the org-SA level at all (its SA and MW rows don't share an
-organism --- see brenda-reconciliation.md), so the `fuzzy` checkpoint's own fixture will need a
-matching-organism SA/MW pair if it is meant to exercise this path, same gap noted there.
+The hand-built fixtures do not exercise the org-SA level at all (their `sa.tsv` has no rows, see
+brenda-reconciliation.md), so the `fuzzy` checkpoint's own fixture would need a matching-organism
+SA/MW pair to exercise this path.
 
 ## Reproducing
 
