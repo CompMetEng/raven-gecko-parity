@@ -21,15 +21,14 @@ entries:
 #   findMetSmiles: with a duplicated name in smilesDB.tsv MATLAB takes the first row and Python
 #     the last; a metabolite without a name gets no SMILES in MATLAB and is looked up by its id
 #     in Python.
-#   saveKcatSource: Python does not replace a tab or newline in the detail text, which splits
-#     the row; MATLAB replaces it by a space. A detail that starts with '; ' is trimmed by
-#     MATLAB and kept by Python.
 #   loadKcatSource: a row that starts with a quote and never closes it, and a row of empty
 #     quoted fields, are skipped in MATLAB and reported as invalid in Python.
 #   getStandardKcat: a reaction without a GPR and with two substrates is an exchange reaction
 #     for MATLAB (no standard enzyme) and an ordinary reaction for Python; a reaction named
 #     'Biomass Pseudoreaction' is matched case-insensitively in Python only. Called a second
 #     time on a light model, MATLAB raises and Python returns.
+# Cases that agree: saveKcatSource writes a tab or line break of the detail text as a space, so
+# a row is never split, and leaves no leading, trailing or repeated '; ' in the detail column.
 # The OpenKineticsPredictor input for all reactions agrees on this fixture.
 
 inputs:

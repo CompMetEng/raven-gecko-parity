@@ -27,8 +27,8 @@ entries:
 #   setKcatForReactions: Python applies the constraints by default, MATLAB never does; MATLAB
 #     matches ids case-insensitively and ignores an unknown id, Python needs an exact id and
 #     raises; a base id of a light model matches the ec rows in Python only.
-#   getKcatAcrossIsozymes: a NaN kcat is filled from known siblings in Python and left alone in
-#     MATLAB; Python rewrites S for the filled rows by default.
+#   getKcatAcrossIsozymes (agrees): both sides fill only a kcat of 0 from known siblings, leave a
+#     NaN kcat alone, and change S only when asked (apply defaults to false).
 #   applyCustomKcats: MATLAB strips the quotes of a quoted reaction list (textscan %q) and
 #     Python keeps them, so the quoted list matches nothing in Python. Blank kcat entries,
 #     empty notes, exact protein and reaction ids and a protein-only row on a light model
