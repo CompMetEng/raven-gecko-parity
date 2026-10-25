@@ -130,7 +130,7 @@ def test_a_listed_prefix_that_matches_a_difference_passes(workspace: Path):
 
 def test_a_shorter_prefix_matches_deeper_differences_and_indices_are_ignored(workspace: Path):
     write_runs(workspace, {"a": {"rows": [{"x": 1}, {"x": 2}]}}, {"a": {"rows": [{"x": 1}, {"x": 3}]}})
-    write(workspace, keyed_ledger("[a.rows.x]"), "DIFFER")
+    write(workspace, keyed_ledger("[a.rows]"), "DIFFER")
     assert main(["ledger-audit", "--results", "results"]) == 0
     write(workspace, keyed_ledger("[a]"), "DIFFER")
     assert main(["ledger-audit", "--results", "results"]) == 0
@@ -140,14 +140,14 @@ def test_a_stale_prefix_fails(workspace: Path, capsys):
     write_runs(workspace, *DIFFERENT)
     write(workspace, keyed_ledger("[written.lines, kept]"), "DIFFER")
     assert main(["ledger-audit", "--results", "results"]) == 1
-    assert "'kept' matches no difference" in capsys.readouterr().out
+    assert "'kept' is the start of no difference" in capsys.readouterr().out
 
 
 def test_a_prefix_for_a_scenario_that_now_matches_fails(workspace: Path, capsys):
     write_runs(workspace, {"kept": 1}, {"kept": 1})
     write(workspace, keyed_ledger("[kept]"), "MATCH")
     assert main(["ledger-audit", "--results", "results"]) == 1
-    assert "matches no difference" in capsys.readouterr().out
+    assert "is the start of no difference" in capsys.readouterr().out
 
 
 def test_a_row_with_a_differs_list_is_not_held_to_the_note_rule(workspace: Path):
@@ -193,9 +193,9 @@ def test_strict_lets_another_row_cover_a_group(workspace: Path):
     write_runs(workspace, {"written": {"lines": [1, 2]}, "other": {"x": 1}}, {"written": {"lines": [1]}, "other": {"x": 2}})
     second = (
         "  - matlab: other\n    python: demopy.other\n    status: parity\n    scenarios:\n      - toy_demo\n"
-        "    differs: [other]\n"
+        "    differs: [other.x]\n"
     )
-    write(workspace, keyed_ledger("[written]", strict=True, extra_row=second), "DIFFER")
+    write(workspace, keyed_ledger("[written.lines]", strict=True, extra_row=second), "DIFFER")
     assert main(["ledger-audit", "--results", "results"]) == 0
 
 
@@ -227,3 +227,105 @@ def test_the_keys_survive_a_round_trip_of_the_ledger(workspace: Path):
     ledger_path.write_text(dump_ledger(loaded), encoding="utf-8")
     again = load_ledger(ledger_path)
     assert again.strict_differs and again.entries[0].differs == ["written", "kept"]
+
+
+# ---- round-3 hardening of the `differs` rule ------------------------------------------
+
+
+@pytest.mark.parametrize("entry", ["['']", "[results]", "['.']", "[results.]"])
+def test_a_differs_entry_that_names_no_path_is_refused(workspace: Path, capsys, entry: str):
+    write_runs(workspace, *DIFFERENT)
+    write(workspace, keyed_ledger(entry, strict=True), "DIFFER")
+    assert main(["ledger-audit", "--results", "results"]) == 2
+    assert "names no checkpoint path" in capsys.readouterr().err
+
+
+def test_an_entry_longer_than_the_difference_is_stale(workspace: Path, capsys):
+    write_runs(workspace, *DIFFERENT)
+    write(workspace, keyed_ledger("[written.lines.nonexistent_subkey]"), "DIFFER")
+    assert main(["ledger-audit", "--results", "results"]) == 1
+    assert "is the start of no difference" in capsys.readouterr().out
+
+
+def test_strict_coverage_needs_the_group_or_something_deeper(workspace: Path, capsys):
+    write_runs(workspace, *DIFFERENT)
+    write(workspace, keyed_ledger("[written]", strict=True), "DIFFER")
+    assert main(["ledger-audit", "--results", "results"]) == 1
+    assert "difference group written.lines is listed in the differs of no row" in capsys.readouterr().out
+    write(workspace, keyed_ledger("[written.lines.rows]", strict=True), "DIFFER")
+    assert main(["ledger-audit", "--results", "results"]) == 1  # deeper than the difference: stale
+    write(workspace, keyed_ledger("[written.lines]", strict=True), "DIFFER")
+    assert main(["ledger-audit", "--results", "results"]) == 0
+
+
+def test_a_one_segment_group_is_covered_by_its_one_segment_entry(workspace: Path):
+    write_runs(workspace, {"kept": 1, "x": 1}, {"kept": 1, "x": 2})
+    write(workspace, keyed_ledger("[x]", strict=True), "DIFFER")
+    assert main(["ledger-audit", "--results", "results"]) == 0
+
+
+def test_a_scenario_without_a_verdict_is_not_checked_for_stale_entries(workspace: Path):
+    write_runs(workspace, *DIFFERENT)
+    write(workspace, keyed_ledger("[gone.entirely]"))
+    assert main(["ledger-audit", "--results", "results"]) == 0
+
+
+def test_the_status_folder_can_be_given_as_the_results_folder(workspace: Path):
+    write_runs(workspace, *DIFFERENT)
+    write(workspace, keyed_ledger("[written.lines]", strict=True), "DIFFER")
+    assert main(["ledger-audit", "--results", "results/status"]) == 0
+    write(workspace, keyed_ledger("[kept]", strict=True), "DIFFER")
+    assert main(["ledger-audit", "--results", "results/status"]) == 1
+
+
+def test_an_empty_differs_list_needs_a_note_without_strict_too(workspace: Path, capsys):
+    write_runs(workspace, *DIFFERENT)
+    write(workspace, keyed_ledger("[]"), "DIFFER")
+    assert main(["ledger-audit", "--results", "results"]) == 1
+    assert "empty differs list needs a note" in capsys.readouterr().out
+    write(workspace, keyed_ledger("[]", notes="No difference of its own: toy_demo differs elsewhere."), "DIFFER")
+    assert main(["ledger-audit", "--results", "results"]) == 0
+
+
+def test_a_misspelt_top_level_key_is_refused(workspace: Path, capsys):
+    write(workspace, keyed_ledger("[written.lines]").replace("pair: demo\n", "pair: demo\nstrict_differ: true\n"), "DIFFER")
+    assert main(["ledger-audit", "--results", "results"]) == 2
+    assert "unknown top-level key 'strict_differ'; did you mean 'strict_differs'" in capsys.readouterr().err
+
+
+def test_an_anchor_at_the_top_level_is_not_mistaken_for_a_typo(workspace: Path):
+    text = keyed_ledger("[written.lines]").replace("entries:", "base: &base\n  reason: shared\nentries:")
+    write(workspace, text, "DIFFER")
+    write_runs(workspace, *DIFFERENT)
+    assert main(["ledger-audit", "--results", "results"]) == 0
+
+
+@pytest.mark.parametrize("value", ["'false'", "1", "yes please"])
+def test_strict_differs_has_to_be_a_real_boolean(workspace: Path, capsys, value: str):
+    write(workspace, keyed_ledger("[written.lines]").replace("pair: demo\n", f"pair: demo\nstrict_differs: {value}\n"), "DIFFER")
+    assert main(["ledger-audit", "--results", "results"]) == 2
+    assert "'strict_differs' must be true or false" in capsys.readouterr().err
+
+
+def test_a_truncated_result_file_is_a_finding_not_a_traceback(workspace: Path, capsys):
+    write_runs(workspace, *DIFFERENT)
+    (workspace / "results" / "matlab" / "toy_demo.json").write_text('{"scenario": "toy_demo", "resu', encoding="utf-8")
+    write(workspace, keyed_ledger("[written.lines]"), "DIFFER")
+    assert main(["ledger-audit", "--results", "results"]) == 1
+    out = capsys.readouterr().out
+    assert "cannot read toy_demo.json" in out and "Traceback" not in out
+
+
+def test_a_binary_result_file_is_a_finding_too(workspace: Path, capsys):
+    write_runs(workspace, *DIFFERENT)
+    (workspace / "results" / "python" / "toy_demo.seed0.json").write_bytes(b"\xff\xfe\x00bad")
+    write(workspace, keyed_ledger("[written.lines]", strict=True), "DIFFER")
+    assert main(["ledger-audit", "--results", "results"]) == 1
+    assert "cannot read toy_demo.seed0.json" in capsys.readouterr().out
+
+
+def test_a_difference_at_the_root_of_the_results_is_always_reported(workspace: Path, capsys):
+    write_runs(workspace, {"kept": 1}, None)
+    write(workspace, keyed_ledger("[kept]", strict=True), "DIFFER")
+    assert main(["ledger-audit", "--results", "results"]) == 1
+    assert "at the root of the results" in capsys.readouterr().out

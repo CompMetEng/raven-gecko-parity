@@ -2,11 +2,26 @@
 
 from __future__ import annotations
 
+import difflib
 import io
+import re
 from dataclasses import dataclass, field, replace
 from pathlib import Path
 
 import yaml
+
+#: Keys the top level of a ledger file reads. Other keys are left alone (a ledger may hold a
+#: YAML anchor there for merge keys), unless one looks like a misspelling of these.
+TOP_LEVEL_KEYS = frozenset({"version", "pair", "matlab", "python", "strict_differs", "entries"})
+
+
+def path_segments(path: str) -> tuple[str, ...]:
+    """Dotted checkpoint path without list indices and without the leading ``results``."""
+    parts = [part for part in re.sub(r"\[\d+\]", "", str(path)).split(".") if part]
+    if parts and parts[0] == "results":
+        parts = parts[1:]
+    return tuple(parts)
+
 
 #: Every public function on either side must carry exactly one of these.
 STATUSES: dict[str, str] = {
@@ -144,6 +159,16 @@ def load_ledger(path: Path) -> Ledger:
     if not isinstance(data, dict):
         raise LedgerError(f"{path}: expected a mapping at the top level")
 
+    for key in data:
+        if key in TOP_LEVEL_KEYS:
+            continue
+        close = difflib.get_close_matches(str(key), sorted(TOP_LEVEL_KEYS), n=1, cutoff=0.8)
+        if close:
+            raise LedgerError(f"{path}: unknown top-level key {key!r}; did you mean {close[0]!r}?")
+    strict = data.get("strict_differs", False)
+    if not isinstance(strict, bool):
+        raise LedgerError(f"{path}: 'strict_differs' must be true or false, not {strict!r}")
+
     raw_entries = data.get("entries") or []
     if not isinstance(raw_entries, list):
         raise LedgerError(f"{path}: 'entries' must be a list")
@@ -165,6 +190,11 @@ def load_ledger(path: Path) -> Ledger:
             differs = [differs]
         if differs is not None and not isinstance(differs, list):
             raise LedgerError(f"{path}: entry {index} has a 'differs' that is not a list")
+        for item in differs or []:
+            if not path_segments(item):
+                raise LedgerError(
+                    f"{path}: entry {index} has a differs entry {item!r} that names no checkpoint path"
+                )
         entries.append(
             Entry(
                 status=str(raw["status"]),
@@ -185,7 +215,7 @@ def load_ledger(path: Path) -> Ledger:
         entries=entries,
         version=int(data.get("version", 1)),
         path=path,
-        strict_differs=bool(data.get("strict_differs", False)),
+        strict_differs=strict,
     )
 
 

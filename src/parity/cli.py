@@ -91,8 +91,9 @@ def cmd_ledger_audit(args: argparse.Namespace, config: Config) -> int:
     failed = False
     for pair in _pairs(config, args.pair):
         scenarios = list_scenarios(_scenario_root(config), pair.name)
-        differences = read_differences(Path(args.results), scenarios) if args.results else None
-        findings = audit_ledger(load_ledger(pair.ledger), scenarios, results, differences)
+        read_errors: dict[str, str] = {}
+        differences = read_differences(Path(args.results), scenarios, read_errors) if args.results else None
+        findings = audit_ledger(load_ledger(pair.ledger), scenarios, results, differences, read_errors)
         for finding in findings:
             print(f"{pair.name}: {finding.format()}")
         if not findings:

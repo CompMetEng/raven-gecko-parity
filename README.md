@@ -100,12 +100,20 @@ checkpoint path prefixes (without the leading `results.` and without list indice
 ```
 
 `parity ledger-audit --results DIR` rebuilds the differences of each linked scenario from the run
-(`python/<id>.seed<N>.json` against `matlab/<id>.json`) and fails when a listed prefix matches
-none of them. `differs: []` says the row has no difference of its own and needs a note. With
-`strict_differs: true` at the top of a ledger, every `parity` row linked to a scenario that differs
-has to carry the list, and every group of differences (the first two path segments) of such a
-scenario has to be listed by at least one row that links it. Ledgers and rows without these keys
-are audited by the note rule alone.
+(`python/<id>.seed<N>.json` against `matlab/<id>.json`; `DIR` may also be the `status/` folder) and
+fails when a listed prefix is the start of no difference path. A scenario without a verdict in `DIR`
+(a partial run) is not checked, and a result file that cannot be read is reported as a finding.
+`differs: []` says the row has no difference of its own and needs a note, whether or not the
+ledger is strict. An entry has to name a path: an empty entry or `results` is refused.
+
+With `strict_differs: true` at the top of a ledger (a real boolean; a top-level key that looks like a
+misspelling of `version`, `pair`, `matlab`, `python`, `strict_differs` or `entries` is refused), every `parity`
+row linked to a scenario that differs has to carry the list, and every group of differences (the
+first two path segments) of such a scenario has to be covered by the list of at least one row that
+links it. An entry covers a group when it is the group or goes deeper, so `written` does not cover
+the group `written.lines`. A difference at the root of the results (one side returned no results)
+belongs to no group and is always reported. Ledgers and rows without these keys are audited by the
+note rule alone.
 
 ## Local mirroring
 
