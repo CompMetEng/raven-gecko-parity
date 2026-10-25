@@ -47,8 +47,7 @@ inputs:
   adapter_python: "{python_repo}/examples/ecTestGEM"
   fixture_dir: "{matlab_repo}/test/unit_tests/ecTestGEM"
 
-  # Hand-built BRENDA fixture in both formats (see kcat_chain_ectestgem for why both are
-  # needed). Both 1.1.1.1 substrates carry the same kcat, so an EC code reached by wildcard
+  # Hand-built BRENDA fixture (kcat.tsv, sa.tsv and mw.tsv, read by both loaders). Both 1.1.1.1 substrates carry the same kcat, so an EC code reached by wildcard
   # can tie with a directly matched one. MATLAB resolves the BRENDA folder and the
   # evolutionary distances through the adapter's params.path, so a copy of the adapter is
   # redirected to scenario_root (ModelAdapter is a value class); Python takes explicit paths.

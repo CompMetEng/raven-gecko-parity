@@ -1,7 +1,0 @@
-EC1.1.1.1	s1	testus testus//*//*	10.1	*
-EC1.1.1.1	s2	testus testus//*//*	10.2	*
-EC1.1.1.1	s3	testus testus//*//*	10.3	*
-EC1.1.1.1	s4	testus testus//*//*	10.4	*
-EC1.1.1.1	s5	testus testus//*//*	10.5	*
-EC1.1.1.1	s6	testus testus//*//*	10.6	*
-EC1.1.1.1	s7	testus testus//*//*	0.0001	*

@@ -87,12 +87,14 @@ inputs:
 #   (`kcatList = unique(kcatList)`), report the kcat and source of the input model (a reaction tuned before reports the
 #   values of that run), write the pre-tune kcat into ec.notes as num2str prints it (preTuneKcat=10, preTuneKcat=3.1416),
 #   let a tuned kcat pass 1e7, raise for a protToIgnore id that has no usage reaction, and tune a gecko-light model.
-# ignore_lower_case_id: both sides match p4 without regard to case and skip P4 when they pick the enzyme to tune, and both
-#   raise the kcat of R5 by a factor of 10 per iteration. They differ in when they stop: geckopy stops once growth gains
-#   less than 1e-9 (growth 4.5, R5 at 2e10), sensitivityTuning goes on until growth is exactly unchanged (growth 450, R3 at
-#   5 and R5 at 2e13).
-# truncate_ties: round(x, n) rounds an exact tie away from zero in MATLAB (100000.5 gives 100001, 1234565 gives 1234570) and
-#   to even in Python (100000, 1234560). Inf raises in MATLAB and is returned unchanged by geckopy.
+# ignore_lower_case_id: both sides match p4 without regard to case, and both raise the kcat of R5 by a factor of 10 per
+#   iteration. They differ in what they tune and when they stop. sensitivityTuning also tunes R3 through P4, the enzyme
+#   that was to be ignored (R3 from 0.05 to 5, source sensitivityTuning), and goes on until growth is exactly unchanged
+#   (growth 450, R5 at 2e13). geckopy tunes R5 only and stops once growth gains less than 1e-9 (growth 4.5, R5 at 2e10).
+#   The result in MATLAB is certain; that it comes from max() taking the first index once every remaining draw is zero
+#   (sensitivityTuning.m, the line `[~,sel] = max(drawFluxes)`) was read, not run.
+# truncate_ties: both sides round an exact tie away from zero (100000.5 gives 100001, 1234565 gives 1234570). Inf raises in
+#   MATLAB and is returned unchanged by geckopy.
 # zero_growth: with growth 0 and no flux both sides return an empty result. The case of a forced flux that keeps a usage
 #   reaction active at zero growth needs a reaction that ecTestGEM does not have, and is not covered.
 

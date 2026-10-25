@@ -56,13 +56,15 @@ inputs:
 #
 # The enforced levels agree to within 1e-6 relative: MATLAB's solveLP(model, 1) relaxes
 # the objective it fixes to 0.999999 of its maximum, so the top level is 1295.998704
-# where geckopy's exact maximum gives 1296. The tolerance below is 1e-5 for that reason.
+# where geckopy's exact maximum gives 1296. The tolerance below is 2e-6 for that reason.
 #
-# Only the target set is compared. MATLAB additionally returns the slope as the absolute
+# The target set and the ranked order of the targets are compared (MATLAB lists rxnTargets in
+# rank order, then transportTargets; geckopy lists one table ranked by slope times correlation).
+# MATLAB additionally returns the slope as the absolute
 # regression slope, the per-gene action and an essentiality column (one knockout LP per
 # gene), and splits transport reactions into transportTargets; geckopy's ec_fseof returns
 # neither the essentiality nor the split (its notes point callers at
 # cobra.flux_analysis.single_gene_deletion).
 tolerance:
-  rel: 1.0e-5
+  rel: 2.0e-6
   abs: 1.0e-9

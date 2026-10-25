@@ -72,9 +72,10 @@ def run(ctx):
     # target_type is not compared: MATLAB's rxnTargets/transportTargets output does not
     # carry the OE/KD/KO label at all (only geneTargets does, in a different id space),
     # so there is nothing on the MATLAB side to compare it against.
-    targets = sorted(str(row.reaction) for row in result.targets.itertuples())
+    ranked = [str(row.reaction) for row in result.targets.itertuples()]
 
     return {
         "enforced_levels": [float(v) for v in result.enforced],
-        "targets": targets,
+        "targets": sorted(ranked),
+        "targets_ranked": ranked,
     }

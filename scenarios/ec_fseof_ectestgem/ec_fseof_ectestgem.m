@@ -38,6 +38,9 @@ results.enforced_levels = num2cell(reshape(double(fseof.alpha), 1, []));
 % reactions), so there is nothing here to compare it against.
 allTargets = [fseof.rxnTargets(:,1); fseof.transportTargets(:,1)];
 results.targets = sort(reshape(allTargets, 1, []));
+% The order of the report: rxnTargets in rank order (slope times correlation), then
+% transportTargets.
+results.targets_ranked = reshape(allTargets, 1, []);
 
 end
 

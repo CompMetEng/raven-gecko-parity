@@ -133,13 +133,15 @@ function [out, ecModel] = checkpoint_selection(ecModel, mergedList, kcatAdapter)
 ecModel = assignKcatValues(ecModel, mergedList, 'criteria', 'max');
 out.after_select_max = kcat_rows(ecModel, ecModel.ec.rxns);
 
-% The 'median' criterion aggregates the matching kcats; the flag records whether either
-% side raises for it (neither does).
+% The 'median' criterion aggregates the matching kcats; the checkpoint records whether the
+% call raised and the kcat rows it leaves.
 try
-    assignKcatValues(ecModel, mergedList, 'criteria', 'median');
+    probe = assignKcatValues(ecModel, mergedList, 'criteria', 'median');
     out.select_median.raised = false;
+    out.select_median.rows = kcat_rows(probe, probe.ec.rxns);
 catch
     out.select_median.raised = true;
+    out.select_median.rows = cell(1, 0);
 end
 
 ecModel = getKcatAcrossIsozymes(ecModel);
@@ -232,13 +234,9 @@ end
 
 function out = light_partial_isozyme_case()
 % Isolated, purpose-built light-model case: one reaction, two isozymes, only one of
-% which has a kcat assigned. MATLAB's applyKcatConstraints.m corrects an unassigned
-% isozyme's Inf cost (MW/0) to 0 *before* taking min() across isozymes, so the
-% fabricated zero always wins --- silently writing a zero enzyme cost for the whole
-% reaction even though the other isozyme has a real, valid kcat. geckopy's
-% apply_kcat_constraints skips invalid isozymes before the comparison instead.
-% Confirmed by direct execution against a pinned GECKO develop4 worktree; not
-% reachable through the shared ecTestGEM fixture, so built standalone here.
+% which has a kcat assigned. Both sides take the cost of the isozyme that has a kcat: the
+% unassigned isozyme's infinite cost (MW/0) is not a candidate for the minimum. The case is
+% not reachable through the shared ecTestGEM fixture, so it is built standalone here.
 clear model
 model.rxns = {'R1'};
 model.mets = {'prot_pool'};

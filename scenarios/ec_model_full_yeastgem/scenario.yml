@@ -72,24 +72,6 @@ inputs:
 # code / substrate matching tiers, which do not depend on it, are exercised at full
 # genome scale.
 
-# Found and fixed two real, generalizable MATLAB bugs while getting this scenario clean
-# (both confirmed by isolated regression tests, not just "differs on this real-world
-# row" observations):
-#
-#   - sigmaFitter.m returned a model sized for the wrong sigma (its 100-point grid-search
-#     loop never re-applies the best-fitting sigma after the loop ends) --- not exercised
-#     by this scenario directly (sigmaFitter is not in `entries` here), found while
-#     building sensitivity_tuning_ectestgem, [GECKO #433], merged.
-#   - fuzzyKcatMatching.m's wildcard EC search matched a substring instead of a prefix
-#     (`contains` instead of `startsWith` on the pre-built EC index), so a query for
-#     enzyme class 1 ('1.') could also match an unrelated class-4 code that merely
-#     contains the same two characters elsewhere in its string ('4.2.1.1'). Confirmed by
-#     direct execution against real BRENDA data: fixing this changed the matched kcat for
-#     hundreds of yeast-GEM reactions, mostly toward smaller, more plausible values.
-#     [GECKO #434], merged.
-#
-# Both are fixed in GECKO develop.
-#
 # Both loaders drop a BRENDA row whose kcat is more than four orders of magnitude below the
 # median of its EC (filterOutlierKcats and filter_outlier_kcats, both default true). The 0.002
 # 1/s kcat derived from a specific activity for EC 1.1.1.101 is therefore dropped before
