@@ -19,21 +19,19 @@ description: >-
 #                       kegg.tsv. Both sides couple R3 to P4, the enzyme of the matched subunit.
 #   nested_gpr          R2 is catalysed by 'G1 and (G2 or G3)'. Both sides expand it to the
 #                       isozymes {G1,G2} and {G1,G3}.
-#   neg_bounds          R3 has bounds [-10, -1]. MATLAB leaves it unsplit; geckopy splits
-#                       it, the forward copy gets bounds [0, -1] and the model refuses it
-#                       (ValueError).
-#   multi_sink          SINK2 'm1c + m2c <=>' has no gene. MATLAB leaves it unsplit with
-#                       bounds [-1000, 1000]; geckopy splits it into SINK2 and SINK2_REV.
+#   neg_bounds          R3 has bounds [-10, -1]. Both sides leave it unsplit.
+#   multi_sink          SINK2 'm1c + m2c <=>' has no gene. Both sides treat it as an exchange
+#                       and leave it unsplit with bounds [-1000, 1000].
 #   rxn_id_rev_suffix, rxn_id_exp_suffix, rxn_id_usage_prefix, met_id_prot_prefix
-#                       ids that collide with GECKO's own naming. MATLAB refuses each of
-#                       them; geckopy builds the model.
+#                       ids that collide with GECKO's own naming. Both sides refuse each of
+#                       them.
 #   enzyme_comp_is_id   the compartment 'c' is named 'cytosol' and the adapter asks for 'c'.
-#                       MATLAB compares with the compartment names and refuses; geckopy
-#                       accepts a compartment id.
+#                       Both sides compare with the compartment names and refuse.
 #   enzyme_comp_unknown the adapter asks for a compartment the model does not have; both
 #                       sides refuse.
-#   no_genes            every gene rule removed. MATLAB refuses (no protein matches a gene);
-#                       geckopy returns a model with an empty ec.
+#   no_genes            every gene rule removed. Both sides refuse (no protein matches a gene).
+#
+# The scenario has no remaining difference.
 
 entries:
   - makeEcModel

@@ -15,24 +15,25 @@ entries:
   - getKcatAcrossIsozymes
   - applyCustomKcats
 
-# Differences this scenario reports (seed-independent, confirmed by running both sides; the
-# scenario stays DIFFER until the sides are aligned or the difference is recorded as intended):
+# What this scenario compares (seed-independent, confirmed by running both sides). One
+# difference remains; every other case agrees.
+#   applyKcatConstraints, update-list vocabulary (light_update_ids): MATLAB accepts cobra
+#     reaction ids and rejects ec reaction ids in updateRxns; Python accepts ec reaction ids
+#     and rejects cobra ids.
 #   applyKcatConstraints, light model: both sides let every isozyme of a reaction compete for the
-#     cheapest cost when only some of its rows are named, and both skip an isozyme row with a kcat
-#     but no enzymes (the light_subset and light_empty_isozyme_row cases agree). MATLAB accepts
-#     cobra ids and rejects ec ids in updateRxns; Python is the other way round.
-#   applyKcatConstraints, full model: with every kcat 0 MATLAB returns before clearing, so the old
-#     coefficients stay; Python clears them. An empty update list means all reactions in MATLAB
-#     and none in Python.
-#   setKcatForReactions: Python applies the constraints by default, MATLAB never does; MATLAB
-#     matches ids case-insensitively and ignores an unknown id, Python needs an exact id and
-#     raises; a base id of a light model matches the ec rows in Python only.
-#   getKcatAcrossIsozymes (agrees): both sides fill only a kcat of 0 from known siblings, leave a
-#     NaN kcat alone, and change S only when asked (apply defaults to false).
-#   applyCustomKcats: MATLAB strips the quotes of a quoted reaction list (textscan %q) and
-#     Python keeps them, so the quoted list matches nothing in Python. Blank kcat entries,
-#     empty notes, exact protein and reaction ids and a protein-only row on a light model
-#     agree.
+#     cheapest cost when only some of its rows are named, and skip an isozyme row with a kcat
+#     but no enzymes (light_subset, light_empty_isozyme_row).
+#   applyKcatConstraints, full model: with every kcat 0 both sides clear the old coefficients
+#     (full_zero_reapply), and an empty update list means all reactions on both sides
+#     (full_update_list).
+#   setKcatForReactions: both sides change S only when asked (apply defaults to false), match
+#     ids without regard to case, ignore an unknown id and match a light-model id with its
+#     prefix as it stands (a base id matches no row).
+#   getKcatAcrossIsozymes: both sides fill only a kcat of 0 from siblings with a kcat above 0,
+#     leave a NaN kcat alone and change S only when asked (apply defaults to false).
+#   applyCustomKcats: both sides skip a blank kcat, append nothing for an empty note, match
+#     protein and reaction ids exactly, read a quoted reaction list without its quotes and
+#     apply a protein-only row on a light model.
 
 inputs:
   adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"

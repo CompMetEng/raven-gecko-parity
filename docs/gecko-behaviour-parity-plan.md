@@ -4,12 +4,13 @@ The gecko ledger carries **78 rows marked `parity`**, 61 of them linked to at le
 
 ## What exists now
 
-33 scenarios, 15 that match and 18 that report differences. A scenario reports DIFFER while any case differs; the differences are described in its `scenario.yml` and in the ledger notes of the functions concerned, and a deliberate difference is said to be deliberate there.
+33 scenarios, 16 that match and 17 that report differences. A scenario reports DIFFER while any case differs; the differences are described in its `scenario.yml` and in the ledger notes of the functions concerned, and a deliberate difference is said to be deliberate there.
 
 | Scenario | Covers | Verdict |
 |---|---|---|
 | `ec_fseof_ectestgem` | `ecFSEOF` | match |
 | `ec_fva_ectestgem` | `ecFVA` | match |
+| `ec_model_build_edge_cases_ectestgem` | `makeEcModel` | match |
 | `ec_model_expansion_ectestgem` | `makeEcModel`, `loadConventionalGEM`, `ModelAdapter` | match |
 | `ec_model_full_yeastgem` | `makeEcModel`, `getECfromGEM`, `fuzzyKcatMatching`, `assignKcatValues`, `applyKcatConstraints`, `setProtPoolSize` | match |
 | `enzyme_annotation_ectestgem` | `applyComplexData`, `getECfromGEM`, `getECfromDatabase` | match |
@@ -25,7 +26,6 @@ The gecko ledger carries **78 rows marked `parity`**, 61 of them linked to at le
 | `sigma_fitter_edge_cases_ectestgem` | `sigmaFitter` | match |
 | `complex_data_edge_cases_ectestgem` | `applyComplexData`, `calculateFfactor`, `fillEnzConcs` | differs: partial stoichiometry `[2, 0]`, `calculateFfactor` with a missing sample, a zero total and an empty enzyme list, a negative abundance in `fillEnzConcs` |
 | `ec_lookup_edge_cases_ectestgem` | `getECfromDatabase`, `findECInDB`, `applyECcodes`, `getSubsetEcModel` | differs: conflicting ECs for one gene |
-| `ec_model_build_edge_cases_ectestgem` | `makeEcModel` | differs: what `makeEcModel` refuses (ids with `_REV`/`_EXP_n`/`usage_prot`/`prot_pool`, `prot_` metabolites, a compartment given as an id, no genes), bounds `[-10, -1]`, a two-metabolite sink |
 | `ec_model_edit_edge_cases_ectestgem` | `addNewRxnsToEC`, `mapRxnsToConv`, `ecFVA` | differs: `addNewRxnsToEC` when no new enzyme is needed |
 | `ec_model_io_crossload_ectestgem` | `loadEcModel`, `saveEcModel` | differs: `subsystem` in MATLAB's YAML reader |
 | `ec_model_io_ectestgem` | `saveEcModel`, `loadEcModel` | differs: content of the written files: `metaData` description, charge, SBO terms, `subsystem`, gene names |
@@ -33,13 +33,13 @@ The gecko ledger carries **78 rows marked `parity`**, 61 of them linked to at le
 | `evotune_edge_cases_ectestgem` | `screenKcatLeverage`, `selectTunableMask`, `cmaesKcatTuning`, `nChanged`, `parsimonyFrontier`, `bestParsimonious` | differs: order of tied rows, source label, a model without formulas, a flat objective, a NaN RMSE in `bestParsimonious` |
 | `flexibilize_edge_cases_ectestgem` | `flexibilizeEnzConcs`, `relaxProteomicsGreedy`, `constrainEnzConcs` | differs: an infeasible start, `constrainEnzConcs` with a prior lower bound or a negative concentration, an empty `enzymeSet`, tied enzymes |
 | `flux_data_edge_cases_ectestgem` | `loadFluxData`, `constrainFluxData` | differs: argument handling of `loadFluxData` and `constrainFluxData` |
-| `kcat_apply_edge_cases_ectestgem` | `applyKcatConstraints`, `setKcatForReactions`, `getKcatAcrossIsozymes`, `applyCustomKcats` | differs: id vocabulary and all-zero or empty updates in `applyKcatConstraints`, the defaults of `setKcatForReactions`, a quoted list in `applyCustomKcats` |
+| `kcat_apply_edge_cases_ectestgem` | `applyKcatConstraints`, `setKcatForReactions`, `getKcatAcrossIsozymes`, `applyCustomKcats` | differs: the id vocabulary of the update list in `applyKcatConstraints` |
 | `kcat_assignment_pipeline_ectestgem` | `kcatAssignmentConfig`, `collectKcats`, `assignKcats`, `ecTreeEstimate`, `kcatsFromECTree` | differs: config validation, doubled candidates and the `ec.source` text in `collectKcats`, NaN `k` and subsets in the EC tree |
 | `kcat_io_edge_cases_ectestgem` | `findMetSmiles`, `writeOpenKineticsPredictorInput`, `saveKcatSource`, `loadKcatSource`, `getStandardKcat` | differs: `findMetSmiles` duplicates and unnamed metabolites, invalid rows in `loadKcatSource`, `getStandardKcat` |
 | `kcat_merge_edge_cases_ectestgem` | `readDLKcatOutput`, `writeDLKcatInput`, `loadBRENDAdata`, `fuzzyKcatMatching`, `mergeKcats`, `mergeDLKcatAndFuzzyKcats`, `assignKcatValues` | differs: `OKP-` sources in `mergeKcats`, `readDLKcatOutput`, `writeDLKcatInput` |
 | `kcat_review_stats_ectestgem` | `ecStatsFromBrenda`, `reviewKcatAssignment`, `loadBrendaMeasurements` | differs: `ecStatsFromBrenda`, the case of the source in `reviewKcatAssignment`, `measurements.tsv.xz` |
 | `protein_data_filters_ectestgem` | `loadProtData` | differs: column-count validation of `loadProtData` |
-| `sensitivity_tuning_edge_cases_ectestgem` | `sensitivityTuning`, `truncateValues` | differs: the stop rule for a lower-case `protToIgnore` id, `Inf` in `truncateValues` |
+| `sensitivity_tuning_edge_cases_ectestgem` | `sensitivityTuning`, `truncateValues` | differs: `Inf` in `truncateValues` |
 | `upgrade_gecko3_ectestgem` | `upgradeEcModel`, `upgradeGECKOproject`, `convertCustomKcats` | differs: how the readers turn reverse protein reactions, the project report, a project with an adapter class, DLKcat output with foreign substrates |
 
 The scenarios that match cover the base of the pipeline on GECKO's own unit-test model: the expansion into an ecModel, the annotation of its `ec` substructure, the protein budget, the kcat chain, OKP, enzyme usage, ecFVA, flexibilization, sensitivity tuning, ecFSEOF and calculateMW, and `ec_model_full_yeastgem` runs the full tutorial yeast-GEM through `makeEcModel` and a BRENDA kcat assignment. The `*_edge_cases_*` scenarios and `upgrade_gecko3_ectestgem`, `kcat_review_stats_ectestgem`, `kcat_assignment_pipeline_ectestgem`, `protein_data_filters_ectestgem` and `ec_model_io_crossload_ectestgem` feed the same functions inputs that the first fixtures skip, one input per case, so a difference names its cause. `ecTestGEM` is a seven-reaction model, so a scenario that needs a solver declares it explicitly (Gurobi on both sides).
@@ -258,7 +258,7 @@ the gecko entry always has them available even though raven is not the pair unde
 
 `parity refs --format shell` prints a `<pair>_<side>_repo=` line next to its `_ref=` line, so the workflow can check out or `git ls-remote` a pair without a second, hand-maintained copy of its repo name: `parity.toml` stays the one place that fact is written down.
 
-The scenarios that report documented differences are red: `complex_data_edge_cases_ectestgem`, `ec_lookup_edge_cases_ectestgem`, `ec_model_build_edge_cases_ectestgem`, `ec_model_edit_edge_cases_ectestgem`, `ec_model_io_crossload_ectestgem`, `ec_model_io_ectestgem`, `enzyme_usage_edge_cases_ectestgem`, `evotune_edge_cases_ectestgem`, `flexibilize_edge_cases_ectestgem`, `flux_data_edge_cases_ectestgem`, `kcat_apply_edge_cases_ectestgem`, `kcat_assignment_pipeline_ectestgem`, `kcat_io_edge_cases_ectestgem`, `kcat_merge_edge_cases_ectestgem`, `kcat_review_stats_ectestgem`, `protein_data_filters_ectestgem`, `sensitivity_tuning_edge_cases_ectestgem`, `upgrade_gecko3_ectestgem`. Red is the correct, documented answer there, the same shape the raven nightly has with `yaml_roundtrip_smallyeast` and `task_checking_smallyeast`.
+The scenarios that report documented differences are red: `complex_data_edge_cases_ectestgem`, `ec_lookup_edge_cases_ectestgem`, `ec_model_edit_edge_cases_ectestgem`, `ec_model_io_crossload_ectestgem`, `ec_model_io_ectestgem`, `enzyme_usage_edge_cases_ectestgem`, `evotune_edge_cases_ectestgem`, `flexibilize_edge_cases_ectestgem`, `flux_data_edge_cases_ectestgem`, `kcat_apply_edge_cases_ectestgem`, `kcat_assignment_pipeline_ectestgem`, `kcat_io_edge_cases_ectestgem`, `kcat_merge_edge_cases_ectestgem`, `kcat_review_stats_ectestgem`, `protein_data_filters_ectestgem`, `sensitivity_tuning_edge_cases_ectestgem`, `upgrade_gecko3_ectestgem`. Red is the correct, documented answer there, the same shape the raven nightly has with `yaml_roundtrip_smallyeast` and `task_checking_smallyeast`.
 
 ## Coverage by tier
 
@@ -266,7 +266,7 @@ The scenarios that report documented differences are red: `complex_data_edge_cas
 2. Tier 2, the kcat chain: `kcat_chain_ectestgem`, `okp_kcat_ectestgem` and `fuzzy_kcat_coefficient_ectestgem`.
 3. Tier 3, the solver tier: `enzyme_usage_ectestgem`, `ec_fva_ectestgem`, `flexibilize_concs_ectestgem`, `sensitivity_tuning_ectestgem` and `ec_fseof_ectestgem`.
 4. Tier 4, a real model: `ec_model_full_yeastgem`.
-5. Edge cases, which each report DIFFER while a case differs: the scenarios named `*_edge_cases_ectestgem`, `kcat_assignment_pipeline_ectestgem`, `kcat_review_stats_ectestgem`, `protein_data_filters_ectestgem` and `upgrade_gecko3_ectestgem`. `sigma_fitter_edge_cases_ectestgem` matches.
+5. Edge cases, which each report DIFFER while a case differs: the scenarios named `*_edge_cases_ectestgem`, `kcat_assignment_pipeline_ectestgem`, `kcat_review_stats_ectestgem`, `protein_data_filters_ectestgem` and `upgrade_gecko3_ectestgem`. `sigma_fitter_edge_cases_ectestgem` and `ec_model_build_edge_cases_ectestgem` match.
 6. The nightly runs the gecko pair as a second matrix entry, with a four-repo checkout and its own state and report files.
 
 The verdict of every scenario is in the table under "What exists now".
