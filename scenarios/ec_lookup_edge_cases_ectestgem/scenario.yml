@@ -19,6 +19,10 @@ description: >-
 #                G5, the only gene of its reaction, both sides drop the wildcard parent
 #                ('1.1.1.4;1.1.1.303').
 #   wildcard     P3 (R2's second isozyme) carries '1.1.1.1;1.1.1.-'; both sides give 1.1.1.1.
+#   complex_wildcard   P1 and P2 (R2's complex G1 and G2) both carry '1.1.1.4 1.1.1.-'; both
+#                sides give '1.1.1.4' for the complex.
+#   complex_one_gene_no_ec   P1 carries '1.1.1.4 1.1.1.-' and P2 has no EC; both sides leave G2
+#                out and give '1.1.1.4' for the complex.
 #   conflict     G4 (R3) appears twice with 1.1.2.1 and 1.1.2.2. With the action 'display'
 #                MATLAB raises and geckopy logs a warning and takes 1.1.2.1; with 'ignore'
 #                both sides agree.
@@ -49,6 +53,8 @@ inputs:
   database_checks:
     - {name: separators_display, variant: separators, action: display, subset: []}
     - {name: wildcard_display, variant: wildcard, action: display, subset: []}
+    - {name: complex_wildcard_display, variant: complex_wildcard, action: display, subset: []}
+    - {name: complex_one_gene_no_ec_display, variant: complex_one_gene_no_ec, action: display, subset: []}
     - {name: conflict_display, variant: conflict, action: display, subset: []}
     - {name: conflict_ignore, variant: conflict, action: ignore, subset: []}
     - name: conflict_unselected

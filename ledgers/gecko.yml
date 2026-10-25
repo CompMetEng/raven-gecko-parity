@@ -521,7 +521,7 @@ entries:
       - ec_lookup_edge_cases_ectestgem
     differs: []
     notes: >-
-      Both split a database cell on ';' and on white space. For a gene that is the only gene of its reaction and carries a wildcard together with specific codes ('1.1.1.4 1.1.1.- 1.1.1.303'), both sides drop the wildcard parent ('1.1.1.4;1.1.1.303') (ec_lookup_edge_cases_ectestgem). No difference of its own in ec_lookup_edge_cases_ectestgem, which differs for other functions.
+      Both split a database cell on white space and on ';' followed by a space. The EC set of every gene set, one gene or an enzyme complex, is cleaned of a wildcard next to a specific code of its prefix ('1.1.1.4 1.1.1.- 1.1.1.303' gives '1.1.1.4;1.1.1.303'; a complex whose genes both carry '1.1.1.4 1.1.1.-' gives '1.1.1.4'), and a gene without an EC number is left out of a complex, so '1.1.1.4 1.1.1.-' with an empty second gene gives '1.1.1.4' (ec_lookup_edge_cases_ectestgem). Codes with fewer than four levels are neither wildcard parents nor children. A cell that joins codes with ';' and no space is read as one code by MATLAB's getECstring and split by geckopy; UniProt and KEGG separate codes with a space. No difference of its own in ec_lookup_edge_cases_ectestgem, which differs for other functions.
   - matlab: findGECKOroot
     status: internal
     reason: Path helper. pathlib.Path(__file__) covers it; nothing to port.
