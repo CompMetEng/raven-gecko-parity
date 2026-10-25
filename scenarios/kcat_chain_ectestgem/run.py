@@ -15,7 +15,9 @@ the one reaction shape ecTestGEM's stock model does not have, needed to exercise
 getStandardKcat's new-pseudo-protein path rather than only its fillZeroKcat path).
 
 The checkpoints cover every stage on both sides. `selection.select_median` records the
-kcat rows that `criteria="median"` leaves, `applyCustomKcats` (mode A) writes the kcat, sets
+kcat rows that `criteria="median"` leaves, `selection.select_aggregates` the median and the
+mean of three candidates for one reaction (100 from 'custom' first, then 200 and 180 from
+'dlkcat': median 180, mean 160, source of the first row), `applyCustomKcats` (mode A) writes the kcat, sets
 `ec.source` to 'custom' and records the note, and the isolated
 `constraints.light_partial_isozyme` sub-case builds a light model with one reaction and two
 isozymes of which only one has a kcat: both sides price the reaction with the isozyme that
@@ -257,6 +259,25 @@ def _checkpoint_selection(model, merged, inputs: dict):
     except Exception:  # noqa: BLE001 (whether it raises is the finding, not the exception type)
         median_result = {"raised": True, "rows": []}
     out["select_median"] = median_result
+
+    # One reaction with three candidates (kcat 100 from 'custom' first, then 200 and 180 from
+    # 'dlkcat'): the median is 180, the mean 160, and the recorded source is that of the first row.
+    candidates = pd.DataFrame(
+        {
+            "rxn_id": ["R2a_EXP_1"] * 3,
+            "kcat": [100.0, 200.0, 180.0],
+            "source": ["custom", "dlkcat", "dlkcat"],
+        }
+    )
+    aggregates = {}
+    for criterion in ("median", "mean"):
+        probe = model.copy()
+        try:
+            apply_kcat_list(probe, candidates, criteria=criterion)
+            aggregates[criterion] = {"raised": False, "rows": _kcat_rows(probe, ["R2a_EXP_1"])}
+        except Exception:  # noqa: BLE001 (whether it raises is the finding, not the exception type)
+            aggregates[criterion] = {"raised": True, "rows": []}
+    out["select_aggregates"] = aggregates
 
     fill_kcats_from_isozymes(model, apply=False)
     out["after_isozyme_fill"] = _kcat_rows(model, _all_ec_rxns(model))

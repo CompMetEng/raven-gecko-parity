@@ -24,7 +24,7 @@ The gecko ledger carries **78 rows marked `parity`**, 61 of them linked to at le
 | `sensitivity_tuning_ectestgem` | `sensitivityTuning`, `sigmaFitter`, `truncateValues` | match |
 | `sigma_fitter_edge_cases_ectestgem` | `sigmaFitter` | match |
 | `complex_data_edge_cases_ectestgem` | `applyComplexData`, `calculateFfactor`, `fillEnzConcs` | differs: partial stoichiometry `[2, 0]`, `calculateFfactor` with a missing sample, a zero total and an empty enzyme list, a negative abundance in `fillEnzConcs` |
-| `ec_lookup_edge_cases_ectestgem` | `getECfromDatabase`, `findECInDB`, `applyECcodes`, `getSubsetEcModel` | differs: a single gene with a wildcard and specific ECs, conflicting ECs for one gene |
+| `ec_lookup_edge_cases_ectestgem` | `getECfromDatabase`, `findECInDB`, `applyECcodes`, `getSubsetEcModel` | differs: conflicting ECs for one gene |
 | `ec_model_build_edge_cases_ectestgem` | `makeEcModel` | differs: what `makeEcModel` refuses (ids with `_REV`/`_EXP_n`/`usage_prot`/`prot_pool`, `prot_` metabolites, a compartment given as an id, no genes), bounds `[-10, -1]`, a two-metabolite sink |
 | `ec_model_edit_edge_cases_ectestgem` | `addNewRxnsToEC`, `mapRxnsToConv`, `ecFVA` | differs: `addNewRxnsToEC` when no new enzyme is needed |
 | `ec_model_io_crossload_ectestgem` | `loadEcModel`, `saveEcModel` | differs: `subsystem` in MATLAB's YAML reader |
@@ -36,7 +36,7 @@ The gecko ledger carries **78 rows marked `parity`**, 61 of them linked to at le
 | `kcat_apply_edge_cases_ectestgem` | `applyKcatConstraints`, `setKcatForReactions`, `getKcatAcrossIsozymes`, `applyCustomKcats` | differs: id vocabulary and all-zero or empty updates in `applyKcatConstraints`, the defaults of `setKcatForReactions`, a quoted list in `applyCustomKcats` |
 | `kcat_assignment_pipeline_ectestgem` | `kcatAssignmentConfig`, `collectKcats`, `assignKcats`, `ecTreeEstimate`, `kcatsFromECTree` | differs: config validation, doubled candidates and the `ec.source` text in `collectKcats`, NaN `k` and subsets in the EC tree |
 | `kcat_io_edge_cases_ectestgem` | `findMetSmiles`, `writeOpenKineticsPredictorInput`, `saveKcatSource`, `loadKcatSource`, `getStandardKcat` | differs: `findMetSmiles` duplicates and unnamed metabolites, invalid rows in `loadKcatSource`, `getStandardKcat` |
-| `kcat_merge_edge_cases_ectestgem` | `readDLKcatOutput`, `writeDLKcatInput`, `loadBRENDAdata`, `fuzzyKcatMatching`, `mergeKcats`, `mergeDLKcatAndFuzzyKcats`, `assignKcatValues` | differs: the `topOriginLimit` default and `OKP-` sources in `mergeKcats`, `readDLKcatOutput`, `writeDLKcatInput` |
+| `kcat_merge_edge_cases_ectestgem` | `readDLKcatOutput`, `writeDLKcatInput`, `loadBRENDAdata`, `fuzzyKcatMatching`, `mergeKcats`, `mergeDLKcatAndFuzzyKcats`, `assignKcatValues` | differs: `OKP-` sources in `mergeKcats`, `readDLKcatOutput`, `writeDLKcatInput` |
 | `kcat_review_stats_ectestgem` | `ecStatsFromBrenda`, `reviewKcatAssignment`, `loadBrendaMeasurements` | differs: `ecStatsFromBrenda`, the case of the source in `reviewKcatAssignment`, `measurements.tsv.xz` |
 | `protein_data_filters_ectestgem` | `loadProtData` | differs: column-count validation of `loadProtData` |
 | `sensitivity_tuning_edge_cases_ectestgem` | `sensitivityTuning`, `truncateValues` | differs: the stop rule for a lower-case `protToIgnore` id, `Inf` in `truncateValues` |

@@ -20,8 +20,8 @@ entries:
 
 # Differences this scenario reports (seed-independent, confirmed by running both sides; the
 # scenario stays DIFFER until the sides are aligned or the difference is recorded as intended):
-#   mergeKcats and mergeDLKcatAndFuzzyKcats: topOriginLimit defaults to 6 in MATLAB and 4 in
-#     Python, so a BRENDA match of origin 5 or 6 beats a DLKcat prediction in MATLAB only. MATLAB
+#   mergeKcats and mergeDLKcatAndFuzzyKcats: topOriginLimit defaults to 4 on both sides, so a
+#     BRENDA match of origin 5 or 6 ranks after a DLKcat prediction on both sides. MATLAB
 #     normalises 'OKP-BRENDA' and 'OKP-CataPro' to 'okp_brenda' and 'okp_catapro', which are
 #     neither database sources nor listed in the priority, so those rows are dropped and the
 #     reactions take the DLKcat value 9; Python strips the okp_ prefix for matching, so

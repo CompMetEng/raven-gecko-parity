@@ -1,3 +1,3 @@
-# kcat-chain scenario fixture --- one inert row so the loader has something non-empty to index; see scenario.yml
+# One inert row: loadBRENDAdata builds a containers.Map from mw.tsv and refuses an empty key list.
 ec_code	substrate	organism	mw	n	references
 9.9.9.9	*	nonexistent organism	1.0	1	*

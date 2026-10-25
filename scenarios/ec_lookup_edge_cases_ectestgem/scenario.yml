@@ -16,9 +16,7 @@ description: >-
 #   separators   P1 carries '1.1.1.1; 2.2.2.2' and P2 '2.2.2.2' (R2's complex G1 and G2); the
 #                KEGG entry of G5, which UniProt leaves empty, is '1.1.1.4 1.1.1.- 1.1.1.303'.
 #                Both sides split a cell on ';' and on spaces, so the complex gets '2.2.2.2'. For
-#                G5, the only gene of its reaction, MATLAB keeps all three codes
-#                ('1.1.1.4;1.1.1.-;1.1.1.303') because it compares wildcards only between the
-#                genes of a complex; geckopy also removes the wildcard parent of a single gene
+#                G5, the only gene of its reaction, both sides drop the wildcard parent
 #                ('1.1.1.4;1.1.1.303').
 #   wildcard     P3 (R2's second isozyme) carries '1.1.1.1;1.1.1.-'; both sides give 1.1.1.1.
 #   conflict     G4 (R3) appears twice with 1.1.2.1 and 1.1.2.2. With the action 'display'

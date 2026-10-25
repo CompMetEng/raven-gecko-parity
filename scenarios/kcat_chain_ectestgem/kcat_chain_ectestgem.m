@@ -144,6 +144,24 @@ catch
     out.select_median.rows = cell(1, 0);
 end
 
+% One reaction with three candidates (kcat 100 from 'custom' first, then 200 and 180 from
+% 'dlkcat'): the median is 180, the mean 160, and the recorded source is that of the first row.
+candidates.rxns = {'R2a_EXP_1'; 'R2a_EXP_1'; 'R2a_EXP_1'};
+candidates.kcats = [100; 200; 180];
+candidates.kcatSource = {'custom'; 'dlkcat'; 'dlkcat'};
+criteria = {'median', 'mean'};
+for k = 1:numel(criteria)
+    try
+        probe = assignKcatValues(ecModel, candidates, 'criteria', criteria{k});
+        aggregates.(criteria{k}).raised = false;
+        aggregates.(criteria{k}).rows = kcat_rows(probe, {'R2a_EXP_1'});
+    catch
+        aggregates.(criteria{k}).raised = true;
+        aggregates.(criteria{k}).rows = cell(1, 0);
+    end
+end
+out.select_aggregates = aggregates;
+
 ecModel = getKcatAcrossIsozymes(ecModel);
 out.after_isozyme_fill = kcat_rows(ecModel, ecModel.ec.rxns);
 

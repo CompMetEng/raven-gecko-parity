@@ -422,7 +422,7 @@ entries:
     scenarios:
       - ec_lookup_edge_cases_ectestgem
     notes: >-
-      Both split a database cell on ';' and on white space. For a gene that is the only gene of its reaction and carries a wildcard together with specific codes ('1.1.1.4 1.1.1.- 1.1.1.303'), MATLAB keeps all three because it compares wildcards only between the genes of a complex, geckopy also removes the wildcard parent ('1.1.1.4;1.1.1.303') (ec_lookup_edge_cases_ectestgem).
+      Both split a database cell on ';' and on white space. For a gene that is the only gene of its reaction and carries a wildcard together with specific codes ('1.1.1.4 1.1.1.- 1.1.1.303'), both sides drop the wildcard parent ('1.1.1.4;1.1.1.303') (ec_lookup_edge_cases_ectestgem).
   - matlab: findGECKOroot
     status: internal
     reason: Path helper. pathlib.Path(__file__) covers it; nothing to port.
@@ -606,7 +606,7 @@ entries:
       - kcat_chain_ectestgem
       - kcat_merge_edge_cases_ectestgem
     notes: >-
-      Matching three tier tokens (database_exact/database_top/database_bottom), matching default database source set (brenda, sabio_rk), matching source-label normalisation to lowercase snake_case. topOriginLimit defaults to 6 in MATLAB and 4 in geckopy, so a BRENDA match of origin 5 or 6 beats a DLKcat prediction in MATLAB only. A row whose source carries the OKP- tag is matched by its underlying source in geckopy (the okp_ prefix is stripped for matching, so 'OKP-BRENDA' routes to the database tiers and 'OKP-CataPro' matches a 'catapro' priority entry, and the rows keep their OKP- source label). MATLAB drops those rows (the normalised source okp_brenda is neither a database source nor in the priority), so for the probe reactions it takes DLKcat with kcat 9 where geckopy keeps kcat 3 (OKP-BRENDA) and 4 (OKP-CataPro) (kcat_merge_edge_cases_ectestgem).
+      Matching three tier tokens (database_exact/database_top/database_bottom), matching default database source set (brenda, sabio_rk), matching source-label normalisation to lowercase snake_case. topOriginLimit defaults to 4 on both sides, so a BRENDA match of origin 5 or 6 ranks after a DLKcat prediction unless topOriginLimit is raised. A row whose source carries the OKP- tag is matched by its underlying source in geckopy (the okp_ prefix is stripped for matching, so 'OKP-BRENDA' routes to the database tiers and 'OKP-CataPro' matches a 'catapro' priority entry, and the rows keep their OKP- source label). MATLAB drops those rows (the normalised source okp_brenda is neither a database source nor in the priority), so for the probe reactions it takes DLKcat with kcat 9 where geckopy keeps kcat 3 (OKP-BRENDA) and 4 (OKP-CataPro) (kcat_merge_edge_cases_ectestgem).
   - matlab: ModelAdapter
     python: geckopy.ModelAdapter
     status: parity
