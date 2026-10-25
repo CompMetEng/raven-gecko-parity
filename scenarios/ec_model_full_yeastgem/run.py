@@ -99,7 +99,7 @@ def run(ctx):
         "eccodes_populated": sum(1 for e in model.ec.eccodes if e),
     }
 
-    brenda = load_brenda_data(Path(inputs["databases_dir"]))
+    brenda = load_brenda_data(Path(inputs["databases_dir"]) / "brenda-2026.1-1")
 
     phyl_dist = load_phyl_dist(Path(inputs["adapter_matlab"]).parent / "PhylDist.mat")
     fuzzy_df = fuzzy_kcat_matching(model, brenda, phyl_dist)

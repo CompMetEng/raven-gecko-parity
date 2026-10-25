@@ -31,7 +31,7 @@ inputs:
   adapter_matlab: "{scenario_dir}/YeastGEMAdapterParity.m"
   adapter_python: "{matlab_repo}/tutorials/full_ecModel"
   fixture_dir: "{matlab_repo}/tutorials/full_ecModel"
-  databases_dir: "{matlab_repo}/databases/brenda-2026.1-1"
+  databases_dir: "{matlab_repo}/databases"
 
   matlab_solver: gurobi
   python_solver: gurobi
@@ -57,9 +57,11 @@ inputs:
 
 # GECKO does not ship BRENDA data: fetchBrendaAsset downloads the toolbox-assets release
 # brenda-2026.1-1 into databases/brenda-2026.1-1 on first use, the same kcat.tsv / mw.tsv /
-# sa.tsv files that geckopy's load_brenda_data reads. databases_dir names that folder; the
-# MATLAB side reaches it through ModelAdapter.getBrendaDBFolder. Run any GECKO function that
-# loads BRENDA (or fetchBrendaAsset) once before this scenario so the folder exists.
+# sa.tsv files that geckopy's load_brenda_data reads. databases_dir names GECKO's databases
+# folder, which every checkout has; run.py reads the brenda-2026.1-1 folder inside it and the
+# MATLAB side reaches the same folder through ModelAdapter.getBrendaDBFolder. Run any GECKO
+# function that loads BRENDA (or fetchBrendaAsset) once before this scenario so the folder
+# exists.
 # kcat_chain_ectestgem is unaffected: its own five-row BRENDA fixture is hand-written
 # directly in geckopy's format on both sides.
 
