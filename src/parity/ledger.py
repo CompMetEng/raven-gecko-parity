@@ -30,7 +30,7 @@ ONE_SIDED = frozenset({"matlab-only", "python-only", "via-dependency", "subsumed
 #: Statuses that represent queued work rather than a settled decision.
 PENDING = frozenset({"python-pending", "matlab-pending"})
 
-FIELD_ORDER = ("matlab", "python", "status", "reason", "issue", "scenarios", "notes")
+FIELD_ORDER = ("matlab", "python", "status", "reason", "issue", "scenarios", "differs", "notes")
 
 
 class LedgerError(RuntimeError):
@@ -48,6 +48,10 @@ class Entry:
     issue: str | None = None
     notes: str | None = None
     scenarios: list[str] = field(default_factory=list)
+    #: Checkpoint path prefixes (without the leading ``results.``) where the linked scenarios
+    #: still differ. ``None`` means the row does not say; ``[]`` says the row has no
+    #: difference of its own.
+    differs: list[str] | None = None
 
     @property
     def label(self) -> str:
@@ -62,6 +66,10 @@ class Entry:
         out: dict[str, object] = {}
         for name in FIELD_ORDER:
             value = getattr(self, name)
+            if name == "differs":
+                if value is not None:
+                    out[name] = list(value)
+                continue
             if value in (None, "", []):
                 continue
             out[name] = value
@@ -76,6 +84,9 @@ class Ledger:
     entries: list[Entry]
     version: int = 1
     path: Path | None = None
+    #: When true, ``parity ledger-audit`` requires every parity row linked to a scenario that
+    #: differs to list where in its ``differs`` field, and every difference to be listed.
+    strict_differs: bool = False
 
     def by_matlab(self) -> dict[str, Entry]:
         return {e.matlab: e for e in self.entries if e.matlab}
@@ -149,6 +160,11 @@ def load_ledger(path: Path) -> Ledger:
         scenarios = raw.get("scenarios") or []
         if isinstance(scenarios, str):
             scenarios = [scenarios]
+        differs = raw.get("differs")
+        if isinstance(differs, str):
+            differs = [differs]
+        if differs is not None and not isinstance(differs, list):
+            raise LedgerError(f"{path}: entry {index} has a 'differs' that is not a list")
         entries.append(
             Entry(
                 status=str(raw["status"]),
@@ -158,6 +174,7 @@ def load_ledger(path: Path) -> Ledger:
                 issue=raw.get("issue"),
                 notes=raw.get("notes"),
                 scenarios=list(scenarios),
+                differs=None if differs is None else [str(item) for item in differs],
             )
         )
 
@@ -168,6 +185,7 @@ def load_ledger(path: Path) -> Ledger:
         entries=entries,
         version=int(data.get("version", 1)),
         path=path,
+        strict_differs=bool(data.get("strict_differs", False)),
     )
 
 
@@ -197,6 +215,8 @@ def dump_ledger(ledger: Ledger) -> str:
         "matlab": ledger.matlab_repo,
         "python": ledger.python_repo,
     }
+    if ledger.strict_differs:
+        head["strict_differs"] = True
     buffer.write(yaml.safe_dump(head, sort_keys=False, allow_unicode=True))
     buffer.write("\nentries:\n")
 

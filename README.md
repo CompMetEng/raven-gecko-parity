@@ -85,6 +85,28 @@ The `matlab-pending` and `python-pending` rows *are* the back-port queue. The `m
 `python-only`, `via-dependency` and `subsumed` rows *are* the divergence register. Neither
 needs to be maintained separately, and `parity report` renders both.
 
+A `parity` row linked to a scenario that differs can say where, with `differs`, a list of
+checkpoint path prefixes (without the leading `results.` and without list indices):
+
+```yaml
+- matlab: saveEcModel
+  python: geckopy.save_ec_model
+  status: parity
+  scenarios:
+    - ec_model_io_ectestgem
+  differs:
+    - written
+  notes: The written files differ in metaData, charge, SBO terms and gene names.
+```
+
+`parity ledger-audit --results DIR` rebuilds the differences of each linked scenario from the run
+(`python/<id>.seed<N>.json` against `matlab/<id>.json`) and fails when a listed prefix matches
+none of them. `differs: []` says the row has no difference of its own and needs a note. With
+`strict_differs: true` at the top of a ledger, every `parity` row linked to a scenario that differs
+has to carry the list, and every group of differences (the first two path segments) of such a
+scenario has to be listed by at least one row that links it. Ledgers and rows without these keys
+are audited by the note rule alone.
+
 ## Local mirroring
 
 Rather than a cross-repo bot, the mirror check runs on your machine at the two moments it
