@@ -241,7 +241,8 @@ out.subset_order_and_repeat = run_fuzzy(model, idx, kcatAdapter);
 
 model = build_model(adapter);
 try
-    list = fuzzyKcatMatching(model, 'ecRxns', [], 'modelAdapter', kcatAdapter);
+    % [] selects all reactions in MATLAB; an empty index vector selects none, as an empty list does in Python
+    list = fuzzyKcatMatching(model, 'ecRxns', zeros(0,1), 'modelAdapter', kcatAdapter);
     raised = false;
     n = numel(list.rxns);
 catch

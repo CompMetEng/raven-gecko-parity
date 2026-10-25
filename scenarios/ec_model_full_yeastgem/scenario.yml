@@ -90,16 +90,12 @@ inputs:
 #
 # Both are fixed in GECKO develop.
 #
-# One divergence remains, in 8 of 4671 kcats (r_2324 to r_2331, the acyl-DHAP reductases of
-# EC 1.1.1.101): Python gives 11920.0 (wildcard level 1, origin 3), MATLAB 0.0021615
-# (wildcard level 0, origin 5, a kcat derived from a specific activity and a molecular
-# weight). geckopy's load_brenda_data drops a BRENDA row whose kcat is more than four orders
-# of magnitude below the median of its EC (filter_outlier_kcats=True, the default);
-# loadBRENDAdata.m has no such filter. Running the Python side on r_2324 with
-# filter_outlier_kcats=False returns 0.002162, the MATLAB value. The EC-code counts
-# (3799 reactions with an EC), the number of reactions with a kcat (3799), the protein pool
-# bound and every other kcat agree. fill_eccodes_from_gem skips 36 EC strings that fail its
-# format check (for example '1.1.1.n12;4.2.1.119'); the counts above include that effect.
+# Both loaders drop a BRENDA row whose kcat is more than four orders of magnitude below the
+# median of its EC (filterOutlierKcats and filter_outlier_kcats, both default true). The 0.002
+# 1/s kcat derived from a specific activity for EC 1.1.1.101 is therefore dropped before
+# matching on both sides, and the acyl-DHAP reductases r_2324 to r_2331 get the same kcat. The
+# EC-code counts, the number of reactions with a kcat, the protein pool bound and every kcat
+# agree.
 tolerance:
   rel: 1.0e-9
   abs: 1.0e-12

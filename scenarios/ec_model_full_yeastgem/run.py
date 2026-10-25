@@ -4,7 +4,7 @@ Runs the full non-DLKcat pipeline --- make_ec_model, fill_eccodes_from_gem,
 fuzzy_kcat_matching, apply_kcat_list, apply_kcat_constraints, set_prot_pool_size --- on
 GECKO's own yeast-GEM tutorial model. See scenario.yml for why DLKcat is out of scope,
 why eccodes needs a small amount of scenario-side data preparation before the pipeline
-can run at all, and the divergence this scenario asserts.
+can run at all.
 """
 
 from pathlib import Path

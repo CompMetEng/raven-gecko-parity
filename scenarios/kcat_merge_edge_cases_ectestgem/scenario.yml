@@ -31,15 +31,16 @@ entries:
 #     only 'None' raises in Python and returns an empty list in MATLAB.
 #   writeDLKcatInput: an empty selection raises in MATLAB and writes an empty file in Python;
 #     rows follow ec.rxns order in MATLAB and the order of the caller in Python.
-#   loadBRENDAdata: Python drops a row four decades below the median of its EC (when five or
-#     more values exist); MATLAB has no such filter.
-#   fuzzyKcatMatching: an EC code with no relative in BRENDA reaches a global wildcard level 4 in
-#     Python and gives kcat 0 in MATLAB; with two EC codes of equal kcat MATLAB reports the
-#     wildcard match and Python the exact one; a subset is returned in the order and with the
-#     repeats of the caller in Python and in model order without repeats in MATLAB; an empty
-#     subset means all reactions in MATLAB and none in Python.
-# assignKcatValues agrees: rows with kcat 0 are removed together with their kcatSource, so a
-# kept row keeps its own source.
+# Agreements this scenario checks:
+#   loadBRENDAdata: both sides drop a row four decades below the median of its EC when five or
+#     more values exist.
+#   fuzzyKcatMatching: an EC code with no relative in BRENDA reaches wildcard level 4 on both
+#     sides (kcat 80, origin 3); with two EC codes of equal kcat both report the wildcard level
+#     and origin of the exact one; a subset keeps the order and the repeats of the caller; an
+#     empty selection returns no reactions (MATLAB selects all reactions with [] and none with
+#     an empty index vector).
+#   assignKcatValues: rows with kcat 0 are removed together with their kcatSource, so a kept
+#     row keeps its own source.
 
 inputs:
   adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
@@ -56,7 +57,7 @@ inputs:
   phyl_dist_path: "{scenario_dir}/data/PhylDist.mat"
 
   # Seven measurements of 1.1.1.1 (six near 10, one at 1e-4), for the outlier filter of
-  # load_brenda_data, which has no counterpart in loadBRENDAdata.
+  # both loaders.
   outlier_root: "{scenario_dir}/outlier"
   outlier_brenda_dir: "{scenario_dir}/outlier/data"
 

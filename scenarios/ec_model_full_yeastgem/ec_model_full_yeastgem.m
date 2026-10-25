@@ -2,8 +2,7 @@ function results = ec_model_full_yeastgem(ctx)
 % MATLAB side of the genome-scale ecModel pipeline scenario (Tier 4).
 %
 % Runs the full non-DLKcat pipeline on GECKO's own yeast-GEM tutorial model. See
-% scenario.yml for why DLKcat is out of scope and for the divergence this scenario asserts
-% (geckopy's default outlier filter on BRENDA kcats). Unlike the Python side, no
+% scenario.yml for why DLKcat is out of scope. Unlike the Python side, no
 % eccodes or BRENDA-format workaround is needed here: readYAMLmodel and
 % loadBRENDAdata.m already read yeast-GEM.yml and GECKO's own BRENDA files natively.
 

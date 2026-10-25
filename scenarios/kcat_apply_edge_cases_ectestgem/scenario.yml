@@ -29,11 +29,10 @@ entries:
 #     raises; a base id of a light model matches the ec rows in Python only.
 #   getKcatAcrossIsozymes: a NaN kcat is filled from known siblings in Python and left alone in
 #     MATLAB; Python rewrites S for the filled rows by default.
-#   applyCustomKcats: MATLAB writes a NaN kcat for a blank cell (with source and notes), appends
-#     ', ' for empty notes, matches protein ids case-insensitively and strips quotes from a
-#     quoted reaction list; Python skips blank rows, leaves empty notes alone, needs exact ids
-#     and keeps the quotes (so the quoted list matches nothing). A protein-only row on a light
-#     model is applied in Python and ignored in MATLAB.
+#   applyCustomKcats: MATLAB strips the quotes of a quoted reaction list (textscan %q) and
+#     Python keeps them, so the quoted list matches nothing in Python. Blank kcat entries,
+#     empty notes, exact protein and reaction ids and a protein-only row on a light model
+#     agree.
 
 inputs:
   adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
