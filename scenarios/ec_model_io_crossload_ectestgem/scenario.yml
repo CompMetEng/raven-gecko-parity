@@ -28,7 +28,9 @@ description: >-
 # reactions); MATLAB's readYAMLmodel stores the entries in a cell array indexed by reaction and
 # then flattens it with `[model.subSystems{:}]`, which drops the empty cells, so the six
 # `Protein usage` entries land on the first six reactions of the file. This scenario stays
-# DIFFER on `reactions[*].subsystem` of `file_written_by_python`.
+# DIFFER on `reactions[*].subsystem` of `file_written_by_python`. The difference comes from the
+# flatten step of readYAMLmodel in RAVEN develop and ends when the fix in CompMetEng/RAVEN#14 is
+# in the RAVEN that GECKO loads.
 
 entries:
   - loadEcModel
