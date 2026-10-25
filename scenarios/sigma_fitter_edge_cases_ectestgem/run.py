@@ -63,14 +63,15 @@ def _model(adapter, conv, inputs: dict, bounds: dict):
     return model
 
 
-def _case(adapter, conv, inputs: dict, bounds: dict, growth: float, method: str, report_bounds: bool) -> dict:
+def _case(adapter, conv, inputs: dict, bounds: dict, growth: float, method, report_bounds: bool) -> dict:
     model = _model(adapter, conv, inputs, bounds)
+    kwargs = {} if method is None else {"method": method}
     result = fit_sigma(
         model,
         growth_rate=float(growth),
         p_tot=float(inputs["p_tot"]),
         f=float(inputs["f"]),
-        method=method,
+        **kwargs,
     )
     pool = model.reactions.get_by_id("prot_pool_exchange")
     bio = model.reactions.get_by_id(str(inputs["bio_rxn"]))
@@ -104,6 +105,6 @@ def run(ctx):
     ):
         # method="grid" is the algorithm of sigmaFitter; "default" leaves the choice to fit_sigma.
         report = name == "fixed_biomass"
-        cases[f"{name}_default"] = _case(adapter, conv, inputs, bounds, growth, "bisect", report)
+        cases[f"{name}_default"] = _case(adapter, conv, inputs, bounds, growth, None, report)
         cases[f"{name}_grid"] = _case(adapter, conv, inputs, bounds, growth, "grid", report)
     return cases

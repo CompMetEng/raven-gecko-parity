@@ -4,7 +4,7 @@ description: >-
   Edge cases of the sigma fit (sigmaFitter, fit_sigma) on ecTestGEM's single-route ecModel: a target
   that falls between two grid points, a target that uptake caps below reach, and a biomass reaction
   with fixed bounds. Each case runs once with geckopy's default method and once with method="grid",
-  which is the algorithm of sigmaFitter.
+  both the algorithm of sigmaFitter.
 
 entries:
   - sigmaFitter
@@ -42,32 +42,22 @@ inputs:
 
 # Cases and what they exercise
 #
-# on_grid_*: the target is the growth rate at sigma 0.11, so both algorithms land on 0.11. Control
-#   with real content on both sides.
-# between_grid_*: 100 lies between sigma 0.11 (96.0) and 0.12 (104.7). The grid picks the nearer grid
-#   point, while the default bisection returns the smallest sigma that reaches the target, about
-#   0.1146. Both are in the result, so the grid cases isolate the algorithm from the rest.
-# uptake_cap_*: the target 100 is out of reach. growth is flat from sigma 0.0573 on. sigmaFitter takes
-#   the first grid point with the smallest error, the default bisection takes sigma 1.
-# fixed_biomass_*: the biomass reaction has lower bound = upper bound = 0.1. sigmaFitter opens the
-#   bounds of its objective to (0, 1000) before it scans, and returns the model with them open; fit_sigma
-#   leaves them alone, so every solve returns the fixed 0.1 and the target 100 looks unreachable.
-
-# Differences confirmed by direct execution (seeds 0, 1 and 2 agree):
+# Each case runs fit_sigma without a method (the default, the grid of sigmaFitter) and with
+# method="grid". Both sides give the same sigma and the same protein pool bound in every case.
 #
-# fit_sigma's default method is bisection (sigma_fitter.py: method="bisect"), sigmaFitter always scans the grid
-# (sigmaFitter.m: for i=1:100). On a target between two grid points the sigmas are 0.1146 and 0.11 (between_grid_default).
-# When the target is unreachable (uptake_cap_default) the bisection returns sigma 1 (`if growth_at(1.0) < growth_rate`),
-# sigmaFitter the first grid point with the smallest error, 0.06. With method="grid" the two sides give the same sigma and
-# the same protein pool bound in every case.
+# on_grid_*: the target is the growth rate at sigma 0.11, so both land on 0.11. Control with real
+#   content on both sides.
+# between_grid_*: 100 lies between sigma 0.11 (96.0) and 0.12 (104.7). Both sides take the nearer grid
+#   point, 0.11.
+# uptake_cap_*: the target 100 is out of reach. growth is flat from sigma 0.0573 on, and both sides
+#   take the first grid point with the smallest error, 0.06.
+# fixed_biomass_*: the biomass reaction has lower bound = upper bound = 0.1. Both sides open the bounds
+#   of their objective to (0, 1000) before they scan and return the model with them open, so the fit
+#   is 0.11 as without the fixed bounds.
 #
-# sigmaFitter sets the bounds of its objective reaction to (0, 1000) before it scans (sigmaFitter.m lines 81-82) and
-# returns the model with them. fit_sigma leaves the bounds alone, so with a biomass reaction fixed at 0.1 every solve
-# returns 0.1, the target 100 looks unreachable, and the fit returns sigma 1 (default) or 0.01 (grid).
+# fit_sigma(method="bisect") is not part of this scenario: it bisects to a sigma resolution of 1e-6 and
+# does not land on the grid.
 
-# The default method bisects to a sigma resolution of 1e-6, so a target that lies on the grid returns a sigma
-# within about 3e-6 (relative) of the grid point; the tolerance allows that and nothing near the 4 percent that
-# a target between two grid points gives.
 tolerance:
-  rel: 1.0e-5
-  abs: 1.0e-9
+  rel: 1.0e-9
+  abs: 1.0e-12

@@ -3,7 +3,7 @@ pair: gecko
 description: >-
   Edge cases of sensitivityTuning and truncateValues on ecTestGEM's single-route ecModel: the order of the
   tuned reactions, tuning a model that was tuned before, how the pre-tune kcat is written to ec.notes, the
-  physical ceiling for a tuned kcat, protToIgnore with an unknown or a lower-case id, a model whose growth is
+  tuned kcat above 1e7, protToIgnore with an unknown or a lower-case id, a model whose growth is
   zero, a gecko-light model, and rounding ties.
 
 entries:
@@ -47,8 +47,8 @@ inputs:
     R5: 200.0
   notes_long_desired_growth: 1000.0
 
-  # ceiling: R3 at 2e6 /s is the limiting reaction with a pool of 0.01 mg; a bump by 10 gives 2e7, above
-  # the 1e7 ceiling that geckopy applies to a tuned kcat. R5 at 1e8 /s costs next to nothing.
+  # ceiling: R3 at 2e6 /s is the limiting reaction with a pool of 0.01 mg; a bump by 10 gives 2e7. A tuned
+  # kcat has no upper limit on either side. R5 at 1e8 /s costs next to nothing.
   ceiling_kcats:
     R3: 2000000.0
     R5: 100000000.0
@@ -81,23 +81,16 @@ inputs:
   # and the non-finite values.
   truncate_inputs: ["100000.5", "1234565", "-1234565", "0.5", "0", "Inf", "NaN"]
 
-# Differences confirmed by direct execution (seeds 0, 1 and 2 agree):
+# Results (seeds 0, 1 and 2 agree):
 #
-# order: sensitivityTuning returns the tuned reactions sorted by model index (`kcatList = unique(kcatList)`), geckopy in the
-#   order in which they were first tuned. tuned_sorted is equal on both sides.
-# rerun: on a model that was tuned before, the reaction that is bumped again has old kcat NaN and source "" in geckopy (the
-#   pre-tune values are kept only for the run's own first bump, sensitivity_tuning.py `pretune.get(i, (nan, ""))`) and the
-#   input values (0.5 and sensitivityTuning) in sensitivityTuning.
-# notes_*: ec.notes holds num2str(kcat) in MATLAB (preTuneKcat=10, preTuneKcat=3.1416) and the Python repr in geckopy
-#   (preTuneKcat=10.0, preTuneKcat=3.14159265).
-# ceiling: geckopy stops a tuned kcat at 1e7 (_MAX_TUNED_KCAT) and then stalls at growth 8000; sensitivityTuning has no ceiling
-#   and reaches 2e7 and growth 14400.
-# ignore_unknown_id: an id that matches no usage reaction raises in sensitivityTuning (the cellfun on line 94 gets an empty
-#   result) and is ignored in geckopy.
-# ignore_lower_case_id: sensitivityTuning matches p4 case-insensitively, so it skips P4 when it picks the enzyme to tune. R3
-#   stays the limit, and it raises the kcat of R5 by a factor of 10 per iteration until growth stops changing (2e13 here).
-#   geckopy matches exactly, ignores nothing and tunes R3 only.
-# light: geckopy raises NotImplementedError for a gecko-light model, sensitivityTuning tunes it.
+# order, rerun, notes_*, ceiling, ignore_unknown_id, light: both sides agree. Both list the tuned reactions in model order
+#   (`kcatList = unique(kcatList)`), report the kcat and source of the input model (a reaction tuned before reports the
+#   values of that run), write the pre-tune kcat into ec.notes as num2str prints it (preTuneKcat=10, preTuneKcat=3.1416),
+#   let a tuned kcat pass 1e7, raise for a protToIgnore id that has no usage reaction, and tune a gecko-light model.
+# ignore_lower_case_id: both sides match p4 without regard to case and skip P4 when they pick the enzyme to tune, and both
+#   raise the kcat of R5 by a factor of 10 per iteration. They differ in when they stop: geckopy stops once growth gains
+#   less than 1e-9 (growth 4.5, R5 at 2e10), sensitivityTuning goes on until growth is exactly unchanged (growth 450, R3 at
+#   5 and R5 at 2e13).
 # truncate_ties: round(x, n) rounds an exact tie away from zero in MATLAB (100000.5 gives 100001, 1234565 gives 1234570) and
 #   to even in Python (100000, 1234560). Inf raises in MATLAB and is returned unchanged by geckopy.
 # zero_growth: with growth 0 and no flux both sides return an empty result. The case of a forced flux that keeps a usage
