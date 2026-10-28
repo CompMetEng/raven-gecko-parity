@@ -1,9 +1,8 @@
 function results = merge_compartments_smallyeast(ctx)
 % MATLAB side of the compartment-merging scenario.
 %
-% mergeCompartments groups by metNames and keeps the id of the first copy it
-% finds, so the merged metabolites are compared by name --- see scenario.yml
-% for why that is a concession rather than a convenience.
+% mergeCompartments groups by metNames. Merged metabolites are compared by id
+% and by name --- see scenario.yml.
 %
 % Reactions removed by the merge are reported as the difference between the
 % model before and after: RAVEN's deletedRxns covers the deleteRxnsWithOneMet
@@ -34,6 +33,12 @@ results.reactions = sort_cellstr(afterRxns);
 results.removed_reactions = sort_cellstr(setdiff(beforeRxns, afterRxns));
 results.deduplicated_reactions = sort_cellstr(flatten_indexed(duplicateRxns));
 results.metabolites = sort_cellstr(merged.metNames);
+[sortedMets, metOrder] = sort(merged.mets);
+metRecords = cell(1, numel(sortedMets));
+for k = 1:numel(sortedMets)
+    metRecords{k} = struct('id', sortedMets{k}, 'name', merged.metNames{metOrder(k)});
+end
+results.metabolite_ids = metRecords;
 
 [sortedRxns, order] = sort(afterRxns);
 bounds = cell(1, numel(sortedRxns));
@@ -51,7 +56,7 @@ end
 
 
 function records = stoichiometry(model)
-% Keyed by species name rather than metabolite id, matching run.py. char(1)
+% Keyed by metabolite id, matching run.py. char(1)
 % joins the sort keys because it sorts below every character an identifier or
 % a metabolite name can contain, so the ordering matches Python's tuple
 % comparison.
@@ -59,7 +64,7 @@ function records = stoichiometry(model)
 
 keys = cell(numel(rowIdx), 1);
 for k = 1:numel(rowIdx)
-    keys{k} = strjoin({model.rxns{colIdx(k)}, model.metNames{rowIdx(k)}}, char(1));
+    keys{k} = strjoin({model.rxns{colIdx(k)}, model.mets{rowIdx(k)}}, char(1));
 end
 [~, order] = sort(keys);
 
@@ -68,7 +73,7 @@ for k = 1:numel(order)
     i = order(k);
     records{k} = struct( ...
         'reaction', model.rxns{colIdx(i)}, ...
-        'species', model.metNames{rowIdx(i)}, ...
+        'metabolite', model.mets{rowIdx(i)}, ...
         'coefficient', double(coefficients(i)));
 end
 end

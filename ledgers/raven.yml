@@ -379,7 +379,7 @@ entries:
     scenarios:
       - copy_to_compartment_smallyeast
     notes: 'Duplicate reactions into a target compartment. Both leave the originals'' metabolites behind when the
-      reactions are moved. NAMING DIVERGES, the same way it does in mergeCompartments: copyToComps appends the
+      reactions are moved. NAMING DIVERGES: copyToComps appends the
       target compartment to the id a metabolite already has, exactly as its docstring says ("New reactions and
       metabolites will be named as id_toComps(i)"), so ADP_c copied into p becomes ADP_c_p, while
       copy_to_compartment rewrites the suffix and gives ADP_p. Interface also differs: copyToComps takes a list
@@ -1098,9 +1098,12 @@ entries:
     status: parity
     scenarios:
       - merge_compartments_smallyeast
-    notes: 'Collapse a multi-compartment model into one. (1) Merged metabolite IDS DIFFER: RAVEN keeps the id of
-      the first copy it finds, so acetyl-CoA ends up as ACCOA_c or ACCOA_m naming a compartment that no longer
-      exists --- its own docstring warns of this --- while the Python side rewrites the suffix to ACCOA_s. (2)
+    notes: 'Collapse a multi-compartment model into one. (1) Both sides give a merged metabolite the id (and the
+      other fields) of the copy already in the merged compartment if there is one, otherwise of the copy whose
+      id sorts first in character code order, so acetyl-CoA[c] and acetyl-CoA[m] become ACCOA_c on both sides
+      whatever the order of the copies in the model. The id can name a compartment that no longer exists, as
+      both docstrings say. merge_compartments_smallyeast compares the ids. RAVEN groups by metNames; the
+      Python default key strips an _<compartment> id suffix, and the scenario passes the name as key. (2)
       With deleteRxnsWithOneMet on, RAVEN preserves reactions that already had a single metabolite before the
       merge (a model''s exchange reactions) and deletes only those reduced to one by it; the Python side deletes
       both. (3) mergeCompartments'' third output is documented as the reactions deleted for being duplicates, but

@@ -31,22 +31,12 @@ inputs:
   # silently changing what is compared.
   merged_compartment: s
 
-# Metabolites are compared by **name**, not by id, and that is a concession to
-# a real divergence rather than a convenience:
-#
-#   RAVEN keeps the id of the first copy it finds --- acetyl-CoA[c] and
-#   acetyl-CoA[m] merge into whichever of ACCOA_c / ACCOA_m comes first in the
-#   model, keeping that id, which then names a compartment that no longer
-#   exists. Its own docstring warns about this ("If the metabolite IDs reflect
-#   the compartment that they are in the IDs may no longer be representative").
-#   The Python side rewrites the suffix instead, so both become ACCOA_s.
-#
-# Every merged metabolite would therefore differ by id while naming the same
-# species, and the comparison would say nothing about the merge. Names are the
-# identity the grouping is actually built on --- RAVEN groups by metNames, and
-# the Python side is given the same key here rather than its default id-suffix
-# one --- so comparing by name tests the grouping without asserting the naming
-# convention. Recorded on the ledger row.
+# Metabolites are compared by id and by name. RAVEN groups the copies by
+# metNames, and the Python side is given the same key here rather than its
+# default id-suffix one. Both sides give the merged metabolite the id of the
+# copy already in "s" if there is one, otherwise the id that sorts first, so
+# acetyl-CoA[c] and acetyl-CoA[m] become ACCOA_c on both sides wherever the
+# copies sit in the model. The stoichiometry is keyed by metabolite id.
 #
 # The other divergence this scenario steps around, also on the ledger row:
 # with deleteRxnsWithOneMet **on**, RAVEN reserves the reactions that already
