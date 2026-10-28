@@ -1111,7 +1111,10 @@ entries:
       passes the name as key. (2) deleteRxnsWithOneMet (drop_single_metabolite_reactions) is false by default
       on both sides. With it on, both keep the reactions that already had a single metabolite before the merge
       (a model''s exchange reactions) and delete those that the merge reduced to one; a reaction whose
-      metabolites all cancel is deleted either way. The scenario compares both settings. (3) mergeCompartments'' third output is documented as the reactions deleted for being duplicates, but
+      metabolites all cancel is deleted either way. The scenario compares both settings and a run with every
+      argument on its default. The second output differs: deletedRxns lists the reactions deleted for having
+      one metabolite and is empty with the flag off, while deleted_single also lists the reactions whose
+      metabolites all cancelled, with the flag on or off. (3) mergeCompartments'' third output is documented as the reactions deleted for being duplicates, but
       it passes through contractModel''s *third* output (an indexed cell array, one entry per retained reaction)
       rather than its second (the flat list of removed ids). A caller reading the docstring gets one entry per
       surviving reaction instead.'
