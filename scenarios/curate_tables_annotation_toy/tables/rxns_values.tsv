@@ -1,0 +1,5 @@
+rxnIdx	rxnNames	lb	ub	rev	kegg.reaction	metacyc	rxnConfidenceScores
+1	renamed			true		RXN-1	
+2	newscored			false			3
+3	newunscored						
+4	second				R5		

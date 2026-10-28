@@ -1,0 +1,134 @@
+id: simplify_order_toy
+pair: raven
+description: 'simplifyModel modes on hand-written models, compared in model order: which reaction survives
+  a linear merge, the order of the modes (group linear before or after constraining reversible reactions,
+  duplicates before or after dead ends), and whether reserved reactions, genes and unused metabolites
+  survive a zero-interval pass.'
+entries: [simplifyModel]
+inputs:
+  matlab_solver: gurobi
+  python_solver: gurobi
+  cases:
+  - name: group_chain
+    modes: [groupLinear]
+    reserved: [IN, OUT]
+    extra_metabolites: []
+    reactions:
+    - id: IN
+      substrates: []
+      products: [M0]
+      lb: 0
+      ub: 1000
+      rule: ''
+    - id: R1
+      substrates: [M0]
+      products: [M1]
+      lb: 0
+      ub: 1000
+      rule: ''
+    - id: R2
+      substrates: [M1]
+      products: [M2]
+      lb: 0
+      ub: 1000
+      rule: ''
+    - id: R3
+      substrates: [M2]
+      products: [M3]
+      lb: 0
+      ub: 1000
+      rule: ''
+    - id: OUT
+      substrates: [M3]
+      products: []
+      lb: 0
+      ub: 1000
+      rule: ''
+  - name: group_then_constrain
+    modes: [groupLinear, constrainReversible]
+    reserved: []
+    extra_metabolites: []
+    reactions:
+    - id: IN
+      substrates: []
+      products: [A]
+      lb: 0
+      ub: 1000
+      rule: ''
+    - id: R1
+      substrates: [A]
+      products: [B]
+      lb: -1000
+      ub: 1000
+      rule: ''
+    - id: OUT
+      substrates: [B]
+      products: []
+      lb: 0
+      ub: 1000
+      rule: ''
+  - name: zero_interval_reserved
+    modes: [deleteZeroInterval]
+    reserved: [R2]
+    extra_metabolites: [ORPH]
+    reactions:
+    - id: IN
+      substrates: []
+      products: [A]
+      lb: 0
+      ub: 1000
+      rule: ''
+    - id: R1
+      substrates: [A]
+      products: [B]
+      lb: 0
+      ub: 1000
+      rule: g1
+    - id: OUT
+      substrates: [B]
+      products: []
+      lb: 0
+      ub: 1000
+      rule: ''
+    - id: R2
+      substrates: [B]
+      products: [C]
+      lb: 0
+      ub: 0
+      rule: g2
+  - name: duplicates_and_dead_end
+    modes: [deleteDuplicates, deleteInaccessible]
+    reserved: []
+    extra_metabolites: []
+    reactions:
+    - id: IN
+      substrates: []
+      products: [A]
+      lb: 0
+      ub: 1000
+      rule: ''
+    - id: R1
+      substrates: [A]
+      products: [B]
+      lb: 0
+      ub: 1000
+      rule: ''
+    - id: R1b
+      substrates: [A]
+      products: [B]
+      lb: 0
+      ub: 1000
+      rule: ''
+    - id: OUT
+      substrates: [B]
+      products: []
+      lb: 0
+      ub: 1000
+      rule: ''
+    - id: R4
+      substrates: [B]
+      products: [D]
+      lb: 0
+      ub: 1000
+      rule: ''
+tolerance: {rel: 1.0e-12, abs: 1.0e-15}

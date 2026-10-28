@@ -1,0 +1,5 @@
+rxnIdx	rxnNames	metNames	comps	coefficient
+1	bounded	x	c	-4
+1	bounded	y	c	1
+2	openub	x	c	-2
+2	openub	y	c	1

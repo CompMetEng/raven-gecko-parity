@@ -1,0 +1,11 @@
+id: default_compartment_map_toy
+pair: raven
+description: >-
+  The default map from localisation predictor labels to compartment ids: the number of entries and every label with
+  its id, sorted by label (a containers.Map has no declaration order).
+
+entries:
+  - defaultCompartmentMap
+
+inputs:
+  note: none

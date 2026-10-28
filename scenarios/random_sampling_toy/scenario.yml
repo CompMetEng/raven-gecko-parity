@@ -1,0 +1,26 @@
+id: random_sampling_toy
+pair: raven
+description: >-
+  randomSampling with the ACHR, CHRR and random-objective methods on a hand-written model with two parallel
+  reactions that share a capped uptake. A seeded draw cannot match between the two implementations, so only
+  properties that do not depend on the generator are compared: the shape of the sample matrix, whether every
+  sample satisfies the steady state and the bounds, whether the mean of the first parallel reaction is within a
+  band around the centroid of the feasible region (2.86), and whether the two parallel reactions have means
+  within a band of each other.
+
+entries:
+  - randomSampling
+
+inputs:
+  mets:
+  - {id: A, name: A, compartment: c}
+  - {id: B, name: B, compartment: c}
+  reactions:
+  - {id: EX_in, lb: 0, ub: 10, c: 0, stoichiometry: [{met: A, coefficient: 1}]}
+  - {id: R1, lb: 0, ub: 6, c: 0, stoichiometry: [{met: A, coefficient: -1}, {met: B, coefficient: 1}]}
+  - {id: R2, lb: 0, ub: 6, c: 0, stoichiometry: [{met: A, coefficient: -1}, {met: B, coefficient: 1}]}
+  - {id: EX_out, lb: 0, ub: 1000, c: 0, stoichiometry: [{met: B, coefficient: -1}]}
+  n_samples: 2000
+  centroid: 2.8627
+  band: 0.6
+  methods: [achr, chrr, random_objective]

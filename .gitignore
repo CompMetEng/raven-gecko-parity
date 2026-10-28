@@ -16,3 +16,5 @@ build/
 # scenario run scratch files
 scenarios/**/.context.json
 scenarios/**/.matlab_result.json
+scenarios/*/.run.lock
+scripts/hpc/env.local.sh

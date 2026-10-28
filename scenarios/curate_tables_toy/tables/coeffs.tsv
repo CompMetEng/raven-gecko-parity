@@ -1,0 +1,4 @@
+rxnIdx	rxnNames	metNames	comps	coefficient
+1	hexokinase	glucose	c	-1
+1	hexokinase	atp	c	-1
+2	hexokinase	glucose	c	-2

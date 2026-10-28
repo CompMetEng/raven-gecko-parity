@@ -1,0 +1,3 @@
+rxnIdx	rxnNames	metNames	comps	coefficient
+true	fresh	x	c	-2
+true	fresh	y	c	2

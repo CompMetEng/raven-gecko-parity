@@ -1,0 +1,58 @@
+id: contract_model_toy
+pair: raven
+description: >-
+  contractModel against remove_duplicate_reactions on hand-written models: isozymes that merge into one gene rule,
+  duplicates with different bounds, with different reversibility, with different objective coefficients, reversible
+  reactions written in opposite directions, the expandModel suffix, and a restriction to the reactions of one
+  metabolite. Per case the surviving reactions with bounds, objective coefficient and the clauses of the gene rule,
+  and the removed reactions.
+
+entries:
+  - contractModel
+
+inputs:
+  mets: &mets
+  - {id: A_c, name: A, compartment: c}
+  - {id: B_c, name: B, compartment: c}
+  - {id: C_c, name: C, compartment: c}
+  - {id: D_c, name: D, compartment: c}
+  cases:
+  - name: identical_isozymes
+    mets: null
+    reactions:
+    - {id: R1, lb: 0, ub: 1000, c: 0, rule: g1, stoichiometry: [{met: A_c, coefficient: -1}, {met: B_c, coefficient: 1}]}
+    - {id: R2, lb: 0, ub: 1000, c: 0, rule: g2 and g3, stoichiometry: [{met: A_c, coefficient: -1}, {met: B_c, coefficient: 1}]}
+    - {id: R3, lb: 0, ub: 1000, c: 0, rule: g1, stoichiometry: [{met: A_c, coefficient: -1}, {met: B_c, coefficient: 1}]}
+  - name: bounds_differ
+    mets: null
+    reactions:
+    - {id: R1, lb: 0, ub: 10, c: 0, rule: g1, stoichiometry: [{met: A_c, coefficient: -1}, {met: B_c, coefficient: 1}]}
+    - {id: R2, lb: 0, ub: 20, c: 0, rule: g2, stoichiometry: [{met: A_c, coefficient: -1}, {met: B_c, coefficient: 1}]}
+  - name: reversibility_differs
+    mets: null
+    reactions:
+    - {id: R1, lb: 0, ub: 1000, c: 0, rule: g1, stoichiometry: [{met: A_c, coefficient: -1}, {met: B_c, coefficient: 1}]}
+    - {id: R2, lb: -1000, ub: 1000, c: 0, rule: g2, stoichiometry: [{met: A_c, coefficient: -1}, {met: B_c, coefficient: 1}]}
+  - name: objective_differs
+    mets: null
+    reactions:
+    - {id: R1, lb: 0, ub: 1000, c: 0, rule: g1, stoichiometry: [{met: A_c, coefficient: -1}, {met: B_c, coefficient: 1}]}
+    - {id: R2, lb: 0, ub: 1000, c: 1, rule: g2, stoichiometry: [{met: A_c, coefficient: -1}, {met: B_c, coefficient: 1}]}
+  - name: opposite_orientation
+    mets: null
+    reactions:
+    - {id: R1, lb: -1000, ub: 1000, c: 0, rule: g1, stoichiometry: [{met: A_c, coefficient: -1}, {met: B_c, coefficient: 1}]}
+    - {id: R2, lb: -1000, ub: 1000, c: 0, rule: g2, stoichiometry: [{met: A_c, coefficient: 1}, {met: B_c, coefficient: -1}]}
+  - name: expand_suffix
+    mets: null
+    reactions:
+    - {id: X_EXP_1, lb: 0, ub: 1000, c: 0, rule: g1, stoichiometry: [{met: A_c, coefficient: -1}, {met: B_c, coefficient: 1}]}
+    - {id: X_EXP_2, lb: 0, ub: 1000, c: 0, rule: g2, stoichiometry: [{met: A_c, coefficient: -1}, {met: B_c, coefficient: 1}]}
+    - {id: Y_EXP_1, lb: 0, ub: 1000, c: 0, rule: g3, stoichiometry: [{met: C_c, coefficient: -1}, {met: D_c, coefficient: 1}]}
+  - name: restricted_to_metabolite
+    mets: [C_c]
+    reactions:
+    - {id: R1, lb: 0, ub: 1000, c: 0, rule: g1, stoichiometry: [{met: A_c, coefficient: -1}, {met: B_c, coefficient: 1}]}
+    - {id: R2, lb: 0, ub: 1000, c: 0, rule: g2, stoichiometry: [{met: A_c, coefficient: -1}, {met: B_c, coefficient: 1}]}
+    - {id: R3, lb: 0, ub: 1000, c: 0, rule: g3, stoichiometry: [{met: C_c, coefficient: -1}, {met: D_c, coefficient: 1}]}
+    - {id: R4, lb: 0, ub: 1000, c: 0, rule: g4, stoichiometry: [{met: C_c, coefficient: -1}, {met: D_c, coefficient: 1}]}

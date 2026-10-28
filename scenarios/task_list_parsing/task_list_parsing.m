@@ -9,18 +9,40 @@ function results = task_list_parsing(ctx)
 % Nothing is sorted: task order, and the order of entries within a task, are
 % what the parser made of a sequence of rows.
 
-taskStruct = parseTaskList(ctx.inputs.task_file);
+results = parse_file(ctx.inputs.task_file);
+
+results.edge_cases = struct();
+names = ctx.inputs.edge_cases;
+if ischar(names)
+    names = {names};
+end
+for k = 1:numel(names)
+    name = char(names{k});
+    results.edge_cases.(name) = parse_file(ctx.inputs.(name));
+end
+
+end
+
+
+function out = parse_file(path)
+% A file RAVEN refuses is recorded as an error without its message.
+try
+    taskStruct = parseTaskList(path);
+catch
+    out = struct('error', true);
+    return
+end
 
 records = cell(1, numel(taskStruct));
 for k = 1:numel(taskStruct)
     records{k} = task_record(taskStruct(k));
 end
 
-results.n_tasks = numel(records);
+out.error = false;
+out.n_tasks = numel(records);
 % Cell array of structs, not a struct array: jsonencode turns a 1x1 struct
 % array into a bare object instead of a one-element array.
-results.tasks = records;
-
+out.tasks = records;
 end
 
 

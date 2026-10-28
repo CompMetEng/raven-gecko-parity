@@ -34,6 +34,7 @@ isReverse = endsWith(irrevModel.rxns, '_REV');
 out.n_reactions = numel(irrevModel.rxns);
 out.n_reverse = sum(isReverse);
 out.reverse_reactions = sort_cellstr(irrevModel.rxns(isReverse));
+out = merge_struct(out, order_fields(irrevModel));
 out.reactions = reaction_records(irrevModel);
 out.gene_rules = gene_rules(irrevModel);
 out.stoichiometry = stoichiometry(irrevModel);
@@ -52,6 +53,7 @@ added = setdiff(newModel.rxns, originalRxns);
 out.n_reactions = numel(newModel.rxns);
 out.n_added = numel(added);
 out.added_reactions = sort_cellstr(added);
+out = merge_struct(out, order_fields(newModel));
 out.reactions = reaction_records(newModel);
 out.gene_rules = gene_rules(newModel);
 out.stoichiometry = stoichiometry(newModel);
@@ -72,6 +74,26 @@ else
     out.genes = {};
 end
 out.compartments = row(newModel.comps);
+end
+
+
+function out = order_fields(model)
+% Reaction, metabolite and gene ids in model order: where expansion and splitting put things.
+out.reaction_order = row(model.rxns);
+out.metabolite_order = row(model.mets);
+if isfield(model, 'genes')
+    out.gene_order = row(model.genes);
+else
+    out.gene_order = {};
+end
+end
+
+
+function out = merge_struct(out, extra)
+names = fieldnames(extra);
+for k = 1:numel(names)
+    out.(names{k}) = extra.(names{k});
+end
 end
 
 

@@ -1,0 +1,169 @@
+id: gap_fill_milp_toy
+pair: raven
+description: 'Growth-floor gap-filling (gapFillMILP / fill_gaps_milp) and LP gap-filling (gapFillFastLP
+  / fill_gaps_fast_lp) on small hand-written models: a finite bigM, an objective with coefficient 2, an
+  objective of two reactions, a template reaction with a positive lower bound, and a template reaction
+  whose id is also in the draft.'
+entries: [gapFillMILP, gapFillFastLP]
+inputs:
+  matlab_solver: gurobi
+  python_solver: gurobi
+  cases:
+  - name: milp_a
+    algorithm: milp
+    draft:
+    - id: EX_A
+      substrates: []
+      products: [A]
+      lb: 0
+      ub: 5000
+    - id: BIO
+      substrates: [B]
+      products: []
+      lb: 0
+      ub: 5000
+    template:
+    - id: T1
+      substrates: [A]
+      products: [B]
+      lb: 0
+      ub: 5000
+    objective: [BIO]
+    objective_coeffs: [1]
+    min_growth: 1500
+    big_m: 1000
+  - name: milp_b
+    algorithm: milp
+    draft:
+    - id: EX_A
+      substrates: []
+      products: [A]
+      lb: 0
+      ub: 10
+    - id: BIO
+      substrates: [B]
+      products: []
+      lb: 0
+      ub: 1000
+    template:
+    - id: T1
+      substrates: [A]
+      products: [B]
+      lb: 0
+      ub: 1000
+    objective: [BIO]
+    objective_coeffs: [2]
+    min_growth: 15
+    big_m: 1000
+  - name: milp_c
+    algorithm: milp
+    draft:
+    - id: EX_A
+      substrates: []
+      products: [A]
+      lb: 0
+      ub: 10
+    - id: BIO
+      substrates: [B]
+      products: []
+      lb: 0
+      ub: 1000
+    - id: BIO2
+      substrates: [C]
+      products: []
+      lb: 0
+      ub: 1000
+    template:
+    - id: T1
+      substrates: [A]
+      products: [B]
+      lb: 0
+      ub: 3
+    - id: T2
+      substrates: [A]
+      products: [C]
+      lb: 0
+      ub: 3
+    objective: [BIO, BIO2]
+    objective_coeffs: [1, 1]
+    min_growth: 5
+    big_m: 1000
+  - name: milp_d
+    algorithm: milp
+    draft:
+    - id: EX_A
+      substrates: []
+      products: [A]
+      lb: 0
+      ub: 10
+    - id: BIO
+      substrates: [B]
+      products: []
+      lb: 0
+      ub: 1000
+    - id: EX_C
+      substrates: [C]
+      products: []
+      lb: 0
+      ub: 1000
+    template:
+    - id: T1
+      substrates: [A]
+      products: [B]
+      lb: 0
+      ub: 1000
+    - id: T2
+      substrates: [A]
+      products: [C]
+      lb: 1
+      ub: 1000
+    objective: [BIO]
+    objective_coeffs: [1]
+    min_growth: 5
+    big_m: 1000
+  - name: milp_e_milp
+    algorithm: milp
+    draft:
+    - id: R1
+      substrates: [a]
+      products: [b]
+      lb: 0
+      ub: 1000
+    - id: Rname
+      substrates: [b]
+      products: []
+      lb: 0
+      ub: 1000
+    template:
+    - id: Rname
+      substrates: []
+      products: [a]
+      lb: 0
+      ub: 1000
+    objective: [R1]
+    objective_coeffs: [1]
+    min_growth: 1
+    big_m: 1000
+  - name: milp_e_fastlp
+    algorithm: fastlp
+    draft:
+    - id: R1
+      substrates: [a]
+      products: [b]
+      lb: 0
+      ub: 1000
+    - id: Rname
+      substrates: [b]
+      products: []
+      lb: 0
+      ub: 1000
+    template:
+    - id: Rname
+      substrates: []
+      products: [a]
+      lb: 0
+      ub: 1000
+    objective: [R1]
+    objective_coeffs: [1]
+    min_growth: 1
+    big_m: 1000

@@ -1,0 +1,26 @@
+id: parse_hpa_toy
+pair: raven
+description: >-
+  parseHPA and parseHPArna on small Human Protein Atlas dumps. Protein files: tab- and comma-separated, a missing
+  required column, and an extra expression type column. RNA files: the tidy layout with TPM, the older layout with
+  Sample and Value columns, a file with a repeated gene and tissue and with missing values, the wide layout with
+  one column per tissue, and a file without a value column. The result is the set of gene, tissue and value records,
+  independent of the internal matrix or table layout.
+
+entries:
+  - parseHPA
+  - parseHPArna
+
+inputs:
+  data_dir: "{scenario_dir}/data"
+  protein:
+  - {name: normal_tsv, file: normal.tsv}
+  - {name: normal_csv, file: normal.csv}
+  - {name: missing_reliability, file: missing_reliability.tsv}
+  - {name: expression_type, file: expression_type.tsv}
+  rna:
+  - {name: tidy_v19, file: rna_v19.tsv}
+  - {name: sample_value_v18, file: rna_v18.tsv}
+  - {name: duplicate_and_missing, file: rna_dup_missing.tsv}
+  - {name: wide_layout, file: rna_wide.tsv}
+  - {name: no_value_column, file: rna_no_value.tsv}

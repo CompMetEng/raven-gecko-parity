@@ -20,7 +20,9 @@ inputs:
     - PGI
     - ZWF
 
-# Four checkpoints, all solver-free:
+# Five checkpoints, all solver-free. Each records the genes before and after as well as the
+# reactions and metabolites: simplifyModel removes reactions with removeReactions and its defaults, so
+# no checkpoint removes a gene.
 #
 #   zero_interval     reactions with lb = ub = 0 only. smallYeast ships glcIN,
 #                     o2IN and ethIN shut, so all three go.
@@ -32,16 +34,15 @@ inputs:
 #                     metabolites, against six and none on the intact model. A
 #                     single pass would stop far short of that.
 #   dead_end_alone    deleteInaccessible on its own, against the intact model
-#                     (whose exchanges ship shut). Used to be excluded here:
-#                     RAVEN decides whether a metabolite is a dead end from the
-#                     sign pattern of S, with reversible reactions counted in
-#                     both directions and bounds otherwise ignored; the Python
-#                     side additionally consulted the bounds, so a reaction
-#                     locked at zero flux did not count as a producer there,
-#                     and it removed glcIN, o2IN and their cascade where RAVEN
-#                     removed nothing. Fixed in raven-toolbox to match RAVEN's
-#                     bounds-blind check (raven-gecko-parity#69); this
-#                     checkpoint now covers that it stays fixed.
+#                     (whose exchanges ship shut). RAVEN decides whether a
+#                     metabolite is a dead end from the sign pattern of S, with
+#                     reversible reactions counted in both directions and
+#                     bounds otherwise ignored, and the Python side does the
+#                     same, so a reaction locked at zero flux still counts as a
+#                     producer and the run removes nothing (raven-gecko-parity#69).
+#   zero_interval_locked_gene_reactions
+#                     PGI and ZWF, which carry gene rules, locked at zero flux on the intact model and removed
+#                     by the zero-interval mode: the reactions go and their genes stay.
 #
 # What simplifyModel's other modes do, and why they are not here:
 #

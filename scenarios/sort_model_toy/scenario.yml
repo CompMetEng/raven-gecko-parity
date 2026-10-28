@@ -1,0 +1,42 @@
+id: sort_model_toy
+pair: raven
+description: >-
+  sortModel on a hand-written model with reversible and irreversible reactions, two subsystems and a
+  reaction without a subsystem. The direction flip of reversible reactions and the ordering of metabolites
+  by name and compartment are compared exactly, including a tie between two metabolites with the same name
+  and compartment. The reaction-order search draws from each implementation's own random generator, so its
+  permutation is not compared; the order score of every subsystem before and after, the set of reactions,
+  the position of the reaction without a subsystem and the stoichiometry of the irreversible reactions are.
+
+entries:
+  - sortModel
+
+inputs:
+  mets:
+  - {id: a_c, name: A, compartment: c}
+  - {id: b_c, name: B, compartment: c}
+  - {id: c_c, name: C, compartment: c}
+  - {id: a_m, name: A, compartment: m}
+  - {id: x_c, name: X, compartment: c}
+  - {id: y_c, name: Y, compartment: c}
+  - {id: z_c, name: Z, compartment: c}
+  - {id: t1_c, name: tie, compartment: c}
+  - {id: t2_c, name: tie, compartment: c}
+  reactions:
+  - {id: R4, lb: 0, ub: 1000, subsystem: Glyc, stoichiometry: [{met: c_c, coefficient: -1}]}
+  - {id: R3, lb: -1000, ub: 1000, subsystem: Glyc, stoichiometry: [{met: b_c, coefficient: 1}, {met: c_c, coefficient: -1}]}
+  - {id: T3, lb: 0, ub: 1000, subsystem: TCA, stoichiometry: [{met: y_c, coefficient: -1}, {met: z_c, coefficient: 1}]}
+  - {id: U1, lb: 0, ub: 1000, subsystem: "", stoichiometry: [{met: a_m, coefficient: -1}, {met: t1_c, coefficient: 1}]}
+  - {id: R2, lb: -1000, ub: 1000, subsystem: Glyc, stoichiometry: [{met: a_c, coefficient: 1}, {met: b_c, coefficient: -1}]}
+  - {id: T2, lb: 0, ub: 1000, subsystem: TCA, stoichiometry: [{met: x_c, coefficient: -1}, {met: y_c, coefficient: 1}]}
+  - {id: R1, lb: 0, ub: 1000, subsystem: Glyc, stoichiometry: [{met: a_c, coefficient: 1}]}
+  - {id: T1, lb: 0, ub: 1000, subsystem: TCA, stoichiometry: [{met: x_c, coefficient: 1}]}
+  - {id: V1, lb: -1000, ub: 1000, subsystem: "", stoichiometry: [{met: t2_c, coefficient: 1}, {met: t1_c, coefficient: -1}]}
+  - {id: V2, lb: -1000, ub: 1000, subsystem: "", stoichiometry: [{met: z_c, coefficient: -1}, {met: a_m, coefficient: 1}]}
+  cases:
+  - {name: default_unchanged, sort_reversible: false, sort_met_name: false, sort_reaction_order: false, seed: null}
+  - {name: sort_reversible, sort_reversible: true, sort_met_name: false, sort_reaction_order: false, seed: null}
+  - {name: sort_met_name, sort_reversible: false, sort_met_name: true, sort_reaction_order: false, seed: null}
+  - {name: sort_reversible_and_met_name, sort_reversible: true, sort_met_name: true, sort_reaction_order: false, seed: null}
+  - {name: sort_reaction_order, sort_reversible: false, sort_met_name: false, sort_reaction_order: true, seed: 1}
+  - {name: sort_reaction_order_with_sort_reversible, sort_reversible: true, sort_met_name: false, sort_reaction_order: true, seed: 2}

@@ -1,0 +1,7 @@
+rxnIdx	rxnNames	metNames	comps	coefficient
+1	renamed	x	c	-1
+1	renamed	y	c	1
+2	boundtext	x	c	-2
+2	boundtext	y	c	3
+3	plain	x	c	-3
+3	plain	y	c	5

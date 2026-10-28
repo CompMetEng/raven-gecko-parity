@@ -46,6 +46,7 @@ Then:
 parity check                      # validate both ledgers against both repos
 parity report -o build/           # render the human-readable parity documents
 parity sync                       # add rows for anything newly public
+parity ledger-audit --results DIR # parity rows must name the differences their scenarios show
 ```
 
 ## The ledger

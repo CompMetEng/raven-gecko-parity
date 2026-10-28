@@ -57,6 +57,12 @@ in this repository.
    enforces this: a `matlab-pending` row that names a MATLAB function is an error, because
    the status is now a lie.
 4. Consider a scenario. Anything with a solver in it earns one.
+5. Before a row is set to `parity`, or its scenario result changes, run `parity ledger-audit --results <dir>`,
+   where `<dir>` holds the last scenario results (`<id>.txt` or `status/<id>.txt`, the first word being `MATCH`,
+   `DIFFER` or `ERROR`). It fails when a `parity` row has a scenario recorded as `DIFFER` or `ERROR` and a note that
+   does not mention a difference or name the scenario (the way to say that a scenario covering several functions differs elsewhere), and when a scenario that covers the function is not listed in the row's
+   `scenarios`. The note has to list every known difference; the audit checks that it says something, not that it
+   is complete, so read the scenario output as well.
 
 ## A deliberate divergence
 
@@ -84,6 +90,7 @@ Before tagging:
 
 ```bash
 parity check --strict
+parity ledger-audit --results <last nightly results>
 parity report -o build/
 ```
 

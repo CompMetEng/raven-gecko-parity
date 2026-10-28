@@ -124,7 +124,42 @@ def test_an_unknown_placeholder_is_an_error_not_a_silent_literal(tmp_path, fake_
         build_context(load_scenario(directory), tmp_path, fake_pair)
 
 
+def test_a_missing_repository_path_is_an_error(tmp_path, fake_pair):
+    directory = write_scenario(tmp_path, "id: demo\npair: fake\ninputs:\n  where: '{matlab_repo}/core/renamedAway.m'\n")
+    with pytest.raises(ScenarioError, match="renamedAway.m"):
+        build_context(load_scenario(directory), tmp_path, fake_pair)
+
+
+def test_a_missing_scenario_folder_path_is_an_error(tmp_path, fake_pair):
+    directory = write_scenario(tmp_path, "id: demo\npair: fake\ninputs:\n  where: '{scenario_dir}/absent.tsv'\n")
+    with pytest.raises(ScenarioError, match="absent.tsv"):
+        build_context(load_scenario(directory), tmp_path, fake_pair)
+
+
+def test_an_output_path_under_the_repository_root_need_not_exist(tmp_path, fake_pair):
+    directory = write_scenario(tmp_path, "id: demo\npair: fake\ninputs:\n  out: '{repo_root}/results/x.tsv'\n")
+    context = build_context(load_scenario(directory), tmp_path, fake_pair)
+    assert context["inputs"]["out"].endswith("x.tsv")
+
+
 def test_non_path_inputs_pass_through_untouched(tmp_path, fake_pair):
     directory = write_scenario(tmp_path, "id: demo\npair: fake\ninputs:\n  seed: 42\n  mode: strict\n")
     context = build_context(load_scenario(directory), tmp_path, fake_pair)
     assert context["inputs"] == {"seed": 42, "mode": "strict"}
+
+
+def test_check_lists_scenarios_whose_input_paths_are_missing(tmp_path, fake_pair):
+    from types import SimpleNamespace
+
+    from parity.cli import _unresolved_scenario_inputs
+
+    root = tmp_path / "scenarios"
+    root.mkdir()
+    for name, where in (("good", "{scenario_dir}/scenario.yml"), ("stale", "{matlab_repo}/core/renamedAway.m")):
+        (root / name).mkdir()
+        (root / name / "scenario.yml").write_text(
+            f"id: {name}\npair: {fake_pair.name}\ninputs:\n  where: '{where}'\n", encoding="utf-8"
+        )
+    problems = _unresolved_scenario_inputs(SimpleNamespace(root=tmp_path), fake_pair)
+    assert len(problems) == 1
+    assert problems[0].startswith("stale:") and "renamedAway.m" in problems[0]

@@ -17,6 +17,22 @@ inputs:
   # omitted bounds that each side has to default.
   task_file: "{matlab_repo}/tests/function_tests/test_data/test_tasks.txt"
 
+  # Small local files, each a way a task list can be malformed or laid out
+  # differently. A file one side cannot parse is recorded as an error without its
+  # message, so the two sides are compared on whether they parse and on what.
+  #
+  #   id_first        no empty first column: the ID header is the first cell
+  #   comment_first   a comment row ('#') above the header row
+  #   lowercase       header cells in lower case
+  #   orphan          a continuation row before any task
+  #   bad_number      a non-numeric IN LB
+  edge_cases: [id_first, comment_first, lowercase, orphan, bad_number]
+  id_first: edge_id_first.txt
+  comment_first: edge_comment_first.txt
+  lowercase: edge_lowercase.txt
+  orphan: edge_orphan.txt
+  bad_number: edge_bad_number.txt
+
 # Task order and the order of entries within a task are the parser's output,
 # not an incidental detail, so neither is sorted here. A task list is read as a
 # sequence of rows and a difference in where a continuation row was attached is

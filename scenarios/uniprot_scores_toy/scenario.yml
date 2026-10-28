@@ -1,0 +1,39 @@
+id: uniprot_scores_toy
+pair: raven
+description: >-
+  The UniProt localisation parser on a local export (no network): the annotation text is scanned for
+  compartment terms and the result is a gene by compartment score matrix. The export has a vesicle term
+  that contains a compartment word, an isoform block with a Note, a Note that names other compartments, a
+  six-compartment entry, an empty annotation and genes in non-alphabetical order. A second export lists
+  one gene twice. The scores are recorded in file order together with a per-gene view, so a difference in
+  gene order or column order is separate from a difference in content.
+
+entries:
+  - getUniProtScores
+  - parseScores
+
+inputs:
+  uniprot_file: "{scenario_dir}/tables/uniprot.tsv"
+  duplicates_file: "{scenario_dir}/tables/uniprot_duplicates.tsv"
+  ordered_locus_column: Gene Names (ordered locus)
+  small_map:
+    cytoplasm: c
+    nucleus: n
+    mitochondrion: m
+  cases:
+    - name: default_map_first_column
+      file: uniprot_file
+      id_column: null
+      map: default
+    - name: default_map_ordered_locus
+      file: uniprot_file
+      id_column: ordered_locus_column
+      map: default
+    - name: small_map
+      file: uniprot_file
+      id_column: ordered_locus_column
+      map: small_map
+    - name: duplicate_gene
+      file: duplicates_file
+      id_column: ordered_locus_column
+      map: default

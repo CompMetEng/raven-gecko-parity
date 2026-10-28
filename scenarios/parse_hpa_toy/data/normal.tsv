@@ -1,0 +1,6 @@
+Gene	Gene name	Tissue	Cell type	Level	Reliability
+ENSG2	BBB	liver	hemocytes	Low	Supportive
+ENSG1	AAA	liver	hemocytes	High	Approved
+ENSG1	AAA	liver	cholangiocytes	Not detected	Uncertain
+ENSG1	AAA	brain	neuronal cells	Medium	Enhanced
+ENSG3	CCC	brain	neuronal cells	Not detected	Approved

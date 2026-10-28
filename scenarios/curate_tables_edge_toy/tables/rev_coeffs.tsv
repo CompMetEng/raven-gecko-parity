@@ -1,0 +1,5 @@
+rxnIdx	rxnNames	metNames	comps	coefficient
+1	irrev	x	c	-3
+1	irrev	y	c	1
+2	revers	x	c	-5
+2	revers	y	c	1

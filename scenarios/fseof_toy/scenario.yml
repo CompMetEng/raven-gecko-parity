@@ -1,0 +1,32 @@
+id: fseof_toy
+pair: raven
+description: >-
+  FSEOF on a hand-written model in which a product competes with biomass for one substrate and reaches the product
+  through a reversible reaction that carries negative flux. Settings: the defaults, five iterations at a coefficient
+  of 0.5, and a correlation threshold of 0.99. Per case the reactions found as amplification, knockdown and knockout
+  targets and their slopes.
+
+entries:
+  - FSEOF
+
+inputs:
+  mets:
+  - {id: S, name: S, compartment: c}
+  - {id: A, name: A, compartment: c}
+  - {id: B, name: B, compartment: c}
+  - {id: P, name: P, compartment: c}
+  - {id: X, name: X, compartment: c}
+  reactions:
+  - {id: EX_S, lb: 0, ub: 10, c: 0, stoichiometry: [{met: S, coefficient: 1}]}
+  - {id: R_SA, lb: 0, ub: 1000, c: 0, stoichiometry: [{met: S, coefficient: -1}, {met: A, coefficient: 1}]}
+  - {id: Rrev, lb: -1000, ub: 1000, c: 0, stoichiometry: [{met: B, coefficient: -1}, {met: A, coefficient: 1}]}
+  - {id: R_P, lb: 0, ub: 1000, c: 0, stoichiometry: [{met: B, coefficient: -1}, {met: P, coefficient: 1}]}
+  - {id: EX_P, lb: 0, ub: 1000, c: 0, stoichiometry: [{met: P, coefficient: -1}]}
+  - {id: R_X, lb: 0, ub: 1000, c: 0, stoichiometry: [{met: S, coefficient: -1}, {met: X, coefficient: 1}]}
+  - {id: BIO, lb: 0, ub: 1000, c: 1, stoichiometry: [{met: X, coefficient: -1}]}
+  biomass: BIO
+  target: EX_P
+  cases:
+  - {name: defaults, iterations: 10, coefficient: 0.9, threshold: 0.9}
+  - {name: five_iterations_half, iterations: 5, coefficient: 0.5, threshold: 0.9}
+  - {name: threshold_high, iterations: 10, coefficient: 0.9, threshold: 0.99}

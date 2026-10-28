@@ -2,6 +2,7 @@
 
     parity check              validate the ledgers against both repos
     parity sync               add ledger rows for anything newly public
+    parity ledger-audit       parity rows must name the differences their scenarios show
     parity report             render the Markdown parity document
     parity mirror             what does my current change mean for the other side?
     parity docs render        compose CONTRIBUTING.md/AGENTS.md into each sibling
@@ -29,6 +30,7 @@ from parity.ledger import LedgerError, load_ledger, save_ledger
 from parity.scenarios import (
     ScenarioError,
     Tolerance,
+    build_context,
     collect_matlab,
     compare_results,
     list_scenarios,
@@ -64,6 +66,36 @@ def cmd_check(args: argparse.Namespace, config: Config) -> int:
         revisions = (describe(pair.matlab.path), describe(pair.python.path))
         print(render_check(result, strict=args.strict, revisions=revisions))
         failed = failed or not result.ok(strict=args.strict)
+        unresolved = _unresolved_scenario_inputs(config, pair)
+        for problem in unresolved:
+            print(f"scenario input: {problem}")
+        failed = failed or bool(unresolved)
+    return 1 if failed else 0
+
+
+def _unresolved_scenario_inputs(config: Config, pair) -> list[str]:
+    """Scenarios of ``pair`` whose input paths point at files that do not exist."""
+    problems = []
+    for scenario in list_scenarios(_scenario_root(config), pair.name):
+        try:
+            build_context(scenario, config.root, pair)
+        except ScenarioError as error:
+            problems.append(f"{scenario.id}: {error}")
+    return problems
+
+
+def cmd_ledger_audit(args: argparse.Namespace, config: Config) -> int:
+    from parity.audit import audit_ledger, read_results
+
+    results = read_results(Path(args.results)) if args.results else None
+    failed = False
+    for pair in _pairs(config, args.pair):
+        findings = audit_ledger(load_ledger(pair.ledger), list_scenarios(_scenario_root(config), pair.name), results)
+        for finding in findings:
+            print(f"{pair.name}: {finding.format()}")
+        if not findings:
+            print(f"{pair.name}: ledger audit clean")
+        failed = failed or bool(findings)
     return 1 if failed else 0
 
 
@@ -284,6 +316,53 @@ def cmd_compare(args: argparse.Namespace, config: Config) -> int:
     return 1
 
 
+def cmd_seeds(args: argparse.Namespace, config: Config) -> int:
+    """Run the Python side of scenarios under several hash seeds and require the same result."""
+    import os
+    import subprocess
+    import sys
+    import tempfile
+
+    root = _scenario_root(config)
+    scenarios = [load_scenario(root / name) for name in args.scenarios] or list_scenarios(root, args.pair)
+    code = "import sys; from parity.cli import main; sys.exit(main(sys.argv[1:]))"
+    failed = False
+    for scenario in scenarios:
+        documents = {}
+        with tempfile.TemporaryDirectory(prefix="parity_seeds_") as workdir:
+            for seed in args.seeds:
+                target = Path(workdir) / f"seed{seed}.json"
+                command = [sys.executable, "-c", code]
+                if args.config:
+                    command += ["--config", args.config]
+                command += ["run", scenario.id, "--impl", "python", "-o", str(target)]
+                env = {**os.environ, "PYTHONHASHSEED": str(seed)}
+                done = subprocess.run(command, env=env, capture_output=True, text=True)
+                if done.returncode != 0:
+                    print(f"{scenario.id}: seed {seed} failed (exit {done.returncode})")
+                    print(done.stderr.strip()[-400:])
+                    failed = True
+                    break
+                documents[seed] = json.loads(target.read_text(encoding="utf-8"))
+        if len(documents) != len(args.seeds):
+            continue
+        first = args.seeds[0]
+        differing = []
+        for seed in args.seeds[1:]:
+            differences = compare_results(documents[first], documents[seed], scenario.tolerance)
+            if differences:
+                differing.append((seed, differences))
+        if not differing:
+            print(f"{scenario.id}: same result under seeds {', '.join(map(str, args.seeds))}")
+            continue
+        failed = True
+        for seed, differences in differing:
+            print(f"{scenario.id}: seed {seed} differs from seed {first} ({len(differences)} difference(s))")
+            for difference in differences[: args.limit]:
+                print(difference.format())
+    return 1 if failed else 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="parity", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument(
@@ -297,6 +376,11 @@ def build_parser() -> argparse.ArgumentParser:
     check.add_argument("--pair", help="only this pair (default: all)")
     check.add_argument("--strict", action="store_true", help="also fail on warnings and unreviewed rows")
     check.set_defaults(func=cmd_check)
+
+    audit = sub.add_parser("ledger-audit", help="check that parity rows name the differences their scenarios show")
+    audit.add_argument("--pair", help="only this pair (default: all)")
+    audit.add_argument("--results", help="directory with the last results, <id>.txt or status/<id>.txt holding MATCH, DIFFER or ERROR")
+    audit.set_defaults(func=cmd_ledger_audit)
 
     sync = sub.add_parser("sync", help="add ledger rows for anything newly public")
     sync.add_argument("--pair", help="only this pair (default: all)")
@@ -366,6 +450,16 @@ def build_parser() -> argparse.ArgumentParser:
     collect.add_argument("scenario")
     collect.add_argument("-o", "--output", help="result JSON path (default: results/matlab/<scenario>.json)")
     collect.set_defaults(func=cmd_collect)
+
+    seeds = sub.add_parser(
+        "seeds",
+        help="run the Python side under several PYTHONHASHSEED values and compare the results",
+    )
+    seeds.add_argument("scenarios", nargs="*", help="scenario ids (default: all, or those of --pair)")
+    seeds.add_argument("--pair", help="only scenarios of this pair")
+    seeds.add_argument("--seeds", type=int, nargs="+", default=[0, 1, 2, 3], help="hash seeds (default: 0 1 2 3)")
+    seeds.add_argument("--limit", type=int, default=10, help="differences to print per seed")
+    seeds.set_defaults(func=cmd_seeds)
 
     compare = sub.add_parser("compare", help="diff two scenario result files")
     compare.add_argument("left")

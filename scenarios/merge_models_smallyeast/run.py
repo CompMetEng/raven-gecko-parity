@@ -36,6 +36,10 @@ def run(ctx):
         "n_metabolites": len(merged.metabolites),
         "n_genes": len(merged.genes),
         "reactions": sorted(rxn.id for rxn in merged.reactions),
+        # Model order, not sorted: the order of the merged lists is part of the result.
+        "reaction_order": [rxn.id for rxn in merged.reactions],
+        "metabolite_order": [met.id for met in merged.metabolites],
+        "gene_order": [gene.id for gene in merged.genes],
         # Derived by difference from the two inputs rather than by matching on
         # a suffix, so a reaction that already ended in "_smallYeastBad" could
         # not be miscounted as a rename.

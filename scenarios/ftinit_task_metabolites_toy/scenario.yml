@@ -1,0 +1,24 @@
+id: ftinit_task_metabolites_toy
+pair: raven
+description: >-
+  prepINITModel and ftINIT on a model in which the metabolite T has two reactions (R3, A to T by way of B, and R5, T to C)
+  that ftINIT removes because their genes have low expression, and a task (MAKE_T) that names T as its output with a
+  lower bound of 0. The metabolite U has only the dead-end reaction R4, which the first simplification removes, and a
+  second task (MAKE_U) names it as its output. The final removal of reactions in ftINIT also removes the unused
+  metabolites. The scenario records the metabolites, reactions and kept tasks of the extracted model.
+
+entries:
+  - prepINITModel
+  - ftINIT
+
+inputs:
+  tasks: "tasks.txt"
+  ext_comp: e
+  tissue: x
+  threshold: 10
+  matlab_solver: gurobi
+  python_solver: gurobi
+  levels:
+    G2: 100
+    G3: 1
+    G5: 1

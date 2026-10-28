@@ -1,0 +1,16 @@
+id: init_task_metabolites_toy
+pair: raven
+description: >-
+  prepINITModel on a model with one reversible reaction (R2), in which the dead-end reaction R3 (B to T) is the only reaction of
+  the metabolite T, a second metabolite T2 with the same name and compartment as T whose only reaction is the dead end R4,
+  and a task list in which MAKE_T names T as its output and MAKE_T_LOWER names it as t[c]. The first simplification
+  removes R3 and R4. The scenario records the metabolites and reactions of the prepared reference model, the tasks the
+  prepared data keeps and the essential reactions, which show whether a metabolite named by a task survives
+  the removal of the last reaction that uses it.
+
+entries:
+  - prepINITModel
+
+inputs:
+  tasks: "tasks.txt"
+  ext_comp: e
