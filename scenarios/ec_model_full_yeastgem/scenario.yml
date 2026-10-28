@@ -15,9 +15,9 @@ entries:
   - applyKcatConstraints
   - setProtPoolSize
 
-# This is the slow job the plan (docs/gecko-behaviour-parity-plan.md, Tier 4) calls for,
-# run on its own schedule rather than in nightly.yml --- see
-# .github/workflows/gecko-genome-scale.yml. ecTestGEM proves the functions agree on
+# This is the genome-scale check the plan (docs/gecko-behaviour-parity-plan.md, Tier 4) calls
+# for. nightly.yml runs it with the other scenarios, and
+# .github/workflows/gecko-genome-scale.yml runs it weekly on its own. ecTestGEM proves the functions agree on
 # every behaviour MATLAB itself pins down; it does not prove they agree on yeast-GEM,
 # where 4102 conventional reactions and a 30000-row BRENDA snapshot leave a divergence
 # nowhere to hide the way 7 reactions do.

@@ -14,6 +14,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import math
+import os
 import subprocess
 import sys
 from dataclasses import dataclass, field
@@ -88,8 +89,17 @@ def list_scenarios(root: Path, pair: str | None = None) -> list[Scenario]:
     return [s for s in found if not pair or s.pair == pair]
 
 
+_SOLVER_OVERRIDES = {
+    "matlab_solver": "PARITY_MATLAB_SOLVER",
+    "python_solver": "PARITY_PYTHON_SOLVER",
+}
+
+
 def build_context(scenario: Scenario, repo_root: Path, pair=None) -> dict:
     """The inputs handed identically to both implementations.
+
+    PARITY_MATLAB_SOLVER and PARITY_PYTHON_SOLVER replace the ``matlab_solver`` and
+    ``python_solver`` inputs of the scenarios that declare them.
 
     String inputs may use ``{scenario_dir}``, ``{repo_root}``, ``{matlab_repo}`` and
     ``{python_repo}`` placeholders, and bare relative paths resolve against the scenario
@@ -108,6 +118,12 @@ def build_context(scenario: Scenario, repo_root: Path, pair=None) -> dict:
     resolved = {}
     for key, value in scenario.inputs.items():
         resolved[key] = _resolve_input(value, scenario.directory, substitutions)
+
+    # A scenario that declares a solver for a side can be run on another one: the variable
+    # replaces the declared name on that side and leaves scenarios without a declaration alone.
+    for key, variable in _SOLVER_OVERRIDES.items():
+        if key in resolved and os.environ.get(variable):
+            resolved[key] = os.environ[variable]
 
     return {
         "scenario": scenario.id,
