@@ -4,7 +4,8 @@ function results = curate_tables_layout_toy(ctx)
 % The model has two metabolites, x and y in compartment c, and the reactions R0 (x to y) and R0b (y to x). Each case
 % curates it from a set of table files and records the metabolites (name, compartment, formula, charge) and the
 % reactions (name, bounds and stoichiometry by metabolite name) so that identifiers, which each side numbers its own
-% way, are not compared.
+% way, are not compared. The yaml_round_trip cases write the curated model with writeYAMLmodel and read it
+% back with readYAMLmodel before recording it.
 
 inputs = ctx.inputs;
 cases = as_list(inputs.cases);
@@ -25,12 +26,23 @@ for n = 1:numel(rules)
     c = struct('name', sprintf('gene_rule_%02d', n), 'mets', 'none', 'rxns', rxnsFile, 'coeffs', 'coeffs_fresh.tsv');
     results.(c.name) = curate(inputs, c);
 end
+rules = as_list(inputs.yaml_round_trip_rules);
+for n = 1:numel(rules)
+    rxnsFile = fullfile(scratch, sprintf('rxns_yaml_%d.tsv', n));
+    fid = fopen(rxnsFile, 'w');
+    fprintf(fid, 'rxnIdx\trxnNames\tgrRules\n1\tfresh\t%s\n', char(rules{n}));
+    fclose(fid);
+    c = struct('name', sprintf('yaml_round_trip_%02d', n), 'mets', 'none', 'rxns', rxnsFile, ...
+        'coeffs', 'coeffs_fresh.tsv', 'yaml_file', fullfile(scratch, sprintf('model_%d.yml', n)));
+    results.(c.name) = curate(inputs, c);
+end
 end
 
 
 function results = curate(inputs, c)
 model = struct();
 model.id = 'toy';
+model.name = 'toy';
 model.rxns = {'R0'; 'R0b'};
 model.rxnNames = {'existing'; 'existing2'};
 model.mets = {'x_c'; 'y_c'};
@@ -78,6 +90,10 @@ catch err
     end
     results = struct('error', true, 'error_class', kind);
     return
+end
+if isfield(c, 'yaml_file')
+    evalc('writeYAMLmodel(newModel, c.yaml_file);');
+    evalc('newModel = readYAMLmodel(c.yaml_file);');
 end
 
 labels = cell(numel(newModel.mets), 1);

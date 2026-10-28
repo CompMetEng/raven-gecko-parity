@@ -9,6 +9,7 @@ description: >-
 entries:
   - grRuleToDNF
   - isDnfGrRule
+  - parseGrRule
 
 # The rules are the fixture. Deliberately chosen to separate the ways two
 # parsers can disagree rather than to look like a real model: precedence,
@@ -55,24 +56,38 @@ inputs:
     - "G1 and G1"
     - "G1 or G1"
 
-    # Operator spelling: the word forms, all-uppercase, and the
-    # single-character symbol forms, all of which both sides accept.
-    #
-    # Two spellings are left out on purpose, because RAVEN accepts them and
-    # cobra does not --- it warns and yields an *empty* GPR, so the reaction
-    # silently loses its genes rather than failing:
-    #
-    #   * the doubled symbols "&&" and "||";
-    #   * mixed-case operators ("G1 Or G2"). cobra rewrites AND/OR only when
-    #     they are fully uppercase, as a whole word, so "Or" is a syntax error.
-    #
-    # Both are differences in accepted input syntax rather than in behaviour.
-    # They are recorded on the ledger row; asserting them here would leave the
-    # scenario permanently red and drown the differences worth acting on.
+    # Operator spelling. Both sides read rules in the grammar of RAVEN's
+    # parseGrRule: "and"/"or" in any case, "&", "&&", "|" and "||", each
+    # operator a whole word, so an operator glued to a gene id is part of it.
     - "G1 AND G2"
     - "G1 OR G2"
     - "G1 & G2"
     - "G1 | G2"
+    - "G1 && G2"
+    - "G1 || G2"
+    - "G1 Or G2"
+    - "G1 aNd G3 OR G2"
+    - "G1 && (G2 || G3)"
+    - "G1&G2 or G3"
+
+    # Whitespace is what MATLAB's isspace counts. A no-break space (U+00A0)
+    # and a narrow no-break space (U+202F) are not whitespace there, so they
+    # are part of a word: the first two rules are malformed on both sides
+    # and the third is one gene. U+001C and U+2003 are whitespace on both.
+    - "G1\u00a0and G2"
+    - "G1\u202for G2"
+    - "G1\u00a0G2"
+    - "G1\x1cand\u2003G2"
+
+    # Malformed rules: both sides refuse them (RAVEN:badGrRule, ValueError).
+    - "G1 and"
+    - "and G1"
+    - "(G1 or G2"
+    - "G1 or G2)"
+    - "G1 G2"
+    - "()"
+    - "G1 or or G2"
+    - "G1 xor G2"
 
     # Gene ids that contain an operator as a substring, or that are a prefix
     # of one another. Token-based parsing gets these right; string

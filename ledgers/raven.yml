@@ -447,9 +447,12 @@ entries:
       are applied one after the other. A metabolite row without a compartment raises. Gene rules: a grRules cell must be
       a well-formed gene rule in the grammar of parseGrRule (genes joined by and or or in any case, or by &, &&, | and ||,
       with balanced parentheses); a rule with an operator that lacks an operand, empty parentheses or two genes without an
-      operator between them raises (RAVEN:badInput, ValueError) before anything is changed. The scenario compares 52 rules,
+      operator between them raises (RAVEN:badInput, ValueError) before anything is changed. The scenario compares 54 rules,
       valid and malformed, on both sides. RAVEN writes a valid rule in its standard format before it applies it, and Python
-      rewrites the operator spellings that cobra does not read (And, &&, ||) as and and or. The gene rule of a new reaction
+      stores the rule as parse_gr_rule reads it, so an operator glued to a gene id is part of it on both sides (G1&G2 or G3
+      has the genes G1&G2 and G3, G3|G4 the gene G3|G4), also after the curated model is written to YAML and read back
+      (writeYAMLmodel and readYAMLmodel, write_yaml_model and read_yaml_model, which reads rules with parse_gr_rule);
+      cobra's JSON reader splits G1&G2 into G1 and G2. The gene rule of a new reaction
       may name only genes of the model or of the genes table; RAVEN stops in addRxns (Not all genes were found in
       model.genes) and Python raises ValueError; the rule of an existing reaction may name a gene the model does not have.
       A gene id that the genes table lists more than once raises on both sides (RAVEN:badInput, ValueError), whether the
@@ -760,9 +763,12 @@ entries:
     scenarios:
       - gapfill_topology_smallyeast
     notes: 'Both are the BFS metabolite-producibility pre-screen, written as explicit mirrors of each other and
-      both citing Meneco. Defaults differ --- RAVEN seeds from every exchange reaction whose bounds allow uptake
-      and targets the substrates of the objective reaction, while the Python side seeds from one-metabolite
-      reactions with lower_bound < 0 and targets every metabolite in the model.'
+      both citing Meneco. Same defaults: seeds are the metabolites of every reaction with only substrates and
+      lb < 0 or only products and ub > 0 (getExchangeRxns uptake plus reverse), with a warning when there is
+      none; targets are every metabolite of the first objective reaction, substrates and products, and a
+      model without an objective raises (RAVEN:badInput, ValueError). RAVEN reads an empty seeds or targets argument as the default,
+      raven_toolbox only None (seeds=[] starts from no metabolite). RAVEN''s getExchangeRxns uses the
+      boundary metabolites of a model with an unconstrained field; a cobra model has no such field.'
   - matlab: gapReport
     python: raven_toolbox.gapfilling.gap_report
     status: parity
@@ -826,15 +832,18 @@ entries:
   - matlab: getBlast
     python: raven_toolbox.reconstruction.homology.run_blast
     status: parity
-    notes: getBlast hardcodes -evalue 10e-5 (i.e. 1e-4); run_blast defaults to the same 1e-4, but unlike RAVEN
-      takes the cutoff as an argument.
+    notes: Same defaults. getBlast hardcodes -evalue 10e-5 (i.e. 1e-4); run_blast defaults to the same 1e-4, but
+      unlike RAVEN takes the cutoff as an argument. Both use every CPU the process may run on (MATLAB
+      feature('numcores') assigned count, os.sched_getaffinity), pass no -max_target_seqs (BLAST's 500) and the
+      same output columns and makeblastdb call. RAVEN runs all template-to-organism searches first, run_blast
+      alternates the two directions per template, so the hit rows come in another order.
     scenarios:
       - homology_chain
   - matlab: getDiamond
     python: raven_toolbox.reconstruction.homology.run_diamond
     status: parity
     notes: >-
-      getDiamond passes no --evalue, so DIAMOND's own default of 1e-3 applies; run_diamond now defaults to the same 1e-3. The aligners disagree with each other (BLAST 1e-4, DIAMOND 1e-3) because RAVEN's defaults do. Neither homology cutoff has been calibrated against data, unlike the KO-assignment cutoffs, where measurement did justify diverging from RAVEN (see raven-toolbox docs/studies/kegg_hmm_cutoff_calibration.md). No scenario: it needs the diamond executable and protein FASTA files; whether diamond is installed on the HPC nodes was not checked.
+      Same defaults. getDiamond passes no --evalue, so DIAMOND's own default of 1e-3 applies; run_diamond passes 1e-3. Both use --more-sensitive, every CPU the process may run on, no --max-target-seqs (DIAMOND's 25) and the same output columns. The aligners disagree with each other (BLAST 1e-4, DIAMOND 1e-3) because RAVEN's defaults do. Neither homology cutoff has been calibrated against data, unlike the KO-assignment cutoffs, where measurement did justify diverging from RAVEN (see raven-toolbox docs/studies/kegg_hmm_cutoff_calibration.md). No scenario: it needs the diamond executable and protein FASTA files; whether diamond is installed on the HPC nodes was not checked.
   - matlab: getElementalBalance
     python: raven_toolbox.utils.get_elemental_balance
     status: parity
@@ -1027,10 +1036,11 @@ entries:
     status: parity
     scenarios:
       - gpr_dnf_rules
-    notes: 'Rewrites a GPR into disjunctive normal form. Accepted input syntax differs at the edges: RAVEN''s
-      tokeniser takes "&&", "||" and mixed-case operators ("Or"), while cobra''s parser takes only the
-      single-character "&"/"|" and fully uppercase AND/OR. Anything else warns and yields an empty GPR there, so
-      the reaction loses its genes silently rather than raising.'
+    notes: 'Rewrites a GPR into disjunctive normal form. Both read a rule string in the grammar of parseGrRule
+      (raven_toolbox.utils.parse_gr_rule): genes joined by and/or in any case or by &, &&, | and ||, each
+      operator a whole word, so G1&G2 is one gene id. A malformed rule raises RAVEN:badGrRule in RAVEN and
+      ValueError with the same message in raven_toolbox. gpr_to_dnf also takes a cobra GPR, which is used as
+      it is.'
   - matlab: grRuleToString
     status: via-dependency
     reason: 'cobrapy covers this: GPR.to_string().'
@@ -1073,11 +1083,9 @@ entries:
     status: parity
     scenarios:
       - gpr_dnf_rules
-    notes: Direct counterpart; see the standardizeGrRules repair below.
-      Confirmed on MATLAB (RAVEN 79a7d8c, cluster batch 2026-10-21) - both sides accept '&&', '||' and upper
-      case operators. A malformed rule such as 'A and' raises in RAVEN; raven-toolbox warns and returns True.
-      Aligned by CompMetEng/raven-toolbox#181 (is_dnf now raises ValueError on a malformed rule, as RAVEN
-      does). Blank rules are still True on both sides.
+    notes: Direct counterpart; see the standardizeGrRules repair below. Both read a rule string with the
+      parseGrRule grammar (parse_gr_rule on the Python side) and raise on a malformed rule (RAVEN:badGrRule,
+      ValueError). Blank rules are True on both sides.
   - matlab: makeFakeBlastStructure
     python: raven_toolbox.reconstruction.homology.make_ortholog_hits
     status: parity
@@ -1163,8 +1171,18 @@ entries:
     scenarios:
       - elemental_balance_smallyeast
   - matlab: parseGrRule
-    status: via-dependency
-    reason: 'cobrapy covers this: the GPR parser; assigning gene_reaction_rule parses it.'
+    python: raven_toolbox.utils.parse_gr_rule
+    status: parity
+    scenarios:
+      - gpr_dnf_rules
+    notes: 'Same grammar (expr := term (OR term)*, term := factor (AND factor)*, factor := gene | ( expr )),
+      tokeniser and error messages. RAVEN returns a struct tree, raven_toolbox a cobra GPR; an empty or blank
+      rule gives an empty tree and None. Whitespace is what MATLAB''s isspace counts (code points 9 to 13, 28 to
+      32, 5760, 8192 to 8198, 8200 to 8202, 8232, 8233, 8287 and 12288), so the no-break space U+00A0, U+0085,
+      U+2007 and U+202F are part of a word on both sides; gpr_dnf_rules compares rules with U+00A0, U+202F,
+      U+001C and U+2003. cobra''s own GPR.from_string reads a different grammar (&& and || and
+      mixed-case operators are syntax errors, G1&G2 is an AND) and turns a malformed rule into an empty GPR;
+      raven_toolbox reads rule strings with parse_gr_rule in gpr_to_dnf, is_dnf and batch_curate.'
   - matlab: parseHPA
     python: raven_toolbox.init.parse_hpa
     status: parity

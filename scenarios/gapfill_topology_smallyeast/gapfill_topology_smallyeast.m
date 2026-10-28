@@ -58,6 +58,22 @@ results.candidate_reactions = records;
 
 results.pruning_fraction = double(result.pruningFraction);
 
+% The same draft with both defaults: seeds from the exchange reactions,
+% targets from the objective reaction.
+default = gapFillTopological(draft, universal, 'verbose', false);
+[dBlocked, dOrder] = sort(default.blockedMets(:));
+dRecords = cell(1, numel(dBlocked));
+for k = 1:numel(dBlocked)
+    dRecords{k} = struct('metabolite', dBlocked{k}, ...
+        'reactions', {sort_cellstr(default.candidateRxns{dOrder(k)})});
+end
+dReachable = draft.mets(logical(default.reachableMets(:)));
+results.defaults = struct( ...
+    'n_reachable', numel(dReachable), ...
+    'reachable_metabolites', {sort_cellstr(dReachable)}, ...
+    'blocked_metabolites', {row(dBlocked)}, ...
+    'candidate_reactions', {dRecords});
+
 end
 
 
