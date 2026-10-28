@@ -1,7 +1,8 @@
 """Python side of the mergeLinear scenario on hand-written models.
 
 The result is the partition of the original reactions into merged groups, the reactions of
-the reduced model and the reactions reversed by the merge, all sorted.
+the group id returned for every original reaction, the reactions of the reduced model and the
+reactions reversed by the merge, all sorted.
 """
 
 import cobra
@@ -37,6 +38,10 @@ def run(ctx):
         partition = sorted((sorted(ids) for ids in members.values()), key=lambda ids: ids[0])
         results[case["name"]] = {
             "groups": [{"members": ids} for ids in partition],
+            "group_ids": [
+                {"reaction": rxn_id, "group_id": int(group)}
+                for rxn_id, group in sorted(zip(orig_ids, group_ids, strict=True))
+            ],
             "reactions": sorted(rxn.id for rxn in reduced.reactions),
             "reversed_reactions": sorted(
                 rxn_id for rxn_id, flag in zip(orig_ids, reversed_flags, strict=True) if flag

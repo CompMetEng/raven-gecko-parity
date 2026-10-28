@@ -38,12 +38,9 @@ def _merge_checkpoint(reduced, orig_ids, group_ids, reversed_flags):
         if group:
             members.setdefault(group, []).append(rxn_id)
 
-    # Sorted member lists, ordered by their first member: a canonical form for
-    # the partition that does not depend on how either side numbered its
-    # groups. The raw integers are deliberately *not* compared --- see
-    # scenario.yml.
+    # Sorted member lists, ordered by their first member, and the group id
+    # each side returns for every reaction. See scenario.yml.
     partition = sorted((sorted(ids) for ids in members.values()), key=lambda ids: ids[0])
-    index_of = {rxn_id: n for n, ids in enumerate(partition, start=1) for rxn_id in ids}
 
     return {
         "n_reactions_before": len(orig_ids),
@@ -52,8 +49,8 @@ def _merge_checkpoint(reduced, orig_ids, group_ids, reversed_flags):
         "n_merged": sum(1 for group in group_ids if group),
         "n_reversed": sum(1 for flag in reversed_flags if flag),
         "reactions": sorted(rxn.id for rxn in reduced.reactions),
-        "group_index": [
-            {"reaction": rxn_id, "group_index": index_of.get(rxn_id, 0)}
+        "group_ids": [
+            {"reaction": rxn_id, "group_id": int(grouped[rxn_id])}
             for rxn_id in sorted(orig_ids)
         ],
         "groups": [{"members": ids} for ids in partition],

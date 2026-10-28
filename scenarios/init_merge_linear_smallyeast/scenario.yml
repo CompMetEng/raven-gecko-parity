@@ -73,18 +73,10 @@ inputs:
 # model's stoichiometry and bounds have to match too, since a merge that
 # contracted the same chains but combined them wrongly would otherwise pass.
 #
-# Grouping is compared as the partition, not as the raw integers. The two
-# implementations agree on which reactions merge together and disagree on what
-# to call each group: on smallYeast the same nine groups come out numbered
-# differently, because each side's counter increments in its own merge order.
-# The integer is documented on both sides as an equivalence marker --- "merged
-# rxns have the same id" --- and neither promises anything about its value, so
-# comparing it would report a difference that is not one. What is compared
-# instead is the sorted member lists, and a per-reaction index into them, which
-# still asserts that every reaction lands in the same group as its counterpart
-# and that the unmerged set is the same. Recorded on the ledger row, since a
-# caller who stored these integers and compared them across implementations
-# would be caught out by it.
+# Grouping is compared twice: as the partition (sorted member lists) and as
+# the group id each side returns for every reaction. Both sides number the
+# groups 1, 2, ... in the order of the first reaction of each group in the
+# original model, so the ids are compared as returned.
 #
 # One path this fixture does not reach: `reversed`, the flag marking an
 # original reaction whose stored direction was flipped when it was oriented

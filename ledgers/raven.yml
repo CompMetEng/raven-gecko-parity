@@ -1117,11 +1117,11 @@ entries:
       - init_merge_linear_smallyeast
       - merge_linear_toy
     notes: from migration.md. Linear merge of unit-stoichiometry chains; bookkeeping (group_ids, reversed_rxns) to map
-      back to the reference model. DO NOT COMPARE THE RAW GROUP IDS across implementations --- which reactions merge
-      depends on the order in which the metabolites are visited, and both sides agree on that in merge_linear_toy (R1
-      and R2 merge and R0 and R1 survive; with the reaction order changed R0 and R2 survive). They number the groups
-      differently, because each side's counter increments in its own merge order. Both document the integer only as
-      an equivalence marker, so the numbering is not a promise either one makes.
+      back to the reference model. Which reactions merge depends on the order in which the metabolites are visited,
+      and both sides agree on that in merge_linear_toy (R1 and R2 merge and R0 and R1 survive; with the reaction order
+      changed R0 and R2 survive). Both sides number the groups 1, 2, ... in the order of the first reaction of each
+      group in the reference model, after the merge, so the number does not depend on the merge order;
+      merge_linear_toy and init_merge_linear_smallyeast compare the group id of every reaction.
   - matlab: mergeModels
     python: raven_toolbox.manipulation.merge_models
     status: parity
