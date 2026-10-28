@@ -447,7 +447,9 @@ entries:
       operator between them raises (RAVEN:badInput, ValueError) before anything is changed. The scenario compares 54 rules,
       valid and malformed, on both sides. RAVEN writes a valid rule in its standard format before it applies it, and Python
       stores the rule as parse_gr_rule reads it, so an operator glued to a gene id is part of it on both sides (G1&G2 or G3
-      has the genes G1&G2 and G3, G3|G4 the gene G3|G4). The gene rule of a new reaction
+      has the genes G1&G2 and G3, G3|G4 the gene G3|G4), also after the curated model is written to YAML and read back
+      (writeYAMLmodel and readYAMLmodel, write_yaml_model and read_yaml_model, which reads rules with parse_gr_rule);
+      cobra's JSON reader splits G1&G2 into G1 and G2. The gene rule of a new reaction
       may name only genes of the model or of the genes table; RAVEN stops in addRxns (Not all genes were found in
       model.genes) and Python raises ValueError; the rule of an existing reaction may name a gene the model does not have.
       A gene id that the genes table lists more than once raises on both sides (RAVEN:badInput, ValueError), whether the
