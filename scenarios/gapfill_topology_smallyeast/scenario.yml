@@ -4,6 +4,8 @@ description: >-
   Topological gap analysis: which metabolites a draft model can still produce
   from a given medium, which target metabolites it cannot reach, and which
   reactions in a universal database would produce each of those directly.
+  Run with the seeds and targets given below, and again with both defaults
+  (seeds from the exchange reactions, targets from the objective reaction).
 
 entries:
   - gapFillTopological

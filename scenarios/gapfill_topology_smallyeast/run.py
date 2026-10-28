@@ -38,6 +38,11 @@ def run(ctx):
         verbose=False,
     )
 
+    # The same draft with both defaults: seeds from the exchange reactions,
+    # targets from the objective reaction.
+    default = analyse_topology(draft, universal, verbose=False)
+    default_blocked = sorted(default.blocked_metabolites)
+
     blocked = sorted(result.blocked_metabolites)
     return {
         "n_removed": len(removed),
@@ -57,4 +62,13 @@ def run(ctx):
             for met in blocked
         ],
         "pruning_fraction": float(result.pruning_fraction),
+        "defaults": {
+            "n_reachable": len(default.reachable_metabolites),
+            "reachable_metabolites": sorted(default.reachable_metabolites),
+            "blocked_metabolites": default_blocked,
+            "candidate_reactions": [
+                {"metabolite": met, "reactions": sorted(default.candidate_reactions.get(met, []))}
+                for met in default_blocked
+            ],
+        },
     }
