@@ -239,12 +239,13 @@ behaviour under another name. `remove_metabolites_smallyeast` runs both sides at
 non-destructive default, where they agree exactly, including a reaction reduced to zero metabolites
 and left in the model on both sides rather than pruned.
 
-**`removeGenes` and `remove_genes` default to different policies for a reaction a deletion
-blocks.** RAVEN's `removeBlockedRxns=false` (its default) matches the Python side's
-`blocked_reactions="constrain"`, not its own default (`"remove"`) — so comparing each side's own
-default would compare bounding a reaction to (0, 0) against deleting it outright and call the
-difference parity. `remove_genes_smallyeast` names the policy explicitly on both sides instead. Python
-also has a third, one-sided policy (`"keep"`) with no RAVEN equivalent.
+**`removeGenes` and `remove_genes` share their default policy for a reaction a deletion blocks.**
+RAVEN's `removeBlockedRxns=false` and the Python default `blocked_reactions="constrain"` both keep the
+reaction with the rule dropped and bounds (0, 0); `removeBlockedRxns=true` and `"remove"` delete it.
+Both sides also remove every gene that no remaining reaction named before the removal, including an
+orphan gene that was not requested. `remove_genes_smallyeast` names the policy explicitly on both sides
+and `edge_model_toy` runs both defaults. Python also has a third, one-sided policy (`"keep"`) with no
+RAVEN equivalent.
 
 **`addTransport` crashes on its own natural default call.** Asked to transport every metabolite from
 one compartment when not all of them exist in the target, it builds the new reaction names from the full
