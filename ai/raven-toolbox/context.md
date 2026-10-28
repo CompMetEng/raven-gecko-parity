@@ -1,4 +1,4 @@
-﻿# raven-toolbox (Python)
+# raven-toolbox (Python)
 
 Integration branch `develop`; pull requests target it. This is the Python implementation of
 RAVEN, and the ledger is `ledgers/raven.yml` in raven-gecko-parity. geckopy depends on this
