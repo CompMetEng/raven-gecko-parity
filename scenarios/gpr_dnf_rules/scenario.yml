@@ -70,6 +70,15 @@ inputs:
     - "G1 && (G2 || G3)"
     - "G1&G2 or G3"
 
+    # Whitespace is what MATLAB's isspace counts. A no-break space (U+00A0)
+    # and a narrow no-break space (U+202F) are not whitespace there, so they
+    # are part of a word: the first two rules are malformed on both sides
+    # and the third is one gene. U+001C and U+2003 are whitespace on both.
+    - "G1\u00a0and G2"
+    - "G1\u202for G2"
+    - "G1\u00a0G2"
+    - "G1\x1cand\u2003G2"
+
     # Malformed rules: both sides refuse them (RAVEN:badGrRule, ValueError).
     - "G1 and"
     - "and G1"

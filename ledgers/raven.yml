@@ -1161,7 +1161,10 @@ entries:
       - gpr_dnf_rules
     notes: 'Same grammar (expr := term (OR term)*, term := factor (AND factor)*, factor := gene | ( expr )),
       tokeniser and error messages. RAVEN returns a struct tree, raven_toolbox a cobra GPR; an empty or blank
-      rule gives an empty tree and None. cobra''s own GPR.from_string reads a different grammar (&& and || and
+      rule gives an empty tree and None. Whitespace is what MATLAB''s isspace counts (code points 9 to 13, 28 to
+      32, 5760, 8192 to 8198, 8200 to 8202, 8232, 8233, 8287 and 12288), so the no-break space U+00A0, U+0085,
+      U+2007 and U+202F are part of a word on both sides; gpr_dnf_rules compares rules with U+00A0, U+202F,
+      U+001C and U+2003. cobra''s own GPR.from_string reads a different grammar (&& and || and
       mixed-case operators are syntax errors, G1&G2 is an AND) and turns a malformed rule into an empty GPR;
       raven_toolbox reads rule strings with parse_gr_rule in gpr_to_dnf, is_dnf and batch_curate.'
   - matlab: parseHPA
