@@ -444,9 +444,10 @@ entries:
       are applied one after the other. A metabolite row without a compartment raises. Gene rules: a grRules cell must be
       a well-formed gene rule in the grammar of parseGrRule (genes joined by and or or in any case, or by &, &&, | and ||,
       with balanced parentheses); a rule with an operator that lacks an operand, empty parentheses or two genes without an
-      operator between them raises (RAVEN:badInput, ValueError) before anything is changed. The scenario compares 52 rules,
+      operator between them raises (RAVEN:badInput, ValueError) before anything is changed. The scenario compares 54 rules,
       valid and malformed, on both sides. RAVEN writes a valid rule in its standard format before it applies it, and Python
-      rewrites the operator spellings that cobra does not read (And, &&, ||) as and and or. The gene rule of a new reaction
+      stores the rule as parse_gr_rule reads it, so an operator glued to a gene id is part of it on both sides (G1&G2 or G3
+      has the genes G1&G2 and G3, G3|G4 the gene G3|G4). The gene rule of a new reaction
       may name only genes of the model or of the genes table; RAVEN stops in addRxns (Not all genes were found in
       model.genes) and Python raises ValueError; the rule of an existing reaction may name a gene the model does not have.
       A gene id that the genes table lists more than once raises on both sides (RAVEN:badInput, ValueError), whether the
