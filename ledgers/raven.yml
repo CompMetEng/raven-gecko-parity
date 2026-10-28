@@ -1024,10 +1024,11 @@ entries:
     status: parity
     scenarios:
       - gpr_dnf_rules
-    notes: 'Rewrites a GPR into disjunctive normal form. Accepted input syntax differs at the edges: RAVEN''s
-      tokeniser takes "&&", "||" and mixed-case operators ("Or"), while cobra''s parser takes only the
-      single-character "&"/"|" and fully uppercase AND/OR. Anything else warns and yields an empty GPR there, so
-      the reaction loses its genes silently rather than raising.'
+    notes: 'Rewrites a GPR into disjunctive normal form. Both read a rule string in the grammar of parseGrRule
+      (raven_toolbox.utils.parse_gr_rule): genes joined by and/or in any case or by &, &&, | and ||, each
+      operator a whole word, so G1&G2 is one gene id. A malformed rule raises RAVEN:badGrRule in RAVEN and
+      ValueError with the same message in raven_toolbox. gpr_to_dnf also takes a cobra GPR, which is used as
+      it is.'
   - matlab: grRuleToString
     status: via-dependency
     reason: 'cobrapy covers this: GPR.to_string().'
@@ -1070,11 +1071,9 @@ entries:
     status: parity
     scenarios:
       - gpr_dnf_rules
-    notes: Direct counterpart; see the standardizeGrRules repair below.
-      Confirmed on MATLAB (RAVEN 79a7d8c, cluster batch 2026-10-21) - both sides accept '&&', '||' and upper
-      case operators. A malformed rule such as 'A and' raises in RAVEN; raven-toolbox warns and returns True.
-      Aligned by CompMetEng/raven-toolbox#181 (is_dnf now raises ValueError on a malformed rule, as RAVEN
-      does). Blank rules are still True on both sides.
+    notes: Direct counterpart; see the standardizeGrRules repair below. Both read a rule string with the
+      parseGrRule grammar (parse_gr_rule on the Python side) and raise on a malformed rule (RAVEN:badGrRule,
+      ValueError). Blank rules are True on both sides.
   - matlab: makeFakeBlastStructure
     python: raven_toolbox.reconstruction.homology.make_ortholog_hits
     status: parity
@@ -1150,8 +1149,15 @@ entries:
     scenarios:
       - elemental_balance_smallyeast
   - matlab: parseGrRule
-    status: via-dependency
-    reason: 'cobrapy covers this: the GPR parser; assigning gene_reaction_rule parses it.'
+    python: raven_toolbox.utils.parse_gr_rule
+    status: parity
+    scenarios:
+      - gpr_dnf_rules
+    notes: 'Same grammar (expr := term (OR term)*, term := factor (AND factor)*, factor := gene | ( expr )),
+      tokeniser and error messages. RAVEN returns a struct tree, raven_toolbox a cobra GPR; an empty or blank
+      rule gives an empty tree and None. cobra''s own GPR.from_string reads a different grammar (&& and || and
+      mixed-case operators are syntax errors, G1&G2 is an AND) and turns a malformed rule into an empty GPR;
+      raven_toolbox reads rule strings with parse_gr_rule in gpr_to_dnf, is_dnf and batch_curate.'
   - matlab: parseHPA
     python: raven_toolbox.init.parse_hpa
     status: parity

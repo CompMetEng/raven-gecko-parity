@@ -28,10 +28,8 @@ end
 
 
 function record = analyse(rule)
-% RAVEN signals a malformed rule by raising RAVEN:badGrRule. cobra signals it
-% by warning and yielding an empty GPR, so `parsed` is each implementation's
-% own verdict rather than a shared definition --- which is the point: a rule
-% one side rejects and the other silently empties is a difference worth seeing.
+% RAVEN signals a malformed rule by raising RAVEN:badGrRule, raven_toolbox by
+% raising ValueError; `parsed` records that verdict.
 try
     tree = parseGrRule(rule);
     clauses = grRuleToDNF(tree);
