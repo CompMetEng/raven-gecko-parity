@@ -3,8 +3,9 @@
 ``merge_compartments`` is handed a name-based grouping key rather than left on
 its default id-suffix one, because RAVEN groups by ``metNames``. Merged
 metabolites are compared by id, name and ChEBI annotation. smallYeast is merged
-first, then each toy case, a model built from the scenario inputs. See
-scenario.yml.
+first with the settings of scenario.yml, then with the defaults of both
+functions (``defaults``), then each toy case, a model built from the scenario
+inputs. See scenario.yml.
 
 Reactions removed by the merge are reported as the difference between the model
 before and after, not as the lists each function returns: RAVEN reports
@@ -23,6 +24,7 @@ def run(ctx):
     inputs = ctx["inputs"]
     flag = bool(inputs["delete_single_metabolite_reactions"])
     results = _merge(inputs, read_yaml_model(inputs["model"]), flag)
+    results["defaults"] = _merge(inputs, read_yaml_model(inputs["model"]), None)
     results["toy_cases"] = [
         {
             "name": str(case["name"]),
@@ -53,16 +55,21 @@ def _toy_model(case):
 
 
 def _merge(inputs, model, delete_single_metabolite_reactions):
+    """Merge ``model``; ``delete_single_metabolite_reactions=None`` leaves the merged
+    compartment, the flag and the deduplication at their defaults."""
     before_rxns = {rxn.id for rxn in model.reactions}
     before_species = {met.name for met in model.metabolites}
 
-    merged, _deleted, deduplicated = merge_compartments(
-        model,
-        merged_id=str(inputs["merged_compartment"]),
-        base_metabolite=lambda met: met.name,
-        drop_single_metabolite_reactions=delete_single_metabolite_reactions,
-        deduplicate_reactions=True,
-    )
+    if delete_single_metabolite_reactions is None:
+        merged, _deleted, deduplicated = merge_compartments(model, base_metabolite=lambda met: met.name)
+    else:
+        merged, _deleted, deduplicated = merge_compartments(
+            model,
+            merged_id=str(inputs["merged_compartment"]),
+            base_metabolite=lambda met: met.name,
+            drop_single_metabolite_reactions=delete_single_metabolite_reactions,
+            deduplicate_reactions=True,
+        )
 
     after_rxns = {rxn.id for rxn in merged.reactions}
 

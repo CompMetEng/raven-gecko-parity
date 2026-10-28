@@ -2,8 +2,9 @@ function results = merge_compartments_smallyeast(ctx)
 % MATLAB side of the compartment-merging scenario.
 %
 % mergeCompartments groups by metNames. Merged metabolites are compared by id,
-% name and ChEBI annotation. smallYeast is merged first, then each toy case, a
-% model built from the scenario inputs --- see scenario.yml.
+% name and ChEBI annotation. smallYeast is merged first with the settings of
+% scenario.yml, then with the defaults of mergeCompartments (defaults), then
+% each toy case, a model built from the scenario inputs --- see scenario.yml.
 %
 % Reactions removed by the merge are reported as the difference between the
 % model before and after: RAVEN's deletedRxns covers the deleteRxnsWithOneMet
@@ -14,6 +15,7 @@ function results = merge_compartments_smallyeast(ctx)
 inputs = ctx.inputs;
 flag = logical(inputs.delete_single_metabolite_reactions);
 results = merge_summary(inputs, readYAMLmodel(inputs.model), flag);
+results.defaults = merge_summary(inputs, readYAMLmodel(inputs.model), []);
 cases = as_list(inputs.toy_cases);
 toyResults = cell(1, numel(cases));
 for k = 1:numel(cases)
@@ -79,9 +81,14 @@ beforeRxns = model.rxns(:);
 beforeSpecies = unique(model.metNames(:));
 nMetsBefore = numel(model.mets);
 
-[merged, ~, duplicateRxns] = mergeCompartments(model, ...
-    'deleteRxnsWithOneMet', deleteRxnsWithOneMet, ...
-    'distReverse', true);
+% An empty deleteRxnsWithOneMet leaves every argument at its default.
+if isempty(deleteRxnsWithOneMet)
+    [merged, ~, duplicateRxns] = mergeCompartments(model);
+else
+    [merged, ~, duplicateRxns] = mergeCompartments(model, ...
+        'deleteRxnsWithOneMet', deleteRxnsWithOneMet, ...
+        'distReverse', true);
+end
 
 afterRxns = merged.rxns(:);
 
