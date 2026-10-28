@@ -1,7 +1,9 @@
 id: merge_linear_toy
 pair: raven
 description: mergeLinear on small hand-written models where the order in which metabolites are visited
-  can change which reactions merge, and on a linear chain and a mixed-direction chain as controls. The
+  can change which reactions merge, on a model where a reaction is flipped in the second merge pass (after
+  the first pass has removed a reaction before it), and on a linear chain and a mixed-direction chain as
+  controls. The
   partition, the group id of every reaction (numbered by the first reaction of each group on both sides),
   the reduced reactions and the reversed reactions are compared.
 entries: [mergeLinear]
@@ -76,3 +78,11 @@ inputs:
       products: []
       lb: -1000
       ub: 1000
+  - name: ml_late_flip
+    model:
+    - {id: R1, substrates: [], products: [A, Y], lb: 0, ub: 1000}
+    - {id: R2, substrates: [A], products: [Y], lb: 0, ub: 1000}
+    - {id: R3, substrates: [Q], products: [], lb: 0, ub: 1000}
+    - {id: R4, substrates: [W], products: [Y], lb: -1000, ub: 1000}
+    - {id: R5, substrates: [], products: [W], lb: 0, ub: 1000}
+    - {id: R6, substrates: [W], products: [], lb: 0, ub: 1000}

@@ -1126,7 +1126,9 @@ entries:
       and both sides agree on that in merge_linear_toy (R1 and R2 merge and R0 and R1 survive; with the reaction order
       changed R0 and R2 survive). Both sides number the groups 1, 2, ... in the order of the first reaction of each
       group in the reference model, after the merge, so the number does not depend on the merge order;
-      merge_linear_toy and init_merge_linear_smallyeast compare the group id of every reaction.
+      merge_linear_toy and init_merge_linear_smallyeast compare the group id of every reaction. Both sides mark the
+      reaction flipped in a later merge pass as reversed by its id (merge_linear_toy, case ml_late_flip, where R4 is
+      flipped in the second pass, after R2 was removed in the first, and is the only reversed reaction).
   - matlab: mergeModels
     python: raven_toolbox.manipulation.merge_models
     status: parity
@@ -1356,14 +1358,13 @@ entries:
       - remove_genes_smallyeast
       - edge_model_toy
     notes: 'migration.md says ported, but no matching export found: raven_toolbox.manipulation.remove_metabolites, raven_toolbox.remove_genes.
-      Both sides share two policies: removeBlockedRxns=false / blocked_reactions="constrain" (a gene-less reaction kept,
-      bounded to (0, 0)) and removeBlockedRxns=true / blocked_reactions="remove" (deleted). THE DEFAULTS DO NOT CORRESPOND:
-      RAVEN''s removeBlockedRxns default (false) behaves like the Python side''s blocked_reactions="constrain", not
-      like the Python default ("remove") --- comparing each side''s own default would silently compare the constrain
-      policy against the remove policy. Python also has a third policy, blocked_reactions="keep" (leave the reaction
-      with its original bounds and an empty GPR), with no RAVEN equivalent. edge_model_toy: removing a gene from an
-      AND complex leaves the reaction in RAVEN under the default (bounded to (0, 0), rule dropped) and deletes it in
-      Python. An orphan gene that no rule uses is dropped by RAVEN''s removeGenes and kept by Python.'
+      The defaults correspond: RAVEN''s removeBlockedRxns=false and the Python default blocked_reactions="constrain"
+      keep a reaction that loses its last enzyme, with the rule dropped and bounds (0, 0); removeBlockedRxns=true and
+      blocked_reactions="remove" delete it. Python also has a third policy, blocked_reactions="keep" (leave the
+      reaction with its original bounds and an empty GPR), with no RAVEN equivalent. Both sides also remove every
+      gene that no remaining reaction named before the removal, an orphan gene that was not requested included; the
+      other subunit of a complex kept under "constrain" stays. edge_model_toy: no difference found for this
+      function.'
   - matlab: removeIdentifierPrefix
     status: via-dependency
     reason: 'Its only caller is io/importModel.m, itself via-dependency (cobra.io.read_sbml_model);
