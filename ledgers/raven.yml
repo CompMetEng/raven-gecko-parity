@@ -826,15 +826,18 @@ entries:
   - matlab: getBlast
     python: raven_toolbox.reconstruction.homology.run_blast
     status: parity
-    notes: getBlast hardcodes -evalue 10e-5 (i.e. 1e-4); run_blast defaults to the same 1e-4, but unlike RAVEN
-      takes the cutoff as an argument.
+    notes: Same defaults. getBlast hardcodes -evalue 10e-5 (i.e. 1e-4); run_blast defaults to the same 1e-4, but
+      unlike RAVEN takes the cutoff as an argument. Both use every CPU the process may run on (MATLAB
+      feature('numcores') assigned count, os.sched_getaffinity), pass no -max_target_seqs (BLAST's 500) and the
+      same output columns and makeblastdb call. RAVEN runs all template-to-organism searches first, run_blast
+      alternates the two directions per template, so the hit rows come in another order.
     scenarios:
       - homology_chain
   - matlab: getDiamond
     python: raven_toolbox.reconstruction.homology.run_diamond
     status: parity
     notes: >-
-      getDiamond passes no --evalue, so DIAMOND's own default of 1e-3 applies; run_diamond now defaults to the same 1e-3. The aligners disagree with each other (BLAST 1e-4, DIAMOND 1e-3) because RAVEN's defaults do. Neither homology cutoff has been calibrated against data, unlike the KO-assignment cutoffs, where measurement did justify diverging from RAVEN (see raven-toolbox docs/studies/kegg_hmm_cutoff_calibration.md). No scenario: it needs the diamond executable and protein FASTA files; whether diamond is installed on the HPC nodes was not checked.
+      Same defaults. getDiamond passes no --evalue, so DIAMOND's own default of 1e-3 applies; run_diamond passes 1e-3. Both use --more-sensitive, every CPU the process may run on, no --max-target-seqs (DIAMOND's 25) and the same output columns. The aligners disagree with each other (BLAST 1e-4, DIAMOND 1e-3) because RAVEN's defaults do. Neither homology cutoff has been calibrated against data, unlike the KO-assignment cutoffs, where measurement did justify diverging from RAVEN (see raven-toolbox docs/studies/kegg_hmm_cutoff_calibration.md). No scenario: it needs the diamond executable and protein FASTA files; whether diamond is installed on the HPC nodes was not checked.
   - matlab: getElementalBalance
     python: raven_toolbox.utils.get_elemental_balance
     status: parity
