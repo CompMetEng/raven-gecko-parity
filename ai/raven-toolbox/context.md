@@ -38,7 +38,7 @@ pytest -v --timeout=300
 
 - ruff is pinned to the version in `pyproject.toml` (line length 100, rules
   `E,F,W,I,UP,B`). mypy checks `src/raven_toolbox`.
-- CI runs pytest on Python 3.11, 3.12 and 3.13 on Linux, and 3.12 on macOS and Windows.
+- CI runs pytest on Python 3.11 to 3.15 on Linux, and 3.12 on macOS and Windows.
 - `pytest -m "parity and not slow"` runs the MATLAB comparison tests. They need a RAVEN
   checkout in `RAVEN_ROOT`, and several need Gurobi (`gurobipy`); without Gurobi they skip.
   The `slow` marker selects genome-scale tests.
