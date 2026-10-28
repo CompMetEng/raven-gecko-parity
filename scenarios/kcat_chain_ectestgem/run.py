@@ -298,7 +298,6 @@ def _checkpoint_standard(model, inputs: dict):
     uniprot_db = load_uniprot_tsv(inputs["uniprot_path"], id_type="taxonomy_id", auto_download=False)
 
     before_rxns = _all_ec_rxns(model)
-    before_snapshot = _kcat_rows(model, before_rxns)
 
     assign_standard_kcat(model, uniprot_db, fill_zero_kcat=True)
     after_rxns = _all_ec_rxns(model)

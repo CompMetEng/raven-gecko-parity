@@ -11,7 +11,6 @@ differences (infinite bounds, sorted multi-key records, ec.rxns left in expansio
 from pathlib import Path
 
 import cobra
-import pandas as pd
 
 from geckopy import (
     ModelAdapter,
