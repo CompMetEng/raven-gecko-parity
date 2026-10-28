@@ -19,6 +19,8 @@ description: >-
 #                G5, the only gene of its reaction, both sides drop the wildcard parent
 #                ('1.1.1.4;1.1.1.303').
 #   wildcard     P3 (R2's second isozyme) carries '1.1.1.1;1.1.1.-'; both sides give 1.1.1.1.
+#   semicolon_no_space   P3 (R2's second isozyme) carries '1.1.1.1;2.2.2.2' with no space; both
+#                sides read two codes and give '1.1.1.1;2.2.2.2'.
 #   complex_wildcard   P1 and P2 (R2's complex G1 and G2) both carry '1.1.1.4 1.1.1.-'; both
 #                sides give '1.1.1.4' for the complex.
 #   complex_one_gene_no_ec   P1 carries '1.1.1.4 1.1.1.-' and P2 has no EC; both sides leave G2
@@ -53,6 +55,7 @@ inputs:
   database_checks:
     - {name: separators_display, variant: separators, action: display, subset: []}
     - {name: wildcard_display, variant: wildcard, action: display, subset: []}
+    - {name: semicolon_no_space_display, variant: semicolon_no_space, action: display, subset: []}
     - {name: complex_wildcard_display, variant: complex_wildcard, action: display, subset: []}
     - {name: complex_one_gene_no_ec_display, variant: complex_one_gene_no_ec, action: display, subset: []}
     - {name: conflict_display, variant: conflict, action: display, subset: []}

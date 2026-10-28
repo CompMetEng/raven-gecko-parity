@@ -23,14 +23,10 @@ description: >-
 # and genes, reaction subsystem, EC codes, gene name, and the metaData description. A side
 # that cannot load a file reports that instead of a summary.
 #
-# Reading either file, the two loaders agree on every one of those fields except `subsystem`.
-# In the file written by Python only some reactions carry a `subsystem` entry (the protein-pool
-# reactions); MATLAB's readYAMLmodel stores the entries in a cell array indexed by reaction and
-# then flattens it with `[model.subSystems{:}]`, which drops the empty cells, so the six
-# `Protein usage` entries land on the first six reactions of the file. This scenario stays
-# DIFFER on `reactions[*].subsystem` of `file_written_by_python`. The difference comes from the
-# flatten step of readYAMLmodel in RAVEN develop and ends when the fix in CompMetEng/RAVEN#14 is
-# in the RAVEN that GECKO loads.
+# Reading either file, the two loaders agree on every one of those fields. In the file written
+# by Python only some reactions carry a `subsystem` entry (the protein-pool reactions), which
+# MATLAB's readYAMLmodel keeps with its reaction since CompMetEng/RAVEN#14; earlier versions
+# of RAVEN move the six `Protein usage` entries to the first six reactions of the file.
 
 entries:
   - loadEcModel

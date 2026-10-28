@@ -521,7 +521,7 @@ entries:
       - ec_lookup_edge_cases_ectestgem
     differs: []
     notes: >-
-      Both split a database cell on white space and on ';' followed by a space. The EC set of every gene set, one gene or an enzyme complex, is cleaned of a wildcard next to a specific code of its prefix ('1.1.1.4 1.1.1.- 1.1.1.303' gives '1.1.1.4;1.1.1.303'; a complex whose genes both carry '1.1.1.4 1.1.1.-' gives '1.1.1.4'), and a gene without an EC number is left out of a complex, so '1.1.1.4 1.1.1.-' with an empty second gene gives '1.1.1.4' (ec_lookup_edge_cases_ectestgem). Codes with fewer than four levels are neither wildcard parents nor children. A cell that joins codes with ';' and no space is read as one code by MATLAB's getECstring and split by geckopy; UniProt and KEGG separate codes with a space. No difference of its own in ec_lookup_edge_cases_ectestgem, which differs for other functions.
+      Both split a database cell on white space and on ';', with or without a space. The EC set of every gene set, one gene or an enzyme complex, is cleaned of a wildcard next to a specific code of its prefix ('1.1.1.4 1.1.1.- 1.1.1.303' gives '1.1.1.4;1.1.1.303'; a complex whose genes both carry '1.1.1.4 1.1.1.-' gives '1.1.1.4'), and a gene without an EC number is left out of a complex, so '1.1.1.4 1.1.1.-' with an empty second gene gives '1.1.1.4' (ec_lookup_edge_cases_ectestgem). Codes with fewer than four levels are neither wildcard parents nor children. A cell that joins codes with ';' and no space is split into codes by both. No difference of its own in ec_lookup_edge_cases_ectestgem, which differs for other functions.
   - matlab: findGECKOroot
     status: internal
     reason: Path helper. pathlib.Path(__file__) covers it; nothing to port.
@@ -667,11 +667,9 @@ entries:
     scenarios:
       - ec_model_io_ectestgem
       - ec_model_io_crossload_ectestgem
-    differs:
-      - file_written_by_python.reactions
+    differs: []
     notes: >-
-      Either reader loads either file with the same ec data, charge, SBO terms, gene names and description (ec_model_io_crossload_ectestgem). MATLAB's readYAMLmodel assigns subsystem to the wrong reactions when only some reactions carry one, because it flattens with [model.subSystems{:}], which drops empty cells. ec_model_io_ectestgem compares the files each side writes (see saveEcModel).
-      The subsystem differences come from the flatten step of readYAMLmodel in RAVEN develop and end when the fix in CompMetEng/RAVEN#14 is in the RAVEN that GECKO loads.
+      Either reader loads either file with the same ec data, charge, SBO terms, subsystems, gene names and description (ec_model_io_crossload_ectestgem), including a file in which only some reactions carry a subsystem. That needs the readYAMLmodel of RAVEN with CompMetEng/RAVEN#14, which keeps each subsystem with its reaction; earlier versions flatten the subsystems with [model.subSystems{:}], which drops empty cells and moves the entries to the first reactions. The row has no difference of its own; ec_model_io_ectestgem compares the files each side writes and differs there (see saveEcModel).
   - matlab: loadFluxData
     python: geckopy.load_flux_data
     status: parity
