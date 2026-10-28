@@ -258,17 +258,18 @@ subset to avoid it and has no coverage of the default path until it is fixed.
 raven-gecko-parity#9, and worth more than its size suggests: a nameless metabolite defeats the
 name-keyed matching that `merge_compartments` and `add_reactions_from_model` both depend on.
 
-**The two name compartment copies differently, in both directions.** `copyToComps` appends the
-target compartment to the id a metabolite already has (`ADP_c` → `ADP_c_p`) where
-`copy_to_compartment` rewrites the suffix (`ADP_p`); `mergeCompartments` keeps the first copy's id
-where `merge_compartments` rewrites it to the merged compartment. Both scenarios compare metabolites
-as (name, compartment) as a result, which leaves everything else about the transform under test.
+**`copyToComps` and `copy_to_compartment` name compartment copies differently.** `copyToComps`
+appends the target compartment to the id a metabolite already has (`ADP_c` → `ADP_c_p`) where
+`copy_to_compartment` rewrites the suffix (`ADP_p`). The scenario compares metabolites as (name,
+compartment) as a result, which leaves everything else about the transform under test.
 
-**`mergeCompartments` renames merged metabolites on one side and not the other**, reserves
-pre-existing single-metabolite reactions on one side and not the other, and returns something other
-than what its docstring describes. All three are on the ledger row; the scenario compares by species
-name and runs with `deleteRxnsWithOneMet` off, which leaves the merge itself — grouping, coefficient
-summing, cancellation — comparable and matching.
+**`mergeCompartments` and `merge_compartments` keep the same copy of a merged metabolite.** Both
+give it the id and the other fields of the copy already in the merged compartment, if there is one,
+otherwise of the copy whose id sorts first (`ACCOA_c` for `ACCOA_c` and `ACCOA_m`). With
+`deleteRxnsWithOneMet` (`drop_single_metabolite_reactions`) on, both keep the reactions that had a
+single metabolite before the merge and delete those the merge reduced to one. The scenario
+compares the merged metabolites by id, name and ChEBI annotation, with the flag off on smallYeast,
+on in one toy case, and with both functions on their defaults.
 
 **`simplifyModel`'s dead-end pass consults the bounds on one side and not the other.** RAVEN reads
 dead ends off the sign pattern of S, with reversible reactions counted in both directions; the Python
