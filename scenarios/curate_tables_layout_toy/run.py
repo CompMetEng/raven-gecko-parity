@@ -5,7 +5,8 @@ curates it from a set of table files and records the metabolites (name, compartm
 reactions (name, bounds and stoichiometry by metabolite name) so that identifiers, which each side numbers its own
 way, are not compared. The cases cover the layout of the files (a trailing tab, an extra cell, spaces before a cell,
 quotes, blank lines), rows without content, repeated coefficient rows, reaction indices written in different
-notations, reactions that only one of the two reaction tables has, and cells that are refused.
+notations, reactions that only one of the two reaction tables has, and cells that are refused. The
+yaml_round_trip cases write the curated model with write_yaml_model and read it back before recording it.
 """
 
 import tempfile
@@ -14,6 +15,7 @@ from pathlib import Path
 import cobra
 
 from raven_toolbox.curation import batch_curate_from_tsv
+from raven_toolbox.io import read_yaml_model, write_yaml_model
 
 
 def build_model(gene_ids=("G1",)):
@@ -68,6 +70,12 @@ def run(ctx):
             rxns.write_text(f"rxnIdx\trxnNames\tgrRules\n1\tfresh\t{rule}\n", encoding="utf-8")
             case = {"name": f"gene_rule_{number:02d}", "mets": "none", "rxns": str(rxns), "coeffs": "coeffs_fresh.tsv"}
             results[case["name"]] = curate(inputs, case)
+        for number, rule in enumerate(inputs["yaml_round_trip_rules"], start=1):
+            rxns = Path(scratch) / f"rxns_yaml_{number}.tsv"
+            rxns.write_text(f"rxnIdx\trxnNames\tgrRules\n1\tfresh\t{rule}\n", encoding="utf-8")
+            case = {"name": f"yaml_round_trip_{number:02d}", "mets": "none", "rxns": str(rxns),
+                    "coeffs": "coeffs_fresh.tsv", "yaml_file": str(Path(scratch) / f"model_{number}.yml")}
+            results[case["name"]] = curate(inputs, case)
     return results
 
 
@@ -93,6 +101,9 @@ def curate(inputs, case):
         )
     except Exception as exc:
         return {"error": True, "error_class": "" if case.get("ignore_error_class") else error_class(str(exc))}
+    if case.get("yaml_file"):
+        write_yaml_model(model, case["yaml_file"])
+        model = read_yaml_model(case["yaml_file"])
 
     def bound(value):
         return "Inf" if value == float("inf") else "-Inf" if value == float("-inf") else float(value)

@@ -19,7 +19,9 @@ description: >-
   defines (both sides stop), 54 gene rules, each on a new reaction of its own, valid ones (operators in any case or as
   &, &&, | and ||, parentheses with and without spaces, a gene id with a dot, dash, colon, underscore or digits only, a gene id with & or | inside it, which is one gene)
   and malformed ones (unbalanced parentheses, an operator without two operands, empty parentheses, two genes without
-  an operator) for which both sides stop, and the genes the accepted rules give the reaction are compared, a gene that
+  an operator) for which both sides stop, and the genes the accepted rules give the reaction are compared, the genes of
+  rules with G1&G2 and G3|G4 after the curated model is written to YAML and read back (writeYAMLmodel and
+  readYAMLmodel, write_yaml_model and read_yaml_model; one gene each), a gene that
   the genes table lists twice (new or already in the model; both sides stop), and lower and upper bounds that are valid
   only as a pair (2000 and 3000 on an existing reaction whose upper bound is 1000). Not cases, because the two sides
   differ: a lower bound above the upper bound (RAVEN writes it and solveLP rejects the model when it runs, a cobra
@@ -76,6 +78,12 @@ inputs:
     - {name: genes_existing_gene_listed_twice, mets: none, genes: genes_existing_twice.tsv, rxns: none, coeffs: none}
     - {name: genes_new_genes_listed_once, mets: none, genes: genes_new_once.tsv, rxns: none, coeffs: none}
   model_genes: ["G1", "G2", "G3", "G4", "G1.1", "G2-3", "G_1", "G:2", "10", "100", "RAND1", "ORF2", "G1&G2", "G3|G4"]
+  # Each rule on a new reaction; the curated model is written to YAML and read back before the
+  # genes are recorded.
+  yaml_round_trip_rules:
+    - "G1&G2 or G3"
+    - "(G3|G4 and G1) or G1&G2"
+
   gene_rules:
     - "G1"
     - "(G1 and G2) or G3"
