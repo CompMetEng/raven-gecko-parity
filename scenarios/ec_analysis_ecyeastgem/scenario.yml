@@ -1,0 +1,48 @@
+id: ec_analysis_ecyeastgem
+pair: gecko
+description: >-
+  The post-solve analysis functions on a built genome-scale ecModel, the full_ecModel tutorial ecYeastGEM: enzyme usage and its report, enzyme bottlenecks, the enzyme-usage pFBA, the concentration control coefficients, the mapping of fluxes to the conventional model, ecFSEOF and kcat edits, with every enzyme and every mapped flux compared.
+
+entries:
+  - getEnzymeUsage
+  - reportEnzymeUsage
+  - getEnzymeBottlenecks
+  - getPfbaEnzymes
+  - getConcControlCoeffs
+  - mapRxnsToConv
+  - ecFSEOF
+  - applyKcatConstraints
+  - setKcatForReactions
+
+# enzyme_usage_ectestgem and ec_fseof_ectestgem run these functions on a model with five enzymes, which hides every difference that needs many enzymes: ties between enzymes, complexes, isozymes, reversible reactions, a report with more rows than the default limit and the order of ranked lists. This scenario runs them on ecYeastGEM, with about 1000 enzymes and a thousand-odd reactions that carry a kcat.
+#
+# Every case records the result of the call and not a verdict: a case that raises is a result (`raised`), and a number is a record with an `is_nan` flag. The loaded model is the one of ec_model_load_ecyeastgem, read from the tutorial's models/ecYeastGEM.yml; the conventional yeast-GEM is the tutorial's models/yeast-GEM.yml, the one the ecModel was built from.
+#
+# The LP is the same on both sides but a genome-scale LP has many optimal vertices, and the two implementations land on different ones: the growth rate agrees to 2e-7 (relative), while 518 of the 8001 fluxes differ, 511 of them by 1000 or more because RAVEN's solution has free reaction pairs (no kcat, forward and reverse) circulating at the bound where cobrapy's has none. The flux vector is therefore not a checkpoint. What a flux vector feeds is: the usage functions and the mapping are given one vector, data/growth_fluxes.tsv (the solution of the `growth` LP as geckopy returns it, regenerated with regenerate_fluxes.py), and so compare the functions and not the vertex. `usage_solved` keeps what every vertex shares for the solved LP (the total usage and the five largest usages; `min_uptake` only the total, as the second-largest usage differs between vertices there), and `growth` the objective and the exchange fluxes.
+#
+# The checkpoints that solve internally depend on the vertex or on the dual solution and are kept as they are, because that dependence is the behaviour of the functions: `bottlenecks` ranks the shadow prices of prot_<id> (many enzymes tie at one value and the duals of a degenerate LP are not unique), `control_coeffs` analyses the enzymes whose usage is above 0.1 percent of the bound (limit 0.001; an enzyme near the limit differs between vertices), and `fseof` regresses the fluxes of a pFBA at each step (free loops enter the correlation). `pfba` compares what getPfbaEnzymes returns against the optimum (MATLAB fixes the objective at 0.999999 of it).
+#
+# `kcat_edits` changes kcats through ec.kcat and applies them with applyKcatConstraints, on the first isozyme-split reaction, the first reversible reaction, the first complex and a reaction whose kcat is set to zero, chosen by one rule on both sides from the order of ec.rxns; the compared values are the coefficients that change in the stoichiometric matrix and the growth rate that follows.
+inputs:
+  adapter_matlab: "{matlab_repo}/tutorials/full_ecModel"
+  adapter_python: "{matlab_repo}/tutorials/full_ecModel"
+  model_file: ecYeastGEM.yml
+  fluxes_file: "{scenario_dir}/data/growth_fluxes.tsv"
+
+  matlab_solver: gurobi
+  python_solver: gurobi
+  # RAVEN's solveLP gives Gurobi FeasibilityTol and OptimalityTol of 1e-9 and cobrapy leaves them at 1e-6; the python models are set to RAVEN's value (see ec_fva_ecyeastgem).
+  python_tolerance: 1.0e-9
+
+  bio_rxn: r_4041
+  exchange_rxns: [r_1714, r_1672, r_1992, r_1761, r_1808, r_1634, r_4041, prot_pool_exchange]
+  c_source: r_1714
+  fseof_target: r_1761
+  fseof_steps: 10
+  top_abs_usage: 20
+  high_cap_usage: 0.9
+  bottlenecks_top: 20
+
+tolerance:
+  rel: 1.0e-6
+  abs: 1.0e-8

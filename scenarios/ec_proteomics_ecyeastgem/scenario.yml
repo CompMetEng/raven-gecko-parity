@@ -1,0 +1,50 @@
+id: ec_proteomics_ecyeastgem
+pair: gecko
+description: >-
+  Proteomics and flux data on a built genome-scale ecModel: loadProtData with the tutorial proteomics and with an edited file that holds missing values, zeros, unknown, empty and repeated identifiers, fillEnzConcs, constrainEnzConcs, calculateFfactor, setProtPoolSize, loadFluxData, constrainFluxData, flexibilizeEnzConcs and getConcControlCoeffs on ecYeastGEM.
+
+entries:
+  - loadProtData
+  - fillEnzConcs
+  - constrainEnzConcs
+  - calculateFfactor
+  - setProtPoolSize
+  - loadFluxData
+  - constrainFluxData
+  - flexibilizeEnzConcs
+  - getConcControlCoeffs
+
+# protein_pool_ectestgem and flexibilize_concs_ectestgem run these functions on five proteins, where each filter of loadProtData removes a handful of rows and flexibilizeEnzConcs relaxes a single enzyme. This scenario runs the stage-4 pipeline of the full_ecModel tutorial on ecYeastGEM: 1899 measured proteins against 1144 enzymes, where the filters, the identifiers that the model lacks and a flexibilization that relaxes many enzymes in turn all take effect.
+#
+# data/proteomics_edge.tsv is made from 400 rows of the tutorial's proteomics.tsv by data/make_proteomics_edge.py: two conditions (three replicates and two), a missing value written as NA, a zero, a row with a large spread, a condition that is measured for no replicate, a protein the model does not have, an empty identifier and an identifier that occurs twice. loadProtData is run on it with the default filters, without filtering, with one maxMissing per condition, with strict thresholds, with half of the proteins cut and with a replicate count that does not match the file. data/proteomics_empty.tsv is the same table with the missing values left as empty cells, the last cells of a line included. Both readers agree on every one of these except the replicate count: geckopy raises when the columns of the file do not add up to the replicates (the difference of protein_data_filters_ectestgem), loadProtData accepts it.
+#
+# Differences this scenario reports (the run decides, the sources explain):
+#   * loader.edge_wrong_replicates: see above.
+#   * f_factor.edge: calculateFfactor averages the conditions with mean (a protein measured in one condition only has no average and counts for nothing), calculate_f_factor with nanmean (the one measurement is the average); the same difference as complex_data_edge_cases_ectestgem (f_factor.multi_sample_nan).
+#   * pipeline.control_coeffs, pipeline.flexibilize: with the proteomics constraints in place the LP has many optimal vertices and the two sides choose different ones, so getConcControlCoeffs analyses a different set of enzymes (51 of 1144 differ at limit 0.001) and flexibilizeEnzConcs relaxes 43 enzymes in python and 44 in MATLAB, with the usage bounds of three enzymes differing by 0.08 to 0.1 and the others agreeing. The growth rate afterwards agrees.
+#
+# Every case records the result of the call and a case that raises is a result. Lists keep the order of the loader, because the order of the identifiers is part of what it returns.
+inputs:
+  adapter_matlab: "{matlab_repo}/tutorials/full_ecModel"
+  adapter_python: "{matlab_repo}/tutorials/full_ecModel"
+  model_file: ecYeastGEM.yml
+  prot_data_file: "{matlab_repo}/tutorials/full_ecModel/data/proteomics.tsv"
+  prot_data_edge_file: "{scenario_dir}/data/proteomics_edge.tsv"
+  prot_data_empty_file: "{scenario_dir}/data/proteomics_empty.tsv"
+  flux_data_file: "{matlab_repo}/tutorials/full_ecModel/data/fluxData.tsv"
+
+  matlab_solver: gurobi
+  python_solver: gurobi
+  # RAVEN's solveLP gives Gurobi FeasibilityTol and OptimalityTol of 1e-9 and cobrapy leaves them at 1e-6; the python models are set to RAVEN's value (see ec_fva_ecyeastgem).
+  python_tolerance: 1.0e-9
+
+  bio_rxn: r_4041
+  c_source: r_1714
+  exchange_rxns: [r_1714, r_1672, r_1992, r_1761, r_1808, r_1634, r_2033, r_2056, r_4041]
+  fold_change: 10
+  ccc_limit: 0.001
+
+# The python models are set to RAVEN's Gurobi tolerances (python_tolerance). The growth rates under the proteomics constraints are about 0.013, so the tolerance is looser than in the other genome-scale scenarios.
+tolerance:
+  rel: 1.0e-4
+  abs: 1.0e-6
