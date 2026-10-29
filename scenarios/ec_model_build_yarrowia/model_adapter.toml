@@ -1,0 +1,28 @@
+# Adapter of the ec_model_build_yarrowia scenario: Yarrowia lipolytica, iYali5-GEM. The
+# scenario points `path` (the folder with data/uniprot.tsv, kegg.tsv and customKcats.tsv) and
+# `conv_gem` at a checkout of eciYali5-GEM; the values below are those of that repository's
+# adapter (code/debiaggi2025/eciYali5GEMadapter.m).
+conv_gem = "model/iYali5-GEM/iYali5.xml"
+org_name = "yarrowia lipolytica"
+
+sigma = 0.49
+p_tot = 0.202
+f = 0.5
+gr_exp = 0.455
+
+c_source = "1808"
+bio_rxn = "xBIOMASS"
+enzyme_comp = "cytoplasm"
+
+[kegg]
+id = "yli"
+gene_id = "kegg"
+
+[uniprot]
+type = "taxonomy"
+id = "4952"
+gene_id_field = "gene_oln"
+reviewed = false
+
+[complex]
+taxonomic_id = 284591
