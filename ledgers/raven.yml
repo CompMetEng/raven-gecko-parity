@@ -383,9 +383,13 @@ entries:
       target compartment to the id a metabolite already has, exactly as its docstring says ("New reactions and
       metabolites will be named as id_toComps(i)"), so ADP_c copied into p becomes ADP_c_p, while
       copy_to_compartment rewrites the suffix and gives ADP_p. A suffix that is not the metabolite''s own
-      compartment stays on both sides: after mergeCompartments, ADP_c in s copied into p becomes ADP_c_p. The
-      localization functions of raven_toolbox key such a metabolite as ADP, also stripping a suffix that names a
-      compartment of the universal model, the scores or the placements. Interface also differs: copyToComps takes a list
+      compartment stays on both sides: after mergeCompartments, ADP_c in s copied into p becomes ADP_c_p.
+      merge_compartments stores the base id of each merged metabolite in notes[''merged_base_id''] (ADP for the merged
+      ADP_c), and copy_to_compartment copies the notes to the new metabolite. The localization functions of
+      raven_toolbox key a metabolite by that stored base id, otherwise by its id without the suffix of its own
+      compartment, so the merged ADP_c in s and its copy ADP_c_p both key as ADP, and ADP_c in s without a stored base
+      id (for example after write_matlab_model and read_matlab_model, which drop the notes) keys as ADP_c. RAVEN stores
+      no base id. Interface also differs: copyToComps takes a list
       of target compartments, copy_to_compartment one.'
   - matlab: curateModelFromTables
     python: raven_toolbox.curation.batch_curate_from_tsv
