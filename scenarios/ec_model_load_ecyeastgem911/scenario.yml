@@ -1,0 +1,19 @@
+id: ec_model_load_ecyeastgem911
+pair: gecko
+description: >-
+  loadEcModel and load_ec_model on the published ecYeastGEM 9.1.1 (the ecModels repository, branch gecko4, folder ecYeastGEM): a tuned ecModel built and saved by geckopy, compared field by field as in ec_model_load_ecyeastgem.
+
+entries:
+  - loadEcModel
+
+# Unlike the tutorial model of ec_model_load_ecyeastgem, this file was written by geckopy's save_ec_model, after kcats from BRENDA and a prediction, custom kcats and CMA-ES tuning, and it is the model the cross-implementation comparison is meant to serve. The load comparison has the same fields and conventions as ec_model_load_ecyeastgem.
+#
+# The model file is 6.9 MB and is not vendored. adapter_matlab and adapter_python name the folder ecYeastGEM of a checkout of https://github.com/SysBioChalmers/ecModels (branch gecko4, which holds the model in git); loadEcModel reads <folder>/models/ecYeastGEM.yml through the folder's model_adapter.toml. The path below is the checkout on the Vera cluster; on another machine, point both inputs at the folder of a checkout. Without the folder the scenario stops with an error on both sides and is not part of a nightly run.
+inputs:
+  adapter_matlab: /cephyr/users/eduardk/Vera/github/ecModels/ecYeastGEM
+  adapter_python: /cephyr/users/eduardk/Vera/github/ecModels/ecYeastGEM
+  model_file: ecYeastGEM.yml
+
+tolerance:
+  rel: 0.0
+  abs: 0.0
