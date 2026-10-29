@@ -450,9 +450,12 @@ entries:
       operator between them raises (RAVEN:badInput, ValueError) before anything is changed. The scenario compares 54 rules,
       valid and malformed, on both sides. RAVEN writes a valid rule in its standard format before it applies it, and Python
       stores the rule as parse_gr_rule reads it, so an operator glued to a gene id is part of it on both sides (G1&G2 or G3
-      has the genes G1&G2 and G3, G3|G4 the gene G3|G4), also after the curated model is written to YAML and read back
-      (writeYAMLmodel and readYAMLmodel, write_yaml_model and read_yaml_model, which reads rules with parse_gr_rule);
-      cobra's JSON reader splits G1&G2 into G1 and G2. The gene rule of a new reaction
+      has the genes G1&G2 and G3, G3|G4 the gene G3|G4), also after the curated model is written to YAML or a .mat
+      file and read back (read_yaml_model and read_matlab_model read rules with parse_gr_rule) and after a toolbox
+      function copies or rebuilds the rule (merge_compartments, copy_to_compartment, apply_assignment,
+      convert_to_irreversible, merge_models, fill_tasks and every other function that sets a rule through
+      utils.gpr.set_gene_rule). cobra's JSON reader (load_json_model) splits G1&G2 into G1 and G2; cobra's SBML reader
+      keeps it. The gene rule of a new reaction
       may name only genes of the model or of the genes table; RAVEN stops in addRxns (Not all genes were found in
       model.genes) and Python raises ValueError; the rule of an existing reaction may name a gene the model does not have.
       A gene id that the genes table lists more than once raises on both sides (RAVEN:badInput, ValueError), whether the
@@ -1343,8 +1346,10 @@ entries:
       item''s leading dash is stripped before the wrapping-quote check runs, so a quoted list item (e.g. a pubmed id
       under an annotation block) is correctly unquoted. A metabolite missing its charge or compartment resolves to the
       same default regardless of whether a later metabolite in the list happens to carry that field; raven_toolbox''s
-      read_yaml_model matches the same "missing compartment defaults to the first one" behaviour. The two readers produce
-      the same model down to bounds, formulae, compartments, gene sets and stoichiometry. edge_model_toy: no difference
+      read_yaml_model matches the same "missing compartment defaults to the first one" behaviour. Gene rules are read in
+      the grammar of parseGrRule on both sides (read_yaml_model uses parse_gr_rule), so G1&G2 is one gene id; a rule
+      that parse_gr_rule refuses is read by cobra. The two readers produce the same model down to bounds, formulae,
+      compartments, gene sets and stoichiometry. edge_model_toy: no difference
       found for this function; the scenario differs in the writer (see writeYAMLmodel).'
   - matlab: removeBadRxns
     python: raven_toolbox.manipulation.remove_bad_reactions
