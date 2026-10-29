@@ -1,0 +1,24 @@
+id: ec_fva_light_humangem
+pair: gecko
+description: >-
+  ecFVA and ec_fva on the light ecModel of GECKO's light_ecModel tutorial (Human-GEM, 11983 conventional reactions) with growth fixed at its optimum, compared on every 40th reaction of the conventional model.
+
+entries:
+  - ecFVA
+
+# ec_fva_ecyeastgem compares every reaction of the full ecModel of yeast. This is the gecko-light layout, where reactions are not split per isozyme and ec.rxns carries the isozymes, on a model with 12000 reactions. ecFVA has no argument for a subset, so the whole model is run on each side (twelve thousand pairs of LPs, about 10 minutes for geckopy on 8 processes and over an hour for MATLAB) and every 40th reaction is recorded; the number of reactions covered is recorded too. The tutorial ecModel is read from a copy without its 52 empty `enzymes: !!omap` entries (see ec_model_load_light_humangem). The python model is set to RAVEN's Gurobi tolerances (python_tolerance, see ec_fva_ecyeastgem).
+inputs:
+  adapter_matlab: "{matlab_repo}/tutorials/light_ecModel"
+  adapter_python: "{matlab_repo}/tutorials/light_ecModel"
+  model_file: ecModel.yml
+
+  matlab_solver: gurobi
+  python_solver: gurobi
+  python_n_proc: 8
+  python_tolerance: 1.0e-9
+
+  fva_stride: 40
+
+tolerance:
+  rel: 1.0e-6
+  abs: 1.0e-6
