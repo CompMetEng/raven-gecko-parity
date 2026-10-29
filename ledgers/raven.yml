@@ -725,7 +725,7 @@ entries:
       removes every gene without a reaction, one that had none in the reference model included (prep_init_model with
       simplify false keeps such genes), and ftinit does the same. A metabolite that tasks name and whose reactions the
       extraction removes (T) is removed on both sides too. ftinit_task_metabolites_toy compares the metabolites, reactions
-      and kept tasks of the extracted model and gives MATCH.
+      and kept tasks of the extracted model and gives MATCH. With resolveTies on (resolve_ties=True), the final reaction sets on Human-GEM HCT116 (series 1+1) are identical between the tools, but 28 forced directions of step 2 differ (21 mirror pairs of reversible reactions with equal total flux, 5 in merge groups, 2 others), because phases 2c and 2d do not prove optimal in 1800 s in either tool. The extra MILPs of the tie-break run in each step that has a removable (negative-score) reaction.
   - matlab: ftINITFillGaps
     status: subsumed
     reason: Single-task variant. migration.md paired it with fill_tasks, but ftINIT.m actually calls fitTasks
@@ -736,12 +736,12 @@ entries:
     python: raven_toolbox.init.fill_tasks
     status: parity
     notes: >-
-      Task-aware gap-filling within ftINIT: ftINIT.m calls fitTasks with gapFillMode 'preMerged' (RAVEN#746 inlined and removed the former ftINITFillGapsForAllTasks wrapper that used to make this call; the pairing carries over unchanged since fitTasks's own behavior did not change). In preMerged mode fitTasks calls ftINITFillGaps, the same MILP-style formulation fill_tasks uses --- unlike fitTasks's other mode ('merge', tINIT-only, no Python counterpart), which calls generic fillGaps/getMinNrFluxes instead. Two known gaps remain even on the paired preMerged path: fill_tasks extends the reference-model candidate pool with each task's own temporary equations, which ftINITFillGaps does not (a real gap for tasks with custom equations); and fill_tasks carries a resolve_ties option (_resolve_ties_fill, raven-toolbox#114) that pins its degenerate MILP to a canonical answer instead of relying on Seed alone, which ftINITFillGaps has no equivalent for --- raven-gecko-parity#104, demonstrated concretely by a 2-of-9586-reaction tie flip on a genome-scale Human-GEM extraction caused only by changing the MILP's construction path, same Seed. No isolated scenario: the preMerged path needs a prepared reference model and a MILP; ftinit_toy exercises the same step through ftINIT.
+      Task-aware gap-filling within ftINIT: ftINIT.m calls fitTasks with gapFillMode 'preMerged' (RAVEN#746 inlined and removed the former ftINITFillGapsForAllTasks wrapper that used to make this call; the pairing carries over unchanged since fitTasks's own behavior did not change). In preMerged mode fitTasks calls ftINITFillGaps, the same MILP-style formulation fill_tasks uses --- unlike fitTasks's other mode ('merge', tINIT-only, no Python counterpart), which calls generic fillGaps/getMinNrFluxes instead. One known gap remains on the paired preMerged path: fill_tasks extends the reference-model candidate pool with each task's own temporary equations, which ftINITFillGaps does not (a real gap for tasks with custom equations). Both sides pin the degenerate gap-fill MILP to a canonical answer when asked (raven-gecko-parity#104): fitTasks's resolveTies (fitTasks.m:46) passes through ftINITFillGaps to getMinNrFluxes, and fill_tasks's resolve_ties runs _resolve_ties_fill. Both run phase 2a (fewest added reactions) and phase 2b (lowest summed id rank) with the score objective held at its optimum, and warn when a phase stops at the time limit. getMinNrFluxes gives each phase the full TimeLimit, _resolve_ties_fill gives each phase half of time_limit (_TIE_BREAK_TIME_FRACTION). No isolated scenario: the preMerged path needs a prepared reference model and a MILP; ftinit_toy exercises the same step through ftINIT.
   - matlab: ftINITInternalAlg
     python: raven_toolbox.init.run_ftinit
     status: parity
     notes: >-
-      The single-step ftINIT MILP, beneath the full pipeline. Also carries a resolve_ties option (_resolve_ties, raven-toolbox#114) with no MATLAB counterpart, the same gap as fitTasks's --- see raven-gecko-parity#104. No isolated scenario: the single-step MILP needs prepared ftINIT data; ftinit_toy exercises it through ftINIT.
+      The single-step ftINIT MILP, beneath the full pipeline. Both sides pin its degenerate optimum when asked (resolveTies, ftINITInternalAlg.m:467-640; resolve_ties, _resolve_ties, _min_abs_flux and _min_backward_flux in ftinit.py; raven-gecko-parity#104): with the score objective held at its optimum, phase 2a keeps the fewest removable reactions, phase 2b the lowest summed rank (rankKeys, rank_keys), phase 2c gives the least total absolute flux for that on/off state and phase 2d fixes the directions left open by phase 2c; phases 2a and 2b run only when there is a removable (negative-score) reaction. Three differences remain. When the primary solve stopped at the time limit, Python skips every tie-break phase and keeps the primary incumbent (ftinit.py:518), while RAVEN runs phases 2a to 2d on the time-limited incumbent (ftINITInternalAlg.m:459-467). Python gives phases 2a and 2b each half of time_limit (_TIE_BREAK_TIME_FRACTION, ftinit.py:102 and 603), RAVEN the full TimeLimit; phases 2c and 2d get the full budget on both sides. When phase 2c is infeasible without a time limit, Python keeps the phase-2b fluxes without a warning (ftinit.py:711-717), while RAVEN adds phase2c-minflux to its did-not-converge warning. With resolveTies on (resolve_ties=True), the final reaction sets on Human-GEM HCT116 (series 1+1) are identical between the tools, but 28 forced directions of step 2 differ (21 mirror pairs of reversible reactions with equal total flux, 5 in merge groups, 2 others), because phases 2c and 2d do not prove optimal in 1800 s in either tool. The extra MILPs of the tie-break run in each step that has a removable (negative-score) reaction. No isolated scenario: the single-step MILP needs prepared ftINIT data; ftinit_toy exercises it through ftINIT.
   - matlab: gapFillFastCore
     status: subsumed
     reason: The L1-norm LP subroutine of gapFillFastLP; inside fill_gaps_fast_lp on the Python side.
@@ -1279,7 +1279,11 @@ entries:
       because the name does not match exactly), and a second metabolite with the same name and compartment (only
       the first stays). The scenario gives MATCH. The coefficients in task equations are read by float in Python
       and by str2num in RAVEN's parseRxnEqu, so text such as pi, 1_0 or 1/3 is read differently; no scenario
-      covers it.
+      covers it. With resolveTies on (resolve_ties=True), the final reaction sets on Human-GEM HCT116 (series 1+1)
+      are identical between the tools, but 28 forced directions of step 2 differ (21 mirror pairs of reversible
+      reactions with equal total flux, 5 in merge groups, 2 others), because phases 2c and 2d of ftINITInternalAlg
+      and run_ftinit do not prove optimal in 1800 s in either tool. The extra MILPs of the tie-break run in each
+      step that has a removable (negative-score) reaction.
   - matlab: printFluxes
     status: matlab-only
     reason: Console formatting of a flux vector. Python users print a pandas Series or DataFrame; listed as
