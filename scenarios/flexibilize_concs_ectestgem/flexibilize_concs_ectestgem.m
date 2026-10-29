@@ -5,7 +5,7 @@ function results = flexibilize_concs_ectestgem(ctx)
 % constrainFluxData, 'loose' and percentage-variance mode, no LP solve involved) and
 % flexibilize (flexibilizeEnzConcs on enzyme_usage_ectestgem's own R2/R4-blocked,
 % single-bottleneck fixture, reused rather than re-derived). See scenario.yml for the
-% one confirmed divergence, in flexibilizeEnzConcs's post-loop refinement pass only.
+% post-loop refinement pass, where both sides settle at the low edge of the growth band.
 %
 % TestGEMAdapter.m's own bioRxn ('R4', "Not relevant") and c_source ('E1', not a real
 % reaction id here) are not used as-is: both loadFluxData/constrainFluxData/

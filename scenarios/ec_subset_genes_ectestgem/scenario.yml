@@ -10,11 +10,9 @@ entries:
 #
 # Both flavours of ecModel are cut: the full one, where every reaction has one gene set after the isozyme split, and the light one, where R2 keeps its rule `G1 and G2 or G3`.
 #
-# `drop_reaction_and_gene`: the context model has no R2 and no G3, but has G1 and G2 (they stay in its gene list). In the light ecModel R2 survives the removal of G3 (G1 and G2 satisfy the rule) while the gene G3 is removed from the gene list of the model, and R2 is then removed because the context model lacks it. geckopy removes G3 from the gene list first and later removes R2 together with its orphan genes, among which G3 is still a gene of the reaction, so cobra raises that G3 is not found in the gene list. MATLAB's getSubsetEcModel returns the model. In the full ecModel R2 is split per isozyme, the isozyme of G3 goes with the gene and nothing refers to G3 afterwards.
+# `drop_reaction_and_gene`: the context model has no R2 and no G3, but has G1 and G2 (they stay in its gene list). In the light ecModel R2 survives the removal of G3 (G1 and G2 satisfy the rule) and is then removed because the context model lacks it; in the full ecModel R2 is split per isozyme and the isozyme of G3 goes with the gene. Both sides return the same model in both flavours. `drop_reaction`: the context model lacks R2 and every gene that belonged to R2 alone. `identity`: the context model is the full conventional model, so no gene is removed and both sides return the model unchanged.
 #
-# `drop_reaction`: the context model lacks R2 and every gene only R2 used. `identity`: the context model is the full conventional model, so no gene is removed: geckopy returns the copy of the model and MATLAB raises.
-#
-# A raise is a result on both sides. The reproduction on real data is ec_analysis_light_humangem (HT29-GEM of the light_ecModel tutorial), where geckopy raises that ENSG00000179148 is not found.
+# A raise is a result on both sides. The same function on real data is ec_analysis_light_humangem (HT29-GEM of the light_ecModel tutorial).
 inputs:
   adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
   adapter_python: "{python_repo}/examples/ecTestGEM"

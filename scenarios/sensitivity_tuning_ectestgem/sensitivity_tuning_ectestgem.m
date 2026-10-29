@@ -1,8 +1,8 @@
 function results = sensitivity_tuning_ectestgem(ctx)
 % MATLAB side of the sensitivity-tuning scenario.
 %
-% Three independent checkpoints, mirroring run.py. See scenario.yml for the
-% confirmed divergence (sigmaFitter's returned-model bug, fixed as GECKO#433).
+% Three independent checkpoints, mirroring run.py. See scenario.yml for the pool bound
+% that sigmaFitter leaves on the returned model.
 
 previousSolver = getpref('RAVEN', 'solver', '');
 restoreSolver = onCleanup(@() restore_solver(previousSolver));

@@ -69,18 +69,8 @@ inputs:
     - -55.5555555
     - 1.0e-8
 
-# One confirmed divergence, found by direct execution rather than assumed from either
-# side's comments:
-#
-# sigmaFitter --- a genuine MATLAB bug, not a design choice: the 100-point grid-search
-# loop reassigns `model` on every iteration, so by the time it ends the returned model's
-# protein pool is sized for whichever sigma was tried *last* (sigma=1), not the
-# best-fitting sigma the function actually returns as its own second output. geckopy's
-# own MATLAB-COMPAT note already flags this; confirmed here with the actual numbers on
-# this fixture (returned sigma 0.11 on both sides; MATLAB's returned model pool bound
-# 2000, geckopy's 220 = Ptot*f*0.11*1000, the value at the *returned* sigma). Filed and
-# fixed: [GECKO #433]. This scenario's model-state checkpoint will read as matching
-# once that merges rather than needing a code change here.
+# sigmaFitter and fit_sigma size the protein pool of the model they return for the sigma they
+# return: the sigma is 0.11 and the pool bound 220 (Ptot*f*0.11*1000) on both sides.
 tolerance:
   rel: 1.0e-6
   abs: 1.0e-9

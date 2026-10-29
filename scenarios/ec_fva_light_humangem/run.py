@@ -30,8 +30,8 @@ def run(ctx):
     conv = load_conventional_gem(adapter)
 
     # The tutorial ecModel has 52 ec reactions written as an `enzymes: !!omap` entry with no
-    # content, which geckopy's reader rejects (see ec_model_load_light_humangem). Both sides
-    # read a copy without them.
+    # content; both readers load the file as it is (see ec_model_load_light_humangem). Both
+    # sides here read a copy without them.
     text = (folder / "models" / str(inputs["model_file"])).read_text(encoding="utf-8")
     text = re.sub(r"^ *- enzymes: !!omap\n(?= {0,4}\S)", "", text, flags=re.MULTILINE)
     with tempfile.TemporaryDirectory(prefix="parity_light_fva_") as workdir:

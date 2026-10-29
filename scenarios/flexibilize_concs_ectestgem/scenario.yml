@@ -75,13 +75,11 @@ inputs:
   iter_per_enzyme: 5
 
 # Both sides flex exactly one protein (P5), the same number of times (1), from
-# the same starting concentration, and now agree on the post-loop refinement pass
-# too (raven-gecko-parity#71): both pin growth into a narrow *band* around
-# exp_growth (RAVEN's setParam('var', bioRxn, expGrowth, 0.5) --- +/-0.25%) and,
-# since the objective is to *minimise* protein-pool usage, settle at the band's
-# low edge (2.49375, not 2.5). geckopy's refinement solve previously pinned growth
-# to exp_growth exactly instead; reconciled toward MATLAB's band rather than the
-# other way, so both P5's flexed concentration and the final growth rate now match
+# the same starting concentration, and agree on the post-loop refinement pass
+# too: both pin growth into a narrow *band* around exp_growth (RAVEN's
+# setParam('var', bioRxn, expGrowth, 0.5) --- +/-0.25%) and, since the objective
+# is to *minimise* protein-pool usage, settle at the band's low edge (2.49375,
+# not 2.5), so both P5's flexed concentration and the final growth rate match
 # (flexConcs 0.173177, growth 2.49375).
 tolerance:
   rel: 1.0e-6

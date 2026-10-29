@@ -2,8 +2,8 @@ function results = ec_fva_ectestgem(ctx)
 % MATLAB side of the ecFVA scenario.
 %
 % One ecModel, one call to ecFVA, mapped back to the conventional model's reactions.
-% Mirrors run.py; see scenario.yml for why R2's isozyme kcats are distinct and for the
-% mechanism behind this scenario's one confirmed divergence (R2's own min/max flux).
+% Mirrors run.py; see scenario.yml for why R2's isozyme kcats are distinct and how the
+% bounds of an isozyme-split reaction are combined.
 %
 % ecFVA always starts a parallel pool if one is not already running (parfor, no serial
 % path), unlike geckopy's ec_fva, which this scenario tells to stay serial on this small

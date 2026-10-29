@@ -3,8 +3,8 @@ function results = ec_fva_light_humangem(ctx)
 % tutorial's gecko-light ecModel with growth fixed at its optimum. See scenario.yml.
 %
 % The tutorial ecModel has 52 ec reactions with no enzyme written as an empty `enzymes: !!omap`
-% entry, which geckopy's reader rejects (see ec_model_load_light_humangem). Both sides read a
-% copy without them; loadEcModel joins its filename onto <adapter path>/models/, so the copy
+% entry; both readers load the file as it is (see ec_model_load_light_humangem). Both sides here
+% read a copy without them; loadEcModel joins its filename onto <adapter path>/models/, so the copy
 % goes to a temporary folder that a copy of the adapter points to (ModelAdapter is a value
 % class).
 

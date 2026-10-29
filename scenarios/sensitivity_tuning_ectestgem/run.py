@@ -7,8 +7,8 @@ Three independent checkpoints, matching the three ledger rows this scenario cove
     fixture, with kcat_R3 deliberately too low for the target growth rate.
 ``sigma_fitter``
     fit_sigma (method='grid', matching MATLAB's own 100-point sweep exactly) on a
-    separate instance of the same fixture shape. Confirmed divergence in the returned
-    model's pool bound only --- see scenario.yml; filed and fixed as GECKO#433.
+    separate instance of the same fixture shape. The returned model's pool bound is sized
+    for the returned sigma on both sides --- see scenario.yml.
 ``truncate_values``
     Plain rounding, one value per order-of-magnitude regime.
 """

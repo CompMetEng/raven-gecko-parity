@@ -50,8 +50,8 @@ def _adapter(inputs: dict) -> ModelAdapter:
 def _repaired_model_file(inputs: dict, workdir: str) -> str:
     """A copy of the tutorial ecModel without its empty `enzymes: !!omap` entries.
 
-    The file has 52 ec reactions with no enzyme written that way, which geckopy's reader
-    rejects (see ec_model_load_light_humangem). The copy is read by both sides.
+    The file has 52 ec reactions with no enzyme written that way; both readers load the file
+    as it is (see ec_model_load_light_humangem). The copy is read by both sides.
     """
     text = (Path(inputs["adapter_python"]) / "models" / str(inputs["model_file"])).read_text(encoding="utf-8")
     text = re.sub(r"^ *- enzymes: !!omap\n(?= {0,4}\S)", "", text, flags=re.MULTILINE)

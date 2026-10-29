@@ -50,12 +50,11 @@ inputs:
 # between_grid_*: 100 lies between sigma 0.11 (96.0) and 0.12 (104.7). Both sides take the nearer grid
 #   point, 0.11.
 # uptake_cap_*: the target 100 is out of reach. growth is flat from sigma 0.0573 on, and both sides
-#   take the first grid point with the smallest error, 0.06. That holds on Gurobi for MATLAB. With
-#   MATLAB on GLPK the plateau growth carries rounding noise (49.999999999999986 at sigma 0.06, 50 at
-#   sigma 1), sigmaFitter compares the errors exactly and takes the first minimum, so it returns
-#   sigma 1 and a pool bound of 2000 instead of 0.06 and 120. geckopy returns 0.06 on glpk,
-#   glpk_exact, scipy and Gurobi because it counts growth within 1e-9 (relative) of the plateau
-#   as on it. The case stays as it is: it is the case that shows the difference.
+#   take the first grid point on the plateau, 0.06, with a pool bound of 120. The growth on the plateau
+#   carries rounding noise with some solvers (49.999999999999986 at sigma 0.06 and 50 at sigma 1 with
+#   MATLAB on GLPK), so both count growth within 1e-9 (relative) of the best growth as on the plateau. The
+#   result is the same with MATLAB on Gurobi and GLPK and geckopy on Gurobi, GLPK and scipy.
+#
 # fixed_biomass_*: the biomass reaction has lower bound = upper bound = 0.1. Both sides open the bounds
 #   of their objective to (0, 1000) before they scan and return the model with them open, so the fit
 #   is 0.11 as without the fixed bounds.

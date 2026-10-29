@@ -54,12 +54,8 @@ report = reportEnzymeUsage(ecModel, usageData, ...
     'highCapUsage', double(ctx.inputs.high_cap_usage), ...
     'topAbsUsage', double(ctx.inputs.top_abs_usage));
 results.report.high_cap_usage = report_table_rows(report.highCapUsage, 'capUsage', 'cap_usage');
-% Confirmed divergence, asserted rather than avoided: reportEnzymeUsage.m always
-% returns exactly topAbsUsage rows -- an enzyme with no flux-carrying reaction still
-% gets a placeholder row (isscalar(find(carriedFlux)) is false for zero matches, the
-% same branch a genuinely multi-reaction enzyme takes). report_enzyme_usage instead
-% skips any enzyme with no flux-carrying reaction outright, so it can return fewer
-% rows. See scenario.yml and raven-gecko-parity#18 for the mechanism on each side.
+% Both sides skip an enzyme with no flux-carrying reaction, so the table has fewer
+% than topAbsUsage rows when fewer enzymes carry flux. See scenario.yml.
 results.report.top_abs_usage = report_table_rows(report.topAbsUsage, 'percUsage', 'perc_usage');
 results.report.total_usage_flux = double(report.totalUsageFlux);
 

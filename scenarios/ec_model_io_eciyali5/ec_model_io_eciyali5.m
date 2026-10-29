@@ -26,8 +26,9 @@ delete(fullfile(modelsDir, gzName));
 % The file has two constructs that a strict YAML parser rejects. GECKO 3 wrote three kcat
 % notes as ""text"" and 30 reactions with the standard kcat as an `enzymes: !!omap` entry with
 % no content. The cases as_published and notes_repaired record what each reader does with the
-% file as published and with the notes repaired; the other cases read a copy in which both are
-% repaired (doubled quotes become single ones, the empty `enzymes` entries are left out).
+% file as published and with the notes repaired (both readers load both); the other cases read a
+% copy in which both are repaired (doubled quotes become single ones, the empty `enzymes`
+% entries are left out).
 results.as_published = attempt(@() counts_of(publishedName, ioAdapter));
 notesFixed = regexprep(text, '(?m)^( *- notes: )""([^\n]+)""$', '$1"$2"');
 write_text(fullfile(modelsDir, 'notes_repaired.yml'), notesFixed);

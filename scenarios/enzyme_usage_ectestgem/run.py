@@ -141,11 +141,8 @@ def run(ctx):
     )
     report_result = {
         "high_cap_usage": _report_table_rows(report.high_cap_usage, "cap_usage"),
-        # Confirmed divergence, asserted rather than avoided: report_enzyme_usage skips
-        # any enzyme with no flux-carrying reaction outright, so this table can return
-        # fewer than top_abs_usage rows. reportEnzymeUsage.m instead always returns
-        # exactly top_abs_usage rows, padding with a placeholder for anything inactive.
-        # See scenario.yml and raven-gecko-parity#18 for the mechanism on each side.
+        # Both sides skip an enzyme with no flux-carrying reaction, so this table has
+        # fewer than top_abs_usage rows when fewer enzymes carry flux. See scenario.yml.
         "top_abs_usage": _report_table_rows(report.top_abs_usage, "perc_usage"),
         "total_usage_flux": float(report.total_usage_flux),
     }
