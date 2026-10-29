@@ -387,9 +387,11 @@ entries:
       merge_compartments stores the base id of each merged metabolite in notes[''merged_base_id''] (ADP for the merged
       ADP_c), and copy_to_compartment copies the notes to the new metabolite. The localization functions of
       raven_toolbox key a metabolite by that stored base id, otherwise by its id without the suffix of its own
-      compartment, so the merged ADP_c in s and its copy ADP_c_p both key as ADP, and ADP_c in s without a stored base
-      id (for example after write_matlab_model and read_matlab_model, which drop the notes) keys as ADP_c. RAVEN stores
-      no base id. Interface also differs: copyToComps takes a list
+      compartment, so the merged ADP_c in s and its copy ADP_c_p both key as ADP. RAVEN stores no base id; its
+      readYAMLmodel shows the key in metNotes and no RAVEN function uses it. A round trip through RAVEN YAML (which
+      joins the key and the free-text note into one string) or through a .mat file (write_matlab_model and
+      read_matlab_model carry no metabolite notes) loses the key, and ADP_c in s then keys as ADP_c, without an
+      error. Interface also differs: copyToComps takes a list
       of target compartments, copy_to_compartment one.'
   - matlab: curateModelFromTables
     python: raven_toolbox.curation.batch_curate_from_tsv
@@ -1132,7 +1134,13 @@ entries:
       metabolites all cancelled, with the flag on or off. (3) mergeCompartments'' third output is documented as the reactions deleted for being duplicates, but
       it passes through contractModel''s *third* output (an indexed cell array, one entry per retained reaction)
       rather than its second (the flat list of removed ids). A caller reading the docstring gets one entry per
-      surviving reaction instead.'
+      surviving reaction instead. (4) merge_compartments stores the base id of each merged metabolite in
+      notes[''merged_base_id''] (ACCOA for the kept ACCOA_c); RAVEN stores none. The key is written to YAML
+      and read back by read_yaml_model, and survives copy(), cobra JSON and SBML. RAVEN''s readYAMLmodel shows
+      it in metNotes, for example "merged_base_id: ACCOA note: free text note", and no RAVEN function uses it.
+      A round trip through RAVEN YAML or a .mat file loses it, because RAVEN joins the key and the free text
+      into one string and the .mat reader and writer of raven_toolbox carry no metabolite notes; the
+      localization functions then key a merged ACCOA_c in s as ACCOA_c, without an error.'
   - matlab: mergeLinear
     python: raven_toolbox.init.merge_linear
     status: parity
