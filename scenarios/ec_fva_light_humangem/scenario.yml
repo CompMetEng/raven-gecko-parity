@@ -6,7 +6,11 @@ description: >-
 entries:
   - ecFVA
 
-# ec_fva_ecyeastgem compares every reaction of the full ecModel of yeast. This is the gecko-light layout, where reactions are not split per isozyme and ec.rxns carries the isozymes, on a model with 12000 reactions. ecFVA has no argument for a subset, so the whole model is run on each side (twelve thousand pairs of LPs, about 10 minutes for geckopy on 8 processes and over an hour for MATLAB) and every 40th reaction is recorded; the number of reactions covered is recorded too. The tutorial ecModel is read from a copy without its 52 empty `enzymes: !!omap` entries (see ec_model_load_light_humangem). The python model is set to RAVEN's Gurobi tolerances (python_tolerance, see ec_fva_ecyeastgem).
+# ec_fva_ecyeastgem compares every reaction of the full ecModel of yeast. This is the gecko-light layout, where reactions are not split per isozyme and ec.rxns carries the isozymes, on a model with 12000 reactions. ecFVA has no argument for a subset, so the whole model is run on each side (twelve thousand pairs of LPs, about 10 minutes for geckopy on 8 processes and about 2 hours for MATLAB) and every 40th reaction is recorded; the number of reactions covered is recorded too.
+#
+# The tutorial ecModel is read from a copy without its 52 empty `enzymes: !!omap` entries (see ec_model_load_light_humangem). The python model is set to RAVEN's Gurobi tolerances (python_tolerance, see ec_fva_ecyeastgem).
+#
+# Result. With growth fixed at its optimum (lower and upper bound equal) the LP is borderline feasible: ecFVA returns NaN (no solution) for the maximum of 44 of the 300 recorded reactions and ec_fva for 6 of them, all of which are among MATLAB's, although both solve with Gurobi tolerances of 1e-9. On the 256 reactions that both sides solve, 2 of 512 values differ, by up to 2.5e-4. The NaN records are the differences of this scenario; they are a property of the equality bound and not of the algorithm, and a lower bound of 99 percent of the optimum instead of an equality would avoid them (not run).
 inputs:
   adapter_matlab: "{matlab_repo}/tutorials/light_ecModel"
   adapter_python: "{matlab_repo}/tutorials/light_ecModel"
