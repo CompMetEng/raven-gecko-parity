@@ -26,8 +26,14 @@ for k = 1:numel(cases)
     for g = 1:numel(members)
         records{g} = struct('members', {members{g}});
     end
+    [sortedIds, idOrder] = sort(origIds);
+    idRecords = cell(1, numel(sortedIds));
+    for j = 1:numel(sortedIds)
+        idRecords{j} = struct('reaction', sortedIds{j}, 'group_id', groupIds(idOrder(j)));
+    end
     results.(char(c.name)) = struct( ...
         'groups', {records}, ...
+        'group_ids', {idRecords}, ...
         'reactions', {sort_cellstr(reduced.rxns)}, ...
         'reversed_reactions', {sort_cellstr(origIds(reversedRxns))});
 end

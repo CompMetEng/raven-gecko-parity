@@ -38,9 +38,8 @@ out.n_reversed = sum(reversedRxns);
 
 out.reactions = sort_cellstr(reduced.rxns);
 
-% Sorted member lists, ordered by their first member: a canonical form for the
-% partition that does not depend on how either side numbered its groups. The
-% raw integers are deliberately not compared --- see scenario.yml.
+% Sorted member lists, ordered by their first member, and the group id
+% mergeLinear returns for every reaction. See scenario.yml.
 groups = cell(1, numel(uniqueGroups));
 firsts = cell(1, numel(uniqueGroups));
 for k = 1:numel(uniqueGroups)
@@ -50,27 +49,17 @@ for k = 1:numel(uniqueGroups)
 end
 [~, groupOrder] = sort(firsts);
 groupRecords = cell(1, numel(groups));
-indexOf = containers.Map('KeyType', 'char', 'ValueType', 'double');
 for k = 1:numel(groups)
-    members = groups{groupOrder(k)};
-    groupRecords{k} = struct('members', {members});
-    for j = 1:numel(members)
-        indexOf(members{j}) = k;
-    end
+    groupRecords{k} = struct('members', {groups{groupOrder(k)}});
 end
 out.groups = groupRecords;
 
-sortedOrig = sort(origIds);
+[sortedOrig, origOrder] = sort(origIds);
 records = cell(1, numel(sortedOrig));
 for k = 1:numel(sortedOrig)
-    if isKey(indexOf, sortedOrig{k})
-        idx = indexOf(sortedOrig{k});
-    else
-        idx = 0;
-    end
-    records{k} = struct('reaction', sortedOrig{k}, 'group_index', idx);
+    records{k} = struct('reaction', sortedOrig{k}, 'group_id', double(groupIds(origOrder(k))));
 end
-out.group_index = records;
+out.group_ids = records;
 
 out.reversed_reactions = sort_cellstr(origIds(reversedRxns));
 
