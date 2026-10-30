@@ -27,10 +27,9 @@ description: Complex-portal stoichiometry, f factor and enzyme concentrations on
 #   * Partial stoichiometry. For P1, P2 with [2, 0], MATLAB counts only the non-zero entries
 #     as subunits, matches one of the two model proteins (50%) and applies nothing; Python
 #     counts both proteins, applies 2 for P1 and 1 for P2.
-#   * calculateFfactor. MATLAB averages the samples with mean(abundances, 2), so a protein
-#     with one missing sample drops out of both sums (f 0.375 for multi_sample_nan); Python
-#     averages the measured samples (0.444). A zero total is NaN in MATLAB and 0 in Python.
-#     An empty enzyme list means every model enzyme in MATLAB and none in Python (0.5 and 0).
+#   * calculateFfactor. Both sides average the measured samples of a protein (f 0.5 for
+#     multi_sample_nan), and a zero total is NaN on both. An empty enzyme list means every
+#     model enzyme in MATLAB and none in Python (0.5 and 0).
 #   * fillEnzConcs. MATLAB stores a negative abundance (-0.5 for P1); Python skips it with a
 #     warning and leaves the concentration unset.
 # The other cases agree: the fixture's own file, a complex that lists its proteins in another

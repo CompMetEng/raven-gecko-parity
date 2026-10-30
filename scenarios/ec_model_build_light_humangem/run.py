@@ -121,7 +121,8 @@ def run(ctx):
     _patch_eccodes_from_yaml(conv, adapter.params.conv_gem)
 
     # MATLAB's makeEcModel reads data/uniprot.tsv and data/kegg.tsv, and uses KEGG for the genes
-    # that UniProt misses; make_ec_model uses KEGG only when it is given the database.
+    # that UniProt misses. make_ec_model reads the data/kegg.tsv of the adapter folder by itself;
+    # this fixture keeps its data in another folder, so the databases are passed.
     data = Path(inputs["fixture_dir"]) / "data"
     uniprot_db = load_uniprot_tsv(
         data / "uniprot.tsv",

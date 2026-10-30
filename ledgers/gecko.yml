@@ -435,12 +435,9 @@ entries:
       - complex_data_edge_cases_ectestgem
       - ec_proteomics_ecyeastgem
     differs:
-      - f_factor.edge
       - f_factor.empty_enzymes
-      - f_factor.multi_sample_nan
-      - f_factor.zero_total
     notes: >-
-      Both sides agree on a clean multi-sample table. They differ when a protein has a missing sample (MATLAB's mean(abundances, 2) drops it from both sums, f 0.375; geckopy averages the measured samples, 0.444), for a zero total (NaN in MATLAB, 0 in geckopy) and for an empty enzyme list (every model enzyme in MATLAB, none in geckopy; f 0.5 against 0) (complex_data_edge_cases_ectestgem). On 400 rows of the tutorial proteomics with a protein measured in one of the two conditions, the factor is 0.6456 in geckopy and 0.6341 in MATLAB, the averaging difference described above (ec_proteomics_ecyeastgem). On the full tutorial table both give 0.52855.
+      Both sides average the measured samples of a protein, so a protein missing in one sample still counts with its measurement, and agree on a clean multi-sample table, on 400 rows of the tutorial proteomics with a protein measured in one of two conditions (ec_proteomics_ecyeastgem) and on the full tutorial table (0.52855). A zero total is NaN on both sides (geckopy logs a warning). They differ for an empty enzyme list: MATLAB cannot tell an empty list from no list and uses every model enzyme (f 0.5), geckopy takes None as every model enzyme and an explicit empty list as none (f 0) (complex_data_edge_cases_ectestgem).
   - matlab: calculateMW
     python: geckopy.calculate_mw
     status: parity
@@ -636,7 +633,7 @@ entries:
       - as_is.eccodes.from_gem_raised
       - unquoted.eccodes.from_gem_raised
     notes: >-
-      Both validate each EC string against a strict pattern (four purely-numeric-or-'-' levels) and drop the whole string, including any other valid EC code joined to it, on a single failure --- yeast-GEM's own annotations include real "new/undefined subclass" codes like 1.1.1.n12 that fail this pattern. For a model without an `eccodes` field MATLAB raises and geckopy returns with nothing filled (ec_model_build_yarrowia).
+      Both validate each EC string against a strict pattern (four purely-numeric-or-'-' levels) and drop the whole string, including any other valid EC code joined to it, on a single failure --- yeast-GEM's own annotations include real "new/undefined subclass" codes like 1.1.1.n12 that fail this pattern. For a model that carries no EC numbers at all MATLAB raises ('The model has no model.eccodes field.') and geckopy fills nothing: geckopy has no model-level `eccodes` field that can be missing, the EC number of a reaction is its `ec-code` annotation, and a reaction without one gets an empty EC string. A GEM without EC annotations is a valid input there, whose EC numbers come from the databases (ec_model_build_yarrowia). Kept as a design difference.
   - matlab: getECstring
     status: subsumed
     reason: EC-string formatting, inlined on the Python side inside fill_eccodes_from_database and fill_eccodes_from_gem.
@@ -740,12 +737,9 @@ entries:
       - protein_pool_ectestgem
       - protein_data_filters_ectestgem
       - ec_proteomics_ecyeastgem
-    differs:
-      - column_count_mismatch.raised
-      - column_count_mismatch.rows
-      - loader.edge_wrong_replicates
+    differs: []
     notes: >-
-      Both sides blank a row whose RSD exceeds maxRSD in every replicate and use cutLowest, addStdevs, minVal, a per-condition maxMissing vector and filterData false, and both drop a row with an empty id. They differ when the replicate counts do not add up to the columns of the file: geckopy raises, MATLAB reads the first columns and ignores the rest (protein_data_filters_ectestgem). The same holds on 400 rows of the tutorial proteomics read with a replicate count that does not match the columns (ec_proteomics_ecyeastgem); with the right counts both give the same abundances for the default, unfiltered, cut-half, maxMissing-vector and strict settings.
+      Both sides blank a row whose RSD exceeds maxRSD in every replicate and use cutLowest, addStdevs, minVal, a per-condition maxMissing vector and filterData false, and both drop a row with an empty id. Both raise when the replicate counts do not add up to the columns of the file (protein_data_filters_ectestgem), also on 400 rows of the tutorial proteomics (ec_proteomics_ecyeastgem); with the right counts both give the same abundances for the default, unfiltered, cut-half, maxMissing-vector and strict settings.
   - matlab: makeEcModel
     python: geckopy.make_ec_model
     status: parity
@@ -757,7 +751,7 @@ entries:
       - ec_model_build_yarrowia
     differs: []
     notes: >-
-      [3->4] ec.genes/enzymes/mw/sequence sorted alphabetically for stable order on both sides. KEGG fallback for unmatched genes (opt-in via kegg_db= on the Python side) is also ported to makeEcModel.m stage 7: a gene UniProt can't match falls back to databases.kegg for MW/sequence/accession (or the bare KEGG gene id, when the KEGG row itself has no UniProt accession) instead of getting no enzyme data at all. ModelAdapter gains getKeggCompatibleGenes, matching Python's adapter.get_kegg_compatible_genes. [Py] single return; unmatched genes logged and annotated on rxn.notes['geckopy_warning']. Both expand yeast-GEM's 4102 conventional reactions to 4671 ec.rxns identically. Both couple a complex to the enzymes of its known subunits when one subunit is in neither database, expand a nested gene rule to isozymes and refuse an adapter compartment that the model lacks. Both refuse reaction ids that end in _REV or _EXP_n or start with usage_prot or prot_pool, a metabolite id that starts with prot_, an enzyme compartment given as an id and a model without genes, leave a reaction with bounds [-10, -1] unsplit and treat a two-metabolite sink as an exchange (ec_model_build_edge_cases_ectestgem agrees on all of these cases). Both read the quoted cells of uniprot.tsv and uniprotConversion.tsv like textscan %q, without the quotes, and expand Human-GEM light to 2421 enzymes and 29321 ec reactions and iYali5-GEM to 893 enzymes and 1746 ec reactions (2732 with the quotes removed from the data) with the same coupling, EC codes, molecular weights and kcats (ec_model_build_light_humangem, ec_model_build_yarrowia). The row has no difference of its own; ec_model_build_yarrowia differs for getECfromGEM.
+      [3->4] ec.genes/enzymes/mw/sequence sorted alphabetically for stable order on both sides. KEGG fallback for unmatched genes (both sides read data/kegg.tsv of the project when it exists; geckopy also takes kegg_db=) is also ported to makeEcModel.m stage 7: a gene UniProt can't match falls back to databases.kegg for MW/sequence/accession (or the bare KEGG gene id, when the KEGG row itself has no UniProt accession) instead of getting no enzyme data at all. ModelAdapter gains getKeggCompatibleGenes, matching Python's adapter.get_kegg_compatible_genes. [Py] single return; unmatched genes logged and annotated on rxn.notes['geckopy_warning']. Both expand yeast-GEM's 4102 conventional reactions to 4671 ec.rxns identically. Both couple a complex to the enzymes of its known subunits when one subunit is in neither database, expand a nested gene rule to isozymes and refuse an adapter compartment that the model lacks. Both refuse reaction ids that end in _REV or _EXP_n or start with usage_prot or prot_pool, a metabolite id that starts with prot_, an enzyme compartment given as an id and a model without genes, leave a reaction with bounds [-10, -1] unsplit and treat a two-metabolite sink as an exchange (ec_model_build_edge_cases_ectestgem agrees on all of these cases). Both read the quoted cells of uniprot.tsv and uniprotConversion.tsv like textscan %q, without the quotes, and expand Human-GEM light to 2421 enzymes and 29321 ec reactions and iYali5-GEM to 893 enzymes and 1746 ec reactions (2732 with the quotes removed from the data) with the same coupling, EC codes, molecular weights and kcats (ec_model_build_light_humangem, ec_model_build_yarrowia). The row has no difference of its own; ec_model_build_yarrowia differs for getECfromGEM.
   - matlab: mapRxnsToConv
     python: geckopy.map_rxns_to_conv
     status: parity
