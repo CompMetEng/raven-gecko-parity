@@ -436,9 +436,8 @@ entries:
       - ec_proteomics_ecyeastgem
     differs:
       - f_factor.empty_enzymes
-      - f_factor.zero_total
     notes: >-
-      Both sides average the measured samples of a protein, so a protein missing in one sample still counts with its measurement, and agree on a clean multi-sample table, on 400 rows of the tutorial proteomics with a protein measured in one of two conditions (ec_proteomics_ecyeastgem) and on the full tutorial table (0.52855). They differ for a zero total (NaN in MATLAB, 0 with a warning in geckopy) and for an empty enzyme list: MATLAB cannot tell an empty list from no list and uses every model enzyme (f 0.5), geckopy takes None as every model enzyme and an explicit empty list as none (f 0) (complex_data_edge_cases_ectestgem).
+      Both sides average the measured samples of a protein, so a protein missing in one sample still counts with its measurement, and agree on a clean multi-sample table, on 400 rows of the tutorial proteomics with a protein measured in one of two conditions (ec_proteomics_ecyeastgem) and on the full tutorial table (0.52855). A zero total is NaN on both sides (geckopy logs a warning). They differ for an empty enzyme list: MATLAB cannot tell an empty list from no list and uses every model enzyme (f 0.5), geckopy takes None as every model enzyme and an explicit empty list as none (f 0) (complex_data_edge_cases_ectestgem).
   - matlab: calculateMW
     python: geckopy.calculate_mw
     status: parity
@@ -634,7 +633,7 @@ entries:
       - as_is.eccodes.from_gem_raised
       - unquoted.eccodes.from_gem_raised
     notes: >-
-      Both validate each EC string against a strict pattern (four purely-numeric-or-'-' levels) and drop the whole string, including any other valid EC code joined to it, on a single failure --- yeast-GEM's own annotations include real "new/undefined subclass" codes like 1.1.1.n12 that fail this pattern. For a model without an `eccodes` field MATLAB raises and geckopy returns with nothing filled (ec_model_build_yarrowia).
+      Both validate each EC string against a strict pattern (four purely-numeric-or-'-' levels) and drop the whole string, including any other valid EC code joined to it, on a single failure --- yeast-GEM's own annotations include real "new/undefined subclass" codes like 1.1.1.n12 that fail this pattern. For a model that carries no EC numbers at all MATLAB raises ('The model has no model.eccodes field.') and geckopy fills nothing: geckopy has no model-level `eccodes` field that can be missing, the EC number of a reaction is its `ec-code` annotation, and a reaction without one gets an empty EC string. A GEM without EC annotations is a valid input there, whose EC numbers come from the databases (ec_model_build_yarrowia). Kept as a design difference.
   - matlab: getECstring
     status: subsumed
     reason: EC-string formatting, inlined on the Python side inside fill_eccodes_from_database and fill_eccodes_from_gem.
