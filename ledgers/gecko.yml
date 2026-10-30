@@ -111,7 +111,7 @@ entries:
     differs:
       - cmaes_flat.n_generations
     notes: >-
-      Main CMA-ES kcat-tuning entry point, replacing the retired ABC-SMC bayesianSensitivityTuning (GECKO#477, closes raven-gecko-parity#21). Its docstring says it was written to match "what geckopy's own port actually runs"; that port is kcat_tuning.evotune.tuning.cmaes_kcat_tuning (geckopy#51). With a flat objective the sides differ: cmaesKcatTuning runs all max_generations generations, cmaes_kcat_tuning hands the search to cma, whose own stopping criteria apply, and stops after 1 generation; neither changes a kcat (evotune_edge_cases_ectestgem).
+      Main CMA-ES kcat-tuning entry point (GECKO#477, closes raven-gecko-parity#21). Its docstring says it was written to match "what geckopy's own port actually runs"; that port is kcat_tuning.evotune.tuning.cmaes_kcat_tuning (geckopy#51). With a flat objective the sides differ: cmaesKcatTuning runs all max_generations generations, cmaes_kcat_tuning hands the search to cma, whose own stopping criteria apply, and stops after 1 generation; neither changes a kcat (evotune_edge_cases_ectestgem).
   - matlab: ecStatsFromBrenda
     status: python-pending
     scenarios:
@@ -127,8 +127,7 @@ entries:
   - matlab: evotuneScore
     python: geckopy.kcat_tuning.evotune.evotune_distance
     status: parity
-    notes: 'Scores one candidate kcat set (simulate + RMSE), successor to the old Bayesian abc_max.m''s
-      rmsecal helper. geckopy splits this across kcat_tuning.evotune.simulate.simulate_evotune_dataset (the
+    notes: 'Scores one candidate kcat set (simulate + RMSE). geckopy splits this across kcat_tuning.evotune.simulate.simulate_evotune_dataset (the
       simulate half, internal there) and kcat_tuning.evotune.distance.evotune_distance/dataset_rmse (geckopy#51,
       the RMSE half --- evotune_distance is the top-level entry point, dataset_rmse its per-dataset helper).'
   - matlab: isozymeTieMap
@@ -139,8 +138,7 @@ entries:
   - matlab: loadEvotuneData
     python: geckopy.kcat_tuning.evotune.load_evotune_data
     status: parity
-    notes: 'Loads the optional flux/max-growth/zero-flux experimental TSVs for CMA-ES tuning, successor to
-      the old Bayesian loadBayesianData.m. Matches kcat_tuning.evotune.data.load_evotune_data (geckopy#51).'
+    notes: 'Loads the optional flux/max-growth/zero-flux experimental TSVs for CMA-ES tuning. Matches kcat_tuning.evotune.data.load_evotune_data (geckopy#51).'
   - matlab: nChanged
     status: python-pending
     scenarios:
