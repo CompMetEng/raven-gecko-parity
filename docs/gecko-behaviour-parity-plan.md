@@ -4,7 +4,7 @@ The gecko ledger carries **78 rows marked `parity`**, 61 of them linked to at le
 
 ## What exists now
 
-48 scenarios, 24 that match and 24 that report differences. A scenario reports DIFFER while any case differs; the differences are described in its `scenario.yml` and in the ledger notes of the functions concerned, and a deliberate difference is said to be deliberate there.
+48 scenarios, 25 that match and 23 that report differences. A scenario reports DIFFER while any case differs; the differences are described in its `scenario.yml` and in the ledger notes of the functions concerned, and a deliberate difference is said to be deliberate there.
 
 | Scenario | Covers | Verdict |
 |---|---|---|
@@ -33,16 +33,16 @@ The gecko ledger carries **78 rows marked `parity`**, 61 of them linked to at le
 | `ec_subset_genes_ectestgem` | `getSubsetEcModel` | match |
 | `standard_kcat_subsystem_ectestgem` | `getStandardKcat` | match |
 | `complex_data_edge_cases_ectestgem` | `applyComplexData`, `calculateFfactor`, `fillEnzConcs` | differs: partial stoichiometry `[2, 0]`, `calculateFfactor` with a missing sample, a zero total and an empty enzyme list, a negative abundance in `fillEnzConcs` |
-| `ec_analysis_ecyeastgem` | `getEnzymeUsage`, `reportEnzymeUsage`, `getEnzymeBottlenecks`, `getPfbaEnzymes`, `getConcControlCoeffs`, `mapRxnsToConv`, `ecFSEOF`, `applyKcatConstraints`, `setKcatForReactions` | differs: the tied bottlenecks (none of the top 20 enzymes shared), the pFBA margin, the ecFSEOF target set (356 and 372 reactions) |
-| `ec_analysis_ecyeastgem911` | the same without `mapRxnsToConv` | differs: the tied bottlenecks, the pFBA margin, the ecFSEOF target set (364 and 363) |
-| `ec_analysis_light_humangem` | `mapRxnsToConv`, `getSubsetEcModel`, `setProtPoolSize` | differs: the subset keeps one gene and six metabolites that no reaction uses |
+| `ec_analysis_ecyeastgem` | `getEnzymeUsage`, `reportEnzymeUsage`, `getEnzymeBottlenecks`, `getPfbaEnzymes`, `getConcControlCoeffs`, `mapRxnsToConv`, `ecFSEOF`, `applyKcatConstraints`, `setKcatForReactions` | differs: the tied bottlenecks (none of the top 20 enzymes shared) and the order of 27 of the 372 ecFSEOF targets, which have the same target set |
+| `ec_analysis_ecyeastgem911` | the same without `mapRxnsToConv` | differs: the tied bottlenecks and the order of 10 of the 363 ecFSEOF targets, which have the same target set |
+| `ec_analysis_light_humangem` | `mapRxnsToConv`, `getSubsetEcModel`, `setProtPoolSize` | match |
 | `ec_model_build_yarrowia` | `makeEcModel`, `getECfromGEM`, `getECfromDatabase`, `fuzzyKcatMatching`, `assignKcatValues`, `applyCustomKcats`, `getStandardKcat`, `applyKcatConstraints`, `setProtPoolSize` | differs: `getECfromGEM` for a model without EC codes |
 | `ec_model_io_eciyali5` | `loadEcModel`, `saveEcModel`, `upgradeEcModel` | differs: the number of reactions `upgradeEcModel` turns (895 and 0) |
 | `ec_proteomics_ecyeastgem` | `loadProtData`, `fillEnzConcs`, `constrainEnzConcs`, `calculateFfactor`, `setProtPoolSize`, `loadFluxData`, `constrainFluxData`, `flexibilizeEnzConcs`, `getConcControlCoeffs` | differs: the replicate-count check of `loadProtData`, the mean of `calculateFfactor`, the optimal vertex under the proteomics constraints |
 | `ec_lookup_edge_cases_ectestgem` | `getECfromDatabase`, `findECInDB`, `applyECcodes`, `getSubsetEcModel` | differs: conflicting ECs for one gene |
 | `ec_model_edit_edge_cases_ectestgem` | `addNewRxnsToEC`, `mapRxnsToConv`, `ecFVA` | differs: `addNewRxnsToEC` when no new enzyme is needed |
 | `ec_model_io_ectestgem` | `saveEcModel`, `loadEcModel` | differs: content of the written files: `metaData` description, charge, SBO terms, `subsystem`, gene names |
-| `enzyme_usage_edge_cases_ectestgem` | `getEnzymeUsage`, `reportEnzymeUsage`, `getEnzymeBottlenecks`, `getPfbaEnzymes`, `getConcControlCoeffs` | differs: the pFBA margin, tied bottlenecks, `zero=false` in the report, a missing usage reaction, a negative `topAbsUsage` |
+| `enzyme_usage_edge_cases_ectestgem` | `getEnzymeUsage`, `reportEnzymeUsage`, `getEnzymeBottlenecks`, `getPfbaEnzymes`, `getConcControlCoeffs` | differs: the margin of a given pFBA fraction, tied bottlenecks, `zero=false` in the report, a missing usage reaction, a negative `topAbsUsage` |
 | `evotune_edge_cases_ectestgem` | `screenKcatLeverage`, `selectTunableMask`, `cmaesKcatTuning`, `nChanged`, `parsimonyFrontier`, `bestParsimonious` | differs: order of tied rows, source label, a model without formulas, a flat objective, a NaN RMSE in `bestParsimonious` |
 | `flexibilize_edge_cases_ectestgem` | `flexibilizeEnzConcs`, `relaxProteomicsGreedy`, `constrainEnzConcs` | differs: `constrainEnzConcs` with a prior lower bound or a negative concentration, an empty `enzymeSet`, the first of two tied enzymes |
 | `flux_data_edge_cases_ectestgem` | `loadFluxData`, `constrainFluxData` | differs: argument handling of `loadFluxData` and `constrainFluxData` |
@@ -203,9 +203,10 @@ These scenarios need Gurobi, which `nightly.yml` provisions for the RAVEN pair. 
 
 1. The enforced production-flux levels. Both sides start at the biomass-optimal production flux
    (`0` here, since the cheaper of two isozyme routes covers all of it) and end at 90% of the
-   theoretical maximum: `[0, 259.2, 518.4, 777.6, 1036.8, 1296.0]`. The levels agree to within
-   1e-6 relative. MATLAB's `solveLP(model,1)` relaxes the objective it fixes to 0.999999 of its
-   maximum, so the top level is 1295.998704, and the scenario tolerance is 2e-6 for that reason.
+   theoretical maximum of the pFBA solution that maximises the target. Both fix the objective at
+   0.999999 of its optimum in the pFBA step (`solveLP(model,1)` in RAVEN, `fseof` in raven_toolbox), so the levels are
+   `[0, 259.19974, 518.39948, 777.59922, 1036.79896, 1295.998704]` on both sides. `ec_fseof` passes
+   `equality=True`, which fixes the target flux at each level, as `ecFSEOF` does.
 2. The candidate search space. Both sides consider reactions with a gene rule only, drop the
    `usage_prot_*` reactions from the report and keep the enforced production reaction itself
    (`R3`, whose flux follows the enforced level by definition). Uncatalysed and exchange
@@ -214,9 +215,8 @@ These scenarios need Gurobi, which `nightly.yml` provisions for the RAVEN pair. 
    absolute Pearson correlation with the enforced flux reaches `corrThreshold` (default 0.9),
    and rank by slope times correlation. On this fixture both sides report `R3` and `R5`.
 
-Only the levels, the target set and its ranked order are compared. `ecFSEOF.m` additionally computes a per-gene
-essentiality column (one knockout LP per gene), reports the absolute regression slope and splits
-results into `rxnTargets` vs `transportTargets`; `ec_fseof` does none of these, pointing callers
+Only the levels, the target set and its ranked order are compared. The ranked order lists the reaction targets first and the transport targets after them, each group ranked by slope times correlation (the `transport` column of `ec_fseof` marks the second group; on ecYeastGEM 9.1.1 the 32 transport targets are the last 32 of 363 rows on both sides). `ecFSEOF.m` additionally computes a per-gene
+essentiality column (one knockout LP per gene) and reports the absolute regression slope; `ec_fseof` does neither, pointing callers
 at `cobra.flux_analysis.single_gene_deletion` and a subsystem/metabolite check instead.
 
 ### Tier 4 --- a real model
@@ -240,9 +240,9 @@ The other real-data scenarios run the same pairs of functions on models that GEC
 | `ec_model_io_eciyali5` | eciYali5-GEM written by GECKO 3 (reverse protein reactions, three notes with doubled quotes, empty `enzymes` entries), read, upgraded, written and read back | differs in one value: `upgradeEcModel` turns 895 reactions in MATLAB and 0 in geckopy, whose reader has turned them already; the upgraded model agrees |
 | `ec_model_build_light_humangem` | `makeEcModel` to `setProtPoolSize` on Human-GEM with the tutorial data (2421 enzymes, 29321 ec reactions, a 22 MB DLKcat file) | match |
 | `ec_model_build_yarrowia` | the same pipeline on iYali5-GEM with the eciYali5-GEM data, once with the data as it is and once without double quotes | differs in one value per run: `getECfromGEM` raises for a model without EC codes and `fill_eccodes_from_gem` returns |
-| `ec_analysis_ecyeastgem`, `ec_analysis_ecyeastgem911` | the usage, bottleneck, pFBA, control coefficient, mapping, ecFSEOF and kcat edit functions on ecYeastGEM | differs: tied bottlenecks, the pFBA margin and the ecFSEOF target set, each from the choice of an optimal vertex or from a documented margin |
-| `ec_analysis_light_humangem` | growth, mapping and `getSubsetEcModel` to HT29-GEM on the light Human-GEM ecModel | differs in two counts: geckopy keeps the pseudo-gene `standard` and six metabolites that no reaction uses |
-| `ec_fva_ecyeastgem`, `ec_fva_light_humangem` | `ecFVA` and `ec_fva` on ecYeastGEM with flux data and on the light Human-GEM ecModel | `ec_fva_ecyeastgem` differs only in `fixed_cobra_tolerance`, the Python model at cobrapy's default tolerance (1952 of 4102 reactions differ), and matches with RAVEN's tolerance of 1e-9; `ec_fva_light_humangem` differs in the NaN records: RAVEN's Gurobi presolve reports the fixed-growth LP infeasible for 44 maxima and 164 minima of 300 sampled reactions (geckopy: 6 and 6), and the values both solve agree |
+| `ec_analysis_ecyeastgem`, `ec_analysis_ecyeastgem911` | the usage, bottleneck, pFBA, control coefficient, mapping, ecFSEOF and kcat edit functions on ecYeastGEM | differs: tied bottlenecks and the order of the ecFSEOF targets, each from the choice of an optimal vertex |
+| `ec_analysis_light_humangem` | growth, mapping and `getSubsetEcModel` to HT29-GEM on the light Human-GEM ecModel | match: `get_subset_ec_model` removes the genes and metabolites that no kept reaction uses, as `getSubsetEcModel` does |
+| `ec_fva_ecyeastgem`, `ec_fva_light_humangem` | `ecFVA` and `ec_fva` on ecYeastGEM with flux data and on the light Human-GEM ecModel | `ec_fva_ecyeastgem` differs only in `fixed_cobra_tolerance`, the Python model at cobrapy's default tolerance (1944 of 4102 reactions differ), and matches with RAVEN's tolerance of 1e-9; `ec_fva_light_humangem` differs in the NaN records: RAVEN's Gurobi presolve reports the fixed-growth LP infeasible for 44 maxima and 164 minima of 300 sampled reactions (geckopy: 6 and 6), and of the 391 values both solve one differs (the minimum of MAR07157, 0 in geckopy and 2.45e-4 in MATLAB) |
 | `ec_proteomics_ecyeastgem` | the proteomics and flux data functions on ecYeastGEM with the tutorial data and an edited file | differs: the replicate-count check of `loadProtData`, the average of `calculateFfactor` and the optimal vertex under the proteomics constraints |
 | `ec_tuning_ecyeastgem` | `sensitivityTuning` and `sigmaFitter` on ecYeastGEM before its tuning (7, 12 and 5 tuned kcats) | match |
 | `ec_subset_genes_ectestgem`, `standard_kcat_subsystem_ectestgem` | `getSubsetEcModel` with a context model that lacks a reaction and a gene of its rule, and `getStandardKcat` with subsystems that real models have, on ecTestGEM | match |
@@ -251,7 +251,21 @@ Fixes in the two toolboxes show in these scenarios, and each is the reason one o
 
 What stays different is a convention or follows the solver. RAVEN's `solveLP` gives Gurobi tolerances of 1e-9 and cobrapy leaves them at 1e-6, so the Python models of the FVA and analysis scenarios are set to RAVEN's value. An LP with many optimal vertices or a degenerate dual gives the sides different fluxes, shadow prices and control coefficients, which is why the usage functions are given one flux vector and why the tied bottlenecks, the target set of `ecFSEOF` and the enzymes analysed by `getConcControlCoeffs` differ. The remaining differences are in the ledger notes of the functions: the replicate-count check of `loadProtData`, the average of `calculateFfactor` (`nanmean` in geckopy), the KEGG fallback of `make_ec_model`, which is used when `kegg_db` is passed, and the reactions and metabolites that `getSubsetEcModel` removes with its unused genes.
 
-Solver combinations. `PARITY_MATLAB_SOLVER` and `PARITY_PYTHON_SOLVER` replace the declared solvers of the scenarios that declare one. On the ecTestGEM scenarios that declare a solver, Gurobi on both sides and GLPK in MATLAB with scipy in geckopy give the verdicts and the differing groups of the default run (GLPK on both sides was run for `sigma_fitter_edge_cases_ectestgem`, `flexibilize_concs_ectestgem`, `flexibilize_edge_cases_ectestgem` and `sensitivity_tuning_edge_cases_ectestgem` and gives the same), except that with scipy geckopy lands on the vertex MATLAB reports for the tied rows of `getEnzymeBottlenecks` and `relaxProteomicsGreedy`, so those two cases match. The scipy runs of the genome-scale scenarios take hours where Gurobi takes minutes, and `ec_analysis_ecyeastgem911` differs in more groups with scipy than with Gurobi (the scan of `ecFSEOF` returns nine of the ten enforced levels).
+Solver combinations. `PARITY_MATLAB_SOLVER` and `PARITY_PYTHON_SOLVER` replace the declared solvers of the scenarios that declare one. The default is Gurobi on both sides (seeds 0, 1 and 2 of the Python side). Seed 0 was also run with GLPK on both sides, with GLPK in MATLAB and scipy in geckopy and with Gurobi in MATLAB and scipy in geckopy, on the solver-declaring scenarios other than `ec_fva_light_humangem` (its MATLAB step takes about 3 hours, so it ran with Gurobi on both sides). `ec_fva_ecyeastgem` did not finish with GLPK in MATLAB (the MATLAB step passed a limit of one hour twice), so its GLPK combinations were not run. The scenarios that declare no solver ran once, with the default.
+
+- Matching on every combination that ran: `ec_fseof_ectestgem`, `ec_fva_ectestgem`, `enzyme_usage_ectestgem`, `ec_model_full_yeastgem`, `ec_model_build_light_humangem`, `flexibilize_concs_ectestgem`, `sensitivity_tuning_ectestgem` and `sigma_fitter_edge_cases_ectestgem` (the sigma and the pool bound are the same on GLPK, Gurobi and scipy). `ec_tuning_ecyeastgem` matches except with GLPK on both sides, where the growth rates before and after the tuning differ by 4.5e-7 to 1.6e-6 absolute (up to 4e-6 relative); that follows the numerics of GLPK and was not examined further.
+- The differing groups of the default run recur with every combination in the edge-case scenarios and in `ec_proteomics_ecyeastgem`, `ec_model_build_yarrowia` and `ec_model_edit_edge_cases_ectestgem`. With scipy geckopy lands on the vertex MATLAB reports for the tied rows of `getEnzymeBottlenecks` and `relaxProteomicsGreedy` in the ecTestGEM scenarios, so `tied_bottlenecks` and `relax_tied_enzymes` match there. The flux-data LP of `ec_proteomics_ecyeastgem` with 10 percent bounds is feasible with GLPK and infeasible with Gurobi and scipy, so the case differs for GLPK in MATLAB with scipy in geckopy (probably a tolerance effect, not examined).
+- Differences on ecYeastGEM by solver pair, tutorial model and in brackets 9.1.1 (`ec_analysis_ecyeastgem`, `ec_analysis_ecyeastgem911`):
+
+| MATLAB/geckopy | `bottlenecks` order and rows | `fseof` targets in MATLAB and geckopy | `fseof` ranks that differ | `min_uptake` | `pfba` |
+|---|---|---|---|---|---|
+| Gurobi/Gurobi | 20 and 49 (20 and 50) | 372 and 372 (363 and 363) | 27 (10) | none | none |
+| GLPK/GLPK | 19 and 51 (16 and 33) | 358 and 357 (363 and 363) | 207 (188) | none (9.1.1: the pool flux is 125 in MATLAB and 113.7 in geckopy at the same minimal glucose uptake) | none |
+| GLPK/scipy | 20 and 58 (20 and 42) | 358 and 380 (363 and 363) | 204 (188) | as GLPK/GLPK | none |
+| Gurobi/scipy | 20 and 55 (20 and 56) | 372 and 380 (363 and 363) | 147 (11) | as GLPK/GLPK | none |
+
+  The ranked FSEOF tables differ by ties (reactions of one pathway with equal scores to 1e-12) and near-ties, and the pFBA vertex of GLPK and HiGHS carries flux through other reactions of the same lipid pathway than the Gurobi vertex does. The enforced levels agree on every pair.
+- scipy limits. `ec_analysis_light_humangem` raises in geckopy with scipy (`subset`: LookupError when the model returned by `get_subset_ec_model` is solved; see the ledger row of `getSubsetEcModel`). Genome-scale light models are slow on scipy: the run of `ec_model_build_light_humangem` takes 2 hours 17 minutes against about 1.5 minutes of Python time with Gurobi (stack samples show `switch_to_scipy` adding the constraints one by one in `add_constraint` and `apply_kcat_constraints` adding the pool coefficients reaction by reaction), and `get_subset_ec_model` on the light ecModel takes 65 minutes. `ec_fva_ecyeastgem` on scipy (Gurobi in MATLAB) agrees with growth free, differs for one bound with growth fixed (the minimum of r_2720, -173.615 against -173.3495, 0.15 percent relative) and for 2257 of 8204 bounds in the run at cobrapy's tolerance (2258 of 24612 bounds against geckopy on Gurobi), because of the accuracy of HiGHS on the ill-scaled LPs of ecYeastGEM; that is a limit of the solver and not a parity statement, and the Python part takes about 100 minutes. `geckopy.solver_support` has no MATLAB counterpart.
 
 A whole-model diff on top of an unchecked base reports many differences with one cause, so tiers 1 and 2 come first.
 
@@ -279,7 +293,7 @@ the gecko entry always has them available even though raven is not the pair unde
 
 `parity refs --format shell` prints a `<pair>_<side>_repo=` line next to its `_ref=` line, so the workflow can check out or `git ls-remote` a pair without a second, hand-maintained copy of its repo name: `parity.toml` stays the one place that fact is written down.
 
-The scenarios that report documented differences are red: `complex_data_edge_cases_ectestgem`, `ec_analysis_ecyeastgem`, `ec_analysis_ecyeastgem911`, `ec_analysis_light_humangem`, `ec_fva_ecyeastgem`, `ec_fva_light_humangem`, `ec_lookup_edge_cases_ectestgem`, `ec_model_build_yarrowia`, `ec_model_edit_edge_cases_ectestgem`, `ec_model_io_eciyali5`, `ec_model_io_ectestgem`, `ec_proteomics_ecyeastgem`, `enzyme_usage_edge_cases_ectestgem`, `evotune_edge_cases_ectestgem`, `flexibilize_edge_cases_ectestgem`, `flux_data_edge_cases_ectestgem`, `kcat_apply_edge_cases_ectestgem`, `kcat_assignment_pipeline_ectestgem`, `kcat_io_edge_cases_ectestgem`, `kcat_merge_edge_cases_ectestgem`, `kcat_review_stats_ectestgem`, `protein_data_filters_ectestgem`, `sensitivity_tuning_edge_cases_ectestgem`, `upgrade_gecko3_ectestgem`. Red is the correct, documented answer there, the same shape the raven nightly has with `yaml_roundtrip_smallyeast` and `task_checking_smallyeast`.
+The scenarios that report documented differences are red: `complex_data_edge_cases_ectestgem`, `ec_analysis_ecyeastgem`, `ec_analysis_ecyeastgem911`, `ec_fva_ecyeastgem`, `ec_fva_light_humangem`, `ec_lookup_edge_cases_ectestgem`, `ec_model_build_yarrowia`, `ec_model_edit_edge_cases_ectestgem`, `ec_model_io_eciyali5`, `ec_model_io_ectestgem`, `ec_proteomics_ecyeastgem`, `enzyme_usage_edge_cases_ectestgem`, `evotune_edge_cases_ectestgem`, `flexibilize_edge_cases_ectestgem`, `flux_data_edge_cases_ectestgem`, `kcat_apply_edge_cases_ectestgem`, `kcat_assignment_pipeline_ectestgem`, `kcat_io_edge_cases_ectestgem`, `kcat_merge_edge_cases_ectestgem`, `kcat_review_stats_ectestgem`, `protein_data_filters_ectestgem`, `sensitivity_tuning_edge_cases_ectestgem`, `upgrade_gecko3_ectestgem`. Red is the correct, documented answer there, the same shape the raven nightly has with `yaml_roundtrip_smallyeast` and `task_checking_smallyeast`.
 
 ## Coverage by tier
 

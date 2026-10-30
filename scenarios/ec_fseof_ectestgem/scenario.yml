@@ -10,8 +10,8 @@ description: >-
 entries:
   - ecFSEOF
 
-# The fifth and last scenario in this pair that needs an LP solver; same reasoning as
-# the rest of Tier 3 for declaring it explicitly.
+# One of the scenarios of this pair that needs an LP solver; same reasoning as the rest of Tier 3
+# for declaring it explicitly.
 inputs:
   adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
   adapter_python: "{python_repo}/examples/ecTestGEM"
@@ -52,19 +52,19 @@ inputs:
 # reactions with a gene rule, drop the usage_prot_* reactions from the report and keep
 # the enforced production reaction itself when it has a gene rule (R3 here, whose flux
 # follows the enforced level by definition). Both start the enforced levels at the
-# production flux of the growth optimum and end at 90% of the theoretical maximum.
+# production flux of the growth optimum and end at 90% of the theoretical maximum of the
+# pFBA solution that maximises the target. The pFBA step fixes the objective at 0.999999 of its
+# optimum on both sides (RAVEN's solveLP(model, 1) and raven_toolbox's fseof), so the top level
+# is 1295.998704 on both. ec_fseof passes equality=True, which fixes the target flux at each
+# level, as ecFSEOF does.
 #
-# The enforced levels agree to within 1e-6 relative: MATLAB's solveLP(model, 1) relaxes
-# the objective it fixes to 0.999999 of its maximum, so the top level is 1295.998704
-# where geckopy's exact maximum gives 1296. The tolerance below is 2e-6 for that reason.
-#
-# The target set and the ranked order of the targets are compared (MATLAB lists rxnTargets in
-# rank order, then transportTargets; geckopy lists one table ranked by slope times correlation).
-# MATLAB additionally returns the slope as the absolute
+# The target set and the ranked order of the targets are compared. MATLAB lists rxnTargets in
+# rank order, then transportTargets; geckopy lists one table ranked by slope times correlation
+# inside each group, reaction targets first and transport targets after them (its `transport`
+# column marks the second group). MATLAB additionally returns the slope as the absolute
 # regression slope, the per-gene action and an essentiality column (one knockout LP per
-# gene), and splits transport reactions into transportTargets; geckopy's ec_fseof returns
-# neither the essentiality nor the split (its notes point callers at
-# cobra.flux_analysis.single_gene_deletion).
+# gene); geckopy's ec_fseof returns neither the essentiality nor the per-gene action (its notes
+# point callers at cobra.flux_analysis.single_gene_deletion).
 tolerance:
-  rel: 2.0e-6
+  rel: 1.0e-6
   abs: 1.0e-9
