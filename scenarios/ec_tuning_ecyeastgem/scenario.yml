@@ -10,6 +10,8 @@ entries:
 # sensitivity_tuning_ectestgem tunes one kcat of a five-enzyme model. The tuning of a genome-scale model takes dozens of steps, each of which picks the enzyme with the highest usage and the reaction that consumes most of it, so a tie anywhere in the sequence sends the two sides to different kcats. The model is models/ecYeastGEM_beforeBaySens.yml of the full_ecModel tutorial with glucose uptake opened, growth as the objective and the protein pool as the adapter sets it (setProtPoolSize), which is the state the tutorial calls sensitivityTuning in.
 #
 # Three tuning runs start from the same model: the adapter's growth rate with the default fold change of 10, the same with the enzyme of the first tuning step ignored (protToIgnore), and a lower growth rate with a fold change of 2. Each records the tuned list in the order of the steps (reaction, enzymes, old and new kcat, source), the growth rate afterwards and the whole kcat vector and its notes; sigmaFitter records the fitted sigma and the pool bound it leaves.
+#
+# The python models are set to RAVEN's solver tolerance (python_tolerance 1e-9). solveLP gives GLPK and Gurobi 1e-9 and cobrapy leaves GLPK at 1e-7, so without it the growth before the tuning differs between the sides with GLPK (0.126351575673 against 0.126351105513). At 1e-9 the scenario matches with Gurobi on both sides, with GLPK on both sides (the growth rates differ by 7e-10 at most) and with GLPK in MATLAB and scipy in geckopy.
 inputs:
   adapter_matlab: "{matlab_repo}/tutorials/full_ecModel"
   adapter_python: "{matlab_repo}/tutorials/full_ecModel"
@@ -17,6 +19,8 @@ inputs:
 
   matlab_solver: gurobi
   python_solver: gurobi
+  # RAVEN's solveLP gives the solver a feasibility and optimality tolerance of 1e-9 and cobrapy leaves them at 1e-6 (Gurobi) or 1e-7 (GLPK); the python models are set to RAVEN's value (see ec_proteomics_ecyeastgem).
+  python_tolerance: 1.0e-9
 
   bio_rxn: r_4041
   c_source: r_1714

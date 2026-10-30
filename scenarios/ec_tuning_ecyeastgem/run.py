@@ -42,6 +42,7 @@ def fresh(inputs: dict):
     adapter.params.path = folder
     model = load_ec_model(str(inputs["model_file"]), adapter)
     model.solver = str(inputs["python_solver"])
+    model.tolerance = float(inputs["python_tolerance"])
     model.adapter = adapter
     rxn = model.reactions.get_by_id(str(inputs["c_source"]))
     rxn.lower_bound = -1000.0
