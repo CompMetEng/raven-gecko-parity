@@ -20,10 +20,8 @@ description: loadProtData / load_prot_data on replicate proteomics, one filter a
 # validation difference (a column count that does not match the replicate counts) shows up as
 # a flag and not as a crash of one side.
 
-# Known differences, so this scenario reports DIFFER until one side changes:
-#   * Column count. Python raises when the replicate counts do not add up to the columns of
-#     the file; MATLAB reads the first columns and ignores the rest without a message.
-# Everything else agrees: the RSD filter (a row above maxRSD is dropped in every replicate, so
+# Both sides raise when the replicate counts do not add up to the columns of the file. The two
+# sides agree on the RSD filter (a row above maxRSD is dropped in every replicate, so
 # X1 [1, 1, 10] and X5 [20, 1, 1] are gone on both sides), cutLowest (floor of that percent of
 # the values of a condition is removed: none for 0, seven for 20), addStdevs, minVal, the
 # per-condition maxMissing vector, filterData false, and the row with an empty UniProt id
