@@ -1,0 +1,3 @@
+# No molecular-weight rows: the fixture has no specific-activity data.
+ec_code	substrate	organism	mw	n	references
+9.9.9.9	*	nonexistent organism	1.0	1	*

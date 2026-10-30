@@ -1,0 +1,20 @@
+id: standard_kcat_subsystem_ectestgem
+pair: gecko
+description: >-
+  getStandardKcat and assign_standard_kcat on a model with subsystems, for the shapes that real models have: one name for every reaction, two names that differ only in letter case (as "Pentose phosphate pathway" and "Pentose Phosphate Pathway" do in Human-GEM) and a name in a reaction without genes that no other reaction has, and a reaction without genes that has no subsystem while the others do.
+
+entries:
+  - getStandardKcat
+
+# The ecTestGEM fixture has no subsystems, so kcat_chain_ectestgem runs getStandardKcat with the model-wide median only. The subsystem branch is the one that real models take: the standard kcat of a reaction without genes is the median kcat of the reactions of its first subsystem when at least `threshold` of them have a kcat, else the model-wide median.
+#
+# The model is ecTestGEM with the R6 of kcat_chain_ectestgem (no genes), all ec reactions with the kcat 10 and the subsystems of the case. R6 is the only reaction that receives the standard kcat. `uniform`: every reaction in `Alpha`. `case_variant`: R3 in `alpha` and the others in `Alpha`; both sides treat the two names as one subsystem. `own_name`: R6 in `Beta`, which no reaction with a kcat has. `empty_subsystem`: R6 has no subsystem (an empty cell in MATLAB, as RAVEN's SBML import gives it to the reactions without a group, and an empty string in cobra) while the others have `Alpha`; both sides give the reaction the model-wide standard kcat. `no_subsystem`: no reaction has one. A raise is a result on both sides. Every case gives R6 the kcat 10 from the standard enzyme on both sides.
+inputs:
+  adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
+  adapter_python: "{python_repo}/examples/ecTestGEM"
+  fixture_dir: "{matlab_repo}/test/unit_tests/ecTestGEM"
+  uniprot_path: "{matlab_repo}/test/unit_tests/ecTestGEM/data/uniprot.tsv"
+
+tolerance:
+  rel: 1.0e-9
+  abs: 1.0e-12

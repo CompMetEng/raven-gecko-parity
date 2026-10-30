@@ -1,0 +1,7 @@
+# BRENDA release review-fixture - kcat in 1/s
+ec_code	substrate	organism	kcat_max	kcat_median	n	references
+1.1.1.1	m1	testus testus	10	2	3	*
+1.1.1.1	m2	testus falsus	6	2	2	*
+1.1.1.1	m3	testus alius	10	2	2	*
+1.1.2.2	m1	testus testus	100	40	2	*
+3.5.1.n3	m1	testus testus	40	4	1	*

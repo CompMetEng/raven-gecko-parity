@@ -1,0 +1,21 @@
+id: ec_model_io_eciyali5
+pair: gecko
+description: >-
+  A real ecModel written by GECKO 3, eciYali5-GEM of Yarrowia lipolytica, through both implementations: loadEcModel and load_ec_model (which turn the reverse protein usage reactions forward on reading), the upgrade run on the file read without it (upgradeEcModel and upgrade_ec_model), and a write and read-back with saveEcModel and save_ec_model, once and twice, compared field by field.
+
+entries:
+  - loadEcModel
+  - saveEcModel
+  - upgradeEcModel
+
+# upgrade_gecko3_ectestgem builds a GECKO 3 ecModel from the seven-reaction fixture by reversing its protein reactions. This scenario starts from a file that GECKO 3 wrote for a published model: the eciYali5-GEM 1.0.1 release of https://github.com/SysBioChalmers/eciYali5-GEM (model/eciYali5-GEM.yml, written by RAVEN 2 exportModel, so with `blankID` and `blankName` in the metaData, protein reactions in the reverse direction, reaction ids that are not the model's and no `gecko_format`). The 2.5 MB file is vendored gzip-compressed in data/ and both sides decompress it into a temporary models/ folder, because loadEcModel reads <adapter path>/models/<filename>.
+#
+# What is compared. `loaded`: the model each loader returns, with the summary of ec_model_load_ecyeastgem (order of reactions, metabolites and genes, every bound, gene rule, formula, charge, stoichiometric coefficient and ec array) and `loaded_protein_reactions` (the direction, bounds, objective weight and coefficients of every usage reaction and of the pool exchange, the part that the upgrade changes). `upgrade_raw`: the file read by the YAML reader alone, upgraded with upgradeEcModel / upgrade_ec_model, with the number of reactions the upgrade turned. geckopy's reader turns reverse reactions while it reads (raven_toolbox) and MATLAB's does not, so the count differs by design (see upgrade_gecko3_ectestgem); the model after the upgrade is what both should agree on. `round_trip`: the loaded model written and read back by the same side. `second_round_trip`: whether a second write and read changes the model.
+inputs:
+  adapter_matlab: "{python_repo}/examples/ecTestGEM"
+  adapter_python: "{python_repo}/examples/ecTestGEM"
+  model_gz: "{scenario_dir}/data/eciYali5-GEM.yml.gz"
+
+tolerance:
+  rel: 0.0
+  abs: 0.0

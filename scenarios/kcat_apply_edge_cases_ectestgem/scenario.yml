@@ -1,0 +1,52 @@
+id: kcat_apply_edge_cases_ectestgem
+pair: gecko
+description: >-
+  Edge cases of the functions that write kcats into ec.kcat and into the S matrix:
+  applyKcatConstraints (light-model subsets, an isozyme row without enzymes, re-applying
+  after every kcat was set to zero, an empty or unknown update list), setKcatForReactions
+  (default apply, letter case, unknown and base ids), getKcatAcrossIsozymes (NaN and zero
+  siblings, default apply) and applyCustomKcats (empty notes, a blank kcat, letter case,
+  protein-only rows, a quoted reaction list, a partial complex, a light model). Each case
+  builds its own state, so the verdicts are independent. A raise is a value on both sides.
+
+entries:
+  - applyKcatConstraints
+  - setKcatForReactions
+  - getKcatAcrossIsozymes
+  - applyCustomKcats
+
+# What this scenario compares (seed-independent, confirmed by running both sides). One
+# difference remains; every other case agrees.
+#   applyKcatConstraints, update-list vocabulary (light_update_ids): MATLAB accepts cobra
+#     reaction ids and rejects ec reaction ids in updateRxns; Python accepts ec reaction ids
+#     and rejects cobra ids.
+#   applyKcatConstraints, light model: both sides let every isozyme of a reaction compete for the
+#     cheapest cost when only some of its rows are named, and skip an isozyme row with a kcat
+#     but no enzymes (light_subset, light_empty_isozyme_row).
+#   applyKcatConstraints, full model: with every kcat 0 both sides clear the old coefficients
+#     (full_zero_reapply), and an empty update list means all reactions on both sides
+#     (full_update_list).
+#   setKcatForReactions: both sides change S only when asked (apply defaults to false), match
+#     ids without regard to case, ignore an unknown id and match a light-model id with its
+#     prefix as it stands (a base id matches no row).
+#   getKcatAcrossIsozymes: both sides fill only a kcat of 0 from siblings with a kcat above 0,
+#     leave a NaN kcat alone and change S only when asked (apply defaults to false).
+#   applyCustomKcats: both sides skip a blank kcat, append nothing for an empty note, match
+#     protein and reaction ids exactly, read a quoted reaction list without its quotes and
+#     apply a protein-only row on a light model.
+
+inputs:
+  adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
+  adapter_python: "{python_repo}/examples/ecTestGEM"
+  fixture_dir: "{matlab_repo}/test/unit_tests/ecTestGEM"
+
+  # One customKcats.tsv per case, each applied to a fresh full ecTestGEM model. MATLAB
+  # reads the file through the path given to applyCustomKcats and Python through its path
+  # argument, so both read the same bytes.
+  custom_dir: "{scenario_dir}/data"
+
+# The values compared are copies of kcats and divisions of fixed numbers (MW / kcat / 3600),
+# so the usual tolerance is honest.
+tolerance:
+  rel: 1.0e-9
+  abs: 1.0e-12

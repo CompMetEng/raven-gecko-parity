@@ -1,0 +1,75 @@
+id: ec_lookup_edge_cases_ectestgem
+pair: gecko
+description: >-
+  EC-code lookups and model subsetting on edge inputs: EC cells separated by '; ' and by
+  spaces, a wildcard EC next to a specific one, a gene that maps to two UniProt entries with
+  different ECs (with the conflict action 'display' and 'ignore', and with the conflict
+  outside the selected reactions), copying EC codes to the GEM of a light model, and a
+  subset ecModel built when a gene or a reaction is missing from the small GEM.
+
+# Three checkpoints.
+#
+# database_checks: getECfromDatabase / fill_eccodes_from_database on a full ecTestGEM ecModel
+# against a variant of data/uniprot.tsv and data/kegg.tsv kept in this scenario's variants/
+# folder. Both sides build the model from the fixture and then read the databases from the
+# variant. A side that raises reports `raised: true` and no codes.
+#   separators   P1 carries '1.1.1.1; 2.2.2.2' and P2 '2.2.2.2' (R2's complex G1 and G2); the
+#                KEGG entry of G5, which UniProt leaves empty, is '1.1.1.4 1.1.1.- 1.1.1.303'.
+#                Both sides split a cell on ';' and on spaces, so the complex gets '2.2.2.2'. For
+#                G5, the only gene of its reaction, both sides drop the wildcard parent
+#                ('1.1.1.4;1.1.1.303').
+#   wildcard     P3 (R2's second isozyme) carries '1.1.1.1;1.1.1.-'; both sides give 1.1.1.1.
+#   semicolon_no_space   P3 (R2's second isozyme) carries '1.1.1.1;2.2.2.2' with no space; both
+#                sides read two codes and give '1.1.1.1;2.2.2.2'.
+#   complex_wildcard   P1 and P2 (R2's complex G1 and G2) both carry '1.1.1.4 1.1.1.-'; both
+#                sides give '1.1.1.4' for the complex.
+#   complex_one_gene_no_ec   P1 carries '1.1.1.4 1.1.1.-' and P2 has no EC; both sides leave G2
+#                out and give '1.1.1.4' for the complex.
+#   conflict     G4 (R3) appears twice with 1.1.2.1 and 1.1.2.2. With the action 'display'
+#                MATLAB raises and geckopy logs a warning and takes 1.1.2.1; with 'ignore'
+#                both sides agree.
+#   conflict_unselected   the same conflict with only R2's reactions selected: MATLAB visits
+#                every reaction before it applies the selection and raises; geckopy looks at
+#                the selected reactions only.
+#
+# apply_eccodes: getECfromGEM followed by applyECcodes / copy_ec_to_gem, on a full and a
+# light ecModel, reported as the codes each conventional reaction ends up with; both sides
+# agree on both models.
+#
+# subset: getSubsetEcModel / get_subset_ec_model with a small GEM that lacks reaction R3
+# (drop_reaction) or lacks gene G3, with R2's rule reduced to 'G1 and G2' (drop_gene); both
+# sides agree on the genes, gene associations and ec structure of the subset in both cases.
+
+entries:
+  - getECfromDatabase
+  - findECInDB
+  - applyECcodes
+  - getSubsetEcModel
+
+inputs:
+  adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
+  fixture_dir: "{matlab_repo}/test/unit_tests/ecTestGEM"
+  adapter_python: "{python_repo}/examples/ecTestGEM"
+  variants_dir: "{scenario_dir}/variants"
+
+  database_checks:
+    - {name: separators_display, variant: separators, action: display, subset: []}
+    - {name: wildcard_display, variant: wildcard, action: display, subset: []}
+    - {name: semicolon_no_space_display, variant: semicolon_no_space, action: display, subset: []}
+    - {name: complex_wildcard_display, variant: complex_wildcard, action: display, subset: []}
+    - {name: complex_one_gene_no_ec_display, variant: complex_one_gene_no_ec, action: display, subset: []}
+    - {name: conflict_display, variant: conflict, action: display, subset: []}
+    - {name: conflict_ignore, variant: conflict, action: ignore, subset: []}
+    - name: conflict_unselected
+      variant: conflict
+      action: display
+      subset: [R2_EXP_1, R2_EXP_2, R2_REV_EXP_1, R2_REV_EXP_2]
+
+  subset_variants:
+    - drop_reaction
+    - drop_gene
+
+# Codes are compared as the strings each side stores; model structure is copied, not summed.
+tolerance:
+  rel: 0.0
+  abs: 0.0

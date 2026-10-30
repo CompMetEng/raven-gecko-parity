@@ -1,0 +1,39 @@
+id: ec_model_build_yarrowia
+pair: gecko
+description: >-
+  The ecModel pipeline on a conventional model of another organism, iYali5-GEM of Yarrowia lipolytica (1986 reactions, read from SBML), with the data of the eciYali5-GEM repository: makeEcModel, getECfromGEM, getECfromDatabase, fuzzyKcatMatching against BRENDA, assignKcatValues, applyCustomKcats, getStandardKcat, applyKcatConstraints and setProtPoolSize, compared at each step.
+
+entries:
+  - makeEcModel
+  - getECfromGEM
+  - getECfromDatabase
+  - fuzzyKcatMatching
+  - assignKcatValues
+  - applyCustomKcats
+  - getStandardKcat
+  - applyKcatConstraints
+  - setProtPoolSize
+
+# ec_model_full_yeastgem builds the model of the organism GECKO was developed on, from a YAML file. This builds a second organism from an SBML file whose reaction ids are numbers and whose genes are Yarrowia ordered-locus names, with a UniProt taxonomy snapshot (reviewed and unreviewed entries, so genes with several UniProt entries), a KEGG snapshot, a list of custom kcats given by reaction id only and the BRENDA release of GECKO's databases folder.
+#
+# The model and the data are those of https://github.com/SysBioChalmers/eciYali5-GEM, which this scenario does not vendor (uniprot.tsv alone is 8.6 MB): eciyali_dir names a checkout, the path below is the one on the Vera cluster. Both sides take their parameters from the model_adapter.toml of this folder, with `path` and `conv_gem` pointed at the checkout. Without the checkout the scenario stops with an error on both sides and is not part of a nightly run.
+#
+# BRENDA is read from databases_dir/brenda-2026.1-1 (run any GECKO function that loads BRENDA once so that the folder exists). fuzzyKcatMatching's organism-distance step needs a KEGG taxonomy file that is not vendored; both sides use the two-organism stand-in PhylDist.mat of ec_model_full_yeastgem, so the organism tier degrades to the wildcard on both sides.
+#
+# Differences this scenario reports (the run decides, the sources explain):
+#   * eccodes.from_gem_raised: the model has no EC codes of its own. getECfromGEM raises for a model without an `eccodes` field; fill_eccodes_from_gem returns with nothing filled.
+# Everything else agrees, with the data as it is and with the copy without double quotes: the counts and order of the ec reactions and enzymes, the EC codes, the molecular weights, the BRENDA candidates, the kcats after assignment and after the custom kcats, the standard kcats, the protein coefficients and the pool bound. data/uniprot.tsv quotes the EC cell of an entry with several codes, as "1.1.1.25; 2.5.1.19; 4.2.3.4"; both sides read the cell like textscan %q, without the quotes. `unquoted` runs the same pipeline on a copy of the data without any double quote, which gives a different model from `as_is` on both sides, and the two sides agree on each. getStandardKcat and assign_standard_kcat give a reaction without a subsystem the standard kcat of the model while other reactions have one (iYali5-GEM, where the reactions without a group have an empty subsystem; standard_kcat_subsystem_ectestgem reproduces the shape on ecTestGEM).
+#
+# Checkpoints: `expansion` (counts, ec.rxns and enzymes in order), `eccodes` (EC codes in ec order after the model's own and after the database), `kcats` (the fuzzy candidate list, kcat and source after assignment and after the custom kcats, the protein coefficients of the stoichiometric matrix and the pool bound) and `standard` (the result of getStandardKcat or that it raised). The standard step runs on a copy and the later stages continue from the model without it, so that they compare the same state whatever the step does. Neither side needs a solver.
+inputs:
+  adapter_matlab: "{scenario_dir}/YarrowiaAdapterParity.m"
+  adapter_python: "{scenario_dir}"
+  eciyali_dir: /cephyr/users/eduardk/Vera/github/eciYali5-GEM
+  databases_dir: "{matlab_repo}/databases"
+
+  matlab_solver: gurobi
+  python_solver: gurobi
+
+tolerance:
+  rel: 1.0e-9
+  abs: 1.0e-12

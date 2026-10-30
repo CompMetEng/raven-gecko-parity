@@ -1,0 +1,30 @@
+id: ec_analysis_light_humangem
+pair: gecko
+description: >-
+  Solving and mapping on the light ecModel of GECKO's light_ecModel tutorial (Human-GEM): growth, the minimum protein pool usage at 99 percent of it, mapRxnsToConv to the conventional Human-GEM, getSubsetEcModel to the HT29 cell-line model and setProtPoolSize with the adapter values and with Ptot halved.
+
+entries:
+  - mapRxnsToConv
+  - getSubsetEcModel
+  - setProtPoolSize
+
+# The gecko-light layout has no per-enzyme machinery (no prot_<id> metabolites, no usage reactions), so what is checked here is what a light ecModel needs: that both implementations solve the same LP, map its fluxes back to the 11983 reactions of Human-GEM and cut it down to a context-specific model alike. The steps are those at the end of the tutorial's protocol.m: growth with the stored objective, the minimum protein pool usage with growth at 99 percent of the optimum, mapRxnsToConv on a fixed flux vector (all mapped fluxes and the pool flux; the vector of the LP differs between the two sides, which find different vertices with free reaction pairs circulating in RAVEN's), getSubsetEcModel with HT29-GEM (the reactions, genes and enzymes that remain, the growth rate of the conventional HT29 model, of the full ecModel and of the subset). The flux variability of the same model is ec_fva_light_humangem.
+#
+# The tutorial ecModel has 52 ec reactions written as an `enzymes: !!omap` entry with no content (ec_model_load_light_humangem compares the readers on the file itself); both sides here read a copy without them. The python models are set to RAVEN's Gurobi tolerances (python_tolerance, see ec_fva_ecyeastgem). The conventional model and the HT29 model are read from the tutorial's models/ folder, the HT29 model with the YAML reader of each side. With the scipy solver the python side reads the HT29 model on glpk and moves it to scipy (geckopy.solver_support), because optlang builds the scipy matrix densely and a genome-scale model then does not finish loading.
+#
+# Every case records the result of the call and a case that raises is a result. `subset` agrees on the reactions, the ec reactions, the enzymes, the genes, the metabolites and the growth rates: get_subset_ec_model removes the metabolites and genes that no kept reaction uses, as getSubsetEcModel does (removeGenes and removeReactions with the unused-metabolite and unused-gene options). Not compared: the number of non-zero fluxes of the LP (1360 in RAVEN's solution, 680 in cobrapy's, the free pairs) and the flux sum of the parsimonious solution (solveLP(model, 1) gives 761072 and cobra's pfba 110).
+inputs:
+  adapter_matlab: "{matlab_repo}/tutorials/light_ecModel"
+  adapter_python: "{matlab_repo}/tutorials/light_ecModel"
+  model_file: ecModel.yml
+  subset_file: "{matlab_repo}/tutorials/light_ecModel/models/HT29-GEM.yml"
+
+  matlab_solver: gurobi
+  python_solver: gurobi
+  python_tolerance: 1.0e-9
+
+  pool_scale: 0.5
+
+tolerance:
+  rel: 1.0e-6
+  abs: 1.0e-6

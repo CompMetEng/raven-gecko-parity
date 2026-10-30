@@ -1,0 +1,19 @@
+id: ec_model_load_ecyeastgem
+pair: gecko
+description: >-
+  loadEcModel and load_ec_model on a built genome-scale ecModel, GECKO's full_ecModel tutorial ecYeastGEM, compared field by field: the ids and order of reactions, metabolites and genes, every bound, objective coefficient, subsystem, EC code, gene rule, metabolite formula and charge, every stoichiometric coefficient, and every array of the ec substructure.
+
+entries:
+  - loadEcModel
+
+# The other loadEcModel scenarios use the 17-reaction ecTestGEM ecModel, a file built in memory by the same scenario. This one reads a file that a GECKO run wrote and that was never touched by geckopy: 8000-odd reactions with isozymes, complexes, reversible reactions split into _REV rows, protein usage reactions, sensitivity-tuned kcats and kcats that are zero. The tutorial copy sits in every GECKO checkout, so the scenario runs wherever the code does.
+#
+# Both sides read models/ecYeastGEM.yml through the tutorial's model_adapter.toml (loadEcModel(filename, adapter) joins <adapter path>/models/<filename>), and each summarises the loaded model the way ec_model_io_crossload_ectestgem does, extended to the fields a genome-scale model has: reaction and metabolite names, metabolite formula and compartment, EC codes, gene rules and the notes and source of every kcat. Lists keep the order of the model, because the order is part of what a loader returns; the stoichiometry and the coupling matrix are sorted multi-key records. An infinite bound is a class and a zero, as in ec_model_expansion_ectestgem, and an unmeasured concentration (NaN) is a class and a zero too, since JSON has no NaN.
+inputs:
+  adapter_matlab: "{matlab_repo}/tutorials/full_ecModel"
+  adapter_python: "{matlab_repo}/tutorials/full_ecModel"
+  model_file: ecYeastGEM.yml
+
+tolerance:
+  rel: 0.0
+  abs: 0.0

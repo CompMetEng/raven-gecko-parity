@@ -62,7 +62,11 @@ in this repository.
    `DIFFER` or `ERROR`). It fails when a `parity` row has a scenario recorded as `DIFFER` or `ERROR` and a note that
    does not mention a difference or name the scenario (the way to say that a scenario covering several functions differs elsewhere), and when a scenario that covers the function is not listed in the row's
    `scenarios`. The note has to list every known difference; the audit checks that it says something, not that it
-   is complete, so read the scenario output as well.
+   is complete, so read the scenario output as well. A row can state where it differs with `differs`, a list of
+   checkpoint path prefixes that the audit checks against the differences rebuilt from `python/<id>.seed<N>.json`
+   and `matlab/<id>.json` in the same directory; a ledger with `strict_differs: true` requires the list on every
+   `parity` row linked to a scenario that differs and requires every difference group (the first two path
+   segments) to be listed by an entry that is the group or goes deeper (see the README).
 
 ## A deliberate divergence
 

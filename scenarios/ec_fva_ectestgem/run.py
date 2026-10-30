@@ -2,9 +2,8 @@
 
 One ecModel, one call to ec_fva, mapped back to the conventional model's reactions. R2 is
 ecTestGEM's only isozyme-split reaction (G1 and G2, forming a complex, or G3 alone); distinct
-kcats for its two isozymes give the solver a real trade-off, which is what exposes this
-scenario's one confirmed divergence --- see scenario.yml for the mechanism and geckopy's own
-MATLAB-COMPAT note in ec_fva.py for the algorithmic difference it comes from.
+kcats for its two isozymes give the solver a real trade-off, so the range of R2 depends on
+how the bounds of an isozyme-split reaction are combined --- see scenario.yml.
 """
 
 import importlib.util

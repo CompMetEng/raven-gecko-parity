@@ -118,6 +118,19 @@ def test_resolved_paths_use_native_separators(tmp_path, fake_pair):
     assert context["inputs"]["where"] == str(Path(context["inputs"]["where"]))
 
 
+def test_solver_variables_replace_only_declared_solvers(tmp_path, fake_pair, monkeypatch):
+    directory = write_scenario(tmp_path, "id: demo\npair: fake\ninputs:\n  matlab_solver: gurobi\n")
+    monkeypatch.setenv("PARITY_MATLAB_SOLVER", "glpk")
+    monkeypatch.setenv("PARITY_PYTHON_SOLVER", "scipy")
+    context = build_context(load_scenario(directory), tmp_path, fake_pair)
+
+    assert context["inputs"] == {"matlab_solver": "glpk"}, "a side without a declared solver gets none"
+
+    monkeypatch.delenv("PARITY_MATLAB_SOLVER")
+    context = build_context(load_scenario(directory), tmp_path, fake_pair)
+    assert context["inputs"]["matlab_solver"] == "gurobi"
+
+
 def test_an_unknown_placeholder_is_an_error_not_a_silent_literal(tmp_path, fake_pair):
     directory = write_scenario(tmp_path, "id: demo\npair: fake\ninputs:\n  where: '{nonesuch}/x'\n")
     with pytest.raises(ScenarioError, match="nonesuch"):

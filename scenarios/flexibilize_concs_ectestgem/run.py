@@ -11,7 +11,7 @@ Two independent checkpoints, matching the two ledger rows this scenario covers b
     flexibilize_enz_concs on enzyme_usage_ectestgem's own R2/R4-blocked, single-bottleneck
     fixture (reused rather than re-derived --- see scenario.yml), which gives the
     "find the worst enzyme, relax it" loop exactly one unambiguous candidate (P5) to work
-    with. Confirmed divergence in the post-loop refinement pass only; see scenario.yml.
+    with. Both sides settle at the low edge of the growth band in the refinement pass; see scenario.yml.
 """
 
 import importlib.util

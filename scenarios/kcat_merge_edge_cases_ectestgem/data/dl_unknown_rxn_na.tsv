@@ -1,0 +1,3 @@
+rxn_id	gene	substrate	smiles	sequence	kcat
+R3	G4	m1	C	M	10
+NOSUCH	G4	m1	C	M	NA

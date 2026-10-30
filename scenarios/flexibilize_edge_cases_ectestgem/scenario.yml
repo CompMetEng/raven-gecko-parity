@@ -1,0 +1,66 @@
+id: flexibilize_edge_cases_ectestgem
+pair: gecko
+description: >-
+  Edge cases of the proteomics relaxation functions on ecTestGEM: flexibilizeEnzConcs when an
+  upper bound of R1 caps growth below the target, when a usage bound is already above the relaxed
+  value and when the start is infeasible; relaxProteomicsGreedy with two enzymes that bind at
+  once and with an empty candidate set; constrainEnzConcs with a prior lower bound on a usage
+  reaction and with a negative concentration.
+
+entries:
+  - flexibilizeEnzConcs
+  - relaxProteomicsGreedy
+  - constrainEnzConcs
+
+inputs:
+  adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
+  adapter_python: "{python_repo}/examples/ecTestGEM"
+  fixture_dir: "{matlab_repo}/test/unit_tests/ecTestGEM"
+
+  matlab_solver: gurobi
+  python_solver: gurobi
+
+  # The fixture of flexibilize_concs_ectestgem: R2 and R4 blocked, P5 the one binding enzyme.
+  kcats:
+    R3: 15.0
+    R5: 200.0
+  exp_growth: 2.5
+  fold_change: 2.0
+  iter_per_enzyme: 5
+  # Above the growth of the constrained model (2.253), so P5 has to be relaxed to reach it.
+  relax_target: 2.5
+  # For the case in which P5's usage bound starts at 10 times its concentration.
+  exp_growth_high: 30.0
+
+# flex_control and relax_control return real content on both sides. Every other case records a
+# raise as a result. relax_tied_enzymes makes P4's cap equal to the flux it carries, so both
+# enzymes bind and the dual that picks the next enzyme is not unique; the harness runs the Python
+# side under three hash seeds, and a candidate order that follows the hash shows as a difference
+# between the seeds.
+tolerance:
+  rel: 1.0e-6
+  abs: 1.0e-9
+
+# Cases and what each side does (verdicts of the run):
+#   flex_control, flex_usage_bound_above_target: both sides agree. In the second case P5's usage
+#     bound starts at 10 times its concentration, P4 and P5 are flexed 2 and 6 times, and the
+#     final bounds and growth are identical.
+#   flex_growth_capped_by_uptake: with R1's upper bound capping growth at 2.3659, both sides use
+#     the growth they reached as the target of the final pass and settle at the low edge of its
+#     band (growth 2.35995, P5 ratio 1.047375).
+#   flex_infeasible_start: both sides skip the loop on an infeasible start and return growth 0,
+#     no flexed enzyme and the original bounds of P5's usage reaction. flexibilize_enz_concs reads
+#     the status of its first solve, so the result is the same with the Gurobi, GLPK and scipy
+#     interfaces.
+#   constrain_prior_lower_bound: MATLAB resets the lower bound to 0 and the pool coefficient to
+#     -1 before setting the bound; Python leaves the lower bound, so setting the upper bound
+#     below it raises.
+#   constrain_negative_concentration: MATLAB sets an upper bound of -0.5; Python skips the
+#     enzyme with a warning and leaves the bound at 1000.
+#   relax_control: both sides relax P5 and reach the same growth.
+#   relax_empty_enzyme_set: MATLAB treats an empty set as all enzymes and converges; Python
+#     treats it as no candidates and returns converged=false.
+#   relax_tied_enzymes: the final set (P4 and P5) and the final growth are the same. The first
+#     enzyme depends on the dual solution of the LP, which is not unique here: geckopy on Gurobi
+#     relaxes P5 first (shadow price -14.4) and MATLAB P4 first (-1.35); geckopy on scipy
+#     relaxes P4 first, as MATLAB does. The order is the same under all three hash seeds.

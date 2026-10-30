@@ -44,4 +44,7 @@ with open('repos/geckopy/pyproject.toml', 'rb') as f:
 print('\n'.join(d for d in deps if not d.strip().startswith('raven-toolbox')))
 " > geckopy-deps.txt
   pip install -r geckopy-deps.txt
+
+  # ec_model_full_yeastgem reads the BRENDA files from the GECKO checkout.
+  python scripts/ci/stage_brenda.py repos/GECKO
 fi

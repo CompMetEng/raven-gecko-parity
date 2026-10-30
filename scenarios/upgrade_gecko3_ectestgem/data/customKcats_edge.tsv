@@ -1,0 +1,4 @@
+proteins	genes	gene_name	kcat	rxns	notes	stoicho
+P3	G3	none	200			1
+P3	G3	none	300		second	1
+			50	R2_REV, R5		

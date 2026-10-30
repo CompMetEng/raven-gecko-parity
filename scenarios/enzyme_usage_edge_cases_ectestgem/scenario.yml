@@ -1,0 +1,59 @@
+id: enzyme_usage_edge_cases_ectestgem
+pair: gecko
+description: >-
+  Edge cases of the post-solve enzyme functions on ecTestGEM: usage and capacity of an enzyme
+  with an upper bound of 0 or without a usage reaction, usage tables without zero-usage
+  enzymes and the report built from them, a negative or minimal topAbsUsage, the order and
+  signed shadow prices of getEnzymeBottlenecks when two enzymes bind at once,
+  getPfbaEnzymes on a fraction of the optimum and with a missing objective, and
+  getConcControlCoeffs when the protein pool binds and no enzyme concentration is set.
+
+entries:
+  - getEnzymeUsage
+  - reportEnzymeUsage
+  - getEnzymeBottlenecks
+  - getPfbaEnzymes
+  - getConcControlCoeffs
+
+inputs:
+  adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
+  adapter_python: "{python_repo}/examples/ecTestGEM"
+  fixture_dir: "{matlab_repo}/test/unit_tests/ecTestGEM"
+
+  matlab_solver: gurobi
+  python_solver: gurobi
+
+  # The fixture of enzyme_usage_ectestgem: R2 and R4 blocked, so R3 (P4) and R5 (P5) are the
+  # only route and P5's measured concentration is the one binding constraint.
+  kcats:
+    R3: 15.0
+    R5: 200.0
+  high_cap_usage: 0.9
+  top_abs_usage: 5
+
+# Each case records a raise as a result, so the sides can disagree about raising. The control_*
+# cases return real content on both sides. The tolerance is tight enough to show the 1e-6
+# relaxation of the fixed objective that getPfbaEnzymes applies to a given fraction.
+tolerance:
+  rel: 1.0e-7
+  abs: 1.0e-9
+
+# Cases and what each side does (verdicts of the run; the scenario stays DIFFER while any of
+# these differences stands):
+#   control_*: usage, report, bottleneck and pFBA tables agree.
+#   zero_ub_enzyme: capUsage of an enzyme whose upper bound is 0 is NaN on both sides.
+#   usage_exclude_zero: getEnzymeUsage with zero=false works on both sides, but MATLAB's
+#     reportEnzymeUsage then raises on the filtered table, which it indexes by the position in
+#     ec.enzymes; Python reports the two enzymes that carry flux.
+#   report_negative_top: topAbsUsage -1 gives an empty table in MATLAB and two rows in Python.
+#   usage_missing_reaction: an enzyme without usage_prot_<id> makes MATLAB raise; Python leaves it out.
+#   pfba_fraction_09: the default fraction of both sides is 0.999999 of the optimum (control_pfba
+#     agrees). getPfbaEnzymes multiplies a given fraction by 0.999999 as well (0.9 gives 0.8999991);
+#     pfba_enzymes uses the given fraction as it is, so growth_over_optimum is 0.8999991 in
+#     MATLAB and 0.9 in Python. An unknown objective and an empty objective raise on both sides.
+#   tied_bottlenecks: with P4 and P5 both at their caps the LP has no unique dual. Python ranks
+#     P5 first (shadow price -14.4) and MATLAB P4 first (-1.35), so the ranking follows the
+#     dual the solver returns for a degenerate vertex.
+#   control_coeffs_pool_binding agrees: with the protein pool binding and no enzyme bound
+#     binding, both sides give P4 and P5 the coefficient 0. geckopy reads the reduced cost of each
+#     usage reaction's forward variable; MATLAB perturbs the usage bound.

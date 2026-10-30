@@ -1,0 +1,43 @@
+id: ec_model_io_crossload_ectestgem
+pair: gecko
+description: >-
+  What each side's loader makes of the file the other side's writer produced: loadEcModel
+  reading the file save_ec_model wrote, and load_ec_model reading the file saveEcModel wrote.
+
+# ec_model_io_ectestgem shows that the two writers produce different files for the same
+# ecModel and that each side reads back its own file unchanged. It does not show what a
+# reader does with the other side's file, which is what happens when a model built in one
+# tool is opened in the other. Both files are vendored under data/ and both sides load both,
+# so the comparison is between two readers of one file, not between two writers.
+#
+# The fixtures are the `written` checkpoint of ec_model_io_ectestgem, one per side, taken
+# from the same ecTestGEM ecModel (data/ecModel.python.yml from save_ec_model,
+# data/ecModel.matlab.yml from saveEcModel). Each side first writes the ecModel itself and
+# stops with an error when its own output no longer reproduces its own fixture, apart from
+# the metaData date line, so a change to a writer cannot leave the fixtures stale without
+# notice. Regenerate them with regenerate_fixtures.py from the two result files of
+# ec_model_io_ectestgem.
+#
+# Each loaded model is summarised with the fields of ec_model_io_ectestgem plus the ones in
+# which the two written files differ: metabolite charge, SBO terms on metabolites, reactions
+# and genes, reaction subsystem, EC codes, gene name, and the metaData description. A side
+# that cannot load a file reports that instead of a summary.
+#
+# Reading either file, the two loaders agree on every one of those fields. In the file written
+# by Python only some reactions carry a `subsystem` entry (the protein-pool reactions), which
+# MATLAB's readYAMLmodel keeps with its reaction since CompMetEng/RAVEN#14; earlier versions
+# of RAVEN move the six `Protein usage` entries to the first six reactions of the file.
+
+entries:
+  - loadEcModel
+  - saveEcModel
+
+inputs:
+  adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
+  fixture_dir: "{matlab_repo}/test/unit_tests/ecTestGEM"
+  adapter_python: "{python_repo}/examples/ecTestGEM"
+  scenario_root: "{scenario_dir}"
+
+tolerance:
+  rel: 0.0
+  abs: 0.0

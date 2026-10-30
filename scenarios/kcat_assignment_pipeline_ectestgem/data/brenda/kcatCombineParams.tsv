@@ -1,0 +1,63 @@
+# Combination parameters: bias (median residual) and error variance per source and evidence bin, fitted on the kcat-benchmark development split (K1)
+# measurement_sd: 0.48
+# min_variance: 0.01
+# interval_scale ec_tree+homologs: 1.114601
+# interval_scale ec_tree+okp: 1.415373
+# interval_scale okp: 1.522416
+# bins: ec_tree by measurements of the full EC (ec4:<n>) or the deepest EC level with measurements (ec3, ec2, ec0); homologs by identity of the nearest homolog (40 = 0.39-0.5, ..., 90 = 0.9-0.95, exact = 0.95 and above: assumed, not fitted, as the benchmark hides such homologs); okp by similarity to the method's training sequences in percent (<40, 40-60, 60-80, >80)
+source	bin	bias	variance	n
+ec_tree	ec0	-0.477494	3.332655	31
+ec_tree	ec2	0.008576	1.060435	9
+ec_tree	ec3	0.228823	1.742613	354
+ec_tree	ec4:1-2	0.057011	0.810277	143
+ec_tree	ec4:21-100	-0.07847	0.797282	946
+ec_tree	ec4:3-5	0.02135	1.476119	161
+ec_tree	ec4:6-20	-0.072662	0.651306	571
+ec_tree	ec4:>100	0.095282	1.247626	880
+homologs	40	-0.015187	1.260886	276
+homologs	50	0.137754	0.529905	280
+homologs	60	0.134241	0.761262	160
+homologs	70	-0.003058	0.328011	123
+homologs	80	-0.122846	0.178652	133
+homologs	90	-0.006082	0.453805	35
+homologs	exact	0.0	0.01	0
+okp_catapro	40-60	-0.300479	1.005508	239
+okp_catapro	60-80	-0.341574	1.036547	175
+okp_catapro	<40	0.007093	1.36854	277
+okp_catapro	>80	-0.15406	1.389519	64
+okp_catpred	40-60	-0.058922	1.061973	180
+okp_catpred	60-80	0.27677	1.230538	146
+okp_catpred	<40	0.235111	1.318567	253
+okp_catpred	>80	-0.081488	1.107396	59
+okp_dlkcat	40-60	0.043925	2.537594	431
+okp_dlkcat	60-80	-0.244621	1.133348	207
+okp_dlkcat	<40	0.252701	1.677558	685
+okp_dlkcat	>80	0.022845	1.022631	162
+okp_eitlem	40-60	-0.248184	1.63886	247
+okp_eitlem	60-80	-0.067952	0.990736	193
+okp_eitlem	<40	0.116477	1.54518	295
+okp_eitlem	>80	0.046687	0.832454	117
+okp_kinform_h	40-60	-0.279691	1.201118	254
+okp_kinform_h	60-80	-0.361429	0.95066	193
+okp_kinform_h	<40	-0.026799	1.393414	314
+okp_kinform_h	>80	-0.028761	0.938711	117
+okp_kinform_l	40-60	-0.334772	1.089254	254
+okp_kinform_l	60-80	-0.43286	0.87998	193
+okp_kinform_l	<40	0.036872	1.343055	314
+okp_kinform_l	>80	-0.063352	0.887797	117
+okp_omniesi	40-60	-0.038675	1.058088	208
+okp_omniesi	60-80	0.343364	1.774134	172
+okp_omniesi	<40	0.146418	1.434299	281
+okp_omniesi	>80	-0.224751	0.968644	66
+okp_omniesi_o2denet	40-60	0.109344	1.625946	208
+okp_omniesi_o2denet	60-80	0.27745	1.299593	172
+okp_omniesi_o2denet	<40	0.335257	2.010058	281
+okp_omniesi_o2denet	>80	0.072894	1.348823	66
+okp_turnup	40-60	0.484889	1.236623	358
+okp_turnup	60-80	0.150104	0.793036	148
+okp_turnup	<40	0.297525	1.044164	785
+okp_turnup	>80	0.278717	0.851301	62
+okp_unikp	40-60	-0.082426	1.54923	425
+okp_unikp	60-80	-0.362285	0.915037	207
+okp_unikp	<40	0.09514	1.536078	662
+okp_unikp	>80	-0.257379	0.904278	159

@@ -1,0 +1,52 @@
+id: kcat_io_edge_cases_ectestgem
+pair: gecko
+description: >-
+  Edge cases of the text and bookkeeping around kcats: the local SMILES cache of
+  findMetSmiles (a duplicated name, a metabolite without a name), the OpenKineticsPredictor
+  input for reactions that share enzymes, the kcat source files (a detail with a tab or a
+  leading separator, rows a spreadsheet may have quoted) and the standard-kcat fallback (a
+  reaction without enzymes that has two substrates, a biomass pseudoreaction, a light model
+  called twice). Each case builds its own state. A raise is a value on both sides. No case
+  reaches PubChem: every metabolite name is in the vendored cache.
+
+entries:
+  - findMetSmiles
+  - writeOpenKineticsPredictorInput
+  - saveKcatSource
+  - loadKcatSource
+  - getStandardKcat
+
+# Differences this scenario reports (seed-independent, confirmed by running both sides; the
+# scenario stays DIFFER until the sides are aligned or the difference is recorded as intended):
+#   findMetSmiles: with a duplicated name in smilesDB.tsv MATLAB takes the first row and Python
+#     the last; a metabolite without a name gets no SMILES in MATLAB and is looked up by its id
+#     in Python.
+#   loadKcatSource: a row that starts with a quote and never closes it, and a row of empty
+#     quoted fields, are skipped in MATLAB and reported as invalid in Python.
+#   getStandardKcat: a reaction without a GPR and with two substrates is an exchange reaction
+#     for MATLAB (no standard enzyme) and an ordinary reaction for Python; a reaction named
+#     'Biomass Pseudoreaction' is matched case-insensitively in Python only. Called a second
+#     time on a light model, MATLAB raises and Python returns.
+# Cases that agree: saveKcatSource writes a tab or line break of the detail text as a space, so
+# a row is never split, and leaves no leading, trailing or repeated '; ' in the detail column.
+# The OpenKineticsPredictor input for all reactions agrees on this fixture.
+
+inputs:
+  adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
+  adapter_python: "{python_repo}/examples/ecTestGEM"
+  fixture_dir: "{matlab_repo}/test/unit_tests/ecTestGEM"
+
+  # MATLAB resolves smilesDB.tsv, uniprot.tsv and the OKP input through the adapter's own
+  # params.path (<root>/data/...), so a copy of the adapter (ModelAdapter is a value class)
+  # is redirected to each root; Python takes explicit paths into the same files.
+  scenario_root: "{scenario_dir}"
+  dup_root: "{scenario_dir}/smiles_dup"
+  empty_root: "{scenario_dir}/smiles_empty"
+  okp_root: "{scenario_dir}/okp"
+  uniprot_path: "{scenario_dir}/data/uniprot.tsv"
+  odd_source: "{scenario_dir}/data/odd.tsv"
+  save_dir: "{repo_root}/results/.kcat_io_save"
+
+tolerance:
+  rel: 1.0e-9
+  abs: 1.0e-12

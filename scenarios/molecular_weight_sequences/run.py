@@ -8,13 +8,10 @@ than model output, and keeping input order is what makes a result that stops mat
 scenario.yml's per-sequence comments easy to locate --- the same reasoning
 ``gpr_dnf_rules`` uses for its own rule list.
 
-``calculate_mw`` legitimately returns NaN for a sequence with no recognisable residues.
-That is not the harness's NaN --- MATLAB's ``calculateMW`` never produces one, since it
-always starts from and returns at least the water mass --- so it is emitted as-is rather
-than folded into a has-value/value pair the way an absent metabolite charge is elsewhere in
-this repo. The point of this scenario is exactly that MATLAB says 18 and Python says NaN for
-the same input; the has-value convention exists to hide a difference the *harness*
-introduces, not the one being measured here.
+``calculate_mw`` returns NaN for a sequence with no recognisable residues, and so does
+MATLAB's ``calculateMW``. The NaN is emitted as-is, not folded into a has-value/value pair
+the way an absent metabolite charge is elsewhere in this repo: the point of this scenario is
+that both sides give the same answer for the same input.
 """
 
 from geckopy import calculate_mw

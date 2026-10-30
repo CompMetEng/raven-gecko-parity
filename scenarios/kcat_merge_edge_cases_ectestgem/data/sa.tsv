@@ -1,0 +1,2 @@
+# No specific-activity rows: this scenario does not exercise the SA-derived kcat path.
+ec_code	substrate	organism	sa_max	sa_median	n	references

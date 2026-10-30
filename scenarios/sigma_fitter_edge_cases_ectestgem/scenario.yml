@@ -1,0 +1,67 @@
+id: sigma_fitter_edge_cases_ectestgem
+pair: gecko
+description: >-
+  Edge cases of the sigma fit (sigmaFitter, fit_sigma) on ecTestGEM's single-route ecModel: a target
+  that falls between two grid points, a target that uptake caps below reach, and a biomass reaction
+  with fixed bounds. Each case runs once with geckopy's default method and once with method="grid",
+  both the algorithm of sigmaFitter.
+
+entries:
+  - sigmaFitter
+
+inputs:
+  adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
+  adapter_python: "{python_repo}/examples/ecTestGEM"
+  fixture_dir: "{matlab_repo}/test/unit_tests/ecTestGEM"
+
+  matlab_solver: gurobi
+  python_solver: gurobi
+
+  bio_rxn: R5
+
+  # R2 and R4 are blocked and R3 is the only route from m1 to m2, the fixture shape that
+  # sensitivity_tuning_ectestgem uses. kcat_R3 = 5 and kcat_R5 = 200 make growth proportional to
+  # sigma up to the uptake limit: 872.7 * sigma, so the grid points 0.11 and 0.12 give 96.0 and 104.7.
+  kcats:
+    R3: 5.0
+    R5: 200.0
+  p_tot: 0.5
+  f: 4.0
+
+  # Growth rates handed to the fit, one per case.
+  growth_on_grid: 96.0
+  growth_between_grid_points: 100.0
+  growth_above_uptake_limit: 100.0
+
+  # Lower bound given to S1 in the uptake_cap cases: at most 50 units of e1 enter, so growth never
+  # exceeds 50 whatever sigma is.
+  uptake_lower_bound: -50.0
+
+  # Both bounds of the biomass reaction in the fixed_biomass cases.
+  fixed_biomass: 0.1
+
+# Cases and what they exercise
+#
+# Each case runs fit_sigma without a method (the default, the grid of sigmaFitter) and with
+# method="grid". Both sides give the same sigma and the same protein pool bound in every case.
+#
+# on_grid_*: the target is the growth rate at sigma 0.11, so both land on 0.11. Control with real
+#   content on both sides.
+# between_grid_*: 100 lies between sigma 0.11 (96.0) and 0.12 (104.7). Both sides take the nearer grid
+#   point, 0.11.
+# uptake_cap_*: the target 100 is out of reach. growth is flat from sigma 0.0573 on, and both sides
+#   take the first grid point on the plateau, 0.06, with a pool bound of 120. The growth on the plateau
+#   carries rounding noise with some solvers (49.999999999999986 at sigma 0.06 and 50 at sigma 1 with
+#   MATLAB on GLPK), so both count growth within 1e-9 (relative) of the best growth as on the plateau. The
+#   result is the same with MATLAB on Gurobi and GLPK and geckopy on Gurobi, GLPK and scipy.
+#
+# fixed_biomass_*: the biomass reaction has lower bound = upper bound = 0.1. Both sides open the bounds
+#   of their objective to (0, 1000) before they scan and return the model with them open, so the fit
+#   is 0.11 as without the fixed bounds.
+#
+# fit_sigma(method="bisect") is not part of this scenario: it bisects to a sigma resolution of 1e-6 and
+# does not land on the grid.
+
+tolerance:
+  rel: 1.0e-9
+  abs: 1.0e-12

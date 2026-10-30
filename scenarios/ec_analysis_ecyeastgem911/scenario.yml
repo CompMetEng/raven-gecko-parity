@@ -1,0 +1,47 @@
+id: ec_analysis_ecyeastgem911
+pair: gecko
+description: >-
+  The post-solve analysis functions on the published ecYeastGEM 9.1.1 (ecModels repository, branch gecko4): enzyme usage and its report, enzyme bottlenecks, the enzyme-usage pFBA, the concentration control coefficients, ecFSEOF and kcat edits, with every enzyme compared.
+
+entries:
+  - getEnzymeUsage
+  - reportEnzymeUsage
+  - getEnzymeBottlenecks
+  - getPfbaEnzymes
+  - getConcControlCoeffs
+  - ecFSEOF
+  - applyKcatConstraints
+  - setKcatForReactions
+
+# enzyme_usage_ectestgem and ec_fseof_ectestgem run these functions on a model with five enzymes, which hides every difference that needs many enzymes: ties between enzymes, complexes, isozymes, reversible reactions, a report with more rows than the default limit and the order of ranked lists. This scenario runs them on ecYeastGEM, with about 1000 enzymes and a thousand-odd reactions that carry a kcat. It is ec_analysis_ecyeastgem on the model that was built and tuned with geckopy (kcats from BRENDA, EITLEM predictions, custom kcats and CMA-ES tuning, 4850 ec reactions), without the mapping to the conventional model: the yeast-GEM 9.1.1 file it was built from is not at hand (the ecModels repository does not track it and the yeast-GEM checkout is 9.0.2). The model is not vendored (6.9 MB); the adapter folder is the ecYeastGEM folder of a checkout of the ecModels repository (branch gecko4), here the one on the Vera cluster. data/growth_fluxes.tsv is the growth LP of this model (regenerate_fluxes.py).
+#
+# Every case records the result of the call and not a verdict: a case that raises is a result (`raised`), and a number is a record with an `is_nan` flag. The loaded model is the one of ec_model_load_ecyeastgem911.
+#
+# The LP is the same on both sides but a genome-scale LP has many optimal vertices, and the two implementations land on different ones (ec_analysis_ecyeastgem gives the evidence on the tutorial model: the growth rate agrees to 2e-7 relative while hundreds of fluxes differ, mostly free reaction pairs circulating at the bound in RAVEN's solution). The flux vector is therefore not a checkpoint. What a flux vector feeds is: the usage functions are given one vector, data/growth_fluxes.tsv (the solution of the `growth` LP as geckopy returns it, regenerated with regenerate_fluxes.py), and so compare the functions and not the vertex. `usage_solved` keeps what every vertex shares for the solved LP (the total usage and the five largest usages; `min_uptake` only the total, as the second-largest usage differs between vertices there), and `growth` the objective and the exchange fluxes.
+#
+# The checkpoints that solve internally depend on the vertex or on the dual solution and are kept as they are, because that dependence is the behaviour of the functions: `bottlenecks` ranks the shadow prices of prot_<id> (many enzymes tie at one value and the duals of a degenerate LP are not unique), `control_coeffs` analyses the enzymes whose usage is above 0.1 percent of the bound (limit 0.001; an enzyme near the limit differs between vertices), and `fseof` regresses the fluxes of a pFBA at each step; with Gurobi on both sides the target sets are equal (372 reactions on the tutorial model, 363 on ecYeastGEM 9.1.1) and the order differs in 27 and 10 positions, in runs of reactions with equal scores (to 1e-12) and where the pFBA vertex fixes a flux differently, so the order is not stable against the choice of the optimal vertex at this scale (the ledger row of ecFSEOF gives the counts for GLPK and scipy). `pfba` compares what getPfbaEnzymes returns against the optimum (both sides fix the objective at 0.999999 of it) and agrees.
+#
+# `kcat_edits` changes kcats through ec.kcat and applies them with applyKcatConstraints, on the first isozyme-split reaction, the first reversible reaction, the first complex and a reaction whose kcat is set to zero, chosen by one rule on both sides from the order of ec.rxns; the compared values are the coefficients that change in the stoichiometric matrix and the growth rate that follows.
+inputs:
+  adapter_matlab: /cephyr/users/eduardk/Vera/github/ecModels/ecYeastGEM
+  adapter_python: /cephyr/users/eduardk/Vera/github/ecModels/ecYeastGEM
+  model_file: ecYeastGEM.yml
+  fluxes_file: "{scenario_dir}/data/growth_fluxes.tsv"
+
+  matlab_solver: gurobi
+  python_solver: gurobi
+  # RAVEN's solveLP gives Gurobi FeasibilityTol and OptimalityTol of 1e-9 and cobrapy leaves them at 1e-6; the python models are set to RAVEN's value (see ec_fva_ecyeastgem).
+  python_tolerance: 1.0e-9
+
+  bio_rxn: r_4041
+  exchange_rxns: [r_1714, r_1672, r_1992, r_1761, r_1808, r_1634, r_4041, prot_pool_exchange]
+  c_source: r_1714
+  fseof_target: r_1761
+  fseof_steps: 10
+  top_abs_usage: 20
+  high_cap_usage: 0.9
+  bottlenecks_top: 20
+
+tolerance:
+  rel: 1.0e-6
+  abs: 1.0e-8

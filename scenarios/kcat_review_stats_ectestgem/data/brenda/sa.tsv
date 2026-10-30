@@ -1,0 +1,3 @@
+# BRENDA release review-fixture - specific activity in umol/min/mg
+ec_code	substrate	organism	sa_max	sa_median	n	references
+4.1.1.1	*	testus testus	2	2	1	*

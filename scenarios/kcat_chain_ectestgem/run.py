@@ -14,13 +14,14 @@ one isozyme and on isozyme-fill/standard-kcat for the rest) and R6 (no GPR at al
 the one reaction shape ecTestGEM's stock model does not have, needed to exercise
 getStandardKcat's new-pseudo-protein path rather than only its fillZeroKcat path).
 
-Three checkpoints assert a confirmed, real divergence on purpose rather than working
-around it --- see the comments at `applyCustomKcats` (mode-A source/notes), the
-`criteria='median'` sub-case under `selection` (MATLAB's own dead code), and the
-isolated `constraints.light_partial_isozyme` sub-case (MATLAB silently zeroing a
-reaction's enzyme cost). All three were confirmed by direct execution against a
-pinned GECKO develop4 worktree before being written into this scenario; see
-docs/gecko-behaviour-parity-plan.md for the upstream issues.
+The checkpoints cover every stage on both sides. `selection.select_median` records the
+kcat rows that `criteria="median"` leaves, `selection.select_aggregates` the median and the
+mean of three candidates for one reaction (100 from 'custom' first, then 200 and 180 from
+'dlkcat': median 180, mean 160, source of the first row), `applyCustomKcats` (mode A) writes the kcat, sets
+`ec.source` to 'custom' and records the note, and the isolated
+`constraints.light_partial_isozyme` sub-case builds a light model with one reaction and two
+isozymes of which only one has a kcat: both sides price the reaction with the isozyme that
+has one.
 """
 
 import importlib.util
@@ -249,29 +250,40 @@ def _checkpoint_selection(model, merged, inputs: dict):
     apply_kcat_list(model, merged, criteria="max")
     out["after_select_max"] = _kcat_rows(model, _all_ec_rxns(model))
 
-    # MATLAB's assignKcatValues.m computes [selectedKcats(i),j] = median(...)/mean(...)
-    # for these two criteria --- a two-output call standard MATLAB median/mean do not
-    # support (only max/min do). Confirmed by direct execution: this errors
-    # unconditionally with "Too many output arguments" whenever it reaches a
-    # reaction needing aggregation, i.e. on any non-empty kcatList. geckopy's
-    # apply_kcat_list has no such restriction. Asserted here rather than avoided.
+    # The 'median' criterion aggregates the matching kcats; the checkpoint records whether the
+    # call raised and the kcat rows it leaves.
     probe = model.copy()
     try:
         apply_kcat_list(probe, merged, criteria="median")
-        median_result = {"raised": False}
-    except Exception:  # noqa: BLE001 --- whether it raises is the finding, not the exception type
-        median_result = {"raised": True}
+        median_result = {"raised": False, "rows": _kcat_rows(probe, _all_ec_rxns(probe))}
+    except Exception:  # noqa: BLE001 (whether it raises is the finding, not the exception type)
+        median_result = {"raised": True, "rows": []}
     out["select_median"] = median_result
+
+    # One reaction with three candidates (kcat 100 from 'custom' first, then 200 and 180 from
+    # 'dlkcat'): the median is 180, the mean 160, and the recorded source is that of the first row.
+    candidates = pd.DataFrame(
+        {
+            "rxn_id": ["R2a_EXP_1"] * 3,
+            "kcat": [100.0, 200.0, 180.0],
+            "source": ["custom", "dlkcat", "dlkcat"],
+        }
+    )
+    aggregates = {}
+    for criterion in ("median", "mean"):
+        probe = model.copy()
+        try:
+            apply_kcat_list(probe, candidates, criteria=criterion)
+            aggregates[criterion] = {"raised": False, "rows": _kcat_rows(probe, ["R2a_EXP_1"])}
+        except Exception:  # noqa: BLE001 (whether it raises is the finding, not the exception type)
+            aggregates[criterion] = {"raised": True, "rows": []}
+    out["select_aggregates"] = aggregates
 
     fill_kcats_from_isozymes(model, apply=False)
     out["after_isozyme_fill"] = _kcat_rows(model, _all_ec_rxns(model))
 
     # customKcats.tsv's only row targets R3 by reaction id alone (mode A: no protein
-    # listed). MATLAB's applyCustomKcats.m only ever writes ec.kcat in this branch,
-    # leaving ec.source/ec.notes at whatever they already were (here: 'brenda', from
-    # the fuzzy match). geckopy's apply_custom_kcats shares one write path across all
-    # three modes and always sets source='custom' and appends the note. Both sides
-    # apply the same new kcat; source/notes are the deliberately-asserted difference.
+    # listed). Both sides write the new kcat, set ec.source to 'custom' and record the note.
     apply_custom_kcats(model, Path(inputs["custom_kcats_path"]), apply=False)
     out["after_custom_kcats"] = _kcat_rows(model, ["R3"])
 
@@ -326,13 +338,10 @@ def _checkpoint_constraints(model) -> dict:
 
 def _checkpoint_constraints_light_partial_isozyme(adapter) -> dict:
     """Isolated, purpose-built light-model case: one reaction, two isozymes, only one
-    of which has a kcat assigned. MATLAB's applyKcatConstraints.m corrects an
-    unassigned isozyme's Inf cost (MW/0) to 0 *before* taking min() across isozymes,
-    so the fabricated zero always wins --- silently writing a zero enzyme cost for
-    the whole reaction even though the other isozyme has a real, valid kcat.
-    geckopy's apply_kcat_constraints skips invalid isozymes before the comparison
-    instead. Confirmed by direct execution against a pinned GECKO develop4 worktree;
-    not reachable through the shared ecTestGEM fixture, so built standalone here.
+    of which has a kcat assigned. Both sides take the cost of the isozyme that has a kcat:
+    the unassigned isozyme's infinite cost (MW/0) is not a candidate for the minimum. The
+    case is not reachable through the shared ecTestGEM fixture, so it is built standalone
+    here.
     """
     model = cobra.Model("light_partial_isozyme")
     pool = cobra.Metabolite("prot_pool", compartment="c")

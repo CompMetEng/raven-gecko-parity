@@ -32,14 +32,26 @@ function out = checkpoint_reactions_from_enzyme(model, adapter, inputs)
 ecModel = fresh(model, adapter);
 out.known        = reactions_from_enzyme_case(ecModel, inputs.known_enzyme);
 out.case_variant = reactions_from_enzyme_case(ecModel, inputs.case_variant_enzyme);
-out.unknown      = reactions_from_enzyme_case(ecModel, inputs.unknown_enzyme);
+out.unknown      = unknown_enzyme_case(ecModel, inputs.unknown_enzyme);
+end
+
+
+function out = unknown_enzyme_case(ecModel, proteinId)
+% An unknown protein id, reported as the side-neutral 'no reactions'. getReactionsFromEnzyme
+% returns empty outputs for it; geckopy raises ValueError, a deliberate difference
+% (raven-gecko-parity#70) that its own side asserts. Here the empty outputs are asserted,
+% so the run fails if getReactionsFromEnzyme starts to error or to return reactions.
+[rxns, kcat] = getReactionsFromEnzyme(ecModel, proteinId);
+assert(isempty(rxns) && isempty(kcat), ...
+    'getReactionsFromEnzyme returned reactions for the unknown protein %s', proteinId);
+out.rxns = cell(1, 0);
+out.kcat = zeros(1, 0);
 end
 
 
 function out = reactions_from_enzyme_case(ecModel, proteinId)
-% getReactionsFromEnzyme never errors --- an unknown protein id yields empty outputs, not
-% an exception --- so `raised` is always false here. The field still exists so the shape
-% matches geckopy's side, which does raise for the same input.
+% getReactionsFromEnzyme never errors for a known id; `raised` is false here to match the
+% shape of geckopy's side.
 [rxns, kcat] = getReactionsFromEnzyme(ecModel, proteinId);
 [rxns, order] = sort(rxns(:));
 kcat = double(kcat(:));
@@ -63,9 +75,8 @@ baseScalar = fresh(model, adapter);
 baseScalar = setKcatForReactions(baseScalar, inputs.kcat_base_scalar.rxn, inputs.kcat_base_scalar.value);
 out.base_scalar = kcat_and_source(baseScalar, {'R2_EXP_1', 'R2_EXP_2'});
 
-% MATLAB accepts a per-isozyme kcat list for an unsuffixed base name, relying on ec.rxns
-% order --- geckopy refuses this and asks for the suffixed ids explicitly. Both sides are
-% therefore expected to disagree here: `raised` stays false on this side.
+% A per-isozyme kcat list for an unsuffixed base name is assigned in ec.rxns order; geckopy
+% accepts it too. `raised` is false on both sides.
 baseList = fresh(model, adapter);
 baseList = setKcatForReactions(baseList, inputs.kcat_base_list.rxn, inputs.kcat_base_list.values);
 out.base_list.raised = false;
@@ -108,7 +119,7 @@ overwriteNonempty = applyECcodes(overwriteNonempty, false); % idempotent: no new
 out.overwrite_false_unchanged = isequal(before, eccode_tokens(overwriteNonempty, target));
 
 % Blank the ec.eccodes entry for `target` before copying, so overwrite=true is asked to
-% replace a real annotation with nothing --- the case MATLAB clobbers and geckopy does not.
+% replace a real annotation with nothing; neither side lets an empty entry replace it.
 overwriteEmpty = fresh(model, adapter);
 ecIdx = find(strcmp(overwriteEmpty.ec.rxns, target), 1);
 if ~isempty(ecIdx)

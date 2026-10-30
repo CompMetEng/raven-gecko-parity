@@ -98,7 +98,7 @@ def run(ctx):
         pool_size[flavour] = {"default": default_bound, "override": override_bound}
 
     # --- prot_data: read once, both other checkpoints reuse it.
-    prot_data = load_prot_data(Path(adapter.params.path) / "data" / "proteomics.tsv", [1])
+    prot_data = load_prot_data(Path(adapter.params.path) / "data" / "proteomics.tsv", [1], filter_data=True)
     prot_data_result = {
         "uniprot_ids": [str(u) for u in prot_data.uniprot_ids],
         "abundances": [float(a) for a in prot_data.abundances.ravel()],

@@ -7,9 +7,8 @@ scenario.yml for why this stops at the CSV boundary rather than the real OKP RES
 and for the one real MATLAB bug this scenario's write checkpoint found and confirmed
 fixed ([GECKO #437]).
 
-One checkpoint asserts a confirmed, real divergence on purpose rather than working around
-it: MATLAB's kcatSource carries an 'OKP-' prefix geckopy's source column does not. See the
-comment at read_output below.
+The read_output checkpoint compares the source column verbatim: both sides carry the
+'OKP-' prefix.
 """
 
 import importlib.util
@@ -94,11 +93,7 @@ def _checkpoint_read(model, inputs: dict) -> dict:
                 "gene": str(r.genes[0]) if r.genes else "",
                 "substrate": str(r.substrates[0]) if r.substrates else "",
                 "kcat": float(r.kcat),
-                # geckopy's source column keeps parse_okp_output's stripped-but-not-
-                # reprefixed value ('CataPro', 'BRENDA'); MATLAB's kcatSource carries an
-                # 'OKP-' prefix on the same value (see scenario.yml). Both are recorded,
-                # not normalized to a shared token, so the split stays visible in the
-                # comparison rather than being hidden by the checkpoint itself.
+                # Recorded verbatim: 'OKP-CataPro', 'OKP-BRENDA' on both sides.
                 "source": str(r.source),
             }
             for r in df.itertuples()

@@ -1,51 +1,61 @@
 # Plan: behavioural parity for GECKO ↔ geckopy
 
-The gecko ledger carries **49 rows marked `parity`** and, until now, no scenario at all: every
-one of those rows was a claim about matching names. This is the plan to make the claim real,
-and the companion to [behaviour-parity-plan.md](behaviour-parity-plan.md), which does the same
-job for RAVEN.
+The gecko ledger carries **78 rows marked `parity`**, 61 of them linked to at least one scenario. A scenario runs both sides on the same input and compares the results; a row without one is a claim about matching names. This plan describes the scenarios, the fixture they share and what each reports. It is the companion to [behaviour-parity-plan.md](behaviour-parity-plan.md), which does the same job for RAVEN.
 
 ## What exists now
 
+48 scenarios, 25 that match and 23 that report differences. A scenario reports DIFFER while any case differs; the differences are described in its `scenario.yml` and in the ledger notes of the functions concerned, and a deliberate difference is said to be deliberate there.
+
 | Scenario | Covers | Verdict |
 |---|---|---|
+| `ec_fseof_ectestgem` | `ecFSEOF` | match |
+| `ec_fva_ectestgem` | `ecFVA` | match |
+| `ec_model_build_edge_cases_ectestgem` | `makeEcModel` | match |
 | `ec_model_expansion_ectestgem` | `makeEcModel`, `loadConventionalGEM`, `ModelAdapter` | match |
+| `ec_model_full_yeastgem` | `makeEcModel`, `getECfromGEM`, `fuzzyKcatMatching`, `assignKcatValues`, `applyKcatConstraints`, `setProtPoolSize` | match |
 | `enzyme_annotation_ectestgem` | `applyComplexData`, `getECfromGEM`, `getECfromDatabase` | match |
+| `enzyme_usage_ectestgem` | `getEnzymeUsage`, `reportEnzymeUsage`, `getConcControlCoeffs` | match |
+| `flexibilize_concs_ectestgem` | `loadFluxData`, `constrainFluxData`, `flexibilizeEnzConcs` | match |
+| `fuzzy_kcat_coefficient_ectestgem` | `fuzzyKcatMatching`, `loadBRENDAdata` | match |
+| `kcat_chain_ectestgem` | `fuzzyKcatMatching`, `loadBRENDAdata`, `writeDLKcatInput`, `readDLKcatOutput`, `mergeKcats`, `assignKcatValues`, `applyCustomKcats`, `getKcatAcrossIsozymes`, `getStandardKcat`, `removeStandardKcat`, `applyKcatConstraints` | match |
+| `model_edits_ectestgem` | `getReactionsFromEnzyme`, `setKcatForReactions`, `applyECcodes`, `mapRxnsToConv`, `addNewRxnsToEC` | match |
+| `molecular_weight_sequences` | `calculateMW` | match |
+| `okp_kcat_ectestgem` | `findMetSmiles`, `writeOpenKineticsPredictorInput`, `readOpenKineticsPredictorOutput` | match |
 | `protein_pool_ectestgem` | `setProtPoolSize`, `calculateFfactor`, `loadProtData`, `fillEnzConcs`, `constrainEnzConcs` | match |
-| `molecular_weight_sequences` | `calculateMW` | **differs**, on purpose --- see below |
-| `ec_model_io_ectestgem` | `saveEcModel`, `loadEcModel` | match (content); **differs** (layout) |
-| `model_edits_ectestgem` | `addNewRxnsToEC`, `copyECtoGEM`, `setKcatForReactions`, `getReactionsFromEnzyme`, `mapRxnsToConv` | match, plus four small documented divergences --- see below |
-| `kcat_chain_ectestgem` | `fuzzyKcatMatching`, `loadBRENDAdata`, `writeDLKcatInput`, `readDLKcatOutput`, `mergeDLKcatAndFuzzyKcats`, `selectKcatValue`, `applyCustomKcats`, `getKcatAcrossIsozymes`, `getStandardKcat`, `removeStandardKcat`, `applyKcatConstraints` | match, plus three confirmed divergences --- see below |
-| `okp_kcat_ectestgem` | `findMetSmiles`, `writeOpenKineticsPredictorInput`, `readOpenKineticsPredictorOutput` | match, plus one confirmed divergence --- see below |
-| `enzyme_usage_ectestgem` | `enzymeUsage`, `reportEnzymeUsage`, `getConcControlCoeffs` | match, plus one confirmed divergence --- see Tier 3 below |
-| `ec_fva_ectestgem` | `ecFVA` | match, plus one confirmed divergence --- see Tier 3 below |
-| `flexibilize_concs_ectestgem` | `loadFluxData`, `constrainFluxData`, `flexibilizeEnzConcs` | match, plus one confirmed divergence --- see Tier 3 below |
-| `sensitivity_tuning_ectestgem` | `sensitivityTuning`, `sigmaFitter`, `findMaxValue`, `truncateValues` | match, plus two confirmed divergences --- see Tier 3 below |
-| `ec_fseof_ectestgem` | `ecFSEOF` | **differs**, on purpose --- see Tier 3 below |
+| `sensitivity_tuning_ectestgem` | `sensitivityTuning`, `sigmaFitter`, `truncateValues` | match |
+| `sigma_fitter_edge_cases_ectestgem` | `sigmaFitter` | match |
+| `ec_model_io_crossload_ectestgem` | `loadEcModel`, `saveEcModel` | match |
+| `ec_model_load_ecyeastgem` | `loadEcModel` | match |
+| `ec_model_load_ecyeastgem911` | `loadEcModel` | match |
+| `ec_model_load_light_humangem` | `loadEcModel` | match |
+| `ec_model_build_light_humangem` | `makeEcModel`, `applyComplexData`, `getECfromGEM`, `fuzzyKcatMatching`, `readDLKcatOutput`, `mergeDLKcatAndFuzzyKcats`, `assignKcatValues`, `getStandardKcat`, `applyKcatConstraints`, `setProtPoolSize` | match |
+| `ec_tuning_ecyeastgem` | `sensitivityTuning`, `sigmaFitter` | match |
+| `ec_subset_genes_ectestgem` | `getSubsetEcModel` | match |
+| `standard_kcat_subsystem_ectestgem` | `getStandardKcat` | match |
+| `complex_data_edge_cases_ectestgem` | `applyComplexData`, `calculateFfactor`, `fillEnzConcs` | differs: partial stoichiometry `[2, 0]`, `calculateFfactor` with a missing sample, a zero total and an empty enzyme list, a negative abundance in `fillEnzConcs` |
+| `ec_analysis_ecyeastgem` | `getEnzymeUsage`, `reportEnzymeUsage`, `getEnzymeBottlenecks`, `getPfbaEnzymes`, `getConcControlCoeffs`, `mapRxnsToConv`, `ecFSEOF`, `applyKcatConstraints`, `setKcatForReactions` | differs: the tied bottlenecks (none of the top 20 enzymes shared) and the order of 27 of the 372 ecFSEOF targets, which have the same target set |
+| `ec_analysis_ecyeastgem911` | the same without `mapRxnsToConv` | differs: the tied bottlenecks and the order of 10 of the 363 ecFSEOF targets, which have the same target set |
+| `ec_analysis_light_humangem` | `mapRxnsToConv`, `getSubsetEcModel`, `setProtPoolSize` | match |
+| `ec_model_build_yarrowia` | `makeEcModel`, `getECfromGEM`, `getECfromDatabase`, `fuzzyKcatMatching`, `assignKcatValues`, `applyCustomKcats`, `getStandardKcat`, `applyKcatConstraints`, `setProtPoolSize` | differs: `getECfromGEM` for a model without EC codes |
+| `ec_model_io_eciyali5` | `loadEcModel`, `saveEcModel`, `upgradeEcModel` | differs: the number of reactions `upgradeEcModel` turns (895 and 0) |
+| `ec_proteomics_ecyeastgem` | `loadProtData`, `fillEnzConcs`, `constrainEnzConcs`, `calculateFfactor`, `setProtPoolSize`, `loadFluxData`, `constrainFluxData`, `flexibilizeEnzConcs`, `getConcControlCoeffs` | differs: the replicate-count check of `loadProtData`, the mean of `calculateFfactor`, the optimal vertex under the proteomics constraints |
+| `ec_lookup_edge_cases_ectestgem` | `getECfromDatabase`, `findECInDB`, `applyECcodes`, `getSubsetEcModel` | differs: conflicting ECs for one gene |
+| `ec_model_edit_edge_cases_ectestgem` | `addNewRxnsToEC`, `mapRxnsToConv`, `ecFVA` | differs: `addNewRxnsToEC` when no new enzyme is needed |
+| `ec_model_io_ectestgem` | `saveEcModel`, `loadEcModel` | differs: content of the written files: `metaData` description, charge, SBO terms, `subsystem`, gene names |
+| `enzyme_usage_edge_cases_ectestgem` | `getEnzymeUsage`, `reportEnzymeUsage`, `getEnzymeBottlenecks`, `getPfbaEnzymes`, `getConcControlCoeffs` | differs: the margin of a given pFBA fraction, tied bottlenecks, `zero=false` in the report, a missing usage reaction, a negative `topAbsUsage` |
+| `evotune_edge_cases_ectestgem` | `screenKcatLeverage`, `selectTunableMask`, `cmaesKcatTuning`, `nChanged`, `parsimonyFrontier`, `bestParsimonious` | differs: order of tied rows, source label, a model without formulas, a flat objective, a NaN RMSE in `bestParsimonious` |
+| `flexibilize_edge_cases_ectestgem` | `flexibilizeEnzConcs`, `relaxProteomicsGreedy`, `constrainEnzConcs` | differs: `constrainEnzConcs` with a prior lower bound or a negative concentration, an empty `enzymeSet`, the first of two tied enzymes |
+| `flux_data_edge_cases_ectestgem` | `loadFluxData`, `constrainFluxData` | differs: argument handling of `loadFluxData` and `constrainFluxData` |
+| `kcat_apply_edge_cases_ectestgem` | `applyKcatConstraints`, `setKcatForReactions`, `getKcatAcrossIsozymes`, `applyCustomKcats` | differs: the id vocabulary of the update list in `applyKcatConstraints` |
+| `kcat_assignment_pipeline_ectestgem` | `kcatAssignmentConfig`, `collectKcats`, `assignKcats`, `ecTreeEstimate`, `kcatsFromECTree` | differs: config validation, doubled candidates and the `ec.source` text in `collectKcats`, NaN `k` and subsets in the EC tree |
+| `kcat_io_edge_cases_ectestgem` | `findMetSmiles`, `writeOpenKineticsPredictorInput`, `saveKcatSource`, `loadKcatSource`, `getStandardKcat` | differs: `findMetSmiles` duplicates and unnamed metabolites, invalid rows in `loadKcatSource`, `getStandardKcat` |
+| `kcat_merge_edge_cases_ectestgem` | `readDLKcatOutput`, `writeDLKcatInput`, `loadBRENDAdata`, `fuzzyKcatMatching`, `mergeKcats`, `mergeDLKcatAndFuzzyKcats`, `assignKcatValues` | differs: `OKP-` sources in `mergeKcats`, `readDLKcatOutput`, `writeDLKcatInput` |
+| `kcat_review_stats_ectestgem` | `ecStatsFromBrenda`, `reviewKcatAssignment`, `loadBrendaMeasurements` | differs: `ecStatsFromBrenda`, the case of the source in `reviewKcatAssignment`, `measurements.tsv.xz` |
+| `protein_data_filters_ectestgem` | `loadProtData` | differs: column-count validation of `loadProtData` |
+| `sensitivity_tuning_edge_cases_ectestgem` | `sensitivityTuning`, `truncateValues` | differs: `Inf` in `truncateValues` |
+| `upgrade_gecko3_ectestgem` | `upgradeEcModel`, `upgradeGECKOproject`, `convertCustomKcats` | differs: how the readers turn reverse protein reactions, the project report, a project with an adapter class, DLKcat output with foreign substrates |
 
-Thirteen scenarios, forty-five of the 49 rows. Five of the first six run on GECKO's own unit-test
-model and agree on content, so the base of the pipeline --- the expansion into an ecModel, the
-annotation of its `ec` substructure, the protein budget that limits it, the save/load round
-trip, and everyday edits to a built model --- is checked rather than assumed.
-`enzyme_annotation_ectestgem` was blocked until [GECKO #425] merged, and
-`model_edits_ectestgem` until [GECKO #427]; see below for both. `molecular_weight_sequences`
-and `ec_model_io_ectestgem` are red by design: the former on every one of its eighteen
-sequences ([raven-gecko-parity #11]), the latter on the written file's layout only, not its
-content ([raven-gecko-parity #6], one level down from where it was already tracked).
-`kcat_chain_ectestgem` closes out the whole kcat pipeline --- eleven functions across five
-stages on one flowing ecModel --- and was blocked until three real MATLAB bugs it found along
-the way were fixed; see Tier 2 below for all three. `okp_kcat_ectestgem` covers OKP, the newer,
-REST-submitted alternative to DLKcat kcat prediction, and started life as three ledger rows
-wrongly filed as one-sided (`matlab-only`/`python-only` with no counterpart named, despite each
-side's own reason text naming the other) --- see the fixed ledger rows themselves for the
-correction, and Tier 2 below for the one real MATLAB indexing bug this scenario found and fixed
-along the way. `enzyme_usage_ectestgem` is the first
-scenario in this pair to need an LP solver, `ec_fva_ectestgem` the second,
-`flexibilize_concs_ectestgem` the third, `sensitivity_tuning_ectestgem` the fourth and
-`ec_fseof_ectestgem` the fifth and last --- Tier 3 is complete; see below for all five
-fixtures and the confirmed divergences each one found. `ec_fseof_ectestgem` is also red by
-design, on nearly everything it reports --- the widest-reaching divergence in either pair,
-already visible on the RAVEN side before this scenario existed.
+The scenarios that match cover the base of the pipeline on GECKO's own unit-test model: the expansion into an ecModel, the annotation of its `ec` substructure, the protein budget, the kcat chain, OKP, enzyme usage, ecFVA, flexibilization, sensitivity tuning, ecFSEOF and calculateMW, and `ec_model_full_yeastgem` runs the full tutorial yeast-GEM through `makeEcModel` and a BRENDA kcat assignment. The `*_edge_cases_*` scenarios and `upgrade_gecko3_ectestgem`, `kcat_review_stats_ectestgem`, `kcat_assignment_pipeline_ectestgem`, `protein_data_filters_ectestgem` and `ec_model_io_crossload_ectestgem` feed the same functions inputs that the first fixtures skip, one input per case, so a difference names its cause. `ecTestGEM` is a seven-reaction model, so a scenario that needs a solver declares it explicitly (Gurobi on both sides).
 
 ## The fixture
 
@@ -74,50 +84,7 @@ and stoichiometric coefficient.
 a drift between GECKO's `TestGEMAdapter.m` and geckopy's `model_adapter.toml` is reported
 rather than silently changing what the rest of the scenario measures.
 
-**BRENDA is the one fixture that cannot be shared.** GECKO ships it as
-`max_KCAT.txt` / `max_MW.txt` / `max_SA.txt`; geckopy reads `kcat.tsv` / `mw.tsv` / `sa.tsv`.
-Same data, two formats, and neither loader reads the other's. The kcat scenarios below therefore
-have to declare two paths and say why --- the only place in either pair where that is true.
-Confirmed equivalent, by execution on both sides: [docs/brenda-reconciliation.md](brenda-reconciliation.md).
-
-## Resolved: GECKO did not run against RAVEN `develop3`
-
-Filed as [GECKO #424], fixed by [GECKO #425], **merged to `develop4`** on 2026-08-26
-(`d053ca94`). Left here because the pattern --- a cross-repo removal that only running code
-detects --- is worth recognising the next time it happens.
-
-`applyComplexData` calls `progressbar`, which RAVEN removed when it replaced ad-hoc progress
-reporting with the `progressReport` class ([RAVEN #623]). It is not one function: on
-`develop4`, eight GECKO sources call it in 22 places.
-
-| GECKO function | Call sites |
-|---|---:|
-| `applyComplexData` | 3 |
-| `findMetSmiles` | 3 |
-| `getComplexData` | 2 |
-| `fuzzyKcatMatching` | 2 |
-| `getECfromDatabase` | 2 |
-| `loadDatabases` | 2 |
-| `ecFSEOF` | 6 |
-| `ecFVA` | 2 |
-
-On the branch pair the ledger tracks --- GECKO `develop4` against RAVEN `develop3` --- each of
-these errors before it computes anything. `parity check` cannot see this, because a call to a
-function that no longer exists is not a change in either repo's public API; only running the
-code finds it, which is exactly what the scenarios are for.
-
-It was not only the parity scenarios this stopped. Running GECKO's own
-`geckoCoreFunctionTests` against RAVEN `develop3` errored on `tc0003`, `tc0004`, `tc0007` and
-`tc0010`; three further cases called the same functions, so 7 of the suite's 13 cases could not
-pass. That was the strongest argument in [GECKO #424], and it was worth checking before
-filing: a break in GECKO's own tests needs no parity harness to justify fixing.
-
-Confirmed twice: behind a local no-op stand-in for `progressbar`, before the fix landed, and
-again against the merged `develop4` commit itself, with nothing local on the path.
-`enzyme_annotation_ectestgem` matches on all six of its checkpoints and all thirteen cases of
-`geckoCoreFunctionTests` pass. So this was a build break, not a behavioural divergence --- the
-numbers were never in question, only whether the code could run at all. The stand-in is deliberately *not* committed --- shimming it here would hide a break that
-every GECKO user on RAVEN `develop3` is hitting too.
+**BRENDA is read from the same files on both sides.** GECKO's `databases/brenda-<release>` folder and geckopy's `brenda-refresh` output hold `kcat.tsv`, `mw.tsv` and `sa.tsv`, and both loaders read them. The scenarios that need BRENDA point both sides at one folder (`brenda_dir` for geckopy, the adapter's `params.path` for MATLAB). Confirmed equivalent, by execution on both sides: [docs/brenda-reconciliation.md](brenda-reconciliation.md).
 
 ## The scenario programme
 
@@ -132,437 +99,125 @@ first stage that diverges is the one to fix.
 | `ec_model_expansion_ectestgem` | `makeEcModel`, `loadConventionalGEM`, `ModelAdapter` | done, matching |
 | `enzyme_annotation_ectestgem` | `applyComplexData`, `getECfromGEM`, `getECfromDatabase` | done, matching |
 | `protein_pool_ectestgem` | `setProtPoolSize`, `calculateFfactor`, `loadProtData`, `fillEnzConcs`, `constrainEnzConcs` | done, matching |
-| `molecular_weight_sequences` | `calculateMW` | done, red on purpose --- see below |
-| `ec_model_io_ectestgem` | `saveEcModel`, `loadEcModel` | done, content matches, layout doesn't --- see below |
-| `model_edits_ectestgem` | `addNewRxnsToEC`, `copyECtoGEM`, `setKcatForReactions`, `getReactionsFromEnzyme`, `mapRxnsToConv` | done, matching (plus [GECKO #427]) --- see below |
+| `molecular_weight_sequences` | `calculateMW` | done, matching |
+| `ec_model_io_ectestgem` | `saveEcModel`, `loadEcModel` | done, round trips match, written files differ in content (see below) |
+| `ec_model_io_crossload_ectestgem` | `loadEcModel`, `saveEcModel` | done, one `subsystem` difference in MATLAB's reader (see below) |
+| `model_edits_ectestgem` | `addNewRxnsToEC`, `copyECtoGEM`, `setKcatForReactions`, `getReactionsFromEnzyme`, `mapRxnsToConv` | done, matching; the unknown-enzyme case is asserted on each side as a deliberate difference |
 
-`molecular_weight_sequences` turned out to carry more than the one documented divergence.
-Eighteen sequences, each isolating one variable; all eighteen differ. The twenty standard
-residues agree between the tables to the gram-mole --- confirmed, not assumed, since that is
-exactly the kind of thing an eighteen-line PASS would have hidden a regression in. What
-differs:
+`molecular_weight_sequences` runs `calculateMW` and `calculate_mw` on eighteen sequences, each isolating one variable: the water-mass constant (`18.01528`), `X` ("any residue") and `B` ("D or N") as the mean and computed values of geckopy's table, lowercase letters (counted as residues after upper-casing), and a sequence with no recognised residue (`NaN` on both sides, so an empty sequence cannot read as an 18 Da protein). The twenty standard residues, `J`, `O`, `U` and `Z` agree between the tables to the gram-mole. All eighteen sequences agree, so the scenario is a regression fixture: a delta that reappears is a finding.
 
-- the water-mass constant, `18` against `18.01528`, on every sequence with any residue at all;
-- `X` ("any residue"): MATLAB's `126.50`, an unsourced historical constant, against geckopy's
-  live mean of its own standard-residue table, `118.885` --- 7.615 Da apart in the table, not
-  the 7.11 Da geckopy's own comment claims, worth reconciling one way or the other;
-- `B` ("D or N"): MATLAB's pre-rounded `114.60` against geckopy's computed `114.595` --- half a
-  hundredth of a Dalton, and not previously documented as a divergence at all, since nothing
-  had run the two functions on the same input before this scenario did;
-- shape: `calculateMW` matches case-sensitively, so a lowercase letter is ignored like a digit,
-  where `calculate_mw` upper-cases first and counts it as a real residue; and `calculateMW`
-  returns `18` for a sequence with no recognised residues at all, where `calculate_mw` returns
-  `NaN` by design, precisely so an empty sequence cannot read as an 18 Da protein.
+`ec_model_io_ectestgem` writes one freshly built full ecModel (17 reactions after expansion)
+with both writers and reads each file back with its own reader. `saveEcModel` /
+`save_ec_model` are thin wrappers around `writeYAMLmodel` / `write_yaml_model`, and
+`loadEcModel` / `load_ec_model` around the matching readers. The model before any write and
+the model after write-then-read agree on every field on both sides --- reactions, bounds, gene
+associations, stoichiometry, and every `ec.*` array down to the coupling matrix --- so each
+side's own round trip is lossless. The written *files* have the same layout (2-space indent,
+the same key order and quoting, identical `ec-rxns`, `ec-enzymes` and `gecko_light` blocks)
+and differ in content: 347 lines / 6774 characters from `save_ec_model` against 297 / 5496
+from `saveEcModel`. None of the differences touches the `ec` data. They are:
 
-`J`, `O`, `U` and `Z` were checked too, and agree exactly --- the divergence is `X` and `B`
-specifically, not non-standard codes in general. Filed as [raven-gecko-parity #11], in the
-same "measured, not assumed" shape as the RAVEN plan's own divergence write-ups: what the
-decision is, not a recommendation, since none of the three questions in it has an answer that
-does not amount to picking a reference.
+- `metaData`: both writers record `gecko_format` and a `generator` line (GECKO in the MATLAB
+  file, geckopy in the Python file); `save_ec_model` also writes a `description`, which
+  `saveEcModel` cannot, because `writeYAMLmodel` has no slot for a model description.
+- `charge: 0.0` on four metabolites in the Python file: the SBML fixture sets no charge and
+  cobra's SBML import fills in 0; the MATLAB import leaves it unset and the writer omits it.
+- SBO terms on metabolites, reactions and genes in the Python file: cobra keeps the `sboTerm`
+  of every SBML entity (and `make_ec_model` adds `SBO:0000252` to the protein metabolites);
+  the MATLAB import drops an SBO term that is the same for every entity of one type, as in
+  this model.
+- `subsystem: Protein usage` on `prot_pool_exchange` and the `usage_prot_*` reactions in the
+  Python file: `make_ec_model` always sets it, `makeEcModel` only when the model has
+  subsystems.
+- `name` on the five genes in the MATLAB file: the MATLAB import reads the SBML gene label as
+  the short name; cobra's import gives an empty name, which the writer omits.
 
-`ec_model_io_ectestgem` turned out to be exactly the GECKO analogue of
-`yaml_roundtrip_smallyeast` it was expected to be: `saveEcModel` / `save_ec_model` are thin
-wrappers around `writeYAMLmodel` / `write_yaml_model`, `loadEcModel` / `load_ec_model` around
-the matching readers, so the divergence already tracked at that layer
-([raven-gecko-parity #6]) propagates unchanged. Confirmed rather than assumed, on a freshly
-built full ecModel (17 reactions after expansion): the model before any write, and the model
-after write-then-read, agree on every field on both sides --- reactions, bounds, gene
-associations, stoichiometry, and every `ec.*` array down to the coupling matrix, zero
-differences, each side's own round trip independently lossless. The written *file* does not:
-352 lines / 6980 characters against 295 / 6011 for the same model, the same 2-space-vs-4-space
-layout question one level down, plus a GECKO-specific wrinkle --- `save_ec_model` writes a
-`metaData` provenance block (`date`, `geckopy_version`, `description`) that `saveEcModel`
-shapes differently. Recorded as a comment on [raven-gecko-parity #6] rather than a new issue:
-same open question, not a new one.
+A single `ec-code` is written as a list by both writers.
 
-One difference from `yaml_roundtrip_smallyeast` worth stating for whoever extends this
-scenario: ecTestGEM ships no pre-existing `ecModel.yml`, so this scenario's `direct`
-checkpoint is a freshly *built* ecModel, not one read off disk the way `yaml_roundtrip`'s is
-from `smallYeast.yml`. Reading a real, larger ecModel --- the tutorial's `ecYeastGEM.yml`,
-written by MATLAB --- on both sides remains open, and is a materially different question: it
-would test today's readers against a file that may carry the legacy quirks
-`raven_toolbox.io.read_yaml_model`'s own docstring says it normalises on load (a top-level
-`smiles` field, reverse-direction `usage_prot_*` / `prot_pool_exchange`), none of which a
-freshly-built model exercises. Worth its own scenario later, not a substitute for this one.
+`ec_model_io_crossload_ectestgem` reads the two files with both readers. Charge, SBO terms, subsystems, gene names, EC codes, the `ec` data and the `metaData` description all load identically on both sides, from either file, including the file in which only some reactions carry a `subsystem` entry (as in the Python file). That needs the `readYAMLmodel` of RAVEN with CompMetEng/RAVEN#14, which keeps each subsystem with its reaction.
 
-`model_edits_ectestgem` found the same shape of thing three times over: a real, previously
-unknown crash directly in one of its five target functions, plus four small, already-typical
-API-shape divergences the individual docstrings had already called out but nothing had run.
+ecTestGEM ships no pre-existing `ecModel.yml`, so the `direct` checkpoint of this scenario is a freshly built ecModel. Reading ecModels that a GECKO or geckopy run wrote is the job of the real-model scenarios of tier 4: `ec_model_load_ecyeastgem`, `ec_model_load_ecyeastgem911`, `ec_model_load_light_humangem` and `ec_model_io_eciyali5`, which carry the legacy conventions of GECKO 3 files (reverse-direction `usage_prot_*` and `prot_pool_exchange` reactions, empty `enzymes` entries, notes with doubled quotes).
 
-The crash: `addNewRxnsToEC` raised `Index in position 2 is invalid` whenever more than one new
-reaction in a single call needed isozyme (OR-grRule) expansion --- including one *reversible*
-reaction with an isozyme grRule on its own, since the reversibility split duplicates that
-grRule onto a second entry before the isozyme split runs. The split loop mutated the arrays it
-was iterating over using indices computed before any mutation, so each removal shifted every
-later entry's position and a later index silently stopped pointing at the reaction it was
-meant to. Fixed in [GECKO #427], merged: compute every split's replacement rows from the original,
-unmutated arrays first, remove every original that needed splitting in one indexed operation,
-append the replacements after. `geckoCoreFunctionTests.m` had no test for `addNewRxnsToEC` at
-all; one is added with the fix. Confirmed against the fix: adding a reversible,
-isozyme-catalysed reaction (the exact combination the bug needed) and comparing against
-geckopy's `add_new_rxns_to_ec` on the same input, the two agree on the reactions added, the
-enzymes added, and every field --- reactions, gene associations, stoichiometry, every `ec.*`
-array --- of the resulting model.
+`model_edits_ectestgem` covers `addNewRxnsToEC` with more than one new reaction that needs isozyme (OR-rule) expansion in a single call, including one reversible reaction with an isozyme rule on its own, since the reversibility split duplicates that rule onto a second entry before the isozyme split runs. Both sides agree on the reactions added, the enzymes added and every field of the resulting model: reactions, gene associations, stoichiometry and every `ec.*` array.
 
-The four divergences, each confirmed on the parts that agree as well as the parts that don't:
+Every checkpoint of the scenario matches. The one remaining behavioural difference is deliberate and decided in
+raven-gecko-parity#70: for a protein id that is not in `ec.enzymes`, `getReactionsFromEnzyme` returns empty outputs and
+geckopy's `get_reactions_from_enzyme` raises `ValueError`. Each side asserts its own behaviour inside the scenario (the run
+fails if either changes) and reports the same empty result, so the checkpoint compares what both stand for.
 
-- `getReactionsFromEnzyme` / `get_reactions_from_enzyme`: the known-enzyme case matches
-  exactly. MATLAB matches protein ids case-insensitively and returns empty outputs for an
-  unknown one; geckopy is case-sensitive and raises `ValueError` for both a case-mismatched
-  known id and a genuinely unknown one.
-- `setKcatForReactions` / `set_kcat_for_reactions`: kcat values match exactly for a suffixed
-  id and for a base name broadcasting one scalar across its isozymes. `ec.source` reads
-  `'setKcatForReactions'` in MATLAB, `'manual'` in geckopy. And MATLAB accepts a per-isozyme
-  kcat list for an unsuffixed base name, relying on `ec.rxns` order to line the values up;
-  geckopy refuses this and asks for the suffixed ids explicitly.
-- `copyECtoGEM` / `copy_ec_to_gem`: filling an empty eccode, and leaving a populated one alone
-  under `overwrite=false`, both match exactly. Under `overwrite=true`, MATLAB clobbers an
-  existing annotation with an *empty* `ec.eccodes` entry; geckopy treats an empty entry as
-  nothing to propagate and never clobbers with emptiness, `overwrite=true` or not.
-- `mapRxnsToConv` / `map_rxns_to_conv`: matches exactly, no divergence --- checked with a
-  synthetic per-reaction flux vector keyed by id (the alphabetical rank of each ecModel
-  reaction's own id, so the comparison never assumes the two sides agree on row order,
-  only on the set of ids), rather than a solved flux distribution, keeping the whole
-  scenario solver-free.
+The other checkpoints agree: `getReactionsFromEnzyme` matches protein ids case-insensitively on both sides;
+`setKcatForReactions` gives the same kcat values and the same `ec.source` string for a suffixed id, a base name with one
+scalar and a base name with a per-isozyme list; `copyECtoGEM` fills an empty eccode, leaves a populated one alone under
+`overwrite=false` and treats an empty `ec.eccodes` entry under `overwrite=true` the same way; `mapRxnsToConv` matches on a
+synthetic per-reaction flux vector keyed by id (the alphabetical rank of each ecModel reaction's own id, so the comparison
+never assumes the two sides agree on row order, only on the set of ids), keeping the whole scenario solver-free.
 
-None of the four is new: every one is already a `MATLAB-COMPAT` comment in geckopy's own
-source. What this scenario adds is running the two side by side on the same input, which is
-what turns "documented in a comment" into "asserted, and fails if either side moves".
-
-`protein_pool_ectestgem` turned up two real bugs in `calculateFfactor`, both fixed and
-**merged** in [GECKO #426]: it called `loadDatabases` for its UniProt database
-unconditionally, even when a `protData` struct is supplied directly and that call's result
-goes unused, and its documented no-data fallback (`f = 0.5`) was unreachable --- execution
-fell through past it and crashed instead of returning. Confirmed on both counts, twice:
-before merging, and again against the merged `develop4` commit itself with nothing local on
-the path. `runtests('geckoCoreFunctionTests')` passes all fourteen cases including a new one
-for the crash, and `protein_pool_ectestgem` matches identically, since the removed call was
-never used on the path this scenario exercises. One shape difference remains and is not
-worth closing: MATLAB's function still needs a `modelAdapter` in every call, to read
-`params.path`, where geckopy's `calculate_f_factor` needs one only when there is no
-`prot_data` at all --- harmless, since resolving that path does no I/O of its own.
+`protein_pool_ectestgem` matches on `setProtPoolSize`, `calculateFfactor`, `loadProtData`, `fillEnzConcs` and `constrainEnzConcs`. MATLAB's `calculateFfactor` needs a `modelAdapter` in every call, to read `params.path`, where geckopy's `calculate_f_factor` needs one only when there is no `prot_data` at all: resolving that path does no I/O of its own. `loadProtData` is called with the filters switched on on both sides.
 
 ### Tier 2 --- the kcat chain
 
-One scenario, checkpoint per stage, on ecTestGEM. This is where GECKO's numbers come from and
-where a divergence is most expensive to find late.
+`kcat_chain_ectestgem` is one flowing ecModel with one checkpoint per stage, on ecTestGEM plus two reactions: `R2a` (the same gene rule shape as `R2` but no EC code, so it goes through DLKcat and the isozyme fill) and `R6` (no gene rule, the one shape the stock fixture lacks, needed for the new-standard-pseudo-protein path). It reports MATCH at every checkpoint.
 
 | Checkpoint | Covers |
 |---|---|
 | `fuzzy` | `fuzzyKcatMatching`, `loadBRENDAdata` |
 | `standard` | `getStandardKcat`, `removeStandardKcat` |
-| `dlkcat` | `writeDLKcatInput`, `readDLKcatOutput`, `mergeDLKcatAndFuzzyKcats` |
-| `selection` | `selectKcatValue`, `applyCustomKcats`, `getKcatAcrossIsozymes` |
+| `dlkcat` | `writeDLKcatInput`, `readDLKcatOutput`, `mergeDLKcatAndFuzzyKcats`, `mergeKcats` |
+| `selection` | `assignKcatValues`, `applyCustomKcats`, `getKcatAcrossIsozymes` |
 | `constraints` | `applyKcatConstraints` |
 
-Two things to settle before writing it. ~~The BRENDA fixture is in two formats (above), so the
-declaration has to name both files and assert they carry the same triples.~~ Settled: both
-fixtures are the same five triples and both loaders parse them the same way, confirmed by
-execution --- [docs/brenda-reconciliation.md](brenda-reconciliation.md). One gap that reconciliation
-surfaced: the ecTestGEM fixture's SA and MW rows don't share an organism, so the SA-derived-kcat
-join is untested by either loader on this fixture; the `fuzzy` checkpoint either accepts that gap
-or the fixture grows a matching pair first.
+The behaviours the checkpoints pin down:
 
-The other thing to settle: geckopy records that its BRENDA **search order** differs from
-MATLAB's --- MATLAB tries organism-specific specific-activity before some kcat candidates.
-Settled, also by execution, also not a divergence: geckopy's search order and its `origin`
-output both match MATLAB's exactly ---
-[docs/brenda-search-order.md](brenda-search-order.md).
+- `applyCustomKcats`, mode A (a reaction id and no protein): both sides write the new `ec.kcat`, set `ec.source` to `custom` and record the note.
+- `assignKcatValues` with `criteria='median'` and `'mean'`: for one reaction with three candidates (kcat 100 from `custom` first, then 200 and 180 from `dlkcat`) both sides write 180 and 160 and record the source of the first row.
+- `applyKcatConstraints`, light formulation, partial isozyme coverage: when only some isozymes of a reaction have a usable kcat, both sides skip the others before taking the cheapest. The shared ecTestGEM fixture cannot reach this case, so a small purpose-built light model inside the scenario does.
+- `getStandardKcat` aggregates a subsystem's kcat as the median on both sides. The ecTestGEM fixture has no `subSystems` data, so the scenario exercises the global fallback only.
 
-`runDLKcat` is out of scope: it needs the DLKcat container. The scenario reads a stored
-`DLKcat.tsv`, exactly as MATLAB's own test does.
+The BRENDA files are read by both loaders and are described in [docs/brenda-reconciliation.md](brenda-reconciliation.md). geckopy's BRENDA search order and its `origin` output match MATLAB's ([docs/brenda-search-order.md](brenda-search-order.md)). `runDLKcat` is out of scope because it needs the DLKcat container: the scenario reads a stored `DLKcat.tsv`.
 
-**Done: `kcat_chain_ectestgem`.** One flowing ecModel (the stock fixture plus two reactions:
-`R2a`, same GPR shape as `R2` but no EC code, so it has to go through DLKcat and isozyme-fill;
-`R6`, no GPR at all, the one shape the stock fixture lacks, needed for the
-new-standard-pseudo-protein path) walked through all eleven functions in pipeline order,
-checkpointed at each stage. Content matches exactly except three confirmed, asserted
-divergences:
+`okp_kcat_ectestgem` covers OpenKineticsPredictor, the REST-submitted alternative to DLKcat: `findMetSmiles` feeding `writeOpenKineticsPredictorInput` (both `onlyWithSmiles` branches), then `readOpenKineticsPredictorOutput` parsing a result file into a kcat list. It stops at the CSV boundary on both sides. Both sides prefix each entry's source with `OKP-` (for example `OKP-CataPro`), and the scenario compares the source verbatim. It reports MATCH.
 
-- **`applyCustomKcats`**, mode A (reaction id only, no protein listed): MATLAB only writes
-  `ec.kcat`, leaving `ec.source`/`ec.notes` at whatever they already were; geckopy shares one
-  write path across all three modes and always sets `source='custom'` and appends the note.
-  Not flagged as a MATLAB-COMPAT note upstream --- found by reading both implementations side
-  by side, not from any existing documentation.
-- **`selectKcatValue`**, `criteria='median'`/`'mean'`: dead code in MATLAB.
-  `[selectedKcats(i),j] = median(...)`/`mean(...)` requests a two-output form neither function
-  supports (only `max`/`min` do); confirmed by direct execution to error unconditionally with
-  *"Too many output arguments"*. GECKO's own `test/VerificationMatrix.tsv` already flags this
-  function as under-tested, and no call site anywhere in the codebase --- including the
-  function's own docstring example --- ever passes `criteria='median'`/`'mean'`. geckopy's
-  `apply_kcat_list` has no such restriction.
-- **`applyKcatConstraints`**, light formulation, partial isozyme coverage: when only some
-  isozymes of a reaction have a kcat, MATLAB corrects an unassigned isozyme's `Inf` cost
-  (`MW/0`) to `0` *before* taking `min()` across isozymes, so the fabricated zero always wins
-  --- silently writing a zero enzyme cost for the whole reaction even though another isozyme has
-  a real, valid kcat. geckopy skips invalid isozymes before the comparison instead. Not
-  reachable through the shared ecTestGEM fixture (every isozyme there ends up with a kcat by
-  the time constraints are applied), so this is a small, isolated, purpose-built model within
-  the scenario rather than a fixture addition.
-
-Two more real divergences were found along the way but are not asserted by the scenario, since
-neither is reachable through the ecTestGEM fixture without a fixture change that would cost more
-than it teaches here: `getStandardKcat`'s per-subsystem kcat is MATLAB's arithmetic mean against
-geckopy's median (deliberate on the Python side --- kcats span orders of magnitude, so a mean is
-dominated by the largest member --- a >100x difference on a skewed sample; the ecTestGEM fixture
-has no `subSystems` data at all, so this code path is currently unreachable on either side), and
-`readDLKcatOutput`'s unrecognised-substrate handling is fatal in MATLAB (aborts the whole read)
-but a non-fatal per-row drop in geckopy (only the case-sensitivity half of this is a documented
-MATLAB-COMPAT note upstream). Both are recorded in `ledgers/gecko.yml`.
-
-Four real bugs were found and fixed along the way, three in files the scenario's own execution
-needed to touch, one (below) found the same way but confirmed and fixed separately since it
-isn't reachable through the shared fixture:
-
-- `writeDLKcatInput.m` silently wrote **zero rows** for any non-trivial `ecRxns` subset --- the
-  ordinary, documented way to call it (e.g. "only the reactions fuzzy matching couldn't find a
-  kcat for"). The function reuses the name `ecRxns` for three different index spaces across its
-  body; once the substrate/reaction matrix is pre-filtered to the requested subset, later code
-  that still treats those as *global* `model.ec.rxns` indices silently selects the wrong rows
-  (or, after a first, insufficient fix attempt, the wrong *columns* clear correctly but the
-  wrong reaction names get attached to them). Fixed by threading the caller's requested indices
-  through explicitly rather than reusing the emptied variable. [GECKO #428], merged.
-- `TestGEMAdapter.m`'s `getSpontaneousReactions` referenced an undefined variable
-  (`rxns_tsv.rxns`) --- would crash unconditionally, and `getStandardKcat` is the only caller of
-  this method anywhere in GECKO, so `getStandardKcat` could never run against `TestGEMAdapter`
-  at all. Fixed to `model.rxnNames(spont)`, matching the template adapter's own pattern. That
-  alone was not enough: the hardcoded position it set (`spont(5) = true`, valid only for the
-  7-reaction *conventional* model) breaks once `getStandardKcat` calls it with the
-  already-expanded *ecModel*, where R4's position has moved. Fixed to match by reaction id
-  instead, mirroring geckopy's own `TestGEMAdapter.get_spontaneous_reactions` port, which already
-  solved this the same way with the same reasoning in its own comment. [GECKO #429], merged.
-- `applyKcatConstraints.m`, full formulation: two enzyme rows mapping to the same
-  `prot_<accession>` metabolite (distinct genes sharing one UniProt entry) got MATLAB's
-  last-write-wins instead of summed, since a plain indexed assignment on a repeated linear index
-  in MATLAB keeps only the last value written; geckopy explicitly sums, with its own regression
-  test for exactly this. Confirmed by direct execution before either filing or fixing. Not
-  reachable through the shared ecTestGEM fixture, so filed separately as [GECKO #430] rather than
-  asserted by the scenario, then fixed by accumulating per unique linear index (`unique` +
-  `accumarray`, not a naive `accumarray` over the whole matrix, which would allocate a dense
-  array sized to it). [GECKO #431], merged, closes [GECKO #430].
-
-`getStandardKcat.m`/`removeStandardKcat.m` had no MATLAB test coverage at all before this ---
-`test/VerificationMatrix.tsv` records the former with empty Verification/Comments columns, and
-the latter isn't listed there at all. This scenario is the first thing, on either side, to
-actually run them.
-
-**Done: `okp_kcat_ectestgem`.** OpenKineticsPredictor (OKP) is the newer, REST-submitted
-alternative to DLKcat --- `findMetSmiles` feeding `writeOpenKineticsPredictorInput`'s CSV-building
-(both `onlyWithSmiles` branches), then `readOpenKineticsPredictorOutput` parsing a result file
-back into a kcat list, on ecTestGEM. Stops at the CSV boundary on both sides rather than the real
-OKP API, same reasoning DLKcat's own neural network is out of scope for `kcat_chain_ectestgem`
-and `ec_model_full_yeastgem`.
-
-This scenario exists because of a ledger-audit finding, not a gap in the scenario programme's own
-plan: `writeOpenKineticsPredictorInput`/`readOpenKineticsPredictorOutput` were filed as
-`matlab-only` with no counterpart named, while their real Python counterparts
-(`build_okp_input_csv`/`parse_okp_output`) sat separately filed as `python-only` --- four rows
-each independently claiming isolation, even though each side's own `reason` text named the other
-function. Fixed by re-pairing them as `parity` rows (see `ledgers/gecko.yml`); this scenario then
-confirmed the pairing behaviourally.
-
-Content matches exactly except one confirmed, asserted divergence: MATLAB's `kcatSource` prefixes
-each entry's provenance with `OKP-` (e.g. `OKP-CataPro`, stripped of OKP's own leading
-`Prediction from `); geckopy's `parse_okp_output` keeps the same stripped value un-prefixed
-(`CataPro`). Confirmed by direct execution; recorded, not normalized away.
-
-Found and fixed one real MATLAB bug along the way, in the same family as `writeDLKcatInput.m`'s
-own subset-indexing bug above --- both functions build a CSV from a caller-chosen `ecRxns`
-subset, and both got the subset's own index space confused with `ec.rxns`' absolute one, just in
-different ways. `writeOpenKineticsPredictorInput.m` indexed `model.ec.rxnEnzMat` with
-`reactionIdxs`, a position *within the requested subset* (`1..numel(ecRxnsIdx)`), instead of
-mapping it back through `ecRxnsIdx` to `ec.rxns`' own absolute position
-(`1..numel(model.ec.rxns)`). The two only coincide when the subset is "everything, in `ec.rxns`
-order" --- any subset excluding an earlier `ec.rxns` entry shifts every later entry's subset
-position below its absolute position. Concretely, on ecTestGEM: `ec.rxns` order is `[R2_EXP_1,
-R2_EXP_2, R2_REV_EXP_1, R2_REV_EXP_2, R3, R5]`; this scenario's own `write` checkpoint requests
-`{R2_EXP_1, R2_EXP_2, R3}`, skipping the two `REV` entries in between, so `R3`'s subset position
-(3) no longer equals its absolute position (5) --- the bug read `rxnEnzMat` row 3
-(`R2_REV_EXP_1`'s genes) instead of row 5 (`R3`'s own gene): `R3`'s enzyme never appeared in the
-output, and an earlier isozyme's genes appeared as a spurious duplicate instead. geckopy's
-`build_okp_input_csv` has no equivalent bug, confirmed by direct execution on the identical
-subset. Fixed by mapping `reactionIdxs` back through `ecRxnsIdx` before indexing `rxnEnzMat`.
-[GECKO #437], merged.
+The edge cases of the chain are in `kcat_apply_edge_cases_ectestgem`, `kcat_merge_edge_cases_ectestgem`, `kcat_io_edge_cases_ectestgem`, `kcat_assignment_pipeline_ectestgem`, `kcat_review_stats_ectestgem` and `upgrade_gecko3_ectestgem`. Each reports DIFFER while a case differs, and its `scenario.yml` and the ledger notes of the functions concerned describe each difference.
 
 ### Tier 3 --- the solver tier
 
-Needs Gurobi, which `nightly.yml` already provisions for the RAVEN pair. Compare at set level
-and on magnitudes, not on the exact vertex an LP happened to land on.
+These scenarios need Gurobi, which `nightly.yml` provisions for the RAVEN pair. They compare at set level and on magnitudes, not on the exact vertex an LP happened to land on.
 
-| Scenario | Covers |
-|---|---|
-| `enzyme_usage_ectestgem` | `enzymeUsage`, `reportEnzymeUsage`, `getConcControlCoeffs` |
-| `ec_fva_ectestgem` | `ecFVA` |
-| `flexibilize_concs_ectestgem` | `flexibilizeEnzConcs`, `constrainFluxData`, `loadFluxData` |
-| `sensitivity_tuning_ectestgem` | `sensitivityTuning`, `sigmaFitter`, `findMaxValue`, `truncateValues` |
-| `ec_fseof_ectestgem` | `ecFSEOF` |
+| Scenario | Covers | Verdict |
+|---|---|---|
+| `enzyme_usage_ectestgem` | `getEnzymeUsage`, `reportEnzymeUsage`, `getConcControlCoeffs` | match |
+| `ec_fva_ectestgem` | `ecFVA` | match |
+| `flexibilize_concs_ectestgem` | `loadFluxData`, `constrainFluxData`, `flexibilizeEnzConcs` | match |
+| `sensitivity_tuning_ectestgem` | `sensitivityTuning`, `sigmaFitter`, `truncateValues` | match |
+| `ec_fseof_ectestgem` | `ecFSEOF` | match |
 
-`ecFSEOF` already carries a recorded divergence on the RAVEN side of the house (slope of |flux|
-against endpoint comparison); check whether the ecModel version inherits it before writing the
-scenario.
+`enzyme_usage_ectestgem`: with both of ecTestGEM's parallel m1 to m2 routes (R2, R4) open, MATLAB and geckopy solve to different, equally optimal vertices of the same LP once proteomics narrows every protein's cap and leaves the protein pool with slack. The scenario blocks R2 and R4 and leaves R3, ecTestGEM's only single-gene, single-isozyme reaction, as the only route, which removes the degeneracy structurally. P5's measured concentration, the tightest of the five, is then the only binding constraint on growth. `getConcControlCoeffs` reads the reduced cost of each usage bound in geckopy and perturbs each bound in MATLAB, and both give the same coefficients here, because nothing else binds within the perturbation range.
 
-**Done: `enzyme_usage_ectestgem`.** A real LP was the first obstacle, not the last: with both of
-ecTestGEM's parallel m1->m2 routes (R2, R4) left open, MATLAB and geckopy each solve to a
-*different*, equally optimal vertex of the same LP --- same growth rate to nine significant
-figures, different per-protein usage, a different capacity-saturated enzyme --- once real
-proteomics data (loaded the same way `protein_pool_ectestgem` does) narrows every protein's own
-usage cap and leaves the shared protein-pool budget with slack. That is a genuine degeneracy in
-this fixture, confirmed by direct execution, not a bug on either side and not fixable by
-choosing different kcats (the pool budget, not the kcats, is what would normally arbitrate
-between the routes, and it isn't the binding constraint here). The scenario blocks R2 and R4,
-leaving R3 --- ecTestGEM's only single-gene, single-isozyme reaction --- as the sole route,
-which removes the degeneracy structurally rather than by tuning around it. With R3 alone, P5's
-measured concentration (the tightest of the five) becomes the sole binding constraint on growth,
-which is what gives `getConcControlCoeffs` something real to report.
+`ec_fva_ectestgem`: FVA needs no unique optimum, so R2 and R4 stay open, and R2's two isozymes get different kcats to give the solver a trade-off between them. Both sides read each canonical reaction's bounds off the solve of its own group, so the isozyme-split reaction agrees.
 
-Found and fixed one real MATLAB crash along the way: `reportEnzymeUsage`'s default `topAbsUsage`
-(10) indexed past the end of any model with fewer enzymes than that --- ecTestGEM has 5 --- so
-the function crashed outright on the default call. [GECKO #432], merged.
+`flexibilize_concs_ectestgem`: `loadFluxData` and `constrainFluxData` match in both bound-setting modes (RAVEN's `setParam('var', ...)` sets `lb` and `ub` with the same sign-aware arithmetic as geckopy). `flexibilizeEnzConcs` reuses the R2/R4-blocked fixture of `enzyme_usage_ectestgem`, which has exactly one growth-limiting enzyme (P5): both sides flex it once from the same starting concentration and agree on the flexed concentration and the final growth. A harness note: MATLAB's `jsonencode` collapses a one-element numeric array to a bare scalar, so the MATLAB side converts such arrays with `num2cell` (see `docs/scenarios.md`).
 
-One confirmed divergence, asserted rather than avoided: `reportEnzymeUsage`'s `topAbsUsage`
-table always returns exactly the requested row count, padding any enzyme with no
-flux-carrying reaction with a placeholder row (a `isscalar(find(carriedFlux))` check that treats
-"zero reactions carried flux" the same as "more than one," which is arguably itself a second,
-smaller bug); `report_enzyme_usage`'s `top_abs_usage` table instead skips such an enzyme outright,
-so it can return fewer rows than requested. Both sides agree exactly on every enzyme that does
-carry flux. [raven-gecko-parity #18].
+`sensitivity_tuning_ectestgem`: `sensitivityTuning` bumps the same reaction and enzyme on both sides (`R3`, `P4`) with the same old and new kcat. `sigmaFitter` and `fit_sigma` return the same sigma and the same protein pool bound for the returned model. `truncateValues` agrees for one value per order-of-magnitude regime, a negative value, and a value small enough to round away to zero. The edge cases are in `sigma_fitter_edge_cases_ectestgem` (match) and `sensitivity_tuning_edge_cases_ectestgem` (differs).
 
-`getConcControlCoeffs` carries its own documented algorithmic difference (MATLAB's 2x
-finite-difference probe vs. geckopy's default LP-shadow-price read, see geckopy's own
-MATLAB-COMPAT note) that this fixture's one cleanly-binding enzyme does not expose --- both
-methods agree here because nothing else becomes binding within the probe's 2x range. Recorded
-on the ledger row rather than re-demonstrated by a second fixture.
+**`ec_fseof_ectestgem`.** `geckopy.ec_fseof` is a thin wrapper over `raven_toolbox.analysis.fseof`, which classifies a reaction as a target by the correlation of its absolute flux with the enforced production flux, as RAVEN's `FSEOF` does, and `ecFSEOF` does the same. The scenario compares the enforced levels, the target set and the ranked order of the targets, on ecTestGEM:
 
-**Done: `ec_fva_ectestgem`.** No new fixture obstacle this time --- unlike enzyme_usage_ectestgem,
-FVA does not need a unique optimal point, so R2 and R4 are both left open on purpose, and R2's
-two isozymes (`G1 and G2`, forming a complex, or `G3` alone) get distinct kcats to give the
-solver a real trade-off between them. That trade-off is exactly what exposes the one confirmed
-divergence geckopy's own source already documents (`MATLAB-COMPAT` note, `ec_fva.py`): MATLAB's
-`ecFVA.m` reduces each split ec-reaction's own bound with min/max across every canonical
-group's LP solve first, then sums the (already independently reduced) forward variants and
-subtracts the reverse ones --- the "envelope". geckopy instead reads a canonical reaction's
-combined forward-minus-reverse value directly off the one solve that actually optimised it ---
-the "diagonal", always a value some single feasible flux distribution attains, where MATLAB's
-forward and reverse variants can each be reduced against a different combination of the other,
-not necessarily one jointly achievable together. Confirmed by direct execution: every reaction
-with a single enzyme or none (`R1`, `R3`, `R4`, `R5`, `S1`, `S2`) agrees exactly; `R2`, the one
-isozyme-split reaction, does not --- MATLAB reports `[-3927.27, 0]`, geckopy reports
-`[-6000, 3272.73]`. MATLAB's range happens to sit inside geckopy's here, but that is this
-fixture's arithmetic, not a general property of the two algorithms, so the ledger and scenario
-both describe the mechanism rather than calling one side "tighter".
+1. The enforced production-flux levels. Both sides start at the biomass-optimal production flux
+   (`0` here, since the cheaper of two isozyme routes covers all of it) and end at 90% of the
+   theoretical maximum of the pFBA solution that maximises the target. Both fix the objective at
+   0.999999 of its optimum in the pFBA step (`solveLP(model,1)` in RAVEN, `fseof` in raven_toolbox), so the levels are
+   `[0, 259.19974, 518.39948, 777.59922, 1036.79896, 1295.998704]` on both sides. `ec_fseof` passes
+   `equality=True`, which fixes the target flux at each level, as `ecFSEOF` does.
+2. The candidate search space. Both sides consider reactions with a gene rule only, drop the
+   `usage_prot_*` reactions from the report and keep the enforced production reaction itself
+   (`R3`, whose flux follows the enforced level by definition). Uncatalysed and exchange
+   reactions (`R1`, `R4`, `S1`, `S2`) are not targets on either side.
+3. The selection criterion. Both sides take a reaction as a target when some absolute flux exceeds 1e-10, its spread is nonzero and the
+   absolute Pearson correlation with the enforced flux reaches `corrThreshold` (default 0.9),
+   and rank by slope times correlation. On this fixture both sides report `R3` and `R5`.
 
-**Done: `flexibilize_concs_ectestgem`.** Two independent checkpoints. `loadFluxData` +
-`constrainFluxData` needed no fixture engineering and turned up no real divergence, only a
-corrected suspicion: geckopy's own MATLAB-COMPAT note flags RAVEN's `setParam('var', ...)`
-(used for `constrainFluxData`'s percentage-variance mode) as a "soft slack-variable
-formulation" that might not match `apply_flux_data_constraints`'s hard bound-set. Read directly
-against RAVEN's actual `setParam.m` rather than taken on faith: its `'var'` case just sets
-`lb`/`ub` with the same sign-aware arithmetic geckopy already uses --- no slack variable at
-all. Confirmed by direct execution: both the `'loose'` and percentage modes match exactly.
-
-`flexibilizeEnzConcs` reuses `enzyme_usage_ectestgem`'s own R2/R4-blocked fixture rather than
-deriving a new one, since it already has exactly one unambiguous growth-limiting enzyme (P5) ---
-precisely what the "find the worst enzyme by control coefficient, relax it, repeat" loop needs
-to run a short, deterministic trajectory rather than risk depending on `getConcControlCoeffs`'s
-own separately-documented finite-difference-vs-shadow-price divergence. It didn't: both sides
-flex exactly one protein (P5), the same number of times (1), from the same starting
-concentration. The divergence that did turn up is downstream of the loop, in the refinement
-pass that runs after it: MATLAB's refinement solve pins growth into a narrow band around
-`expGrowth` (RAVEN's `setParam('var', bioRxn, expGrowth, 0.5)`, +/-0.25%) and, since the
-objective there is to minimise protein-pool usage, settles at the band's low edge rather than
-at `expGrowth` itself; geckopy's refinement solve pins growth to `exp_growth` exactly (a
-deliberate, already-documented MATLAB-COMPAT choice in `flexibilize_enz_concs.py`). Confirmed
-by direct execution: P5's flexed concentration and the final growth rate both differ by a
-small, fully explained amount (`flexConcs` 0.173177 vs 0.173611; growth 2.49375 vs 2.5).
-
-Found one bug in this scenario's own harness code, not in either GECKO or geckopy: MATLAB's
-`jsonencode` collapses a one-element numeric array (this fixture has exactly one flux-data
-condition) to a bare scalar rather than a one-element JSON array --- the same pitfall
-`docs/scenarios.md` already warned about for a 1x1 *struct* array, but for plain numbers.
-Fixed with `num2cell`, and the doc note extended to cover both cases.
-
-**Done: `sensitivity_tuning_ectestgem`.** Four checkpoints, on the widest range of fixture
-shapes any Tier-3 scenario has needed: `sensitivityTuning` and `sigmaFitter` reuse the same
-R2/R4-blocked, single-route fixture shape as `enzyme_usage_ectestgem` and
-`flexibilize_concs_ectestgem` (each in its own model instance, with its own kcats), while
-`findMaxValue` and `truncateValues` need no ecModel or solver at all --- the first takes a
-BRENDA-shaped table directly (no file I/O), the second is plain rounding.
-
-`sensitivityTuning` matches exactly: same reaction and enzyme bumped (`R3`/`P4`), the same old
-and new kcat. It also corrects a stale comment rather than confirming a fresh one: geckopy's
-own `MATLAB-COMPAT` note describes MATLAB as picking the reverse-direction usage reaction with
-the *most negative* flux, where geckopy picks the most positive. Read against the actual
-`sensitivityTuning.m` on this repo's `develop4`, that description no longer holds --- protein
-usage and pool reactions were switched to the forward direction in GECKO#419, after which
-MATLAB's own code already reads `[~,sel] = max(drawFluxes)`, the same choice geckopy makes.
-Confirmed matching by direct execution, not by re-reading either source a second time.
-
-`sigmaFitter` found a second real MATLAB bug this tier, and it is genuinely a bug, not a
-documented choice: the fitted `sigma` value matches exactly (both sides run the identical
-100-point grid search --- geckopy's `fit_sigma` called with `method='grid'` rather than its own
-faster bisection default, specifically so the two are comparable step for step), but the
-*returned model* did not, because the grid-search loop reassigns `model` on every one of its
-100 iterations and never re-applies the best-fitting sigma afterward --- so the model coming
-back was sized for whichever sigma the loop tried *last* (`sigma=1`), not the one the function
-itself reports. On this fixture: `sigma=0.11` both sides; MATLAB's returned pool bound `2000`
-(`= Ptot*f*1*1000`) against the correct `220` (`= Ptot*f*0.11*1000`). geckopy's own
-`MATLAB-COMPAT` note already flagged this as a known MATLAB bug it deliberately does not
-replicate; this scenario is the first time it was confirmed with real numbers rather than
-taken on faith. Filed and fixed: [GECKO #433], merged.
-
-`truncateValues` matches exactly across one value per order-of-magnitude regime, a negative
-value, and a value small enough to round away to zero.
-
-`findMaxValue` turned up two more confirmed bugs, in a function grep confirms has no callers
-anywhere in GECKO --- documented here rather than fixed, the same judgment call
-`kcat_chain_ectestgem` made for `selectKcatValue`'s dead `'median'` branch. First, its wildcard
-branch never actually matches anything: the EC-prefix slice it builds
-(`EC_cell{i}(strfind(EC_cell{i},'-')-1:end)`) keeps only the character immediately before the
-dash plus the dash itself, and for any `"X.Y.Z.-"`-shaped wildcard that character is always a
-dot, so the search string is always the literal `".-"` --- never a substring of a real EC code.
-Second, when neither the kcat nor the SA table matches at all, comparing `0 > 0` is false, so
-the function falls into the "SA won" branch and labels the (empty) result `'SA*Mw'` instead of
-leaving the parameter blank, the same way geckopy does. Confirmed by direct execution: three of
-five queries (two exact matches and a multi-EC query) agree exactly; the wildcard query and the
-no-match query both diverge exactly as described.
-
-**Done: `ec_fseof_ectestgem`. Tier 3 is complete.** Red on purpose, and more thoroughly than
-any other scenario in either pair: `geckopy.ec_fseof` is a thin wrapper over
-`raven_toolbox.analysis.fseof`, not a port of `ecFSEOF.m`'s own algorithm at all, and its own
-`MATLAB-COMPAT` notes already said as much before this scenario existed. What those notes did
-not say --- and what direct execution on ecTestGEM confirms --- is how *wide* the resulting gap
-is, on three separate, independent axes:
-
-1. The enforced production-flux levels themselves differ, before any target selection can even
-   begin. MATLAB's `alpha` runs from the biomass-optimal production flux (whatever the target
-   reaction naturally carries when only growth is maximised --- `0` here, since the cheaper of
-   two isozyme routes covers all of it) up to 90% of the reaction's theoretical maximum.
-   `raven_toolbox`'s levels instead run from `target_max/n_steps` to `target_max`, with no
-   reference to the biomass-optimal point at all. Confirmed: MATLAB's six levels are
-   `[0, 259.2, 518.4, 777.6, 1036.8, 1296.0]`; geckopy's are `[216, 432, 648, 864, 1080, 1296]`
-   --- the same top end (both derive it from the same theoretical-maximum solve), a different
-   everything else.
-2. `ecFSEOF.m` restricts its *candidate search space* to gene-associated reactions only, applied
-   before target selection even starts; `raven_toolbox`'s classifier considers every reaction in
-   the model. On this fixture that difference alone changes the target list from one reaction to
-   six --- uncatalysed and exchange reactions (`R1`, `R4`, `S1`, `S2`) are structurally
-   ineligible on the MATLAB side and freely eligible on the Python side.
-3. Even restricted to the same candidates, the selection *criterion* differs: MATLAB requires
-   `|flux|` to be strictly monotonic across every one of the scan's steps, then keeps only the
-   top quartile by slope; `raven_toolbox` regresses flux against the enforced level and keeps
-   reactions clearing both a correlation and a slope threshold --- deliberately more tolerant of
-   one noisy step from an LP's alternative optima, per its own `IMPROVEMENTS` notes (FS1--FS4).
-   This is the same divergence already recorded on the RAVEN pair itself, for `FSEOF` vs
-   `raven_toolbox.analysis.fseof` directly (`docs/behaviour-parity-plan.md`'s "Divergences to
-   encode, not fix" table, "slope of \|flux\| vs endpoint comparison") --- confirmed here, for
-   the first time, to carry all the way through both ecModel-specific wrappers too.
-
-Confirmed by direct execution: MATLAB finds exactly one target (`R5`) on this fixture; geckopy
-finds six (`R1`, `R3`, `R4`, `R5`, `S1`, `S2`). Output *shape* differs further still and is not
-asserted at all, since geckopy's side has nothing to compare it against: `ecFSEOF.m`
-additionally computes a per-gene essentiality column (one knockout LP per gene) and splits
-results into `rxnTargets` vs `transportTargets`; `ec_fseof` does neither, pointing callers at
-`cobra.flux_analysis.single_gene_deletion` and a subsystem/metabolite check instead.
+Only the levels, the target set and its ranked order are compared. The ranked order lists the reaction targets first and the transport targets after them, each group ranked by slope times correlation (the `transport` column of `ec_fseof` marks the second group; on ecYeastGEM 9.1.1 the 32 transport targets are the last 32 of 363 rows on both sides). `ecFSEOF.m` additionally computes a per-gene
+essentiality column (one knockout LP per gene) and reports the absolute regression slope; `ec_fseof` does neither, pointing callers
+at `cobra.flux_analysis.single_gene_deletion` and a subsystem/metabolite check instead.
 
 ### Tier 4 --- a real model
 
@@ -572,55 +227,51 @@ tutorial ships `yeast-GEM.yml`, so a slow job --- separate from the nightly, as 
 says for its genome-scale comparison --- compares a full `makeEcModel` and a full BRENDA-based
 kcat assignment against it.
 
-**Done: `ec_model_full_yeastgem`**, in its own workflow
-(`.github/workflows/gecko-genome-scale.yml`, weekly). DLKcat is out of scope --- a separate
-neural-network tool with its own PyTorch environment, not part of GECKO or geckopy, and BRENDA
-fuzzy matching alone is already a substantial genome-scale test of the shared pipeline. Two
-pieces of scenario-side data preparation were needed that no ecTestGEM-scale scenario in this
-pair has needed before: `cobra.io.load_yaml_model` (what `load_conventional_gem` calls for a
-`.yml` file) does not populate `reaction.annotation['ec-code']` from yeast-GEM.yml's own
-`eccodes` reaction field, confirmed by direct execution --- the Python side reads the file a
-second time with a plain YAML parse to recover it, restoring parity input rather than working
-around a divergence in what is compared. And `fuzzyKcatMatching`'s organism-closeness
-escalation needs a real KEGG taxonomy artefact this repo does not vendor or download; a small,
-purpose-built two-organism `PhylDist.mat` stand-in (`YeastGEMAdapterParity.m`) exercises the
-same code path without it, at the cost of leaving that one escalation tier under-exercised ---
-see below.
+`ec_model_full_yeastgem` runs with the other scenarios in the nightly workflow and weekly on its own (`.github/workflows/gecko-genome-scale.yml`); both download the BRENDA release into the GECKO checkout first (`scripts/ci/stage_brenda.py`). DLKcat is out of scope: it is a separate neural-network tool with its own PyTorch environment, and BRENDA fuzzy matching alone is a substantial genome-scale test of the shared pipeline. Two pieces of scenario-side data preparation are needed that no ecTestGEM-scale scenario has needed: `cobra.io.load_yaml_model` (what `load_conventional_gem` calls for a `.yml` file) does not populate `reaction.annotation['ec-code']` from yeast-GEM.yml's own `eccodes` reaction field, so the Python side reads the file a second time with a plain YAML parse to recover it; and `fuzzyKcatMatching`'s organism-closeness escalation needs a real KEGG taxonomy artefact this repo does not vendor or download, so a small two-organism `PhylDist.mat` stand-in (`YeastGEMAdapterParity.m`) exercises the same code path without it.
 
-This scenario justified itself immediately: it found and fixed two real, generalizable MATLAB
-bugs neither reachable through any fixture small enough to avoid them by chance.
+The scenario matches: both sides build the same 4671 ec reactions from yeast-GEM's 4102 conventional reactions, the same number of reactions with a kcat, the same protein pool bound and the same kcat for every reaction. Both loaders drop a BRENDA row whose kcat is more than four orders of magnitude below the median of its EC when five or more values exist (`filterOutlierKcats` and `filter_outlier_kcats`), so the 0.002 1/s kcat derived from a specific activity for EC 1.1.1.101 is dropped before matching on both sides. The organism-closeness tier of fuzzy matching is exercised only through the two-organism `PhylDist.mat` stand-in (`YeastGEMAdapterParity.m`), so both sides take the same wildcard-organism fallback for almost every query; the EC-code and substrate tiers are exercised at full genome scale. See `scenarios/ec_model_full_yeastgem/scenario.yml`.
 
-- **`sigmaFitter.m`** returned a model sized for the wrong sigma --- its 100-point grid-search
-  loop never re-applies the best-fitting sigma after the loop ends, so the returned model was
-  sized for whichever sigma was tried last (`sigma=1`), not the one the function itself
-  reports. Found while building `sensitivity_tuning_ectestgem` (Tier 3), not this scenario ---
-  see there for the full account. [GECKO #433], merged.
-- **`fuzzyKcatMatching.m`**'s wildcard EC search matched a substring instead of a prefix: its
-  optimized path (used on every real call) searched for whether a truncated EC prefix like
-  `1.` appeared *anywhere* in a candidate EC string, not just at the start, so a query for
-  enzyme class 1 also matched an unrelated class-4 code that happened to contain the same two
-  characters elsewhere (`4.2.1.1` contains `1.` between its third and fourth levels). Confirmed
-  by direct execution against real BRENDA data: fixing this changed the matched kcat for
-  hundreds of yeast-GEM reactions. [GECKO #434], merged.
+The other real-data scenarios run the same pairs of functions on models that GECKO or geckopy wrote or built, so that a difference that needs many enzymes, a subsystem, a rule that real genes have or a file that an older version wrote has somewhere to show. Each needs a solver or a checkout of its data; the Vera paths are in the `inputs` of each `scenario.yml`.
 
-With both fixes applied, two confirmed divergences remain. `getECfromGEM`'s ledger row has the
-first: `fill_eccodes_from_gem`'s EC-string validation is stricter than MATLAB's (none at all),
-dropping 36 of 4671 reactions' kcats entirely, including real BRENDA "new/undefined subclass"
-codes like `1.1.1.n12`. The second is a further ~119 reactions whose matched kcat *value*
-differs on each side without either being missing --- the leading hypothesis, not exhaustively
-confirmed for every one of the 119, is that this scenario's own necessarily sparse
-two-organism `PhylDist.mat` stand-in makes the organism-closeness escalation tier close to
-arbitrary at genome scale (both sides' organism-filtering logic were read side by side and are
-faithful ports of each other), rather than a third algorithmic difference. See
-`scenarios/ec_model_full_yeastgem/scenario.yml` for the full account of both.
+| Scenario | Model and data | Verdict |
+|---|---|---|
+| `ec_model_load_ecyeastgem`, `ec_model_load_ecyeastgem911` | the tutorial ecYeastGEM written by GECKO, and ecYeastGEM 9.1.1 written by geckopy | match: every field of the loaded model, 8001 and 8010 reactions |
+| `ec_model_load_light_humangem` | the light ecModel of the `light_ecModel` tutorial (16021 reactions, 30494 ec reactions), whose file has `enzymes: !!omap` entries without content | match: both readers load the file as it is |
+| `ec_model_io_eciyali5` | eciYali5-GEM written by GECKO 3 (reverse protein reactions, three notes with doubled quotes, empty `enzymes` entries), read, upgraded, written and read back | differs in one value: `upgradeEcModel` turns 895 reactions in MATLAB and 0 in geckopy, whose reader has turned them already; the upgraded model agrees |
+| `ec_model_build_light_humangem` | `makeEcModel` to `setProtPoolSize` on Human-GEM with the tutorial data (2421 enzymes, 29321 ec reactions, a 22 MB DLKcat file) | match |
+| `ec_model_build_yarrowia` | the same pipeline on iYali5-GEM with the eciYali5-GEM data, once with the data as it is and once without double quotes | differs in one value per run: `getECfromGEM` raises for a model without EC codes and `fill_eccodes_from_gem` returns |
+| `ec_analysis_ecyeastgem`, `ec_analysis_ecyeastgem911` | the usage, bottleneck, pFBA, control coefficient, mapping, ecFSEOF and kcat edit functions on ecYeastGEM | differs: tied bottlenecks and the order of the ecFSEOF targets, each from the choice of an optimal vertex |
+| `ec_analysis_light_humangem` | growth, mapping and `getSubsetEcModel` to HT29-GEM on the light Human-GEM ecModel | match: `get_subset_ec_model` removes the genes and metabolites that no kept reaction uses, as `getSubsetEcModel` does |
+| `ec_fva_ecyeastgem`, `ec_fva_light_humangem` | `ecFVA` and `ec_fva` on ecYeastGEM with flux data and on the light Human-GEM ecModel | `ec_fva_ecyeastgem` differs only in `fixed_cobra_tolerance`, the Python model at cobrapy's default tolerance (1944 of 4102 reactions differ), and matches with RAVEN's tolerance of 1e-9; `ec_fva_light_humangem` differs in the NaN records: RAVEN's Gurobi presolve reports the fixed-growth LP infeasible for 44 maxima and 164 minima of 300 sampled reactions (geckopy: 6 and 6), and of the 391 values both solve one differs (the minimum of MAR07157, 0 in geckopy and 2.45e-4 in MATLAB) |
+| `ec_proteomics_ecyeastgem` | the proteomics and flux data functions on ecYeastGEM with the tutorial data and an edited file | differs: the replicate-count check of `loadProtData`, the average of `calculateFfactor` and the optimal vertex under the proteomics constraints |
+| `ec_tuning_ecyeastgem` | `sensitivityTuning` and `sigmaFitter` on ecYeastGEM before its tuning (7, 12 and 5 tuned kcats) | match with Gurobi on both sides, with GLPK on both sides and with GLPK in MATLAB and scipy in geckopy, with the python models at RAVEN's tolerance of 1e-9 |
+| `ec_subset_genes_ectestgem`, `standard_kcat_subsystem_ectestgem` | `getSubsetEcModel` with a context model that lacks a reaction and a gene of its rule, and `getStandardKcat` with subsystems that real models have, on ecTestGEM | match |
 
-Do this only after tiers 1 and 2 are green. A whole-model diff on top of an unchecked base
-reports hundreds of differences with one cause. Tier 3 finished first, so all four preceded
-this.
+Fixes in the two toolboxes show in these scenarios, and each is the reason one of them matches. `sigmaFitter` takes the first sigma whose growth is within 1e-9 (relative) of the best growth, so the result no longer depends on the rounding noise of GLPK on a plateau (`sigma_fitter_edge_cases_ectestgem`). `getStandardKcat` and `assign_standard_kcat` treat subsystem names that differ by letter case as one subsystem and accept a reaction without a subsystem, `getSubsetEcModel` accepts a context model that is the full model and a light ecModel with the `001_` prefix, and geckopy reads the cells of `uniprot.tsv` like `textscan %q`, loads files with empty `enzymes` entries and doubled quotes, and works with the scipy solver (`geckopy.solver_support`, which has no MATLAB counterpart). The infeasible start of `flexibilizeEnzConcs` gives the same result on Gurobi, GLPK and scipy.
+
+What stays different is a convention or follows the solver. RAVEN's `solveLP` gives Gurobi tolerances of 1e-9 and cobrapy leaves them at 1e-6, so the Python models of the FVA and analysis scenarios are set to RAVEN's value. An LP with many optimal vertices or a degenerate dual gives the sides different fluxes, shadow prices and control coefficients, which is why the usage functions are given one flux vector and why the tied bottlenecks, the target set of `ecFSEOF` and the enzymes analysed by `getConcControlCoeffs` differ. The remaining differences are in the ledger notes of the functions: the replicate-count check of `loadProtData`, the average of `calculateFfactor` (`nanmean` in geckopy), the KEGG fallback of `make_ec_model`, which is used when `kegg_db` is passed, and the reactions and metabolites that `getSubsetEcModel` removes with its unused genes.
+
+Solver combinations. `PARITY_MATLAB_SOLVER` and `PARITY_PYTHON_SOLVER` replace the declared solvers of the scenarios that declare one. The default is Gurobi on both sides. Seed 0 was run with GLPK in MATLAB and scipy in geckopy and with Gurobi in MATLAB and scipy in geckopy on the solver-declaring scenarios that call `get_subset_ec_model`, `apply_kcat_constraints` or `switch_to_scipy` and on `ec_tuning_ecyeastgem` and `ec_proteomics_ecyeastgem`, and with GLPK on both sides on those two. `ec_fva_ecyeastgem` did not finish with GLPK in MATLAB (the MATLAB step passed a limit of one hour twice), so its GLPK combinations were not run, and `ec_fva_light_humangem` ran with Gurobi in MATLAB, whose step takes about 3 hours, and with Gurobi in MATLAB and scipy in geckopy. The scenarios that declare no solver (`ec_model_build_edge_cases_ectestgem`, `kcat_chain_ectestgem`, `ec_subset_genes_ectestgem`, `ec_model_load_light_humangem` and the other ecTestGEM scenarios without a solver input) ran once, with the default; the scipy path of `get_subset_ec_model` on ecTestGEM is covered by a unit test of geckopy.
+
+- Matching on every combination that ran: `ec_fseof_ectestgem`, `ec_fva_ectestgem`, `enzyme_usage_ectestgem`, `ec_model_full_yeastgem`, `ec_model_build_light_humangem`, `ec_analysis_light_humangem`, `flexibilize_concs_ectestgem`, `sensitivity_tuning_ectestgem` and `sigma_fitter_edge_cases_ectestgem` (the sigma and the pool bound are the same on GLPK, Gurobi and scipy). `ec_tuning_ecyeastgem` matches with Gurobi on both sides, with GLPK on both sides and with GLPK in MATLAB and scipy in geckopy: the python models are set to RAVEN's solver tolerance of 1e-9 (`python_tolerance`), where cobrapy's GLPK tolerance of 1e-7 gave growth rates that differ in the sixth decimal, and with GLPK on both sides the growth rates before and after the tuning differ by 1.1e-10 to 6.6e-10 (absolute).
+- The differing groups of the default run recur with every combination in the edge-case scenarios and in `ec_proteomics_ecyeastgem`, `ec_model_build_yarrowia` and `ec_model_edit_edge_cases_ectestgem`. With scipy geckopy lands on the vertex MATLAB reports for the tied rows of `getEnzymeBottlenecks` and `relaxProteomicsGreedy` in the ecTestGEM scenarios, so `tied_bottlenecks` and `relax_tied_enzymes` match there. The flux-data LP of `ec_proteomics_ecyeastgem` with 10 percent bounds is infeasible (the pyruvate exchange `r_2033` is bound to [7.657e-5, 8.463e-5] and pyruvate cannot be produced). Gurobi on both sides and Gurobi in MATLAB with scipy in geckopy report it infeasible. GLPK accepts it because its optimum violates the mass balance of `s_1400` by 7.657e-5, within its tolerance: MATLAB and geckopy with GLPK both report a growth rate of 0.0913870060941, and the case matches on GLPK on both sides, while HiGHS on scipy reports it infeasible, so it differs for GLPK in MATLAB with scipy in geckopy. This is a solver difference and not a defect of geckopy; the sides agree when both use the same solver.
+- Differences on ecYeastGEM by solver pair, tutorial model and in brackets 9.1.1 (`ec_analysis_ecyeastgem`, `ec_analysis_ecyeastgem911`):
+
+| MATLAB/geckopy | `bottlenecks` order and rows | `fseof` targets in MATLAB and geckopy | `fseof` ranks that differ | `min_uptake` | `pfba` |
+|---|---|---|---|---|---|
+| Gurobi/Gurobi | 20 and 49 (20 and 50) | 372 and 372 (363 and 363) | 27 (10) | none | none |
+| GLPK/GLPK | 19 and 51 (16 and 33) | 358 and 357 (363 and 363) | 207 (188) | none (9.1.1: the pool flux is 125 in MATLAB and 113.7 in geckopy at the same minimal glucose uptake) | none |
+| GLPK/scipy | 20 and 58 (20 and 42) | 358 and 380 (363 and 363) | 204 (188) | as GLPK/GLPK | none |
+| Gurobi/scipy | 20 and 55 (20 and 56) | 372 and 380 (363 and 363) | 147 (11) | as GLPK/GLPK | none |
+
+  The ranked FSEOF tables differ by ties (reactions of one pathway with equal scores to 1e-12) and near-ties, and the pFBA vertex of GLPK and HiGHS carries flux through other reactions of the same lipid pathway than the Gurobi vertex does. The enforced levels agree on every pair.
+- scipy. `get_subset_ec_model` and `apply_kcat_constraints` edit the model on glpk when it is on the scipy solver and move it back to the sparse scipy problem in one pass (`geckopy.solver_support`), because optlang rewrites every constraint for each removed variable and builds the scipy matrix densely. The Python step of `ec_model_build_light_humangem` takes 6.8 minutes with GLPK in MATLAB and 6.9 minutes with Gurobi in MATLAB on scipy, against 2.1 minutes on Gurobi; the Python step of `ec_analysis_light_humangem`, which includes `get_subset_ec_model` on the light ecModel, takes 5.3 and 5.4 minutes on scipy against 5.8 minutes on Gurobi. Both scenarios match on scipy. Genome-scale models are still slow in the FVA: `ec_fva_ecyeastgem` on scipy (Gurobi in MATLAB) agrees with growth free, differs for one bound with growth fixed (the minimum of r_2720, -173.615 against -173.3495, 0.15 percent relative) and for 2257 of 8204 bounds in the run at cobrapy's tolerance (2258 of 24612 bounds against geckopy on Gurobi), because of the accuracy of HiGHS on the ill-scaled LPs of ecYeastGEM; that is a limit of the solver and not a parity statement, and the Python part takes about 100 minutes. `ec_fva_light_humangem` with scipy in geckopy (Gurobi in MATLAB) raises an OptimizationError (HiGHS status 'aborted') after 171 seconds, so it has no scipy result. `geckopy.solver_support` has no MATLAB counterpart.
+
+A whole-model diff on top of an unchecked base reports many differences with one cause, so tiers 1 and 2 come first.
 
 ## The GECKO nightly
 
-Done: `nightly.yml` runs both pairs now, as two entries in one matrix, one at a time rather
+`nightly.yml` runs both pairs as two entries in one matrix, one at a time rather
 than in parallel --- both entries commit `nightly/` back to this repo, and a concurrent push
 from the other entry would race it, which running sequentially avoids without needing retry
 logic. Each writes its own state and report (`nightly/state.json` / `nightly/report.md` for
@@ -640,105 +291,28 @@ on the MATLAB path from wherever that pair is configured, including a `parity.lo
 override. RAVEN and raven-toolbox are checked out unconditionally, in both matrix entries, so
 the gecko entry always has them available even though raven is not the pair under test there.
 
-`parity refs --format shell` gained a `<pair>_<side>_repo=` line alongside its existing `_ref=`
-one while building this, so the workflow can check out or `git ls-remote` a pair without a
-second, hand-maintained copy of its repo name --- `parity.toml` stays the one place that fact
-is written down.
+`parity refs --format shell` prints a `<pair>_<side>_repo=` line next to its `_ref=` line, so the workflow can check out or `git ls-remote` a pair without a second, hand-maintained copy of its repo name: `parity.toml` stays the one place that fact is written down.
 
-The **red from its first night** worry the plan carried here is gone: [RAVEN #623] was followed
-up in [GECKO #425], merged before this joined the nightly. What is red instead is exactly the
-seven scenarios that are red on purpose --- `molecular_weight_sequences`, `ec_model_io_ectestgem`,
-`ec_fseof_ectestgem` (nearly all of it) and (one or a few fields each of)
-`enzyme_usage_ectestgem`, `ec_fva_ectestgem`, `flexibilize_concs_ectestgem` and
-`sensitivity_tuning_ectestgem` --- the same shape of "red is the correct, documented answer"
-the raven nightly has already lived with since
-`yaml_roundtrip_smallyeast` and
-`task_checking_smallyeast`.
+The scenarios that report documented differences are red: `complex_data_edge_cases_ectestgem`, `ec_analysis_ecyeastgem`, `ec_analysis_ecyeastgem911`, `ec_fva_ecyeastgem`, `ec_fva_light_humangem`, `ec_lookup_edge_cases_ectestgem`, `ec_model_build_yarrowia`, `ec_model_edit_edge_cases_ectestgem`, `ec_model_io_eciyali5`, `ec_model_io_ectestgem`, `ec_proteomics_ecyeastgem`, `enzyme_usage_edge_cases_ectestgem`, `evotune_edge_cases_ectestgem`, `flexibilize_edge_cases_ectestgem`, `flux_data_edge_cases_ectestgem`, `kcat_apply_edge_cases_ectestgem`, `kcat_assignment_pipeline_ectestgem`, `kcat_io_edge_cases_ectestgem`, `kcat_merge_edge_cases_ectestgem`, `kcat_review_stats_ectestgem`, `protein_data_filters_ectestgem`, `sensitivity_tuning_edge_cases_ectestgem`, `upgrade_gecko3_ectestgem`. Red is the correct, documented answer there, the same shape the raven nightly has with `yaml_roundtrip_smallyeast` and `task_checking_smallyeast`.
 
-## Order of work
+## Coverage by tier
 
-1. ~~Prove the pattern on the smallest deterministic thing: the expansion.~~ Done
-   (`ec_model_expansion_ectestgem`), matching.
-2. ~~The annotation layer.~~ Done (`enzyme_annotation_ectestgem`), matching.
-3. ~~**Report the `progressbar` break to GECKO.**~~ Filed as [GECKO #424], fixed by
-   [GECKO #425], merged to `develop4`. Everything in tiers 2 and 3 runs through
-   `loadDatabases` or `fuzzyKcatMatching`, so this unblocks more of the programme than it
-   looks like it does.
-4. ~~Protein pool.~~ Done (`protein_pool_ectestgem`), matching. ~~Molecular weight.~~ Done
-   (`molecular_weight_sequences`), red on purpose --- filed as [raven-gecko-parity #11].
-   ~~ecModel I/O.~~ Done (`ec_model_io_ectestgem`), content matches, layout doesn't --- folded
-   into [raven-gecko-parity #6]. ~~Model edits.~~ Done (`model_edits_ectestgem`), matching
-   behind [GECKO #427], merged. Tier 1 is complete.
-5. ~~Extend `nightly.yml` to the gecko pair.~~ Done: a second matrix entry, four-repo
-   checkout, its own state/report files.
-6. ~~The BRENDA fixture.~~ Confirmed equivalent ([docs/brenda-reconciliation.md](brenda-reconciliation.md)).
-   ~~The search-order question.~~ Confirmed matching, also by execution
-   ([docs/brenda-search-order.md](brenda-search-order.md)). ~~The kcat chain.~~ Done
-   (`kcat_chain_ectestgem`), matching except three confirmed, asserted divergences; found and
-   fixed four real MATLAB bugs along the way (`writeDLKcatInput.m`'s subset selection,
-   `TestGEMAdapter.m`'s spontaneous-reaction detection twice over, `applyKcatConstraints.m`'s
-   duplicate-accession summation). ~~OKP.~~ Done (`okp_kcat_ectestgem`), matching except one
-   confirmed, asserted divergence; re-paired three ledger rows that were wrongly filed
-   one-sided on both sides at once, and found and fixed a fifth real MATLAB bug, the same
-   family as `writeDLKcatInput.m`'s own (`writeOpenKineticsPredictorInput.m`'s subset
-   indexing, [GECKO #437]). Tier 2 is complete.
-7. The solver tier. ~~`enzyme_usage_ectestgem`.~~ Done, matching except one confirmed, asserted
-   divergence ([raven-gecko-parity #18]); found and fixed one real MATLAB crash along the way
-   (`reportEnzymeUsage.m`'s unclamped `topAbsUsage` indexing, [GECKO #432], merged).
-   ~~`ec_fva_ectestgem`.~~ Done, matching except one confirmed, already-self-documented
-   divergence (the isozyme-split envelope-vs-diagonal difference geckopy's own `ec_fva.py`
-   already names). ~~`flexibilize_concs_ectestgem`.~~ Done: `loadFluxData`/`constrainFluxData`
-   match exactly in both bound-setting modes (correcting an over-cautious MATLAB-COMPAT
-   note); `flexibilizeEnzConcs` matches except one confirmed, already-self-documented
-   divergence in its post-loop refinement pass. ~~`sensitivity_tuning_ectestgem`.~~ Done:
-   `sensitivityTuning` and `truncateValues` match exactly (the former also correcting a
-   stale MATLAB-COMPAT note, obsoleted by GECKO#419); found and fixed one real MATLAB bug
-   along the way (`sigmaFitter.m` returning a model sized for the wrong sigma, [GECKO
-   #433], merged); `findMaxValue` confirmed two more bugs, in a function with no callers
-   anywhere in GECKO, documented rather than fixed. ~~`ec_fseof_ectestgem`.~~ Done, red on
-   purpose on nearly everything it reports: the enforced-flux levels, the candidate search
-   space, and the selection criterion all differ, the last of which is the same divergence
-   already recorded for `FSEOF` on the RAVEN pair itself, now confirmed to carry through
-   both ecModel-specific wrappers too. **Tier 3 is complete.**
-8. ~~A real model, in a slow job.~~ Done: `ec_model_full_yeastgem`, its own weekly workflow
-   (`gecko-genome-scale.yml`). Found and fixed two real MATLAB bugs
-   (`sigmaFitter.m`, [GECKO #433]; `fuzzyKcatMatching.m`'s wildcard substring match,
-   [GECKO #434]); both merged into `develop4`. Two confirmed divergences remain (EC-validation strictness; kcat-value
-   differences on ~119 reactions, most likely a fixture-sparsity artifact rather than a
-   third algorithmic difference). See Tier 4 above.
+1. Tier 1, the base of the pipeline: `ec_model_expansion_ectestgem`, `enzyme_annotation_ectestgem`, `protein_pool_ectestgem`, `molecular_weight_sequences`, `ec_model_io_ectestgem`, `ec_model_io_crossload_ectestgem` and `model_edits_ectestgem`.
+2. Tier 2, the kcat chain: `kcat_chain_ectestgem`, `okp_kcat_ectestgem` and `fuzzy_kcat_coefficient_ectestgem`.
+3. Tier 3, the solver tier: `enzyme_usage_ectestgem`, `ec_fva_ectestgem`, `flexibilize_concs_ectestgem`, `sensitivity_tuning_ectestgem` and `ec_fseof_ectestgem`.
+4. Tier 4, real models: `ec_model_full_yeastgem`, `ec_model_build_light_humangem`, `ec_model_build_yarrowia`, `ec_model_load_ecyeastgem`, `ec_model_load_ecyeastgem911`, `ec_model_load_light_humangem`, `ec_model_io_eciyali5`, `ec_analysis_ecyeastgem`, `ec_analysis_ecyeastgem911`, `ec_analysis_light_humangem`, `ec_fva_ecyeastgem`, `ec_fva_light_humangem`, `ec_proteomics_ecyeastgem` and `ec_tuning_ecyeastgem`, with `ec_subset_genes_ectestgem` and `standard_kcat_subsystem_ectestgem` for the shapes that real models have.
+5. Edge cases, which each report DIFFER while a case differs: the scenarios named `*_edge_cases_ectestgem`, `kcat_assignment_pipeline_ectestgem`, `kcat_review_stats_ectestgem`, `protein_data_filters_ectestgem` and `upgrade_gecko3_ectestgem`. `sigma_fitter_edge_cases_ectestgem` and `ec_model_build_edge_cases_ectestgem` match.
+6. The nightly runs the gecko pair as a second matrix entry, with a four-repo checkout and its own state and report files.
+
+The verdict of every scenario is in the table under "What exists now".
 
 ## Open questions
 
-- ~~**Does GECKO `develop4` target RAVEN `develop3`?**~~ Answered while fixing the break, and
-  the answer was hiding in GECKO's CI: its `Checkout RAVEN` step took no `ref`, so it tested
-  against RAVEN's *default* branch, `main`. That is a release branch against a development one
-  --- exactly the mistake `parity refs` exists to prevent --- and it is why the break was green
-  in CI while `develop3` users could not call `applyComplexData` at all. [GECKO #425] pins it to
-  `develop3`, which is what `parity.toml` already assumed.
-- **Which ecModel YAML layout is the target?** The same question RAVEN's plan asks about
-  `writeYAMLmodel`, and the answers should not diverge: geckopy writes the `ec-*` sections
-  through raven-toolbox's writer, so whatever is decided there decides this too.
-- **Is the BRENDA search-order difference deliberate?** It changes which kcat a reaction gets,
-  which changes every flux downstream. Answering it is a prerequisite to tier 2, not part of it.
+- **Which ecModel YAML content is the target?** The files differ in `metaData`, charge, SBO
+  terms, subsystem and gene name (see `ec_model_io_ectestgem` above). The `ec-*` sections are
+  identical; whatever is decided for the rest is decided for `writeYAMLmodel` and
+  `write_yaml_model`, not for GECKO.
 - **How much of MATLAB's multi-output API is a divergence worth asserting?** `applyComplexData`
   returns `foundComplex` / `proposedComplex` tables that geckopy only logs; `applyCustomKcats`
   and `findMetSmiles` are the same shape of difference. None of it changes a model, so no
   scenario can see it --- it belongs on the ledger rows, and today only some of it is there.
-
-[RAVEN #623]: https://github.com/SysBioChalmers/RAVEN/pull/623
-[GECKO #424]: https://github.com/SysBioChalmers/GECKO/issues/424
-[GECKO #425]: https://github.com/SysBioChalmers/GECKO/pull/425
-[GECKO #426]: https://github.com/SysBioChalmers/GECKO/pull/426
-[raven-gecko-parity #11]: https://github.com/CompMetEng/raven-gecko-parity/issues/11
-[raven-gecko-parity #6]: https://github.com/CompMetEng/raven-gecko-parity/issues/6
-[GECKO #427]: https://github.com/SysBioChalmers/GECKO/pull/427
-[GECKO #428]: https://github.com/SysBioChalmers/GECKO/pull/428
-[GECKO #429]: https://github.com/SysBioChalmers/GECKO/pull/429
-[GECKO #430]: https://github.com/SysBioChalmers/GECKO/issues/430
-[GECKO #431]: https://github.com/SysBioChalmers/GECKO/pull/431
-[GECKO #432]: https://github.com/SysBioChalmers/GECKO/pull/432
-[raven-gecko-parity #18]: https://github.com/CompMetEng/raven-gecko-parity/issues/18
-[GECKO #433]: https://github.com/SysBioChalmers/GECKO/pull/433
-[GECKO #434]: https://github.com/SysBioChalmers/GECKO/pull/434
-[GECKO #436]: https://github.com/SysBioChalmers/GECKO/pull/436
-[GECKO #437]: https://github.com/SysBioChalmers/GECKO/pull/437

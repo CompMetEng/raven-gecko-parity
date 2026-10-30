@@ -1,17 +1,12 @@
 name: gecko-genome-scale
 
-# Tier 4 of docs/gecko-behaviour-parity-plan.md: the ec_model_full_yeastgem scenario,
-# run at real genome scale (GECKO's own yeast-GEM tutorial model --- 4102 conventional
-# reactions, a 30000-row BRENDA snapshot) rather than the 7-reaction ecTestGEM fixture
-# every other gecko-pair scenario uses. Kept separate from nightly.yml rather than added
-# to its scenario sweep, both because it needs the full (non-sparse) GECKO checkout that
-# the nightly's gecko entry does not otherwise require, and because this scenario is
-# deliberately, documentedly not a clean match (scenarios/ec_model_full_yeastgem/scenario.yml
-# has the full account) --- folding a scenario that is expected to differ into a job that
-# fails the whole matrix on any difference would either hide real regressions behind an
-# expected one, or force this scenario's known divergences into nightly's own
-# pass/fail logic. This job never fails on a *difference*; it fails only if either side
-# cannot complete the pipeline at all.
+# Tier 4 of docs/gecko-behaviour-parity-plan.md: the ec_model_full_yeastgem scenario at real
+# genome scale (GECKO's own yeast-GEM tutorial model with 4102 conventional reactions and the
+# BRENDA release brenda-2026.1-1), rather than the 7-reaction ecTestGEM fixture of the other
+# gecko-pair scenarios. nightly.yml runs the scenario too, when a side has moved; this weekly
+# job runs it whether or not anything moved and prints the whole comparison to the job summary.
+# It fails when either side cannot complete the pipeline, and not on a difference: a difference
+# is read from the summary and from the nightly report.
 
 on:
   schedule:
@@ -92,6 +87,9 @@ jobs:
           print('\n'.join(d for d in deps if not d.strip().startswith('raven-toolbox')))
           " > geckopy-deps.txt
           pip install -r geckopy-deps.txt
+          # The scenario reads the BRENDA files from the GECKO checkout; the Python side
+          # runs first, so geckopy downloads them and they are copied there.
+          python scripts/ci/stage_brenda.py repos/GECKO
 
       - uses: matlab-actions/setup-matlab@v3
         with:
@@ -136,11 +134,9 @@ jobs:
       - name: Collect the MATLAB result
         run: parity collect ec_model_full_yeastgem
 
-      # Deliberately does not fail the job on a difference: this scenario documents
-      # confirmed, expected divergences (scenarios/ec_model_full_yeastgem/scenario.yml).
-      # `parity compare` still exits non-zero on any difference, expected or not, so its
-      # own output --- captured here regardless of that exit code --- is what a human
-      # reviews to tell "still just the known divergences" from "something new broke".
+      # Does not fail the job on a difference. `parity compare` exits non-zero on any
+      # difference, so its output is captured here regardless of that exit code and a
+      # reader of the summary sees what differs.
       - name: Compare
         run: |
           parity compare results/matlab/ec_model_full_yeastgem.json \
@@ -152,7 +148,7 @@ jobs:
             echo '```'
             cat compare-output.txt
             echo '```'
-            echo "See scenarios/ec_model_full_yeastgem/scenario.yml for which of these are already confirmed and documented."
+            echo "See scenarios/ec_model_full_yeastgem/scenario.yml for what the scenario covers."
           } >> "$GITHUB_STEP_SUMMARY"
 
       - uses: actions/upload-artifact@v7

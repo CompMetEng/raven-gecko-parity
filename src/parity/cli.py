@@ -85,12 +85,15 @@ def _unresolved_scenario_inputs(config: Config, pair) -> list[str]:
 
 
 def cmd_ledger_audit(args: argparse.Namespace, config: Config) -> int:
-    from parity.audit import audit_ledger, read_results
+    from parity.audit import audit_ledger, read_differences, read_results
 
     results = read_results(Path(args.results)) if args.results else None
     failed = False
     for pair in _pairs(config, args.pair):
-        findings = audit_ledger(load_ledger(pair.ledger), list_scenarios(_scenario_root(config), pair.name), results)
+        scenarios = list_scenarios(_scenario_root(config), pair.name)
+        read_errors: dict[str, str] = {}
+        differences = read_differences(Path(args.results), scenarios, read_errors) if args.results else None
+        findings = audit_ledger(load_ledger(pair.ledger), scenarios, results, differences, read_errors)
         for finding in findings:
             print(f"{pair.name}: {finding.format()}")
         if not findings:

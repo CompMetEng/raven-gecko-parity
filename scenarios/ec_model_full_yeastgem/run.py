@@ -4,8 +4,7 @@ Runs the full non-DLKcat pipeline --- make_ec_model, fill_eccodes_from_gem,
 fuzzy_kcat_matching, apply_kcat_list, apply_kcat_constraints, set_prot_pool_size --- on
 GECKO's own yeast-GEM tutorial model. See scenario.yml for why DLKcat is out of scope,
 why eccodes needs a small amount of scenario-side data preparation before the pipeline
-can run at all, and the one confirmed divergence (EC-code validation strictness) this
-scenario asserts.
+can run at all.
 """
 
 from pathlib import Path
@@ -29,22 +28,15 @@ from geckopy import (
 
 
 def _adapter(inputs: dict) -> ModelAdapter:
-    """geckopy's yeast-GEM adapter, repointed at the GECKO copy of the fixture.
+    """geckopy's reading of the full_ecModel tutorial's model_adapter.toml.
 
-    Same reasoning as every ecTestGEM-scale scenario in this pair: the parameters are
-    geckopy's own (model_adapter.toml), the data files become the ones MATLAB reads.
+    MATLAB reads the same file through TomlAdapter, so both sides take their parameters
+    from one TOML.
     """
     adapter = ModelAdapter.from_folder(inputs["adapter_python"])
     fixture = Path(inputs["fixture_dir"])
     adapter.params.path = fixture
     adapter.params.conv_gem = fixture / "models" / "yeast-GEM.yml"
-    # examples/yeast-GEM/model_adapter.toml carries f=0.4461, a different value than
-    # YeastGEMAdapter.m's own f=0.5 -- not a bug on either side (each is presumably a
-    # deliberately calibrated value for that project), but setProtPoolSize's bound is
-    # directly proportional to f, so leaving them different would show up as a
-    # pool_ub mismatch that has nothing to do with either implementation's own
-    # behaviour. Matched here so this scenario compares the pipeline, not the config.
-    adapter.params.f = 0.5
     return adapter
 
 
@@ -107,7 +99,7 @@ def run(ctx):
         "eccodes_populated": sum(1 for e in model.ec.eccodes if e),
     }
 
-    brenda = load_brenda_data(Path(inputs["databases_dir"]))
+    brenda = load_brenda_data(Path(inputs["databases_dir"]) / "brenda-2026.1-1")
 
     phyl_dist = load_phyl_dist(Path(inputs["adapter_matlab"]).parent / "PhylDist.mat")
     fuzzy_df = fuzzy_kcat_matching(model, brenda, phyl_dist)
