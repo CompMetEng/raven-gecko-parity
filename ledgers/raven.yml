@@ -1176,7 +1176,7 @@ entries:
       -- is one line each (len(model.reactions), etc.), not worth a dedicated port on its own.'
   - matlab: optimizeProb
     status: via-dependency
-    reason: 'cobrapy covers this: model.optimize(), with optlang underneath.'
+    reason: 'cobrapy covers this: model.optimize(), with optlang underneath. optimizeProb gives the solver a feasibility and optimality tolerance of 1e-9 (cobrapy leaves 1e-6 for Gurobi and 1e-7 for GLPK); raven_toolbox.io.read_yaml_model and read_matlab_model set model.tolerance to 1e-9, and utils.solver.set_raven_tolerance does it for any other model.'
   - matlab: parallelWorkersRAVEN
     status: internal
     reason: MATLAB Parallel Computing Toolbox pool setup.
