@@ -21,6 +21,7 @@ from geckopy import (
     map_rxns_to_conv,
     set_prot_pool_size,
 )
+from geckopy.solver_support import fast_solver_while_building, switch_to_scipy
 
 
 def num(x) -> dict:
@@ -75,7 +76,12 @@ def _lp_growth(model) -> float:
 
 
 def _subset(inputs, adapter, ec_model) -> dict:
-    small = read_yaml_model(str(inputs["subset_file"]))
+    # Read on a solver that builds a genome-scale model quickly (glpk when the default is scipy,
+    # whose optlang build is dense), then move it to the declared solver.
+    with fast_solver_while_building() as on_fast_solver:
+        small = read_yaml_model(str(inputs["subset_file"]))
+    if on_fast_solver:
+        switch_to_scipy(small)
     small.solver = str(inputs["python_solver"])
     small.tolerance = float(inputs["python_tolerance"])
     small_growth = _lp_growth(small)
