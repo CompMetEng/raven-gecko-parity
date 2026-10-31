@@ -52,14 +52,12 @@ tolerance:
 #     no flexed enzyme and the original bounds of P5's usage reaction. flexibilize_enz_concs reads
 #     the status of its first solve, so the result is the same with the Gurobi, GLPK and scipy
 #     interfaces.
-#   constrain_prior_lower_bound: MATLAB resets the lower bound to 0 and the pool coefficient to
-#     -1 before setting the bound; Python leaves the lower bound, so setting the upper bound
-#     below it raises.
-#   constrain_negative_concentration: MATLAB sets an upper bound of -0.5; Python skips the
-#     enzyme with a warning and leaves the bound at 1000.
+#   constrain_prior_lower_bound: both sides reset the lower bound to 0 and the pool coefficient
+#     to -1 before setting the bound.
+#   constrain_negative_concentration: both sides raise.
 #   relax_control: both sides relax P5 and reach the same growth.
-#   relax_empty_enzyme_set: MATLAB treats an empty set as all enzymes and converges; Python
-#     treats it as no candidates and returns converged=false.
+#   relax_empty_enzyme_set: both sides treat an empty set as no candidates and return
+#     converged=false.
 #   relax_tied_enzymes: the final set (P4 and P5) and the final growth are the same. The first
 #     enzyme depends on the dual solution of the LP, which is not unique here: geckopy on Gurobi
 #     relaxes P5 first (shadow price -14.4) and MATLAB P4 first (-1.35); geckopy on scipy

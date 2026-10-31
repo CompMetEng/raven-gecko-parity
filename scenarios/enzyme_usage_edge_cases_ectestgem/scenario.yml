@@ -42,15 +42,12 @@ tolerance:
 # these differences stands):
 #   control_*: usage, report, bottleneck and pFBA tables agree.
 #   zero_ub_enzyme: capUsage of an enzyme whose upper bound is 0 is NaN on both sides.
-#   usage_exclude_zero: getEnzymeUsage with zero=false works on both sides, but MATLAB's
-#     reportEnzymeUsage then raises on the filtered table, which it indexes by the position in
-#     ec.enzymes; Python reports the two enzymes that carry flux.
-#   report_negative_top: topAbsUsage -1 gives an empty table in MATLAB and two rows in Python.
-#   usage_missing_reaction: an enzyme without usage_prot_<id> makes MATLAB raise; Python leaves it out.
+#   usage_exclude_zero: with zero=false both sides report the two enzymes that carry flux.
+#   report_negative_top: topAbsUsage -1 raises on both sides.
+#   usage_missing_reaction: an enzyme without usage_prot_<id> is left out with a warning on both sides.
 #   pfba_fraction_09: the default fraction of both sides is 0.999999 of the optimum (control_pfba
-#     agrees). getPfbaEnzymes multiplies a given fraction by 0.999999 as well (0.9 gives 0.8999991);
-#     pfba_enzymes uses the given fraction as it is, so growth_over_optimum is 0.8999991 in
-#     MATLAB and 0.9 in Python. An unknown objective and an empty objective raise on both sides.
+#     agrees). Both sides multiply a given fraction by 0.999999 (0.9 gives growth_over_optimum
+#     0.8999991). An unknown objective and an empty objective raise on both sides.
 #   tied_bottlenecks: with P4 and P5 both at their caps the LP has no unique dual. Python ranks
 #     P5 first (shadow price -14.4) and MATLAB P4 first (-1.35), so the ranking follows the
 #     dual the solver returns for a degenerate vertex.
