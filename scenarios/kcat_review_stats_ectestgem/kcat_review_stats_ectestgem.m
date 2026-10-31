@@ -118,8 +118,9 @@ for k = 1:numel(files)
     copyfile(fullfile(files(k).folder, files(k).name), brenda);
 end
 adapter = TomlAdapter(project);
-[kcat, sa] = loadBRENDAdata('modelAdapter', adapter);
-stats = ecStatsFromBrenda(kcat, sa);
+[kcat, sa] = loadBRENDAdata('modelAdapter', adapter, 'kcatAggregation', 'max');
+kcatMedian = loadBRENDAdata('modelAdapter', adapter, 'kcatAggregation', 'median');
+stats = ecStatsFromBrenda(kcat, sa, kcatMedian);
 end
 
 

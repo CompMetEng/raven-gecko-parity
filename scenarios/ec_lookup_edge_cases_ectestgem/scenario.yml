@@ -26,11 +26,9 @@ description: >-
 #   complex_one_gene_no_ec   P1 carries '1.1.1.4 1.1.1.-' and P2 has no EC; both sides leave G2
 #                out and give '1.1.1.4' for the complex.
 #   conflict     G4 (R3) appears twice with 1.1.2.1 and 1.1.2.2. With the action 'display'
-#                MATLAB raises and geckopy logs a warning and takes 1.1.2.1; with 'ignore'
-#                both sides agree.
-#   conflict_unselected   the same conflict with only R2's reactions selected: MATLAB visits
-#                every reaction before it applies the selection and raises; geckopy looks at
-#                the selected reactions only.
+#                both sides warn and take 1.1.2.1; with 'ignore' both take 1.1.2.1.
+#   conflict_unselected   the same conflict with only R2's reactions selected: both sides
+#                look at the selected reactions only and give no warning.
 #
 # apply_eccodes: getECfromGEM followed by applyECcodes / copy_ec_to_gem, on a full and a
 # light ecModel, reported as the codes each conventional reaction ends up with; both sides
