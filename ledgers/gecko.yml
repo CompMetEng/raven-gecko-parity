@@ -614,7 +614,7 @@ entries:
       - ec_model_build_yarrowia
     differs: []
     notes: >-
-      Both split a database cell on ';' and on white space. Conflicting ECs for one gene with the action 'display': both give a warning that lists the conflicts and take the first EC; with 'ignore' both take the first EC. Both look at the selected reactions only, so a conflict outside the selection gives no warning (ec_lookup_edge_cases_ectestgem).
+      Both split a database cell on ';' and on white space. Conflicting ECs for one gene with the action 'display': both give a warning that lists the conflicts and take the first EC; with 'ignore' both take the first EC. Both look at the selected reactions only, so a conflict outside the selection gives no warning, and an explicitly empty selection (an empty logical array in MATLAB, an empty list in geckopy) searches nothing; MATLAB's [] or omitted ecRxns means all reactions. MATLAB accepts the action 'add', which its help text documents but which does nothing; geckopy raises ValueError for it (ec_lookup_edge_cases_ectestgem).
   - matlab: getECfromGEM
     python: geckopy.fill_eccodes_from_gem
     status: parity
