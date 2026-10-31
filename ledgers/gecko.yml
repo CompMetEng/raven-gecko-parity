@@ -160,7 +160,8 @@ entries:
     reason: Resolves the tunable kcat subset, source-group tiers, and tie groups shared by screenKcatLeverage
       and cmaesKcatTuning. geckopy has the same capability, but
       split across kcat_tuning.evotune.priors.classify_kcat_source(s)/build_sigma0_log and
-      kcat_tuning.evotune.tying.isozyme_tie_map rather than one function of its own.
+      kcat_tuning.evotune.tying.isozyme_tie_map rather than one function of its own. A source with a
+      detail, such as 'combined (sd=0.10, n=2)', is in the group of its name before ' (' on both sides.
   - matlab: reviewKcatAssignment
     status: python-pending
     scenarios:
@@ -185,10 +186,9 @@ entries:
       - screen_no_formulas.raised
       - screen_no_formulas.rows
       - screen_source_suffix.order
-      - screen_source_suffix.rows
       - screen_zero_flux_known.order
     notes: >-
-      Pre-tuning report of which kcats the data can actually constrain, no optimization run. Matches kcat_tuning.evotune.tuning.screen_kcat_leverage (geckopy#51). Leverage, rank and sigma0_log agree except for the row whose source group differs (below), where rank, sigma0_log and cum_leverage_share differ. The sides differ in the order of rows of equal rank (a stable sort in MATLAB, pandas sort_values in geckopy), in a source such as 'combined (sd=0.10, n=2)' (unlabelled in MATLAB, group combined in geckopy) and for a model without metFormulas (MATLAB raises, geckopy gives every exchange the carbon weight 1) (evotune_edge_cases_ectestgem).
+      Pre-tuning report of which kcats the data can actually constrain, no optimization run. Matches kcat_tuning.evotune.tuning.screen_kcat_leverage (geckopy#51). Leverage, rank and sigma0_log agree; a source with a detail such as 'combined (sd=0.10, n=2)' is in the group of its name before ' (' on both sides (such a kcat gets the sigma0 of that group). The sides differ in the order of rows of equal rank (a stable sort in MATLAB, pandas sort_values in geckopy) and for a model without metFormulas (MATLAB raises, geckopy gives every exchange the carbon weight 1) (evotune_edge_cases_ectestgem).
   - matlab: selectTunableMask
     python: geckopy.kcat_tuning.evotune.select_tunable_mask
     status: parity
@@ -216,24 +216,17 @@ entries:
     status: parity
     scenarios:
       - kcat_assignment_pipeline_ectestgem
-    differs:
-      - collect.select_assigned
+    differs: []
     notes: >-
-      Decides one kcat per reaction from the kcat source files and applies them to the ecModel. MATLAB returns a model copy plus the decisions and the report; geckopy works in place and returns (decisions, report). kcat, spread and candidates agree. ec.source reads 'brenda' in MATLAB and 'brenda (wc=0, origin=1)' in geckopy: geckopy writes the wildcard level and origin of a BRENDA match into the source text and its evotune prior ignores the bracket, while MATLAB writes the source label and evotune matches it whole (kcat_assignment_pipeline_ectestgem). Open as a fork: both sides write the bracket, or neither.
+      Decides one kcat per reaction from the kcat source files and applies them to the ecModel. MATLAB returns a model copy plus the decisions and the report; geckopy works in place and returns (decisions, report). kcat, spread, candidates and ec.source agree: the source is the lower case snake_case label followed by the wildcard level and origin of a BRENDA match in brackets, such as 'brenda (wc=0, origin=1)' (kcat_assignment_pipeline_ectestgem).
   - matlab: collectKcats
     python: geckopy.collect_kcats
     status: parity
     scenarios:
       - kcat_assignment_pipeline_ectestgem
-    differs:
-      - collect.combine_complete
-      - collect.combine_homologs_without_rows
-      - collect.select_complete
-      - collect.select_dlkcat_without_rows
-      - collect.select_isozymes_and_standard
-      - collect.select_no_custom_file
+    differs: []
     notes: >-
-      Decides one kcat per reaction from the kcat source files in data/kcats, without applying them. A source file that several tokens of one stage name (database_top and database_bottom both read brenda.tsv) is one list on both sides, so kcat, spread and candidates agree. A leading okp_ of a row's source label is dropped when the labels of a file are put into the priority, as in geckopy. The source text of a decision differs: geckopy appends the wildcard level and origin ('brenda (wc=0, origin=1)'), MATLAB gives 'brenda'; see assignKcats (kcat_assignment_pipeline_ectestgem).
+      Decides one kcat per reaction from the kcat source files in data/kcats, without applying them. A source file that several tokens of one stage name (database_top and database_bottom both read brenda.tsv) is one list on both sides, so kcat, spread, candidates and the source text of a decision ('brenda (wc=0, origin=1)') agree. A leading okp_ of a row's source label is dropped when the labels of a file are put into the priority, as in geckopy (kcat_assignment_pipeline_ectestgem).
   - matlab: convertCustomKcats
     python: geckopy.convert_custom_kcats
     status: parity

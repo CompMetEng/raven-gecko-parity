@@ -63,16 +63,6 @@ def _patch_eccodes_from_yaml(conv: cobra.Model, yaml_path: Path) -> None:
             rxn.annotation["ec-code"] = eccodes_by_id[rxn.id]
 
 
-def _source_token(source: str) -> str:
-    """The base provenance token, stripping geckopy's bracketed wildcard/origin detail.
-
-    Same helper as kcat_chain_ectestgem's own run.py: 'brenda (wc=0, origin=1)' ->
-    'brenda'. Documented MATLAB-COMPAT choice (select_kcat_value.py), not a divergence
-    this scenario asserts, so the checkpoint compares on the token both sides agree on.
-    """
-    return source.split(" (", 1)[0].lower()
-
-
 def run(ctx):
     inputs = ctx["inputs"]
     cobra.Configuration().solver = str(inputs["python_solver"])
@@ -112,7 +102,7 @@ def run(ctx):
             {
                 "reaction": str(r),
                 "kcat": float(model.ec.kcat[i]),
-                "source": _source_token(str(model.ec.source[i])) if model.ec.source[i] else "",
+                "source": str(model.ec.source[i]),
             }
             for i, r in enumerate(model.ec.rxns)
         ),

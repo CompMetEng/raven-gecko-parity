@@ -16,11 +16,8 @@ description: >-
   subset with a repeated reaction and an empty subset. A raise is a value on both sides. Nothing
   reaches the network.
 
-# Differences this scenario reports (the run decides, the sources explain):
-#   * collect.*: ec.source reads 'brenda (wc=0, origin=1)' in geckopy and 'brenda' in MATLAB for a
-#     value chosen from brenda.tsv; kcat, spread, candidates and the combine stage (kcat, sd, n)
-#     agree.
-# Cases that agree: kcatAssignmentConfig / kcat_assignment_config raise for a capitalised criteria,
+# Cases that agree: ec.source reads 'brenda (wc=0, origin=1)' on both sides for a value chosen from
+# brenda.tsv, and kcat, spread, candidates and the combine stage agree; kcatAssignmentConfig / kcat_assignment_config raise for a capitalised criteria,
 # an empty preset and a stage whose sources is a string; ecTreeEstimate and ECTree raise for k = NaN;
 # an empty ec_rxns list selects no reaction in kcatsFromECTree and kcats_from_ec_tree, and a repeated
 # reaction gives one row; a source file named by database_top and database_bottom is one list.

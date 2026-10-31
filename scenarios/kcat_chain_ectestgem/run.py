@@ -124,17 +124,6 @@ def _fresh_ec_model(adapter, conv):
     return model
 
 
-def _source_token(source: str) -> str:
-    """The base provenance token: lowercased, and dropping geckopy's bracketed
-    wildcard/origin detail (e.g. 'DLKcat' -> 'dlkcat'; 'brenda (wc=0, origin=1)'
-    -> 'brenda'). Both are documented MATLAB-COMPAT choices (select_kcat_value.py:
-    geckopy lowercases MATLAB's raw kcatSource string and appends fuzzy detail),
-    not divergences this scenario is asserting, so the checkpoint compares on the
-    token both sides agree on.
-    """
-    return source.split(" (", 1)[0].lower()
-
-
 def _kcat_rows(model, rxn_ids: list[str]) -> list[dict]:
     ec = model.ec
     index = {r: i for i, r in enumerate(ec.rxns)}
@@ -147,7 +136,7 @@ def _kcat_rows(model, rxn_ids: list[str]) -> list[dict]:
             {
                 "reaction": r,
                 "kcat": float(ec.kcat[i]),
-                "source": _source_token(str(ec.source[i])) if ec.source[i] else "",
+                "source": str(ec.source[i]),
                 "notes": str(ec.notes[i]) if ec.notes[i] else "",
             }
         )
