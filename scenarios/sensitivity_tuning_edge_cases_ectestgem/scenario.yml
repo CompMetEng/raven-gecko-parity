@@ -81,7 +81,7 @@ inputs:
   # and the non-finite values.
   truncate_inputs: ["100000.5", "1234565", "-1234565", "0.5", "0", "Inf", "NaN"]
 
-# Results (seeds 0, 1 and 2 agree). One difference remains, in truncate_ties (Inf):
+# Results (seeds 0, 1 and 2 agree). No difference remains:
 #
 # order, rerun, notes_*, ceiling, ignore_unknown_id, ignore_lower_case_id, light: both sides agree. Both list the tuned
 #   reactions in model order (`kcatList = unique(kcatList)`), report the kcat and source of the input model (a reaction
@@ -90,8 +90,8 @@ inputs:
 #   reaction, match a lower-case protToIgnore id without regard to case
 #   (R3, the reaction of the ignored enzyme P4, stays at 0.05 and only R5 is raised, to 2e10, with growth 4.5), stop once
 #   growth gains less than 1e-9, and tune a gecko-light model.
-# truncate_ties: both sides round an exact tie away from zero (100000.5 gives 100001, 1234565 gives 1234570). Inf raises in
-#   MATLAB and is returned unchanged by geckopy.
+# truncate_ties: both sides round an exact tie away from zero (100000.5 gives 100001, 1234565 gives 1234570). Inf is
+#   returned unchanged on both sides.
 # zero_growth: with growth 0 and no flux both sides return an empty result. The case of a forced flux that keeps a usage
 #   reaction active at zero growth needs a reaction that ecTestGEM does not have, and is not covered.
 

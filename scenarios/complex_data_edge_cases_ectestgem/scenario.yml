@@ -23,16 +23,14 @@ description: Complex-portal stoichiometry, f factor and enzyme concentrations on
 # fillEnzConcs: a negative abundance, a second data column, a protein the model lacks and a
 # duplicated id.
 
-# Known differences, so this scenario reports DIFFER until one side changes:
-#   * Partial stoichiometry. For P1, P2 with [2, 0], MATLAB counts only the non-zero entries
-#     as subunits, matches one of the two model proteins (50%) and applies nothing; Python
-#     counts both proteins, applies 2 for P1 and 1 for P2.
+# No difference remains:
+#   * Partial stoichiometry. For P1, P2 with [2, 0], both sides count both proteins as
+#     subunits and apply 2 for P1 and 1 for P2.
 #   * calculateFfactor. Both sides average the measured samples of a protein (f 0.5 for
-#     multi_sample_nan), and a zero total is NaN on both. An empty enzyme list means every
-#     model enzyme in MATLAB and none in Python (0.5 and 0).
-#   * fillEnzConcs. MATLAB stores a negative abundance (-0.5 for P1); Python skips it with a
-#     warning and leaves the concentration unset.
-# The other cases agree: the fixture's own file, a complex that lists its proteins in another
+#     multi_sample_nan), and a zero total is NaN on both. An empty enzyme list means no
+#     enzyme on both sides (f 0).
+#   * fillEnzConcs. A negative abundance (-0.5 for P1) raises on both sides.
+# Further cases: the fixture's own file, a complex that lists its proteins in another
 # order than ec.enzymes (reversed_order: both sides assign the stoichiometry by protein id, P2
 # 2 and P1 1), an all-zero stoichiometry (every subunit 1),
 # a superset complex (proposed, nothing applied), two identical complexes (the first wins),

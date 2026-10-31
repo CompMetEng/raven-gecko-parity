@@ -52,10 +52,8 @@ entries:
     scenarios:
       - model_edits_ectestgem
       - ec_model_edit_edge_cases_ectestgem
-    differs:
-      - add_new_rxns.no_new_enzymes
     notes: >-
-      Both sides add the reactions and enzymes and give the same model fields, including a nested gene rule expanded to isozymes and a gene id that contains 'or'. They differ when no new enzyme is needed (the rule's genes already have enzymes): MATLAB raises, geckopy adds the reaction (ec_model_edit_edge_cases_ectestgem).
+      Both sides add the reactions and enzymes and give the same model fields, including a nested gene rule expanded to isozymes and a gene id that contains 'or'. A reaction whose genes already have enzymes needs no new enzyme and is added by both (ec_model_edit_edge_cases_ectestgem).
   - matlab: applyComplexData
     python: geckopy.apply_complex_data
     status: parity
@@ -63,10 +61,8 @@ entries:
       - enzyme_annotation_ectestgem
       - complex_data_edge_cases_ectestgem
       - ec_model_build_light_humangem
-    differs:
-      - complexes.partial_zero
     notes: >-
-      Both sides assign a complex's stoichiometry by protein id, apply the first of two identical complexes and apply nothing for a superset or a complex of unknown proteins. They differ for a partial stoichiometry [2, 0]: MATLAB counts only the non-zero entries as subunits, matches one of the two model proteins and applies nothing, geckopy applies 2 for the first and 1 for the second (complex_data_edge_cases_ectestgem).
+      Both sides assign a complex's stoichiometry by protein id, apply the first of two identical complexes and apply nothing for a superset or a complex of unknown proteins. A subunit with stoichiometry 0 has no stated stoichiometry and counts as a subunit with stoichiometry 1, so a stoichiometry [2, 0] applies 2 to the first protein and 1 to the second on both sides (complex_data_edge_cases_ectestgem).
   - matlab: applyCustomKcats
     python: geckopy.apply_custom_kcats
     status: parity
@@ -430,14 +426,13 @@ entries:
   - matlab: calculateFfactor
     python: geckopy.calculate_f_factor
     status: parity
+    differs: []
     scenarios:
       - protein_pool_ectestgem
       - complex_data_edge_cases_ectestgem
       - ec_proteomics_ecyeastgem
-    differs:
-      - f_factor.empty_enzymes
     notes: >-
-      Both sides average the measured samples of a protein, so a protein missing in one sample still counts with its measurement, and agree on a clean multi-sample table, on 400 rows of the tutorial proteomics with a protein measured in one of two conditions (ec_proteomics_ecyeastgem) and on the full tutorial table (0.52855). A zero total is NaN on both sides (geckopy logs a warning). They differ for an empty enzyme list: MATLAB cannot tell an empty list from no list and uses every model enzyme (f 0.5), geckopy takes None as every model enzyme and an explicit empty list as none (f 0) (complex_data_edge_cases_ectestgem).
+      Both sides average the measured samples of a protein, so a protein missing in one sample still counts with its measurement, and agree on a clean multi-sample table, on 400 rows of the tutorial proteomics with a protein measured in one of two conditions (ec_proteomics_ecyeastgem) and on the full tutorial table (0.52855). A zero total is NaN on both sides (geckopy logs a warning). An explicit empty enzyme list means no enzymes on both sides (f 0): {} in MATLAB, [] in geckopy; [] in MATLAB and None in geckopy mean every model enzyme (complex_data_edge_cases_ectestgem). No difference of its own in ec_proteomics_ecyeastgem, which differs for getConcControlCoeffs.
   - matlab: calculateMW
     python: geckopy.calculate_mw
     status: parity
@@ -451,27 +446,22 @@ entries:
       - flexibilize_edge_cases_ectestgem
       - ec_proteomics_ecyeastgem
     differs:
-      - constrain_negative_concentration.value
       - constrain_prior_lower_bound.raised
       - constrain_prior_lower_bound.value
     notes: >-
-      A prior lower bound above the new upper bound (lb 0.05, concentration 0.01): MATLAB resets the lower bound to 0, the upper bound to 0.01 and the pool coefficient to -1, geckopy raises. A negative concentration sets a negative upper bound in MATLAB (-0.5) and is skipped with a warning in geckopy (the upper bound stays 1000) (flexibilize_edge_cases_ectestgem).
+      A prior lower bound above the new upper bound (lb 0.05, concentration 0.01): MATLAB resets the lower bound to 0, the upper bound to 0.01 and the pool coefficient to -1, geckopy raises. A negative concentration raises on both sides (flexibilize_edge_cases_ectestgem).
   - matlab: constrainFluxData
     python: geckopy.apply_flux_data_constraints
     status: parity
+    differs: []
     scenarios:
       - flexibilize_concs_ectestgem
       - flux_data_edge_cases_ectestgem
       - ec_fva_ecyeastgem
       - ec_proteomics_ecyeastgem
-    differs:
-      - constrain_invalid_max_min_growth.raised
-      - constrain_invalid_max_min_growth.value
-      - constrain_missing_exchange.raised
-      - constrain_missing_exchange.value
     notes: >-
-      RAVEN's setParam('var', ...) sets lb and ub with the same sign-aware arithmetic apply_flux_data_constraints uses. A flux column for a reaction that the model lacks is ignored by MATLAB and raises in geckopy, and an invalid maxMinGrowth value skips the growth constraint in MATLAB and raises in geckopy; an unknown condition raises on both sides (flux_data_edge_cases_ectestgem).
-      On ecYeastGEM with the tutorial flux data at 10 percent bounds the LP is infeasible (the pyruvate exchange r_2033 is bound to [7.657e-5, 8.463e-5] and pyruvate cannot be produced). Gurobi on both sides, and Gurobi in MATLAB with scipy in geckopy, report it infeasible. GLPK accepts it, because its optimum violates the mass balance of s_1400 by 7.657e-5, within its tolerance: MATLAB and geckopy with GLPK both report a growth rate of 0.0913870060941, and HiGHS on scipy reports infeasible, so the case differs with GLPK in MATLAB and scipy in geckopy. This is a solver tolerance and not a difference of the functions; the sides agree on the same solver (ec_proteomics_ecyeastgem).
+      RAVEN's setParam('var', ...) sets lb and ub with the same sign-aware arithmetic apply_flux_data_constraints uses. A flux column for a reaction that the model lacks, an invalid maxMinGrowth value and an unknown condition raise on both sides (flux_data_edge_cases_ectestgem).
+      On ecYeastGEM with the tutorial flux data at 10 percent bounds the LP is infeasible (the pyruvate exchange r_2033 is bound to [7.657e-5, 8.463e-5] and pyruvate cannot be produced). Gurobi on both sides, and Gurobi in MATLAB with scipy in geckopy, report it infeasible. GLPK accepts it, because its optimum violates the mass balance of s_1400 by 7.657e-5, within its tolerance: MATLAB and geckopy with GLPK both report a growth rate of 0.0913870060941, and HiGHS on scipy reports infeasible, so the case differs with GLPK in MATLAB and scipy in geckopy. This is a solver tolerance and not a difference of the functions; the sides agree on the same solver (ec_proteomics_ecyeastgem). No difference of its own in ec_proteomics_ecyeastgem, which differs for getConcControlCoeffs.
   - matlab: applyECcodes
     python: geckopy.copy_ec_to_gem
     status: parity
@@ -511,16 +501,14 @@ entries:
   - matlab: getEnzymeUsage
     python: geckopy.enzyme_usage
     status: parity
+    differs: []
     scenarios:
       - enzyme_usage_ectestgem
       - enzyme_usage_edge_cases_ectestgem
       - ec_analysis_ecyeastgem
       - ec_analysis_ecyeastgem911
-    differs:
-      - usage_missing_reaction.raised
-      - usage_missing_reaction.value
     notes: >-
-      [3->4] usage flux read from positive usage_prot_* flux. With a usage upper bound of 0, capUsage is NaN on both sides. An enzyme whose usage reaction is missing raises in MATLAB and is left out by geckopy (enzyme_usage_edge_cases_ectestgem).
+      [3->4] usage flux read from positive usage_prot_* flux. With a usage upper bound of 0, capUsage is NaN on both sides. An enzyme whose usage reaction is missing is left out with a warning on both sides (enzyme_usage_edge_cases_ectestgem). No difference of its own in enzyme_usage_edge_cases_ectestgem, ec_analysis_ecyeastgem and ec_analysis_ecyeastgem911, which differ for getEnzymeBottlenecks and getPfbaEnzymes.
   - matlab: enzymeUsage
     status: subsumed
     reason: Deprecated alias for getEnzymeUsage (src/deprecated/enzymeUsage.m); warns with GECKO:deprecatedName
@@ -528,14 +516,13 @@ entries:
   - matlab: fillEnzConcs
     python: geckopy.fill_enz_concs
     status: parity
+    differs: []
     scenarios:
       - protein_pool_ectestgem
       - complex_data_edge_cases_ectestgem
       - ec_proteomics_ecyeastgem
-    differs:
-      - fill_concs.negative
     notes: >-
-      A negative abundance is stored by MATLAB (-0.5) and skipped with a warning by geckopy, which leaves the concentration unset. A second data column, an unknown protein and a duplicated id (the last value wins) agree (complex_data_edge_cases_ectestgem).
+      A negative abundance of a protein that is an enzyme of the model raises on both sides. A second data column, an unknown protein and a duplicated id (the last value wins) agree (complex_data_edge_cases_ectestgem). No difference of its own in ec_proteomics_ecyeastgem, which differs for getConcControlCoeffs.
   - matlab: findECInDB
     python: geckopy.find_ec_in_db
     status: parity
@@ -714,20 +701,13 @@ entries:
   - matlab: loadFluxData
     python: geckopy.load_flux_data
     status: parity
+    differs: []
     scenarios:
       - flexibilize_concs_ectestgem
       - flux_data_edge_cases_ectestgem
       - ec_proteomics_ecyeastgem
-    differs:
-      - load_missing_file.raised
-      - load_missing_file.value
-      - load_fixed_columns_only.raised
-      - load_fixed_columns_only.value
-      - load_ragged_row.raised
-      - load_ragged_row.value
-      - load_nested_parentheses_header.value
     notes: >-
-      A flux file without exchange columns raises in geckopy and gives empty exchange fields in MATLAB. A missing file raises in geckopy and gives a warning and [] in MATLAB. A ragged row (a missing trailing cell) is padded with NaN by geckopy and raises in MATLAB. A header 'X (EX_a(e))' gives the metabolite 'X (EX_a' and the reaction 'e)' in MATLAB and the whole header for both in geckopy (flux_data_edge_cases_ectestgem).
+      A missing file, a flux file without exchange columns and a ragged row (a missing trailing cell) raise on both sides. A header 'X (EX_a(e))' gives the metabolite 'X' and the reaction 'EX_a(e)' on both sides (flux_data_edge_cases_ectestgem). No difference of its own in ec_proteomics_ecyeastgem, which differs for getConcControlCoeffs.
   - matlab: loadProtData
     python: geckopy.load_prot_data
     status: parity
@@ -831,17 +811,14 @@ entries:
   - matlab: reportEnzymeUsage
     python: geckopy.report_enzyme_usage
     status: parity
+    differs: []
     scenarios:
       - enzyme_usage_ectestgem
       - enzyme_usage_edge_cases_ectestgem
       - ec_analysis_ecyeastgem
       - ec_analysis_ecyeastgem911
-    differs:
-      - usage_exclude_zero.raised
-      - usage_exclude_zero.value
-      - report_negative_top.value
     notes: >-
-      [3->4] reads positive usage_prot_* flux. With zero=false (include_zero=False) MATLAB raises on the filtered table and geckopy reports the enzymes. A negative topAbsUsage gives an empty table in MATLAB and two rows in geckopy (enzyme_usage_edge_cases_ectestgem).
+      [3->4] reads positive usage_prot_* flux. With zero=false (include_zero=False) both sides report the enzymes that have usage, and a negative topAbsUsage raises on both sides (enzyme_usage_edge_cases_ectestgem). No difference of its own in enzyme_usage_edge_cases_ectestgem, ec_analysis_ecyeastgem and ec_analysis_ecyeastgem911, which differ for getEnzymeBottlenecks and getPfbaEnzymes.
   - matlab: runDLKcat
     python: geckopy.run_dlkcat
     status: parity
@@ -931,11 +908,8 @@ entries:
     scenarios:
       - sensitivity_tuning_ectestgem
       - sensitivity_tuning_edge_cases_ectestgem
-    differs:
-      - truncate_ties.output
-      - truncate_ties.raised
     notes: >-
-      Both sides round an exact tie away from zero (100000.5 gives 100001, 1234565 gives 1234570). Inf raises in MATLAB and is returned unchanged by geckopy (sensitivity_tuning_edge_cases_ectestgem).
+      Both sides round an exact tie away from zero (100000.5 gives 100001, 1234565 gives 1234570). Inf is returned unchanged on both sides (sensitivity_tuning_edge_cases_ectestgem).
   - matlab: buildGECKOdoc
     status: internal
     reason: Regenerates MATLAB Toolbox doc metadata. Python docs are docstring-driven, so there is nothing
@@ -1241,10 +1215,9 @@ entries:
     scenarios:
       - flexibilize_edge_cases_ectestgem
     differs:
-      - relax_empty_enzyme_set.value
       - relax_tied_enzymes.value
     notes: >-
-      Relaxes a shadow-price-ranked constrained enzyme in a greedy loop until a target growth is reached, an alternative to flexibilize_enz_concs. Not exposed to getEnzymeBottlenecks' dual-degeneracy finding: this uses constrainEnzConcs to give the relaxed enzymes their own individual usage bounds, a genuinely binding, non-degenerate constraint, rather than relying on the shared, freely-interchangeable protein pool. An empty enzymeSet means all enzymes in MATLAB and none in geckopy (converged is false). geckopy relaxes the enzyme with the largest absolute shadow price and takes the lowest id among exact ties. Which enzyme has the largest price follows the dual solution of the LP, which is not unique when two enzymes bind: geckopy on Gurobi relaxes P5 (price -14.4) before P4 (-1.35) and MATLAB relaxes P4 first, while geckopy on the scipy solver relaxes P4 first, as MATLAB does. The final set and the growth are the same (flexibilize_edge_cases_ectestgem).
+      Relaxes a shadow-price-ranked constrained enzyme in a greedy loop until a target growth is reached, an alternative to flexibilize_enz_concs. Not exposed to getEnzymeBottlenecks' dual-degeneracy finding: this uses constrainEnzConcs to give the relaxed enzymes their own individual usage bounds, a genuinely binding, non-degenerate constraint, rather than relying on the shared, freely-interchangeable protein pool. An empty enzymeSet ({} in MATLAB, [] in geckopy) means no enzyme is eligible on both sides (converged is false); [] in MATLAB and None in geckopy mean every constrained enzyme. geckopy relaxes the enzyme with the largest absolute shadow price and takes the lowest id among exact ties. Which enzyme has the largest price follows the dual solution of the LP, which is not unique when two enzymes bind: geckopy on Gurobi relaxes P5 (price -14.4) before P4 (-1.35) and MATLAB relaxes P4 first, while geckopy on the scipy solver relaxes P4 first, as MATLAB does. The final set and the growth are the same (flexibilize_edge_cases_ectestgem).
   - python: geckopy.RelaxationStep
     status: python-only
     reason: Return type. MATLAB GECKO returns several parallel outputs ([model, a, b] = f(...)); geckopy returns
