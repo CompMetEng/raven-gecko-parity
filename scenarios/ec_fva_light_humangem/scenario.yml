@@ -1,16 +1,13 @@
 id: ec_fva_light_humangem
 pair: gecko
 description: >-
-  ecFVA and ec_fva on the light ecModel of GECKO's light_ecModel tutorial (Human-GEM, 11983 conventional reactions) with growth fixed at its optimum, compared on every 40th reaction of the conventional model.
+  ecFVA and ec_fva on the light ecModel of GECKO's light_ecModel tutorial (Human-GEM, 11983 conventional reactions) with growth bounded below at 99 percent of its optimum, compared on every 40th reaction of the conventional model.
 
 entries:
   - ecFVA
 
-# ec_fva_ecyeastgem compares every reaction of the full ecModel of yeast. This is the gecko-light layout, where reactions are not split per isozyme and ec.rxns carries the isozymes, on a model with 12000 reactions. ecFVA has no argument for a subset, so the whole model is run on each side (twelve thousand pairs of LPs, about 20 minutes for geckopy on 8 processes and about 3.5 hours for MATLAB, so the MATLAB step needs a timeout above 4 hours) and every 40th reaction is recorded; the number of reactions covered is recorded too.
-#
-# The tutorial ecModel is read from a copy without its 52 empty `enzymes: !!omap` entries; ec_model_load_light_humangem reads the file as it is. The python model is set to RAVEN's Gurobi tolerances (python_tolerance, see ec_fva_ecyeastgem).
-#
-# Result. With growth fixed at its optimum (lower and upper bound equal) the LP is borderline feasible. RAVEN's solveLP (Gurobi with Presolve 2 and tolerances of 1e-9) reports the LP of many objectives as infeasible, so ecFVA returns NaN (no solution) for the maximum of 44 and the minimum of 164 of the 300 recorded reactions; ec_fva returns NaN for 6 maxima and 6 minima, and all of the 6 maxima are among MATLAB's. For MAR03905, relaxing the lower bound of growth by 0, 1e-12, 1e-9, 1e-7 and 1e-6 of its value gives the status infeasible, optimal, infeasible, optimal and infeasible in MATLAB, so the status follows the numerics of the presolve and not the algorithm. Of the 391 values that both sides solve, one differs by more than 1e-6: the minimum of MAR07157 is 0 in Python (with each of the hash seeds 0, 1 and 2) and 2.45e-4 in MATLAB. The NaN records are the differences of this scenario; they are a property of the equality bound and not of the algorithm, and a lower bound of 99 percent of the optimum instead of an equality would avoid them (not run).
+# Growth has a lower bound of 99 percent of its optimum (growth_fraction), not an equality, as in the tutorial's constrainFluxData with loose bounds; ecFVA sets no growth constraint itself. With growth fixed by an equality (lower and upper bound at the optimum) the LP is borderline feasible: RAVEN's solveLP (Gurobi with Presolve 2 and tolerances of 1e-9) reports the LP of many objectives as infeasible, so ecFVA returns NaN for the maximum of 44 and the minimum of 164 of the 300 recorded reactions while ec_fva returns NaN for 6 and 6, and the minimum of MAR07157 is 2.45e-4 in MATLAB and, in the parallel ec_fva run, 0 in Python. The status and the values then follow the solver's numerics and the order of the LPs, not the algorithm, so the scenario does not use the equality. With the lower bound both sides solve every recorded LP (no NaN) and all values agree. The tutorial ecModel is read from a copy without its 52 empty `enzymes: !!omap` entries; ec_model_load_light_humangem reads the file as it is. The python model is set to RAVEN's Gurobi tolerances (python_tolerance, see ec_fva_ecyeastgem). ecFVA has no argument for a subset, so the whole model is run on each side (twelve thousand pairs of LPs, about 20 minutes for geckopy on 8 processes and about 1.5 hours for MATLAB on 4 cores, so the MATLAB step needs a timeout above 2 hours) and every 40th reaction is recorded; the number of reactions covered is recorded too.
+
 inputs:
   adapter_matlab: "{matlab_repo}/tutorials/light_ecModel"
   adapter_python: "{matlab_repo}/tutorials/light_ecModel"
@@ -22,6 +19,7 @@ inputs:
   python_tolerance: 1.0e-9
 
   fva_stride: 40
+  growth_fraction: 0.99
 
 tolerance:
   rel: 1.0e-6

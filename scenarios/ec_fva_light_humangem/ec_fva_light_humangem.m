@@ -1,6 +1,6 @@
 function results = ec_fva_light_humangem(ctx)
 % MATLAB side of the light Human-GEM flux variability scenario; mirrors run.py. ecFVA on the
-% tutorial's gecko-light ecModel with growth fixed at its optimum. See scenario.yml.
+% tutorial's gecko-light ecModel with growth bounded below at a fraction of its optimum. See scenario.yml.
 %
 % The tutorial ecModel has 52 ec reactions with no enzyme written as an empty `enzymes: !!omap`
 % entry; both readers load the file as it is (see ec_model_load_light_humangem). Both sides here
@@ -32,7 +32,7 @@ m = loadEcModel('repaired.yml', adapter);
 m.c = double(strcmp(m.rxns, bioId));
 optimum = solveLP(m);
 bioIdx = strcmp(m.rxns, bioId);
-m.lb(bioIdx) = optimum.f;
+m.lb(bioIdx) = optimum.f * double(inputs.growth_fraction);
 m.ub(bioIdx) = optimum.f;
 [minFlux, maxFlux] = ecFVA(m, conv);
 
