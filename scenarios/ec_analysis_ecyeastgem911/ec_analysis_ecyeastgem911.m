@@ -131,19 +131,30 @@ out = struct('high_cap_usage', {table_rows(report.highCapUsage, 'capUsage', 'cap
 end
 
 
-function out = bottleneck_struct(ecModel, top)
-tbl = getEnzymeBottlenecks(ecModel, 'top', top);
+function out = bottleneck_struct(ecModel, top, foldChange, price)
+args = {'top', top};
+if nargin > 2 && ~isempty(foldChange)
+    args = [args, {'foldChange', foldChange}];
+end
+if nargin < 4
+    price = false;
+end
+tbl = getEnzymeBottlenecks(ecModel, args{:});
 n = height(tbl);
 order = cell(1, n);
 records = cell(1, n);
 for k = 1:n
     order{k} = tbl.uniprot{k};
-    records{k} = struct('protein', tbl.uniprot{k}, 'shadow_price', num(tbl.shadowPrice(k)), ...
+    records{k} = struct('protein', tbl.uniprot{k}, 'objective_gain', num(tbl.objectiveGain(k)), ...
         'flux', num(tbl.flux(k)), 'cap_usage', num(tbl.capUsage(k)), ...
-        'upper_bound', num(tbl.upperBound(k)));
+        'upper_bound', num(tbl.upperBound(k)), 'multiple_active', logical(tbl.multipleActive(k)));
+    if price
+        records{k}.shadow_price = num(tbl.shadowPrice(k));
+    end
 end
 [~, sortIdx] = sort(order);
-out = struct('order', {order}, 'rows', {records(sortIdx)});
+out = struct('order', {order}, 'n_resolved', num(tbl.Properties.UserData.nResolved), ...
+    'active_constraints', num(tbl.Properties.UserData.activeConstraints), 'rows', {records(sortIdx)});
 end
 
 

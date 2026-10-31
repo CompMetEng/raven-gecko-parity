@@ -16,7 +16,9 @@ sol = solveLP(ecModel);
 usage = getEnzymeUsage(ecModel, sol.x);
 results.control_usage = run_case(@() struct('objective', num(sol.f), 'proteins', {usage_rows(usage)}));
 results.control_report = run_case(@() report_struct(ecModel, usage, inputs, []));
-results.control_bottlenecks = run_case(@() bottleneck_struct(ecModel, double(inputs.top_abs_usage)));
+results.control_bottlenecks = run_case(@() bottleneck_struct(ecModel, double(inputs.top_abs_usage), [], true));
+results.bottlenecks_fold_change_3 = run_case(@() bottleneck_struct(ecModel, double(inputs.top_abs_usage), double(inputs.fold_change_3)));
+results.bottlenecks_fold_change_1 = run_case(@() bottleneck_struct(ecModel, double(inputs.top_abs_usage), 1));
 results.control_pfba = run_case(@() pfba_struct(ecModel, {}));
 
 results.zero_ub_enzyme = run_case(@() zero_ub_case(ctx));
@@ -30,6 +32,7 @@ results.pfba_unknown_objective = run_case(@() pfba_struct(ecModel, {'rxnId', 'NO
 results.pfba_no_objective = run_case(@() pfba_no_objective_case(ctx));
 
 results.tied_bottlenecks = run_case(@() tied_case(ctx));
+results.dual_without_gain = run_case(@() dual_case(ctx));
 results.control_coeffs_pool_binding = run_case(@() pool_binding_case(ctx));
 
 end
@@ -78,19 +81,30 @@ out = struct('high_cap_usage', {table_rows(report.highCapUsage, 'capUsage', 'cap
 end
 
 
-function out = bottleneck_struct(ecModel, top)
-tbl = getEnzymeBottlenecks(ecModel, 'top', top);
+function out = bottleneck_struct(ecModel, top, foldChange, price)
+args = {'top', top};
+if nargin > 2 && ~isempty(foldChange)
+    args = [args, {'foldChange', foldChange}];
+end
+if nargin < 4
+    price = false;
+end
+tbl = getEnzymeBottlenecks(ecModel, args{:});
 n = height(tbl);
 order = cell(1, n);
 records = cell(1, n);
 for k = 1:n
     order{k} = tbl.uniprot{k};
-    records{k} = struct('protein', tbl.uniprot{k}, 'shadow_price', num(tbl.shadowPrice(k)), ...
+    records{k} = struct('protein', tbl.uniprot{k}, 'objective_gain', num(tbl.objectiveGain(k)), ...
         'flux', num(tbl.flux(k)), 'cap_usage', num(tbl.capUsage(k)), ...
-        'upper_bound', num(tbl.upperBound(k)));
+        'upper_bound', num(tbl.upperBound(k)), 'multiple_active', logical(tbl.multipleActive(k)));
+    if price
+        records{k}.shadow_price = num(tbl.shadowPrice(k));
+    end
 end
 [~, sortIdx] = sort(order);
-out = struct('order', {order}, 'rows', {records(sortIdx)});
+out = struct('order', {order}, 'n_resolved', num(tbl.Properties.UserData.nResolved), ...
+    'active_constraints', num(tbl.Properties.UserData.activeConstraints), 'rows', {records(sortIdx)});
 end
 
 
@@ -138,6 +152,19 @@ function out = tied_case(ctx)
 [m, ~] = build_model(ctx, true);
 m = tie_p4(m);
 out = bottleneck_struct(m, double(ctx.inputs.top_abs_usage));
+end
+
+
+function out = dual_case(ctx)
+% Both caps bind, so each enzyme at its cap has an objectiveGain of 0 (the other cap still
+% holds) and the LP gives a nonzero dual to at least one of them.
+[m, ~] = build_model(ctx, true);
+m = tie_p4(m);
+tbl = getEnzymeBottlenecks(m, 'top', 100);
+atCap = tbl.upperBound > 0 & tbl.capUsage >= 1 - 1e-6;
+out = struct('n_at_cap', num(nnz(atCap)), ...
+    'max_objective_gain_at_cap', num(max(tbl.objectiveGain(atCap))), ...
+    'dual_nonzero_at_cap', logical(any(abs(tbl.shadowPrice(atCap)) > 1e-9)));
 end
 
 
