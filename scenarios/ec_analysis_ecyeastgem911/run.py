@@ -120,23 +120,30 @@ def _report(model, usage, inputs) -> dict:
     }
 
 
-def _bottlenecks(model, top: int) -> dict:
-    df = get_enzyme_bottlenecks(model, top=top)
+def _bottlenecks(model, top: int, fold_change: float | None = None, price: bool = False) -> dict:
+    kwargs = {} if fold_change is None else {"fold_change": fold_change}
+    df = get_enzyme_bottlenecks(model, top=top, **kwargs)
     order = [str(u) for u in df.index]
-    rows = sorted(
-        (
-            {
-                "protein": str(u),
-                "shadow_price": num(r.shadow_price),
-                "flux": num(r.flux),
-                "cap_usage": num(r.cap_usage),
-                "upper_bound": num(r.upper_bound),
-            }
-            for u, r in df.iterrows()
-        ),
-        key=lambda r: r["protein"],
-    )
-    return {"order": order, "rows": rows}
+    rows = []
+    for u, r in df.iterrows():
+        row = {
+            "protein": str(u),
+            "objective_gain": num(r.objective_gain),
+            "flux": num(r.flux),
+            "cap_usage": num(r.cap_usage),
+            "upper_bound": num(r.upper_bound),
+            "multiple_active": bool(r.multiple_active),
+        }
+        if price:
+            row["shadow_price"] = num(r.shadow_price)
+        rows.append(row)
+    rows.sort(key=lambda row: row["protein"])
+    return {
+        "order": order,
+        "n_resolved": num(df.attrs["n_resolved"]),
+        "active_constraints": num(df.attrs["active_constraints"]),
+        "rows": rows,
+    }
 
 
 def _control_coeffs(model) -> list[dict]:

@@ -68,8 +68,7 @@ inputs:
   # threshold and becomes a second candidate -- confirmed by direct execution that
   # P5 is the only enzyme ever flexed at this target, which is what keeps this
   # checkpoint's trajectory short and deterministic rather than depending on
-  # getConcControlCoeffs's own separately-documented finite-difference-vs-
-  # shadow-price divergence (see enzyme_usage_ectestgem/scenario.yml).
+  # which enzymes getConcControlCoeffs analyses (see enzyme_usage_ectestgem/scenario.yml).
   exp_growth: 2.5
   fold_change: 2.0
   iter_per_enzyme: 5
