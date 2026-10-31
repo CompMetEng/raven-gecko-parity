@@ -1,7 +1,7 @@
 {
   "revisions": {
-    "raven.matlab": "9a2829ac8afd60ef6f725d1fdd2cebbc1e4f0796",
-    "raven.python": "667795fb37c7634bdca779b7f139b2273341052d"
+    "raven.matlab": "2d0630e3adf62b4b8af6584ea70754f478428a3e",
+    "raven.python": "94f394074db1cbd66bc2d1c77e44c7878cfc9711"
   },
   "verdicts": {
     "add_reactions_from_equations_smallyeast": "MATCH",
@@ -34,7 +34,7 @@
     "find_leak_metabolite_toy": "MATCH",
     "find_potential_errors_toy": "MATCH",
     "fit_parameters_toy": "MATCH",
-    "fseof_toy": "DIFFER",
+    "fseof_toy": "MATCH",
     "ftinit_task_metabolites_toy": "MATCH",
     "ftinit_toy": "MATCH",
     "gap_fill_milp_toy": "MATCH",
