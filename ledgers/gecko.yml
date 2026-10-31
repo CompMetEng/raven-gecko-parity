@@ -84,13 +84,9 @@ entries:
       - ec_analysis_ecyeastgem911
       - ec_model_build_light_humangem
       - ec_model_build_yarrowia
-    differs:
-      - light_update_ids.cobra_id
-      - light_update_ids.ec_id
+    differs: []
     notes: >-
-      [3->4] writes coefficients with the forward-direction usage_prot_* / prot_pool_exchange convention. In the full formulation, two enzyme rows mapping to the same prot_<accession> metabolite (distinct genes sharing one UniProt entry) are summed on both sides, with every kcat 0 the old coefficients are cleared, and an empty update list means all reactions. In the light formulation, an isozyme with no usable kcat (and a row without enzymes or without a positive enzyme mass) is excluded before selecting the cheapest isozyme on both sides (GECKO#463), and when only some rows of a reaction are named every isozyme of it competes for the cheapest cost. The sides differ in the id vocabulary of the update list: MATLAB takes cobra reaction ids and geckopy takes ec reaction ids (kcat_apply_edge_cases_ectestgem).
-      With every kcat 0 on a light ecModel MATLAB returns the model unchanged, while geckopy clears the pool coefficient of the affected reactions.
-      On the scipy solver geckopy writes the pool coefficients on glpk and moves the model to the sparse scipy problem in one pass (geckopy.solver_support, python-only), so the build of the light Human-GEM ecModel matches MATLAB with GLPK and with Gurobi, and its Python step takes 6.8 and 6.9 minutes against 2.1 minutes on Gurobi (ec_model_build_light_humangem).
+      [3->4] writes coefficients with the forward-direction usage_prot_* / prot_pool_exchange convention. In the full formulation, two enzyme rows mapping to the same prot_<accession> metabolite (distinct genes sharing one UniProt entry) are summed on both sides, with every kcat 0 the old coefficients are cleared, and an empty update list means all reactions. In the light formulation, an isozyme with no usable kcat (and a row without enzymes or without a positive enzyme mass) is excluded before selecting the cheapest isozyme on both sides (GECKO#463), and when only some rows of a reaction are named every isozyme of it competes for the cheapest cost. On a light model the update list takes cobra reaction ids and ec reaction ids with the ###_ prefix on both sides, and an id of neither kind or of both kinds raises. With every kcat 0 both sides clear the pool coefficients of the affected reactions of a light ecModel (kcat_apply_edge_cases_ectestgem). On the scipy solver geckopy writes the pool coefficients on glpk and moves the model to the sparse scipy problem in one pass (geckopy.solver_support, python-only), so the build of the light Human-GEM ecModel matches MATLAB with GLPK and with Gurobi, and its Python step takes 6.8 and 6.9 minutes against 2.1 minutes on Gurobi (ec_model_build_light_humangem). No difference of its own in ec_analysis_ecyeastgem and ec_analysis_ecyeastgem911, which differ for getEnzymeBottlenecks, and in ec_model_build_yarrowia, which differs for getECfromGEM.
   - matlab: bestParsimonious
     status: python-pending
     scenarios:
@@ -445,11 +441,9 @@ entries:
       - protein_pool_ectestgem
       - flexibilize_edge_cases_ectestgem
       - ec_proteomics_ecyeastgem
-    differs:
-      - constrain_prior_lower_bound.raised
-      - constrain_prior_lower_bound.value
+    differs: []
     notes: >-
-      A prior lower bound above the new upper bound (lb 0.05, concentration 0.01): MATLAB resets the lower bound to 0, the upper bound to 0.01 and the pool coefficient to -1, geckopy raises. A negative concentration raises on both sides (flexibilize_edge_cases_ectestgem).
+      A prior lower bound above the new upper bound (lb 0.05, concentration 0.01) is reset on both sides: the lower bound to 0, the upper bound to 0.01 and the pool coefficient to -1. A negative concentration raises on both sides (flexibilize_edge_cases_ectestgem). No difference of its own in ec_proteomics_ecyeastgem, which differs for getConcControlCoeffs.
   - matlab: constrainFluxData
     python: geckopy.apply_flux_data_constraints
     status: parity
@@ -1193,10 +1187,9 @@ entries:
       - enzyme_usage_edge_cases_ectestgem
       - ec_analysis_ecyeastgem
       - ec_analysis_ecyeastgem911
-    differs:
-      - pfba_fraction_09.value
+    differs: []
     notes: >-
-      pFBA variant minimising total usage_prot_* flux (enzyme mass) instead of all fluxes. The default fraction of the optimum is 0.999999 on both sides: getPfbaEnzymes multiplies the fraction (default 1) by 0.999999, the margin solveLP's minFlux=1 technique uses (1.000001 for a negative objective), and pfba_enzymes has 0.999999 as its default fraction_of_optimum. The default calls give the same objective, usage sum and fluxes (control_pfba in enzyme_usage_edge_cases_ectestgem; pfba in ec_analysis_ecyeastgem and ec_analysis_ecyeastgem911 on every solver pair run, with the objective over the optimum 0.999999 on both sides). A given fraction differs by the margin: MATLAB multiplies it by 0.999999 and geckopy uses it as it is, so with 0.9 the growth over the optimum is 0.8999991 in MATLAB and 0.9 in geckopy (growth 2.027883905 and 2.0278859328, usage sum 1.6429615 and 1.6429631; pfba_fraction_09 in enzyme_usage_edge_cases_ectestgem, the same on every solver pair run). Reports a primal solution (fluxes), which is stable across repeated runs, unlike getEnzymeBottlenecks' dual-degeneracy finding. usage_prot_<id> reactions with lb<0 (reverse flux) are rejected rather than silently minimised incorrectly; this is not reachable through any real GECKO 3 ecModel today.
+      pFBA variant minimising total usage_prot_* flux (enzyme mass) instead of all fluxes. The default fraction of the optimum is 0.999999 on both sides: getPfbaEnzymes multiplies the fraction (default 1) by 0.999999, the margin solveLP's minFlux=1 technique uses (1.000001 for a negative objective), and pfba_enzymes multiplies its default fraction_of_optimum of 1.0 by 0.999999. The default calls give the same objective, usage sum and fluxes (control_pfba in enzyme_usage_edge_cases_ectestgem; pfba in ec_analysis_ecyeastgem and ec_analysis_ecyeastgem911 on every solver pair run, with the objective over the optimum 0.999999 on both sides). A given fraction is multiplied by 0.999999 on both sides, so with 0.9 the growth over the optimum is 0.8999991 (pfba_fraction_09 in enzyme_usage_edge_cases_ectestgem). Reports a primal solution (fluxes), which is stable across repeated runs, unlike getEnzymeBottlenecks' dual-degeneracy finding. usage_prot_<id> reactions with lb<0 (reverse flux) are rejected rather than silently minimised incorrectly; this is not reachable through any real GECKO 3 ecModel today.
   - python: geckopy.PhylDist
     status: python-only
     reason: Loaded-data type. MATLAB GECKO passes parallel cell arrays and structs; geckopy wraps them in
@@ -1204,7 +1197,7 @@ entries:
   - python: geckopy.ProtData
     status: python-only
     reason: Loaded-data type. MATLAB GECKO passes parallel cell arrays and structs; geckopy wraps them in
-      a dataclass.
+      a dataclass. No difference of its own in enzyme_usage_edge_cases_ectestgem, ec_analysis_ecyeastgem and ec_analysis_ecyeastgem911, which differ for getEnzymeBottlenecks.
   - matlab: pfbaEnzymes
     status: subsumed
     reason: Deprecated alias for getPfbaEnzymes (src/deprecated/pfbaEnzymes.m); warns with GECKO:deprecatedName
