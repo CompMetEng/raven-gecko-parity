@@ -162,14 +162,10 @@ entries:
     status: parity
     scenarios:
       - kcat_review_stats_ectestgem
-    differs:
-      - review_hand_stats.findings
-      - review_hand_stats_optional.findings
-      - review_hand_stats_top.findings
-      - review_loader_stats.findings
+    differs: []
     issue: CompMetEng/raven-gecko-parity#123
     notes: >-
-      Flags kcat assignments (largest corrections, biggest outliers) that deserve curator review. Both rank by leverage and report a parameter once for tied isozymes, and with the statistics of ecStatsFromBrenda both flag ec-maximum. geckopy exports review_assignment from geckopy and geckopy.gather_kcats. The sides differ in the case of the source: MATLAB compares 'custom' and 'standard' with strcmpi, geckopy exactly, so a source 'Custom' is checked for a duplicate and 'STANDARD' is treated as the fallback in MATLAB only; neither docstring states a case rule (kcat_review_stats_ectestgem).
+      Flags kcat assignments (largest corrections, biggest outliers) that deserve curator review. Both rank by leverage and report a parameter once for tied isozymes, recognise the source labels 'custom' and 'standard' without regard to letter case, and with the statistics of ecStatsFromBrenda both flag ec-maximum. geckopy exports review_assignment from geckopy and geckopy.gather_kcats (kcat_review_stats_ectestgem).
   - matlab: screenKcatLeverage
     python: geckopy.kcat_tuning.evotune.screen_kcat_leverage
     status: parity
@@ -557,11 +553,9 @@ entries:
     scenarios:
       - okp_kcat_ectestgem
       - kcat_io_edge_cases_ectestgem
-    differs:
-      - smiles.duplicate_cache_name
-      - smiles.empty_metabolite_name
+    differs: []
     notes: >-
-      A duplicated name in smilesDB.tsv: MATLAB takes the first row, geckopy the last. A metabolite without a name gets no SMILES in MATLAB and is looked up by its id in geckopy (kcat_io_edge_cases_ectestgem).
+      Both take the last row of a name that is duplicated in smilesDB.tsv, and skip a metabolite without a name with a warning (MATLAB id findMetSmiles:emptyName, geckopy a logged warning), so it gets no SMILES (kcat_io_edge_cases_ectestgem).
   - matlab: flexibilizeEnzConcs
     python: geckopy.flexibilize_enz_concs
     status: parity
@@ -614,7 +608,7 @@ entries:
       - ec_model_build_yarrowia
     differs: []
     notes: >-
-      Both split a database cell on ';' and on white space. Conflicting ECs for one gene with the action 'display': both give a warning that lists the conflicts and take the first EC; with 'ignore' both take the first EC. Both look at the selected reactions only, so a conflict outside the selection gives no warning, and an explicitly empty selection (an empty logical array in MATLAB, an empty list in geckopy) searches nothing; MATLAB's [] or omitted ecRxns means all reactions. MATLAB accepts the action 'add', which its help text documents but which does nothing; geckopy raises ValueError for it (ec_lookup_edge_cases_ectestgem).
+      Both split a database cell on ';' and on white space. Conflicting ECs for one gene with the action 'display': both give a warning that lists the conflicts and take the first EC; with 'ignore' both take the first EC. Both look at the selected reactions only, so a conflict outside the selection gives no warning, and an explicitly empty selection (an empty logical array in MATLAB, an empty list in geckopy) searches nothing; MATLAB's [] or omitted ecRxns means all reactions. Both raise for an action other than 'display' and 'ignore' (MATLAB id getECfromDatabase:unsupportedAction, geckopy ValueError) (ec_lookup_edge_cases_ectestgem).
   - matlab: getECfromGEM
     python: geckopy.fill_eccodes_from_gem
     status: parity

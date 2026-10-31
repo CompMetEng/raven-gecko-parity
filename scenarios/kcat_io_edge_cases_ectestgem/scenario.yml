@@ -18,9 +18,8 @@ entries:
 
 # Differences this scenario reports (seed-independent, confirmed by running both sides; the
 # scenario stays DIFFER until the sides are aligned or the difference is recorded as intended):
-#   findMetSmiles: with a duplicated name in smilesDB.tsv MATLAB takes the first row and Python
-#     the last; a metabolite without a name gets no SMILES in MATLAB and is looked up by its id
-#     in Python.
+#   findMetSmiles: both sides take the last row of a name that is duplicated in smilesDB.tsv and
+#     give no SMILES to a metabolite without a name (with a warning).
 #   loadKcatSource: a row that starts with a quote and never closes it, and a row of empty
 #     quoted fields, are skipped in MATLAB and reported as invalid in Python.
 #   getStandardKcat: a reaction without a GPR and with two substrates is an exchange reaction
