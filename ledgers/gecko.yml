@@ -518,10 +518,27 @@ entries:
     scenarios:
       - flexibilize_concs_ectestgem
       - flexibilize_edge_cases_ectestgem
+      - complex_levelling_ectestgem
       - ec_proteomics_ecyeastgem
     differs: []
     notes: >-
-      The post-loop refinement solve pins growth into a narrow band around expGrowth (RAVEN's setParam('var', bioRxn, expGrowth, 0.5), +/-0.25%) and, minimising protein-pool usage, settles at the band's low edge rather than at expGrowth itself, on both sides (geckopy#41). Once no enzyme limits growth any more, both use the growth reached as the target of the final pass. For an infeasible start both sides skip the loop and return growth 0, no flexed enzyme and the original bounds of the usage reactions; geckopy decides from the status of its first solve, so the result is the same with Gurobi, GLPK and scipy (flexibilize_edge_cases_ectestgem). With the proteomics constraints of ecYeastGEM both sides flex 44 enzymes and the growth afterwards agrees to 2e-9 relative (ec_proteomics_ecyeastgem, seeds 0 to 2).
+      The post-loop refinement solve pins growth into a narrow band around expGrowth (RAVEN's setParam('var', bioRxn, expGrowth, 0.5), +/-0.25%) and, minimising protein-pool usage, settles at the band's low edge rather than at expGrowth itself, on both sides (geckopy#41). Once no enzyme limits growth any more, both use the growth reached as the target of the final pass. For an infeasible start both sides skip the loop and return growth 0, no flexed enzyme and the original bounds of the usage reactions; geckopy decides from the status of its first solve, so the result is the same with Gurobi, GLPK and scipy (flexibilize_edge_cases_ectestgem). With the proteomics constraints of ecYeastGEM both sides flex 44 enzymes and the growth afterwards agrees to 2e-9 relative (ec_proteomics_ecyeastgem, seeds 0 to 2). The perComplex option (per_complex in geckopy) relaxes the measured subunits of a complex together and scales the final bounds of a complex by one factor; both sides give the same flexed enzymes, the same order and the same bounds and growth in the cases of complex_levelling_ectestgem. On a levelled complex of P1, P2 (two copies) and P5 in which all three subunits bind, the default finds no limiting enzyme and leaves growth at 2.2532 (target 2.5), and perComplex flexes the three subunits together and reaches 2.49375, on both sides; with the measured concentrations, the default flexes P2 and P5 and perComplex flexes P1, P2 and P5, and both reach 2.49375.
+  - matlab: getComplexFamilies
+    python: geckopy.complex_families
+    status: parity
+    scenarios:
+      - complex_levelling_ectestgem
+    differs: []
+    notes: >-
+      Both sides merge the enzyme sets of multi-subunit reactions that share at least two subunits and half of the larger set, give a subunit that is in exactly two complexes to the one that catalyses more reactions, and treat a subunit in two complexes of equal weight, in three or more, or one that also catalyses a reaction alone as shared. In the five layouts of complex_levelling_ectestgem (1:4 pair, three subunits with 1, 4 and 2 copies, a third subunit in a second complex, an isozyme variant that swaps one subunit, the complex of the limiting reaction R5) the complexes, the copies, the owned subunits and the shared lists are the same. The return type differs: MATLAB gives a struct with the fields complexes (enzymes, copies and owned per complex), owner (an index per enzyme) and shared; geckopy gives the dataclass ComplexFamilies with complexes as one dict of copies per complex, owner as a dict and shared as a set.
+  - matlab: levelComplexConcs
+    python: geckopy.level_complex_concs
+    status: parity
+    scenarios:
+      - complex_levelling_ectestgem
+    differs: []
+    notes: >-
+      Both sides convert the concentrations to molar amounts with the molecular weights, replace the amount of every owned subunit by the median (default) or mean over the measured owned subunits of amount divided by copies, times the copies, and convert back. With the 1:4 pair both statistics give the same result; with three measured subunits (1, 4 and 2 copies) the median and the mean differ and the sides agree on each. A subunit shared with another complex is left as measured and reported in shared. For an isozyme variant the sides level the merged complex of four subunits. An owned subunit without a measurement is given the level of the complex with fillMissing true (reported in added) and stays NaN with false, and the usage bound of a NaN concentration stays at 1000 on both sides. A complex without any measured owned subunit is left unchanged and reported in skipped. An unknown statistic raises on both sides. The usage-reaction bounds after constrainEnzConcs equal the levelled concentrations. The result type differs: MATLAB gives a struct with the fields adjusted, added, shared and skipped (skipped is a cell array of cell arrays), geckopy the dataclass LevelComplexResult with skipped as tuples.
   - matlab: fuzzyKcatMatching
     python: geckopy.fuzzy_kcat_matching
     status: parity
@@ -1193,19 +1210,13 @@ entries:
       a dataclass.
   - python: geckopy.ComplexFamilies
     status: python-only
-    reason: Return type of complex_families. GECKO has no complex levelling.
+    reason: Return type of complex_families. getComplexFamilies returns a struct with the fields complexes (copies and owned per complex), owner and shared.
   - python: geckopy.LevelComplexResult
     status: python-only
-    reason: Return type of level_complex_concs. GECKO has no complex levelling.
-  - python: geckopy.complex_families
-    status: python-only
-    reason: Groups the enzymes of multi-subunit reactions into complexes. GECKO has no function for it.
+    reason: Return type of level_complex_concs. levelComplexConcs returns a struct with the fields adjusted, added, shared and skipped.
   - python: geckopy.level_complex_abundances
     status: python-only
     reason: Levels molar abundances to one abundance per complex. GECKO has no function for it.
-  - python: geckopy.level_complex_concs
-    status: python-only
-    reason: Gives every complex in model.ec.concs one abundance. GECKO has no function for it.
   - python: geckopy.relax_enz_concs
     status: python-only
     reason: Raises the measured enzyme caps by the least total fold increase in one LP.
