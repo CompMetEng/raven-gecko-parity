@@ -1,6 +1,6 @@
 """Python side of the light Human-GEM flux variability scenario.
 
-ec_fva on the tutorial's gecko-light ecModel with growth fixed at its optimum. See
+ec_fva on the tutorial's gecko-light ecModel with growth bounded below at a fraction of its optimum. See
 scenario.yml.
 """
 
@@ -46,7 +46,7 @@ def run(ctx):
     model.objective_direction = "max"
     optimum = float(model.optimize().objective_value)
     bio = model.reactions.get_by_id(bio_id)
-    bio.lower_bound = optimum
+    bio.lower_bound = optimum * float(inputs["growth_fraction"])
     bio.upper_bound = optimum
 
     df = ec_fva(model, conv, progress=False, n_proc=int(inputs["python_n_proc"]))
