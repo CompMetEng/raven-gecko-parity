@@ -2,7 +2,8 @@
 - metaData: !!omap
   - id: testModel
   - name: testModel
-  - date: "2026-10-28"
+  - date: "2026-10-31"
+  - description: Enzyme-constrained model of testModel
   - gecko_format: "4"
   - generator: GECKO 4.0.0b1
 - metabolites:
