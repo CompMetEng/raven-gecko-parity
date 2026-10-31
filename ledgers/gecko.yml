@@ -91,19 +91,17 @@ entries:
     status: python-pending
     scenarios:
       - evotune_edge_cases_ectestgem
-    differs:
-      - helpers.best_with_nan
+    differs: []
     notes: >-
-      Picks the sparsest CMA-ES kcat-tuning result within tolerance of the best RMSE on a parsimony frontier. geckopy's kcat_tuning.evotune.parsimony module (geckopy#51) implements the same frontier sweep; best_parsimonious itself is an internal helper there, not exported through __all__. geckopy has best_parsimonious in kcat_tuning/evotune/parsimony.py, which is not exported through __all__. With a NaN RMSE at the first point MATLAB takes min(rmses), which skips NaN, and returns a point; geckopy takes the min over the points, gets NaN, finds no point within tolerance and raises ValueError (evotune_edge_cases_ectestgem).
+      Picks the sparsest CMA-ES kcat-tuning result within tolerance of the best RMSE on a parsimony frontier. geckopy#51 implements the same frontier sweep in kcat_tuning.evotune.parsimony; best_parsimonious is an internal helper there, not exported through __all__, so the entry stays python-pending until it is. A point with a NaN RMSE does not set the best RMSE and is never chosen on both sides; with a NaN at the first point both return the sparsest point within tolerance of the best of the others (evotune_edge_cases_ectestgem).
   - matlab: cmaesKcatTuning
     python: geckopy.kcat_tuning.evotune.cmaes_kcat_tuning
     status: parity
     scenarios:
       - evotune_edge_cases_ectestgem
-    differs:
-      - cmaes_flat.n_generations
+    differs: []
     notes: >-
-      Main CMA-ES kcat-tuning entry point (GECKO#477, closes raven-gecko-parity#21). Its docstring says it was written to match "what geckopy's own port actually runs"; that port is kcat_tuning.evotune.tuning.cmaes_kcat_tuning (geckopy#51). With a flat objective the sides differ: cmaesKcatTuning runs all max_generations generations, cmaes_kcat_tuning hands the search to cma, whose own stopping criteria apply, and stops after 1 generation; neither changes a kcat (evotune_edge_cases_ectestgem).
+      Main CMA-ES kcat-tuning entry point (GECKO#477, closes raven-gecko-parity#21). Its docstring says it was written to match "what geckopy's own port actually runs"; that port is kcat_tuning.evotune.tuning.cmaes_kcat_tuning (geckopy#51). With a flat objective both sides run all max_generations generations and change no kcat: cmaes_kcat_tuning does not stop on the flat-fitness criteria of cma (tolfun, tolfunhist, tolflatfitness), while the other cma criteria still apply (evotune_edge_cases_ectestgem).
   - matlab: ecStatsFromBrenda
     python: geckopy.ec_stats_from_brenda
     status: parity
@@ -162,16 +160,9 @@ entries:
     status: parity
     scenarios:
       - evotune_edge_cases_ectestgem
-    differs:
-      - screen_control.order
-      - screen_max_growth_weight.order
-      - screen_no_formulas.order
-      - screen_no_formulas.raised
-      - screen_no_formulas.rows
-      - screen_source_suffix.order
-      - screen_zero_flux_known.order
+    differs: []
     notes: >-
-      Pre-tuning report of which kcats the data can actually constrain, no optimization run. Matches kcat_tuning.evotune.tuning.screen_kcat_leverage (geckopy#51). Leverage, rank and sigma0_log agree; a source with a detail such as 'combined (sd=0.10, n=2)' is in the group of its name before ' (' on both sides (such a kcat gets the sigma0 of that group). The sides differ in the order of rows of equal rank (a stable sort in MATLAB, pandas sort_values in geckopy) and for a model without metFormulas (MATLAB raises, geckopy gives every exchange the carbon weight 1) (evotune_edge_cases_ectestgem).
+      Pre-tuning report of which kcats the data can actually constrain, no optimization run. Matches kcat_tuning.evotune.tuning.screen_kcat_leverage (geckopy#51). Leverage, rank and sigma0_log agree; a source with a detail such as 'combined (sd=0.10, n=2)' is in the group of its name before ' (' on both sides (such a kcat gets the sigma0 of that group). Both sort stably, so rows of equal rank keep the order of the tie groups, and both give every exchange the carbon weight 1 with a warning when the model has no metabolite formulas (evotune_edge_cases_ectestgem).
   - matlab: selectTunableMask
     python: geckopy.kcat_tuning.evotune.select_tunable_mask
     status: parity
@@ -306,7 +297,7 @@ entries:
       - upgrade_raw.value.changed
       - yaml_round_trip.reverse
     notes: >-
-      Brings an ecModel made with GECKO 3 to the GECKO 4 format. The in-memory upgrade agrees for a reverse model and for a forward model with a negative lower bound. The readers differ before it runs: geckopy's reader turns every usage and pool reaction with a negative lower bound forward and leaves the objective alone, MATLAB's readYAMLmodel leaves the model as written and upgradeEcModel then turns it, objective coefficients included, so the objective of a GECKO 3 model keeps its GECKO 3 sign in geckopy and not in MATLAB (upgrade_gecko3_ectestgem). The number of reactions the upgrade turns differs for the same reason: on eciYali5-GEM it is 895 in MATLAB and 0 in geckopy, whose reader has turned them already, and the model after the upgrade agrees (ec_model_io_eciyali5).
+      Brings an ecModel made with GECKO 3 to the GECKO 4 format. The in-memory upgrade agrees for a reverse model and for a forward model with a negative lower bound. The readers differ before it runs, because the Python reader is raven-toolbox's read_yaml_model, which turns reactions with a negative lower bound forward while it reads (GECKO's readYAMLmodel does not): geckopy's reader turns every usage and pool reaction with a negative lower bound forward and leaves the objective alone, MATLAB's readYAMLmodel leaves the model as written and upgradeEcModel then turns it, objective coefficients included, so the objective of a GECKO 3 model keeps its GECKO 3 sign in geckopy and not in MATLAB (upgrade_gecko3_ectestgem). The number of reactions the upgrade turns differs for the same reason: on eciYali5-GEM it is 895 in MATLAB and 0 in geckopy, whose reader has turned them already, and the model after the upgrade agrees (ec_model_io_eciyali5).
   - matlab: upgradeGECKOproject
     python: geckopy.upgrade_project
     status: parity
@@ -317,7 +308,7 @@ entries:
       - projects.no_toml
       - projects.stored_dlkcat_foreign_substrates
     notes: >-
-      Brings a GECKO 3 project to the GECKO 4 layout (dry run by default). Dry runs and applying the upgrade twice agree. For a GECKO 4 model with a negative lower bound on a usage reaction, upgrade_project reports '2 protein reactions turned forward' and rewrites the file, upgradeGECKOproject reports nothing. For a project with an adapter class and no model_adapter.toml, upgradeGECKOproject converts the class and upgrade_project lists the adapter 'by hand' and skips the custom kcats and predictions. kcatsFromDLKcat raises on a stored DLKcat output with substrates the model lacks, kcats_from_dlkcat drops those rows (upgrade_gecko3_ectestgem).
+      Brings a GECKO 3 project to the GECKO 4 layout (dry run by default). Dry runs and applying the upgrade twice agree. For a GECKO 4 model with a negative lower bound on a usage reaction, upgrade_project reports '2 protein reactions turned forward' and rewrites the file, upgradeGECKOproject reports nothing. For a project with an adapter class and no model_adapter.toml, upgradeGECKOproject converts the class and upgrade_project lists the adapter 'by hand' and skips the custom kcats and predictions. This is a design difference: the adapter class is a MATLAB classdef whose constructor assigns the parameters, so only MATLAB can evaluate it, and upgrade_project documents that GECKO's upgradeGECKOproject converts it. kcatsFromDLKcat raises on a stored DLKcat output with substrates the model lacks, kcats_from_dlkcat drops those rows (upgrade_gecko3_ectestgem).
   - matlab: TomlAdapter
     status: subsumed
     reason: geckopy.ModelAdapter.from_folder is already configured by model_adapter.toml. This is the MATLAB class
@@ -466,7 +457,7 @@ entries:
     differs:
       - fixed_cobra_tolerance.fva
     notes: >-
-      Both sides read each canonical reaction's bound directly off its own group's solve (the "diagonal"): forward minus reverse variants from the one LP that jointly optimised them, always a value some feasible flux distribution attains (GECKO#466). Both strip _EXP_n and then _REV only at the end of an id, so a reaction named R_REVX or R_EXP_1X is ranged over (ec_model_edit_edge_cases_ectestgem, which differs for other functions). RAVEN's solveLP gives Gurobi tolerances of 1e-9 and cobrapy leaves them at 1e-6; with the Python model set to 1e-9, both sides agree on the ranges of all 4102 reactions of ecYeastGEM with growth free and with growth fixed (0 reactions differ at 1e-6), and with the cobrapy default 1944 of them differ by more than 1e-6 (2535 of the 8204 bounds, by up to 0.97 absolute and 17 percent relative; fixed_cobra_tolerance in ec_fva_ecyeastgem). With the scipy solver in geckopy and Gurobi in MATLAB, ec_fva_ecyeastgem agrees with growth free (0 of 8204 bounds differ) and differs for one bound with growth fixed (the minimum of r_2720: -173.615 with scipy, -173.3495 with Gurobi in geckopy and in MATLAB, 0.15 percent relative) and for 2257 of the 8204 bounds of the run at the cobrapy tolerance (2258 of 24612 bounds against geckopy on Gurobi, 1 in fixed and none in free). That is the accuracy of HiGHS on the ill-scaled LPs of ecYeastGEM and a limit of the scipy solver, not a parity statement; the Python part of that run took about 100 minutes. On the light Human-GEM ecModel (ec_fva_light_humangem) with growth bounded below at 99 percent of its optimum both sides solve every recorded LP and agree on every recorded value. With growth fixed by an equality the LP is borderline feasible: ecFVA returns NaN for 44 maxima and 164 minima of 300 sampled reactions and ec_fva for 6 and 6, because RAVEN's Gurobi presolve reports the LP infeasible depending on the numerics (not on the algorithm), and the minimum of MAR07157 is 2.45e-4 in MATLAB and, in the parallel ec_fva run, 0 in geckopy (2.45e-4 when the LP is solved on a fresh model), so the scenario does not use the equality. With growth fixed by an equality and the scipy solver in geckopy, HiGHS reports the status 'aborted' for one of the LPs after a 'numeric' warning and ec_fva raises cobra's OptimizationError within 171 seconds, so the ranges are not compared on scipy; the cause was not examined.
+      Both sides read each canonical reaction's bound directly off its own group's solve (the "diagonal"): forward minus reverse variants from the one LP that jointly optimised them, always a value some feasible flux distribution attains (GECKO#466). Both strip _EXP_n and then _REV only at the end of an id, so a reaction named R_REVX or R_EXP_1X is ranged over (ec_model_edit_edge_cases_ectestgem, which differs for other functions). RAVEN's solveLP gives Gurobi tolerances of 1e-9 and cobrapy leaves them at 1e-6; with the Python model set to 1e-9, both sides agree on the ranges of all 4102 reactions of ecYeastGEM with growth free and with growth fixed (0 reactions differ at 1e-6), and with the cobrapy default 1944 of them differ by more than 1e-6 (2535 of the 8204 bounds, by up to 0.97 absolute and 17 percent relative; fixed_cobra_tolerance in ec_fva_ecyeastgem). That variant runs the Python model at cobra's 1e-6 tolerance by construction, so the difference is the tolerance and not the algorithm. With the scipy solver in geckopy and Gurobi in MATLAB, ec_fva_ecyeastgem agrees with growth free (0 of 8204 bounds differ) and differs for one bound with growth fixed (the minimum of r_2720: -173.615 with scipy, -173.3495 with Gurobi in geckopy and in MATLAB, 0.15 percent relative) and for 2257 of the 8204 bounds of the run at the cobrapy tolerance (2258 of 24612 bounds against geckopy on Gurobi, 1 in fixed and none in free). That is the accuracy of HiGHS on the ill-scaled LPs of ecYeastGEM and a limit of the scipy solver, not a parity statement; the Python part of that run took about 100 minutes. On the light Human-GEM ecModel (ec_fva_light_humangem) with growth bounded below at 99 percent of its optimum both sides solve every recorded LP and agree on every recorded value. With growth fixed by an equality the LP is borderline feasible: ecFVA returns NaN for 44 maxima and 164 minima of 300 sampled reactions and ec_fva for 6 and 6, because RAVEN's Gurobi presolve reports the LP infeasible depending on the numerics (not on the algorithm), and the minimum of MAR07157 is 2.45e-4 in MATLAB and, in the parallel ec_fva run, 0 in geckopy (2.45e-4 when the LP is solved on a fresh model), so the scenario does not use the equality. With growth fixed by an equality and the scipy solver in geckopy, HiGHS reports the status 'aborted' for one of the LPs after a 'numeric' warning and ec_fva raises cobra's OptimizationError within 171 seconds, so the ranges are not compared on scipy; the cause was not examined.
   - matlab: getEnzymeUsage
     python: geckopy.enzyme_usage
     status: parity
@@ -794,7 +785,7 @@ entries:
       - written.n_chars
       - written.n_lines
     notes: >-
-      Each side reads back its own file unchanged. The written files have the same layout and identical ec-* sections. Both write gecko_format and a generator line to metaData (naming GECKO in the MATLAB file and geckopy in the Python file). They differ in metaData by the description that only geckopy writes, and in charge, SBO terms, the protein-pool subsystem and gene names, each from the import conventions of cobra and RAVEN (ec_model_io_ectestgem). Both sides write a single ec-code as a list.
+      Each side reads back its own file unchanged. The written files have the same layout and identical ec-* sections. Both write gecko_format and a generator line to metaData (naming GECKO in the MATLAB file and geckopy in the Python file). Both write the description 'Enzyme-constrained model of <id>' in metaData only when the model has no description of its own, and keep an existing one. The differences come from what each side holds in memory, not from the writers: charge 0.0 and SBO terms on metabolites, reactions and genes (cobra's SBML import keeps them, RAVEN's import drops them), gene names (RAVEN's import reads the SBML gene label, cobra leaves the name empty) and the subsystem 'Protein usage' on the protein-pool reactions (make_ec_model always sets it, makeEcModel only for a model with subsystems) (ec_model_io_ectestgem). Both sides write a single ec-code as a list.
   - matlab: assignKcatValues
     python: geckopy.apply_kcat_list
     status: parity
