@@ -1,0 +1,76 @@
+id: complex_levelling_ectestgem
+pair: gecko
+description: >-
+  Complex levelling on ecTestGEM with complexes written into ec.rxnEnzMat: getComplexFamilies,
+  levelComplexConcs (median and mean, a subunit shared with another complex, an isozyme variant,
+  unmeasured subunits with fillMissing true and false, a complex without a measurement, an unknown
+  statistic) and flexibilizeEnzConcs with perComplex true and false on a model whose levelled
+  complex binds.
+
+entries:
+  - getComplexFamilies
+  - levelComplexConcs
+  - flexibilizeEnzConcs
+
+inputs:
+  adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
+  adapter_python: "{python_repo}/examples/ecTestGEM"
+  fixture_dir: "{matlab_repo}/test/unit_tests/ecTestGEM"
+
+  matlab_solver: gurobi
+  python_solver: gurobi
+
+  # The fixture of flexibilize_edge_cases_ectestgem: R2 and R4 blocked, P5 the one binding enzyme.
+  kcats:
+    R3: 15.0
+    R5: 200.0
+  exp_growth: 2.5
+  fold_change: 2.0
+  iter_per_enzyme: 5
+  # Above the growth reached with the mean-levelled complex (7.014), which P4 limits.
+  exp_growth_mean: 8.0
+
+  # Rows of ec.rxnEnzMat (copies per subunit) written into the model before levelling. The
+  # fixture has one enzyme per reaction except R2_EXP_1 (P1 and P2, one copy each); the layouts
+  # replace whole rows, so a reaction with {} has no enzyme. applyKcatConstraints builds the
+  # enzyme coefficients of the reaction from these rows, so the layout also changes the LP: in
+  # `binding` the flux of R5 uses P1, P2 (two copies) and P5, and R2_EXP_1 uses no enzyme.
+  layouts:
+    # P1:P2 = 1:4 on R2_EXP_1
+    pair:
+      R2_EXP_1: {P1: 1, P2: 4}
+      R2_EXP_2: {P3: 1}
+      R3: {P4: 1}
+      R5: {P5: 1}
+    # Three measured subunits, so the median and the mean differ
+    trio:
+      R2_EXP_1: {P1: 1, P2: 4, P3: 2}
+      R2_EXP_2: {}
+      R3: {P4: 1}
+      R5: {P5: 1}
+    # P3 is also a subunit of a second complex, R3, with equal weight
+    shared:
+      R2_EXP_1: {P1: 1, P2: 4, P3: 2}
+      R2_EXP_2: {}
+      R3: {P4: 1, P3: 1}
+      R5: {P5: 1}
+    # R2_EXP_2 is an isozyme variant of R2_EXP_1 that swaps P3 for P4
+    isozyme:
+      R2_EXP_1: {P1: 1, P2: 4, P3: 2}
+      R2_EXP_2: {P1: 1, P2: 4, P4: 2}
+      R3: {}
+      R5: {P5: 1}
+    # P5, the enzyme that limits growth, is one subunit of the complex of R5
+    binding:
+      R2_EXP_1: {}
+      R2_EXP_2: {}
+      R3: {P4: 1}
+      R5: {P5: 1, P2: 2, P1: 1}
+
+# Every case records a raise as a result (`raised`). The levelling cases record ec.concs, the
+# usage-reaction upper bounds after constrainEnzConcs and the sorted adjusted, added, shared and
+# skipped lists. The flexibilize cases record the flexed enzymes sorted by id, their order in the
+# returned list and the growth reached. The tolerance applies to the concentrations and bounds.
+tolerance:
+  rel: 1.0e-6
+  abs: 1.0e-9
