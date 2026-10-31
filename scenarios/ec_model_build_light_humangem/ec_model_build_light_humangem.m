@@ -103,7 +103,7 @@ rows = cell(1, n);
 for i = 1:n
     src = '';
     if ~isempty(ecModel.ec.source{i})
-        src = lower(ecModel.ec.source{i});
+        src = ecModel.ec.source{i};
     end
     rows{i} = struct('reaction', ecModel.ec.rxns{i}, 'kcat', num(ecModel.ec.kcat(i)), 'source', src);
 end

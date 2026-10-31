@@ -45,18 +45,13 @@ def _adapter(inputs: dict) -> ModelAdapter:
     return adapter
 
 
-def _source_token(source: str) -> str:
-    """The base provenance token: 'brenda (wc=0, origin=1)' -> 'brenda'."""
-    return source.split(" (", 1)[0].lower()
-
-
 def _kcat_rows(model) -> list[dict]:
     return sorted(
         (
             {
                 "reaction": str(r),
                 "kcat": num(model.ec.kcat[i]),
-                "source": _source_token(str(model.ec.source[i])) if model.ec.source[i] else "",
+                "source": str(model.ec.source[i]),
             }
             for i, r in enumerate(model.ec.rxns)
         ),

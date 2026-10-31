@@ -102,11 +102,10 @@ inputs:
 # The leverage, rank and sigma0_log of the screens agree, including with the weight 2 on the max-growth data, and so do the
 # masks selected at the three impact shares.
 #
+# screen_source_suffix agrees: "combined (sd=0.10, n=2)" is in group combined with sigma0_log 0.3 on both sides, because both
+#   compare the name before the bracket.
 # order: the rows with equal rank are in a different order (R2_EXP_1 and R2_EXP_2, both with leverage 0). screenKcatLeverage
 #   sorts with the stable sort of MATLAB, screen_kcat_leverage with pandas sort_values, which is not stable.
-# screen_source_suffix: resolveTunableContext matches the whole ec.source against the group names (strcmpi), so
-#   "combined (sd=0.10, n=2)" is unlabelled with sigma0log 0.5. classify_kcat_source in geckopy compares the name before the
-#   bracket, so the source is in group combined with sigma0_log 0.3.
 # screen_no_formulas: fillCarbonNum reads model.metFormulas (line 56), which ecTestGEM does not have, so screenKcatLeverage
 #   raises. screen_kcat_leverage gives every exchange without a formula the carbon weight 1.
 # screen_zero_flux_unknown: both sides raise for a zero-flux id that the model does not have.

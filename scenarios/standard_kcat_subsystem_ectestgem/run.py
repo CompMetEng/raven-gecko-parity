@@ -72,7 +72,7 @@ def _case(inputs: dict, subsystems: dict | None) -> dict:
                 {
                     "reaction": str(r),
                     "kcat": num(model.ec.kcat[i]),
-                    "source": str(model.ec.source[i]).split(" (", 1)[0].lower() if model.ec.source[i] else "",
+                    "source": str(model.ec.source[i]),
                 }
                 for i, r in enumerate(model.ec.rxns)
             ),

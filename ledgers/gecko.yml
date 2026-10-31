@@ -158,7 +158,8 @@ entries:
     reason: Resolves the tunable kcat subset, source-group tiers, and tie groups shared by screenKcatLeverage
       and cmaesKcatTuning. geckopy has the same capability, but
       split across kcat_tuning.evotune.priors.classify_kcat_source(s)/build_sigma0_log and
-      kcat_tuning.evotune.tying.isozyme_tie_map rather than one function of its own.
+      kcat_tuning.evotune.tying.isozyme_tie_map rather than one function of its own. A source with a
+      detail, such as 'combined (sd=0.10, n=2)', is in the group of its name before ' (' on both sides.
   - matlab: reviewKcatAssignment
     status: python-pending
     scenarios:
@@ -183,10 +184,9 @@ entries:
       - screen_no_formulas.raised
       - screen_no_formulas.rows
       - screen_source_suffix.order
-      - screen_source_suffix.rows
       - screen_zero_flux_known.order
     notes: >-
-      Pre-tuning report of which kcats the data can actually constrain, no optimization run. Matches kcat_tuning.evotune.tuning.screen_kcat_leverage (geckopy#51). Leverage, rank and sigma0_log agree except for the row whose source group differs (below), where rank, sigma0_log and cum_leverage_share differ. The sides differ in the order of rows of equal rank (a stable sort in MATLAB, pandas sort_values in geckopy), in a source such as 'combined (sd=0.10, n=2)' (unlabelled in MATLAB, group combined in geckopy) and for a model without metFormulas (MATLAB raises, geckopy gives every exchange the carbon weight 1) (evotune_edge_cases_ectestgem).
+      Pre-tuning report of which kcats the data can actually constrain, no optimization run. Matches kcat_tuning.evotune.tuning.screen_kcat_leverage (geckopy#51). Leverage, rank and sigma0_log agree; a source with a detail such as 'combined (sd=0.10, n=2)' is in the group of its name before ' (' on both sides (such a kcat gets the sigma0 of that group). The sides differ in the order of rows of equal rank (a stable sort in MATLAB, pandas sort_values in geckopy) and for a model without metFormulas (MATLAB raises, geckopy gives every exchange the carbon weight 1) (evotune_edge_cases_ectestgem).
   - matlab: selectTunableMask
     python: geckopy.kcat_tuning.evotune.select_tunable_mask
     status: parity
@@ -214,24 +214,17 @@ entries:
     status: parity
     scenarios:
       - kcat_assignment_pipeline_ectestgem
-    differs:
-      - collect.select_assigned
+    differs: []
     notes: >-
-      Decides one kcat per reaction from the kcat source files and applies them to the ecModel. MATLAB returns a model copy plus the decisions and the report; geckopy works in place and returns (decisions, report). kcat and spread agree. The decisions differ in two fields: MATLAB reports twice the candidates when a stage holds database_top and database_bottom (see collectKcats), and ec.source reads 'brenda' in MATLAB and 'brenda (wc=0, origin=1)' in geckopy (kcat_assignment_pipeline_ectestgem).
+      Decides one kcat per reaction from the kcat source files and applies them to the ecModel. MATLAB returns a model copy plus the decisions and the report; geckopy works in place and returns (decisions, report). kcat, spread, candidates and ec.source agree: the source is the lower case snake_case label followed by the wildcard level and origin of a BRENDA match in brackets, such as 'brenda (wc=0, origin=1)' (kcat_assignment_pipeline_ectestgem).
   - matlab: collectKcats
     python: geckopy.collect_kcats
     status: parity
     scenarios:
       - kcat_assignment_pipeline_ectestgem
-    differs:
-      - collect.combine_complete
-      - collect.combine_homologs_without_rows
-      - collect.select_complete
-      - collect.select_dlkcat_without_rows
-      - collect.select_isozymes_and_standard
-      - collect.select_no_custom_file
+    differs: []
     notes: >-
-      Decides one kcat per reaction from the kcat source files in data/kcats, without applying them. With database_top and database_bottom in one stage, MATLAB reports twice the candidates geckopy reports (collectKcats.m line 212 tests for an already collected list with isequal, which is false for a list that holds NaN); kcat and spread agree. The source text of a decision differs: geckopy appends the wildcard level and origin ('brenda (wc=0, origin=1)'), MATLAB gives 'brenda' (kcat_assignment_pipeline_ectestgem).
+      Decides one kcat per reaction from the kcat source files in data/kcats, without applying them. A source file that several tokens of one stage name (database_top and database_bottom both read brenda.tsv) is one list on both sides, so kcat, spread, candidates and the source text of a decision ('brenda (wc=0, origin=1)') agree. A leading okp_ of a row's source label is dropped when the labels of a file are put into the priority, as in geckopy (kcat_assignment_pipeline_ectestgem).
   - matlab: convertCustomKcats
     python: geckopy.convert_custom_kcats
     status: parity
@@ -244,11 +237,10 @@ entries:
     status: python-pending
     scenarios:
       - kcat_assignment_pipeline_ectestgem
-    differs:
-      - ec_tree.k_nan
+    differs: []
     issue: CompMetEng/geckopy#68
     notes: >-
-      EC-tree kcat estimates for a list of EC numbers, from the median log10 kcat of the measurements up the tree. geckopy has the same estimate as ECTree.estimate (gather_kcats/ec_tree.py), a method of a class that is not exported through __all__, so there is no public function to pair with. ECTree.estimate accepts k = NaN and returns NaN estimates, ecTreeEstimate raises (kcat_assignment_pipeline_ectestgem).
+      EC-tree kcat estimates for a list of EC numbers, from the median log10 kcat of the measurements up the tree. geckopy has the same estimate as ECTree.estimate (gather_kcats/ec_tree.py), a method of a class that is not exported through __all__, so there is no public function to pair with. Both sides raise for k = NaN, k = 0 and a negative k (kcat_assignment_pipeline_ectestgem).
   - matlab: extractEnzymeSubstratePairs
     python: geckopy.gather_kcats.extract_enzyme_substrate_pairs
     status: parity
@@ -263,13 +255,10 @@ entries:
     status: python-pending
     scenarios:
       - kcat_assignment_pipeline_ectestgem
-    differs:
-      - config.criteria_capitalised
-      - config.preset_empty
-      - config.stage_sources_string
+    differs: []
     issue: CompMetEng/geckopy#68
     notes: >-
-      Reads [kcat_assignment] and [kcat_sources.*] of model_adapter.toml. geckopy has the same reader as kcat_assignment_config (gather_kcats/kcat_assignment.py), which is not exported through __all__. geckopy has kcat_assignment_config in gather_kcats/kcat_assignment.py, which is not exported through __all__. geckopy validates [kcat_assignment] with a schema and MATLAB reads what is there: a capitalised criteria, an empty preset and a stage whose sources is a string raise in geckopy and are accepted by MATLAB (kcat_assignment_pipeline_ectestgem).
+      Reads [kcat_assignment] and [kcat_sources.*] of model_adapter.toml. geckopy has the same reader as kcat_assignment_config (gather_kcats/kcat_assignment.py), which is not exported through __all__. geckopy validates [kcat_assignment] with a schema; kcatAssignmentConfig raises kcatAssignment:config for the same values: a capitalised criteria, an empty preset and a stage whose sources is not a list (kcat_assignment_pipeline_ectestgem).
   - matlab: kcatsFromBrenda
     python: geckopy.kcats_from_brenda
     status: parity
@@ -283,11 +272,9 @@ entries:
     status: parity
     scenarios:
       - kcat_assignment_pipeline_ectestgem
-    differs:
-      - ec_tree_model.empty_subset
-      - ec_tree_model.subset_with_repeat
+    differs: []
     notes: >-
-      Estimates kcats from the EC tree and keeps them as a source file. An empty ec_rxns list raises in kcats_from_ec_tree and means every reaction in kcatsFromECTree. A repeated reaction gives one row per mention in MATLAB and one row in geckopy (kcat_assignment_pipeline_ectestgem).
+      Estimates kcats from the EC tree and keeps them as a source file. An ecRxns given explicitly as an empty list selects no reaction on both sides (MATLAB selects all reactions when ecRxns is left out); a reaction named more than once gives one row, in the order of model.ec.rxns (kcat_assignment_pipeline_ectestgem).
   - matlab: kcatsFromHomologs
     python: geckopy.kcats_from_homologs
     status: parity
@@ -311,10 +298,9 @@ entries:
     status: parity
     scenarios:
       - kcat_io_edge_cases_ectestgem
-    differs:
-      - load_source.n_invalid
+    differs: []
     notes: >-
-      Reads a kcat source file and maps its rows to an ecModel. geckopy also exports read_kcat_source, which reads the file without a model. A row that starts with a quote and never closes it, and a row of empty quoted fields, are skipped in MATLAB and reported as invalid in geckopy (kcat_io_edge_cases_ectestgem).
+      Reads a kcat source file and maps its rows to an ecModel. geckopy also exports read_kcat_source, which reads the file without a model. A row of empty quoted fields is skipped on both sides, as a row of tabs is, and a field that opens a double quote and does not close it raises (loadKcatSource:quote in MATLAB, ValueError in geckopy) (kcat_io_edge_cases_ectestgem).
   - matlab: saveKcatSource
     python: geckopy.save_kcat_source
     status: parity
@@ -660,11 +646,9 @@ entries:
       - ec_model_build_light_humangem
       - ec_model_build_yarrowia
       - standard_kcat_subsystem_ectestgem
-    differs:
-      - standard.extra_reactions
-      - standard.light_called_twice
+    differs: []
     notes: >-
-      Both sides aggregate a subsystem's kcat as the median (kcats span orders of magnitude, so a mean is dominated by the largest member), count only reactions with a real (nonzero, non-NaN) kcat toward a subsystem's threshold, so both take the same branch (subsystem-specific kcat or global fallback) for the same input, and treat a NaN kcat as unset when they fill zero kcats. They differ for a reaction without a GPR and with two substrates (an exchange reaction for MATLAB, so no standard enzyme; an ordinary reaction for geckopy), for a reaction named 'Biomass Pseudoreaction' (matched case-insensitively in geckopy only) and for a second call on a light model (MATLAB raises, geckopy returns) (kcat_io_edge_cases_ectestgem). Names of subsystems that differ by letter case count as one subsystem on both sides (Human-GEM has "Pentose phosphate pathway" and "Pentose Phosphate Pathway"), and a reaction without a subsystem gets the model-wide kcat while other reactions have one (iYali5-GEM); the standard kcats agree on Human-GEM light (1365 new reactions) and on iYali5-GEM (standard_kcat_subsystem_ectestgem, ec_model_build_light_humangem, ec_model_build_yarrowia).
+      Both sides aggregate a subsystem's kcat as the median (kcats span orders of magnitude, so a mean is dominated by the largest member), count only reactions with a real (nonzero, non-NaN) kcat toward a subsystem's threshold, so both take the same branch (subsystem-specific kcat or global fallback) for the same input, and treat a NaN kcat as unset when they fill zero kcats. Both leave out an exchange reaction as RAVEN's getExchangeRxns defines it (no substrate or no product, so a reaction without a GPR and with two substrates is one), a reaction whose name contains 'pseudoreaction' or 'SLIME rxn' in any letter case, and add the standard enzyme once: a second call on a light model removes the first call's standard rows and adds them again (kcat_io_edge_cases_ectestgem). Names of subsystems that differ by letter case count as one subsystem on both sides (Human-GEM has "Pentose phosphate pathway" and "Pentose Phosphate Pathway"), and a reaction without a subsystem gets the model-wide kcat while other reactions have one (iYali5-GEM); the standard kcats agree on Human-GEM light (1365 new reactions) and on iYali5-GEM (standard_kcat_subsystem_ectestgem, ec_model_build_light_humangem, ec_model_build_yarrowia).
   - matlab: getSubsetEcModel
     python: geckopy.get_subset_ec_model
     status: parity
@@ -773,10 +757,9 @@ entries:
     scenarios:
       - kcat_chain_ectestgem
       - kcat_merge_edge_cases_ectestgem
-    differs:
-      - merge_okp_prefix.merged
+    differs: []
     notes: >-
-      Matching three tier tokens (database_exact/database_top/database_bottom), matching default database source set (brenda, sabio_rk), matching source-label normalisation to lowercase snake_case. topOriginLimit defaults to 4 on both sides, so a BRENDA match of origin 5 or 6 ranks after a DLKcat prediction unless topOriginLimit is raised. A row whose source carries the OKP- tag is matched by its underlying source in geckopy (the okp_ prefix is stripped for matching, so 'OKP-BRENDA' routes to the database tiers and 'OKP-CataPro' matches a 'catapro' priority entry, and the rows keep their OKP- source label). MATLAB drops those rows (the normalised source okp_brenda is neither a database source nor in the priority), so for the probe reactions it takes DLKcat with kcat 9 where geckopy keeps kcat 3 (OKP-BRENDA) and 4 (OKP-CataPro) (kcat_merge_edge_cases_ectestgem).
+      Matching three tier tokens (database_exact/database_top/database_bottom), matching default database source set (brenda, sabio_rk), matching source-label normalisation to lowercase snake_case. topOriginLimit defaults to 4 on both sides, so a BRENDA match of origin 5 or 6 ranks after a DLKcat prediction unless topOriginLimit is raised. A leading okp_ of a row's normalised source is dropped for matching on both sides (a row whose source carries the OKP- tag), so 'OKP-BRENDA' routes to the database tiers and 'OKP-CataPro' matches a 'catapro' priority entry, and the rows keep their OKP- source label (kcat_merge_edge_cases_ectestgem).
   - matlab: ModelAdapter
     python: geckopy.ModelAdapter
     status: parity
@@ -800,14 +783,9 @@ entries:
       - kcat_chain_ectestgem
       - kcat_merge_edge_cases_ectestgem
       - ec_model_build_light_humangem
-    differs:
-      - read_dlkcat.dl_all_none
-      - read_dlkcat.dl_dotted
-      - read_dlkcat.dl_inf
-      - read_dlkcat.dl_unknown_rxn_na
-      - read_dlkcat.dl_unknown_substrate
+    differs: []
     notes: >-
-      An unrecognised substrate name is fatal in readDLKcatOutput (it aborts the whole read), while read_dlkcat_output drops just that row by default and accepts strict=True to opt into MATLAB's fail-fast behaviour; it reports the non-numeric-kcat and unrecognised-substrate drop counts separately. Substrate-name matching against model.metNames is case-insensitive on both sides. An unknown reaction with kcat NA raises in MATLAB and is accepted by geckopy, 'inf' is kept by geckopy and dropped by MATLAB, '1.2.3' is kept as NaN by MATLAB and dropped by geckopy, and a file with only 'None' raises in geckopy and gives an empty list in MATLAB (kcat_merge_edge_cases_ectestgem).
+      A row whose kcat is not a finite number ('NA', 'None', empty, 'inf', '1.2.3') is dropped before the reactions are checked, on both sides; a file without such a number raises, and a reaction that is not in model.ec.rxns raises when its row has a kcat. A substrate name that is not in model.metNames (matched case-insensitively) drops its row with a warning on both sides; strict (the option 'strict' in MATLAB, strict=True in geckopy) raises instead. read_dlkcat_output reports the non-numeric-kcat and unrecognised-substrate drop counts separately (kcat_merge_edge_cases_ectestgem).
   - matlab: readOpenKineticsPredictorOutput
     python: geckopy.gather_kcats.open_kinetics_predictor.parse_okp_output
     status: parity
@@ -952,11 +930,9 @@ entries:
     scenarios:
       - kcat_chain_ectestgem
       - kcat_merge_edge_cases_ectestgem
-    differs:
-      - write_dlkcat.empty_selection
-      - write_dlkcat.selection_order
+    differs: []
     notes: >-
-      An empty selection raises in MATLAB and writes an empty file in geckopy. Rows follow ec.rxns order in MATLAB and the order of the caller in geckopy (kcat_merge_edge_cases_ectestgem).
+      An empty selection writes an empty file and returns no rows on both sides. Rows follow the order of ec.rxns on both sides, whatever the order of the selection given to geckopy (kcat_merge_edge_cases_ectestgem).
   - matlab: writeOpenKineticsPredictorInput
     python: geckopy.gather_kcats.open_kinetics_predictor.build_okp_input_csv
     status: parity
