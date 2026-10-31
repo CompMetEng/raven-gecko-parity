@@ -16,15 +16,14 @@ entries:
   - loadKcatSource
   - getStandardKcat
 
-# Differences this scenario reports (seed-independent, confirmed by running both sides; the
-# scenario stays DIFFER until the sides are aligned or the difference is recorded as intended):
-#   findMetSmiles: with a duplicated name in smilesDB.tsv MATLAB takes the first row and Python
-#     the last; a metabolite without a name gets no SMILES in MATLAB and is looked up by its id
-#     in Python.
-# Cases that agree: loadKcatSource skips a row of empty quoted fields and a quoted comment and raises
-# for a field that opens a quote and never closes it; getStandardKcat leaves out a reaction without
-# a GPR and with two substrates (an exchange reaction), a reaction named 'Biomass Pseudoreaction',
-# and runs twice on a light model; saveKcatSource writes a tab or line break of the detail text as a space, so
+# All cases agree on both sides:
+#   findMetSmiles takes the last row of a name that is duplicated in smilesDB.tsv and gives no
+#     SMILES to a metabolite without a name (with a warning).
+#   loadKcatSource skips a row of empty quoted fields and a quoted comment and raises for a field
+#     that opens a quote and never closes it.
+#   getStandardKcat leaves out a reaction without a GPR and with two substrates (an exchange
+#     reaction) and a reaction named 'Biomass Pseudoreaction', and runs twice on a light model.
+#   saveKcatSource writes a tab or line break of the detail text as a space, so
 # a row is never split, and leaves no leading, trailing or repeated '; ' in the detail column.
 # The OpenKineticsPredictor input for all reactions agrees on this fixture.
 

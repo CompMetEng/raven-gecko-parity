@@ -14,22 +14,13 @@ description: >-
   on both sides. Nothing reaches the network.
 
 # Differences this scenario reports (the run decides, the sources explain):
-#   * ec_stats: ecStatsFromBrenda always gives kcatMedian NaN (loadBRENDAdata hands over one
-#     aggregate column; ecStatsFromBrenda.m: 'kcatMedian',NaN) and holds the per-triple values
-#     of that column only; ec_stats_from_brenda gives the median of the medians and holds
-#     maxima and medians in `values`. MATLAB upper-cases the EC keys ('3.5.1.N3'), Python keeps
-#     them ('3.5.1.n3'), and reviewKcatAssignment looks the model's EC up as written.
-#   * review_loader_stats: with those statistics MATLAB cannot flag ec-maximum (needs a finite
-#     median), flags no custom value that equals a median, and finds no statistics for an EC
-#     with a lowercase letter.
-#   * review_hand_stats: with identical statistics the review differs in the case of the source
-#     only: MATLAB compares 'custom' and 'standard' with strcmpi, Python exactly, so 'Custom'
-#     is checked for a duplicate and 'STANDARD' is treated as the fallback in MATLAB only.
-#   * lowercase_ec_in_mw: both sides load an mw.tsv with a lowercase EC; the statistics then
-#     differ as in ec_stats (median, values and the case of the EC key).
-#   * measurements: MATLAB reads measurements.tsv only; Python prefers measurements.tsv.xz and
-#     falls back to measurements.tsv, so a folder with only the .xz file raises in MATLAB and a
-#     folder with both gives different tables.
+#   * review_hand_stats, review_hand_stats_optional, review_hand_stats_top, review_loader_stats:
+#     the review differs in the case of the source only: MATLAB compares 'custom' and 'standard'
+#     with strcmpi, Python exactly, so 'Custom' is checked for a duplicate and 'STANDARD' is
+#     treated as the fallback in MATLAB only. ecStatsFromBrenda is called with the max and the
+#     median view of loadBRENDAdata; its statistics agree with ec_stats_from_brenda, including an
+#     EC with a lowercase letter (ec_stats, lowercase_ec_in_mw).
+#   * measurements: both sides read measurements.tsv.xz in preference to measurements.tsv.
 
 entries:
   - ecStatsFromBrenda

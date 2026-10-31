@@ -113,17 +113,13 @@ entries:
     notes: >-
       Main CMA-ES kcat-tuning entry point (GECKO#477, closes raven-gecko-parity#21). Its docstring says it was written to match "what geckopy's own port actually runs"; that port is kcat_tuning.evotune.tuning.cmaes_kcat_tuning (geckopy#51). With a flat objective the sides differ: cmaesKcatTuning runs all max_generations generations, cmaes_kcat_tuning hands the search to cma, whose own stopping criteria apply, and stops after 1 generation; neither changes a kcat (evotune_edge_cases_ectestgem).
   - matlab: ecStatsFromBrenda
-    status: python-pending
+    python: geckopy.ec_stats_from_brenda
+    status: parity
     scenarios:
       - kcat_review_stats_ectestgem
-    differs:
-      - ec_stats.ec
-      - ec_stats.kcat_median
-      - ec_stats.values
-      - lowercase_ec_in_mw.stats
-    issue: CompMetEng/raven-gecko-parity#123
+    differs: []
     notes: >-
-      Summarises loadBRENDAdata's output per EC number for reviewKcatAssignment. Its docstring says it is ported from geckopy's ec_stats_from_brenda (gather_kcats/review.py). The MATLAB function carries a TODO: loadBRENDAdata returns one aggregate column, so kcatMedian is always NaN. geckopy has ec_stats_from_brenda in gather_kcats/review.py, which is not exported through __all__. ecStatsFromBrenda always gives kcatMedian NaN and holds the values of one aggregate column; ec_stats_from_brenda gives the median of the medians and holds maxima and medians. MATLAB upper-cases the EC keys ('3.5.1.N3') and geckopy keeps them (kcat_review_stats_ectestgem).
+      Summarises the BRENDA kcat rows per EC number for reviewKcatAssignment: number of rows and maximum of the max view, median of the median view, the rounded values of both views and the number of specific-activity rows. ecStatsFromBrenda takes the max view and the median view as two loadBRENDAdata outputs (the third argument; without it kcatMedian is NaN and a warning is given), keeps the case of the EC numbers, and agrees with ec_stats_from_brenda on the BRENDA folders of kcat_review_stats_ectestgem, including an EC with a lowercase letter in kcat.tsv, mw.tsv and sa.tsv. geckopy exports ec_stats_from_brenda and the EcStats class from geckopy and geckopy.gather_kcats.
   - matlab: evotuneScore
     python: geckopy.kcat_tuning.evotune.evotune_distance
     status: parity
@@ -161,17 +157,14 @@ entries:
       kcat_tuning.evotune.tying.isozyme_tie_map rather than one function of its own. A source with a
       detail, such as 'combined (sd=0.10, n=2)', is in the group of its name before ' (' on both sides.
   - matlab: reviewKcatAssignment
-    status: python-pending
+    python: geckopy.review_assignment
+    status: parity
     scenarios:
       - kcat_review_stats_ectestgem
-    differs:
-      - review_hand_stats.findings
-      - review_hand_stats_optional.findings
-      - review_hand_stats_top.findings
-      - review_loader_stats.findings
+    differs: []
     issue: CompMetEng/raven-gecko-parity#123
     notes: >-
-      Flags kcat assignments (largest corrections, biggest outliers) that deserve curator review. geckopy has review_assignment (gather_kcats/review.py), which is not exported through __all__. Both rank by leverage and report a parameter once for tied isozymes. geckopy has review_assignment in gather_kcats/review.py, which is not exported through __all__. With identical statistics the sides differ in the case of the source only: MATLAB compares 'custom' and 'standard' with strcmpi, geckopy exactly. With loader statistics MATLAB cannot flag ec-maximum and finds no statistics for an EC with a lowercase letter (kcat_review_stats_ectestgem).
+      Flags kcat assignments (largest corrections, biggest outliers) that deserve curator review. Both rank by leverage and report a parameter once for tied isozymes, recognise the source labels 'custom' and 'standard' without regard to letter case, and with the statistics of ecStatsFromBrenda both flag ec-maximum. geckopy exports review_assignment from geckopy and geckopy.gather_kcats (kcat_review_stats_ectestgem).
   - matlab: screenKcatLeverage
     python: geckopy.kcat_tuning.evotune.screen_kcat_leverage
     status: parity
@@ -288,11 +281,9 @@ entries:
     status: parity
     scenarios:
       - kcat_review_stats_ectestgem
-    differs:
-      - measurements.meas_both
-      - measurements.meas_xz
+    differs: []
     notes: >-
-      Loads measurements.tsv from the BRENDA database folder. geckopy prefers measurements.tsv.xz when it is present; MATLAB reads only measurements.tsv. A folder with only measurements.tsv.xz raises in MATLAB, and a folder with both files gives different tables (kcat_review_stats_ectestgem).
+      Loads measurements.tsv.xz from the BRENDA database folder, or measurements.tsv when there is no .xz file. MATLAB decompresses the .xz file with the xz command, which has to be on the system path; geckopy decompresses it with lzma (kcat_review_stats_ectestgem).
   - matlab: loadKcatSource
     python: geckopy.load_kcat_source
     status: parity
@@ -531,6 +522,9 @@ entries:
   - matlab: findGECKOroot
     status: internal
     reason: Path helper. pathlib.Path(__file__) covers it; nothing to port.
+  - python: geckopy.EcStats
+    status: python-only
+    reason: Data class of the per-EC statistics that review_assignment takes; ecStatsFromBrenda returns a containers.Map of structs with the same fields.
   - python: geckopy.find_max_value
     status: python-only
     reason: 'findMaxValue.m was removed from GECKO (GECKO#465): it had no callers anywhere in the codebase
@@ -543,11 +537,9 @@ entries:
     scenarios:
       - okp_kcat_ectestgem
       - kcat_io_edge_cases_ectestgem
-    differs:
-      - smiles.duplicate_cache_name
-      - smiles.empty_metabolite_name
+    differs: []
     notes: >-
-      A duplicated name in smilesDB.tsv: MATLAB takes the first row, geckopy the last. A metabolite without a name gets no SMILES in MATLAB and is looked up by its id in geckopy (kcat_io_edge_cases_ectestgem).
+      Both take the last row of a name that is duplicated in smilesDB.tsv, and skip a metabolite without a name with a warning (MATLAB id findMetSmiles:emptyName, geckopy a logged warning), so it gets no SMILES (kcat_io_edge_cases_ectestgem).
   - matlab: flexibilizeEnzConcs
     python: geckopy.flexibilize_enz_concs
     status: parity
@@ -598,11 +590,9 @@ entries:
       - enzyme_annotation_ectestgem
       - ec_lookup_edge_cases_ectestgem
       - ec_model_build_yarrowia
-    differs:
-      - database_checks.conflict_display
-      - database_checks.conflict_unselected
+    differs: []
     notes: >-
-      Both split a database cell on ';' and on white space. Conflicting ECs for one gene with the action 'display': MATLAB raises, geckopy logs a warning and takes the first EC; with 'ignore' both agree. MATLAB visits every reaction before it applies the selection, so a conflict outside the selected reactions also raises; geckopy looks at the selected reactions only (ec_lookup_edge_cases_ectestgem).
+      Both split a database cell on ';' and on white space. Conflicting ECs for one gene with the action 'display': both give a warning that lists the conflicts and take the first EC; with 'ignore' both take the first EC. Both look at the selected reactions only, so a conflict outside the selection gives no warning, and an explicitly empty selection (an empty logical array in MATLAB, an empty list in geckopy) searches nothing; MATLAB's [] or omitted ecRxns means all reactions. Both raise for an action other than 'display' and 'ignore' (MATLAB id getECfromDatabase:unsupportedAction, geckopy ValueError) (ec_lookup_edge_cases_ectestgem).
   - matlab: getECfromGEM
     python: geckopy.fill_eccodes_from_gem
     status: parity
