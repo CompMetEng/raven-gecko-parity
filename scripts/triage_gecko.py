@@ -11,9 +11,6 @@ rows themselves:
 * MATLAB's OpenKineticsPredictor REST client (`submitOpenKineticsPredictor`,
   `fetchOpenKineticsPredictor`) and `mergeKcats` exist only on the unmerged
   `feat/geckopy-compat` branch. On `develop4` the file-based round-trip is still what ships.
-* `bayesianSensitivityTuning` is marked "not ported" in the migration doc, but
-  `geckopy/docs/internal/bayesian_tuning_plan.md` says the port is planned and paused --- so
-  it is queued work, not a settled divergence.
 
 Run once:  python scripts/triage_gecko.py
 """
@@ -75,12 +72,6 @@ MATLAB_ONLY: dict[str, str] = {
 }
 
 PYTHON_PENDING: dict[str, tuple[str | None, str]] = {
-    "bayesianSensitivityTuning": (
-        None,
-        "ABC-SMC kcat tuning (~1370 LOC with its helpers). The migration doc calls it "
-        "'not ported', but geckopy/docs/internal/bayesian_tuning_plan.md has the design and "
-        "says the work is paused, not abandoned --- queued, not a divergence.",
-    ),
 }
 
 MATLAB_PENDING: dict[str, tuple[str | None, str]] = {
@@ -118,11 +109,6 @@ MATLAB_PENDING: dict[str, tuple[str | None, str]] = {
 # --------------------------------------------------------------------------------------
 # Not part of the cross-implementation API.
 # --------------------------------------------------------------------------------------
-BAYESIAN_HELPER = (
-    "Helper of bayesianSensitivityTuning, not a standalone entry point. It will be absorbed "
-    "into the Python port rather than getting a counterpart of its own."
-)
-
 # The capability exists on the Python side, just not as its own exported function.
 SUBSUMED: dict[str, str] = {
     "adapterTemplate": (
@@ -156,13 +142,6 @@ INTERNAL: dict[str, str] = {
     "parseGECKOargs": (
         "MATLAB varargin parsing glue. Python uses ordinary keyword arguments."
     ),
-    # Bayesian helpers.
-    "abc_max": BAYESIAN_HELPER,
-    "addCarbonNum": BAYESIAN_HELPER,
-    "getrSample": BAYESIAN_HELPER,
-    "loadBayesianData": BAYESIAN_HELPER,
-    "mse": BAYESIAN_HELPER,
-    "updateprior": BAYESIAN_HELPER,
 }
 
 # geckopy's deprecated aliases, filled in from REPAIR below.
