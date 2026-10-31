@@ -84,37 +84,28 @@ inputs:
 #
 # screen_control: leverage of R3, R5 and the two blocked R2 isozymes. The order of the rows and the rows sorted by
 #   reaction are both reported, so the order of tied rows (R2_EXP_1 and R2_EXP_2 both have leverage 0) is separate.
-# screen_no_formulas: the screen of screen_control on a model without metFormulas. fillCarbonNum reads model.metFormulas,
-#   so the MATLAB side runs the other cases on a copy with empty formulas, which weights every exchange 1 as geckopy does
-#   for a metabolite without a formula.
+# screen_no_formulas: the screen of screen_control on a model without metFormulas. fillCarbonNum warns and weights every
+#   exchange 1, as compute_excarbon does for a model in which no metabolite has a formula.
 # screen_source_suffix: the source of R3 is "combined (sd=0.10, n=2)" and the group is "combined".
 # screen_max_growth_weight: the same screen with a weight of 2 on the max-growth data.
 # screen_zero_flux_*: the flux data has one column (S1); S2 is listed as a reaction without flux, and a second list
 #   adds a reaction id that the model does not have.
 # select_mask_*: the tunable mask from the control screen at three impact shares.
-# cmaes_flat: the tunable set is the two blocked R2 isozymes, so the objective is flat. cmaesKcatTuning stops at
-#   max_generations or at the RMSE threshold; geckopy hands the search to cma, whose own stopping criteria apply too.
+# cmaes_flat: the tunable set is the two blocked R2 isozymes, so the objective is flat. Both sides stop at max_generations
+#   or at the RMSE threshold.
 # helpers: nChanged, parsimonyFrontier with a score of the mean absolute log distance to the tuned vector, and
 #   bestParsimonious on that frontier and on three points of which the one at helper_nan_index has an RMSE of NaN.
 
 # Differences confirmed by direct execution (seeds 0, 1 and 2 agree):
 #
 # The leverage, rank and sigma0_log of the screens agree, including with the weight 2 on the max-growth data, and so do the
-# masks selected at the three impact shares.
+# masks selected at the three impact shares, the order of tied rows, the screen without formulas, the flat CMA-ES run and the
+# helpers.
 #
-# order: the rows with equal rank are in a different order (R2_EXP_1 and R2_EXP_2, both with leverage 0). screenKcatLeverage
-#   sorts with the stable sort of MATLAB, screen_kcat_leverage with pandas sort_values, which is not stable.
 # screen_source_suffix: resolveTunableContext matches the whole ec.source against the group names (strcmpi), so
 #   "combined (sd=0.10, n=2)" is unlabelled with sigma0log 0.5. classify_kcat_source in geckopy compares the name before the
 #   bracket, so the source is in group combined with sigma0_log 0.3.
-# screen_no_formulas: fillCarbonNum reads model.metFormulas (line 56), which ecTestGEM does not have, so screenKcatLeverage
-#   raises. screen_kcat_leverage gives every exchange without a formula the carbon weight 1.
 # screen_zero_flux_unknown: both sides raise for a zero-flux id that the model does not have.
-# cmaes_flat: with a flat objective cmaesKcatTuning runs all max_generations (15) generations; cmaes_kcat_tuning hands the
-#   search to cma, whose stopping criteria apply as well, and stops after 1 generation. Neither changes a kcat.
-# helpers: bestParsimonious takes min(rmses), which skips NaN, and returns the point with the fewest changes among those within
-#   tolerance. best_parsimonious takes min over the points, which returns NaN when the first RMSE is NaN, so no point is within
-#   tolerance and it raises ValueError.
 
 tolerance:
   rel: 1.0e-6

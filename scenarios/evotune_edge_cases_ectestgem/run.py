@@ -197,7 +197,7 @@ def run(ctx):
     results = {}
     control, model, screen = _screen(adapter, conv, inputs, inputs["control_sources"], params, data)
     results["screen_control"] = control
-    # The model has no metabolite formulas; geckopy gives every exchange a carbon weight of 1.
+    # The model has no metabolite formulas; compute_excarbon warns and gives every exchange a carbon weight of 1.
     results["screen_no_formulas"] = control
     results["screen_source_suffix"] = _screen(adapter, conv, inputs, inputs["suffix_sources"], params, data)[0]
     results["screen_max_growth_weight"] = _screen(adapter, conv, inputs, inputs["control_sources"], heavy, data)[0]
