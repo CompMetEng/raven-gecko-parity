@@ -16,6 +16,10 @@ function results = ec_model_io_ectestgem(ctx)
 adapter = ModelAdapterManager.getAdapter(ctx.inputs.adapter_matlab);
 model = loadConventionalGEM('modelAdapter', adapter);
 ecModel = makeEcModel(model, false, adapter);
+% R5 becomes an ec reaction without enzymes, as a standard kcat row is.
+row = find(strcmp(ecModel.ec.rxns, 'R5'));
+ecModel.ec.rxnEnzMat(row, :) = 0;
+ecModel.ec.source{row} = 'standard';
 
 results.direct = summary(ecModel);
 
