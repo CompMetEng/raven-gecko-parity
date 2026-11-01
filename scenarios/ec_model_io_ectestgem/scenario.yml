@@ -7,17 +7,19 @@ description: >-
 # The GECKO analogue of raven-toolbox's own yaml_roundtrip_smallyeast. saveEcModel and
 # save_ec_model are both thin wrappers around RAVEN's writeYAMLmodel / write_yaml_model (see
 # their own docstrings). The `direct` and `roundtrip` checkpoints show that each side reads
-# back its own file unchanged. The `written` checkpoint differs in content, not in layout:
-# the two files have the same indent, key order and quoting, and identical `ec-rxns`,
-# `ec-enzymes` and `gecko_light` blocks. What differs is `metaData` (both files record
-# gecko_format and a generator line; only the Python file has a description), `charge: 0.0` on four metabolites
-# (cobra's SBML import fills in 0 where the SBML sets none), SBO terms on metabolites,
-# reactions and genes (kept by cobra, dropped by the MATLAB import when one term covers a whole
-# entity type), `subsystem: Protein usage` on the protein-pool reactions (always set by
-# make_ec_model, only set by makeEcModel when the model has subsystems) and the gene `name`
-# (read from the SBML gene label by the MATLAB import, empty after cobra's import). The
-# `direct` and `roundtrip` summaries do not look at those fields; ec_model_io_crossload_ectestgem
-# does. A single `ec-code` is written as a list by both writers.
+# back its own file unchanged. The `written` checkpoint records the file by top-level section:
+# the ids of `metabolites`, `reactions` and `genes` in file order, and every line of `metaData`
+# (the generator line reduced to its key, because it names GECKO or geckopy), `compartments`,
+# `gecko_light`, `ec-rxns` and `ec-enzymes`. The two files have the same layout and identical
+# lines in those sections. The fields of the model sections are not compared, because they come
+# from the SBML import of each side: `charge: 0.0` on four metabolites (cobra's import fills in 0
+# where the SBML sets none), SBO terms on metabolites, reactions and genes (kept by cobra,
+# dropped by the MATLAB import when one term covers a whole entity type), the gene `name` (read
+# from the SBML gene label by the MATLAB import, empty after cobra's import) and `subsystem:
+# Protein usage` on the protein-pool reactions (always set by make_ec_model, only set by
+# makeEcModel when the model has subsystems). The `direct` and `roundtrip` summaries do not look
+# at those fields; ec_model_io_crossload_ectestgem does. A single `ec-code` is written as a list
+# by both writers.
 #
 # R5 is made an ec reaction without enzymes (an empty row of the coupling matrix and source
 # `standard`, as a standard kcat row) before the write. Both writers give it the same lines

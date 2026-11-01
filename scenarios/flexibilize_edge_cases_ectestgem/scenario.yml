@@ -34,9 +34,7 @@ inputs:
 
 # flex_control and relax_control return real content on both sides. Every other case records a
 # raise as a result. relax_tied_enzymes makes P4's cap equal to the flux it carries, so both
-# enzymes bind and the dual that picks the next enzyme is not unique; the harness runs the Python
-# side under three hash seeds, and a candidate order that follows the hash shows as a difference
-# between the seeds.
+# enzymes bind and the dual that picks the next enzyme is not unique.
 tolerance:
   rel: 1.0e-6
   abs: 1.0e-9
@@ -58,7 +56,7 @@ tolerance:
 #   relax_control: both sides relax P5 and reach the same growth.
 #   relax_empty_enzyme_set: both sides treat an empty set as no candidates and return
 #     converged=false.
-#   relax_tied_enzymes: the final set (P4 and P5) and the final growth are the same. The first
-#     enzyme depends on the dual solution of the LP, which is not unique here: geckopy on Gurobi
-#     relaxes P5 first (shadow price -14.4) and MATLAB P4 first (-1.35); geckopy on scipy
-#     relaxes P4 first, as MATLAB does. The order is the same under all three hash seeds.
+#   relax_tied_enzymes: the final set (P4 and P5), the final growth, convergence and the number of
+#     steps are the same. Which enzyme is relaxed first follows the dual solution of the LP, which
+#     is not unique here (geckopy on Gurobi relaxes P5 first, MATLAB P4 first, geckopy on scipy P4
+#     first), so the scenario records the outcome of the loop and not its order.

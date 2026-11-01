@@ -113,11 +113,30 @@ def _summary(model) -> dict:
 
 
 def _file_record(path: Path) -> dict:
+    """The sections of the written file: ids for the model sections, lines for the others.
+
+    The ids of ``metabolites``, ``reactions`` and ``genes`` are recorded in file order; the
+    fields the two SBML importers fill differently (charge, SBO terms, gene names) stay out of
+    the comparison. The generator line is reduced to its key because it names the tool.
+    """
     text = path.read_text(encoding="utf-8")
     lines = text.replace("\r\n", "\n").split("\n")
     if lines and lines[-1] == "":
         lines.pop()
-    return {"n_lines": len(lines), "n_chars": sum(len(line) for line in lines), "lines": lines}
+    blocks: list[tuple[str, list[str]]] = []
+    for line in lines[1:]:
+        if line.startswith("- "):
+            blocks.append((line[2:].split(":")[0], []))
+        blocks[-1][1].append(line)
+    sections = []
+    for name, block in blocks:
+        if name in ("metabolites", "reactions", "genes"):
+            ids = [line[len("    - id: "):] for line in block if line.startswith("    - id: ")]
+            sections.append({"name": name, "ids": ids})
+        else:
+            block = ["  - generator" if line.startswith("  - generator:") else line for line in block]
+            sections.append({"name": name, "lines": block})
+    return {"n_sections": len(sections), "sections": sections}
 
 
 def _drop_enzymes(ec, rxn_id: str) -> None:

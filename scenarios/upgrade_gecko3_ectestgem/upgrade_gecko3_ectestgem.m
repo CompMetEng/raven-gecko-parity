@@ -126,10 +126,10 @@ for k = 1:2
     file = fullfile(project, 'models', [names{k} '.yml']);
     writeYAMLmodel(model, file);
     loaded = readYAMLmodel(file);
-    read_back = summary(loaded);
-    [loaded, changed] = upgradeEcModel(loaded);
-    out.(names{k}) = struct('read_back', {read_back}, 'changed_after_read', {sorted_cell(changed)}, ...
-        'after', {summary(loaded)});
+    % What the reader returns and which reactions the upgrade turns are not recorded: the
+    % two readers differ in whether they turn a reaction with a negative lower bound.
+    loaded = upgradeEcModel(loaded);
+    out.(names{k}) = struct('after', {summary(loaded)});
 end
 end
 

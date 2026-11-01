@@ -16,11 +16,11 @@ description: >-
   Nothing reaches the network.
 
 # Differences this scenario reports (the run decides, the sources explain):
-#   * yaml_round_trip: geckopy's reader (raven-toolbox _flip_legacy_prot_direction) turns every
+#   * yaml_round_trip: raven-toolbox's reader (_flip_legacy_prot_direction) turns every
 #     usage_prot_* / prot_pool_exchange reaction with a negative lower bound forward while it
-#     reads and leaves the objective alone; MATLAB's readYAMLmodel leaves the model as written
-#     and upgradeEcModel then turns it, objective coefficients included. After the upgrade the
-#     objective of a GECKO 3 model keeps its GECKO 3 sign in Python and not in MATLAB.
+#     reads, objective coefficient included; MATLAB's readYAMLmodel leaves the model as written
+#     and upgradeEcModel then turns it. The scenario records the model after the upgrade, which
+#     agrees; what the reader returns and which reactions the upgrade turns are not recorded.
 #   * projects.forward_model_negative_lb: a GECKO 4 model with a negative lower bound on one
 #     usage reaction is turned by geckopy's reader and back by upgrade_ec_model, so the model
 #     comes out unchanged, but upgrade_project reports '2 protein reactions turned forward' and

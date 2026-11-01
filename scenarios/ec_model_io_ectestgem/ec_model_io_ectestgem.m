@@ -49,6 +49,10 @@ end
 
 
 function record = file_record(path)
+% The sections of the written file: ids for the model sections, lines for the others. The
+% ids of metabolites, reactions and genes are recorded in file order; the fields the two SBML
+% importers fill differently (charge, SBO terms, gene names) stay out of the comparison. The
+% generator line is reduced to its key because it names the tool.
 text = fileread(path);
 text = strrep(text, sprintf('\r\n'), sprintf('\n'));
 lines = strsplit(text, sprintf('\n'), 'CollapseDelimiters', false);
@@ -56,9 +60,30 @@ if ~isempty(lines) && isempty(lines{end})
     lines(end) = [];
 end
 
-record.n_lines = numel(lines);
-record.n_chars = sum(cellfun(@numel, lines));
-record.lines = reshape(lines, 1, []);
+names = {};
+blocks = {};
+for i = 2:numel(lines)
+    if strncmp(lines{i}, '- ', 2)
+        names{end+1} = strtok(lines{i}(3:end), ':'); %#ok<AGROW>
+        blocks{end+1} = {}; %#ok<AGROW>
+    end
+    blocks{end}{end+1} = lines{i};
+end
+sections = cell(1, numel(names));
+for k = 1:numel(names)
+    block = blocks{k};
+    if any(strcmp(names{k}, {'metabolites', 'reactions', 'genes'}))
+        isId = strncmp(block, '    - id: ', 10);
+        ids = cellfun(@(l) l(11:end), block(isId), 'UniformOutput', false);
+        sections{k} = struct('name', names{k}, 'ids', {reshape(ids, 1, [])});
+    else
+        isGen = strncmp(block, '  - generator:', 14);
+        block(isGen) = {'  - generator'};
+        sections{k} = struct('name', names{k}, 'lines', {reshape(block, 1, [])});
+    end
+end
+record.n_sections = numel(sections);
+record.sections = sections;
 end
 
 
