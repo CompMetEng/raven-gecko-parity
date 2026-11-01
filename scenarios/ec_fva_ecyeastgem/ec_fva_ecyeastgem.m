@@ -26,11 +26,6 @@ results.free = fva_case(ecModel, conv, bioIdx);
 ecModel.lb(bioIdx) = ecModel.ub(bioIdx);
 results.fixed = fva_case(ecModel, conv, bioIdx);
 
-% RAVEN's solveLP always gives Gurobi FeasibilityTol and OptimalityTol of 1e-9, so the run with
-% geckopy's cobrapy default tolerance (fixed_cobra_tolerance) has no counterpart: the same
-% result stands in for it.
-results.fixed_cobra_tolerance = results.fixed;
-
 end
 
 
