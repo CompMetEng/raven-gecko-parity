@@ -301,17 +301,16 @@ entries:
       - ec_model_io_eciyali5
     differs: []
     notes: >-
-      Brings an ecModel made with GECKO 3 to the GECKO 4 format. The model after the upgrade agrees for a reverse model and for a forward model with a negative lower bound, objective coefficients included (upgrade_gecko3_ectestgem, ec_model_io_eciyali5). The readers differ before the upgrade runs: the Python reader is raven-toolbox's read_yaml_model, which turns usage and pool reactions with a negative lower bound forward while it reads, changing the sign of their objective coefficient with the flux, and MATLAB's readYAMLmodel leaves the model as written, so upgradeEcModel turns them. The scenarios record the model after the upgrade and not what the reader returns or how many reactions the upgrade turns (895 in MATLAB and 0 in geckopy on eciYali5-GEM).
+      Brings an ecModel made with GECKO 3 to the GECKO 4 format. The model after the upgrade agrees for a reverse model and for a forward model with a negative lower bound, objective coefficients included (upgrade_gecko3_ectestgem, ec_model_io_eciyali5). The readers differ before the upgrade runs: the Python reader is raven-toolbox's read_yaml_model, which turns usage and pool reactions with the GECKO 3 sign of the `prot_pool` coefficient forward while it reads, changing the sign of their objective coefficient with the flux, and MATLAB's readYAMLmodel leaves the model as written, so upgradeEcModel turns them. The scenarios record the model after the upgrade and not what the reader returns or how many reactions the upgrade turns (895 in MATLAB and 0 in geckopy on eciYali5-GEM).
   - matlab: upgradeGECKOproject
     python: geckopy.upgrade_project
     status: parity
     scenarios:
       - upgrade_gecko3_ectestgem
     differs:
-      - projects.forward_model_negative_lb
       - projects.no_toml
     notes: >-
-      Brings a GECKO 3 project to the GECKO 4 layout (dry run by default). Dry runs and applying the upgrade twice agree. For a GECKO 4 model with a negative lower bound on a usage reaction, upgrade_project reports '2 protein reactions turned forward' and rewrites the file, upgradeGECKOproject reports nothing. For a project with an adapter class and no model_adapter.toml, upgradeGECKOproject converts the class and upgrade_project lists the adapter 'by hand' and skips the custom kcats and predictions. This is a design difference: the adapter class is a MATLAB classdef whose constructor assigns the parameters, so only MATLAB can evaluate it, and upgrade_project documents that GECKO's upgradeGECKOproject converts it. A stored DLKcat output with substrates the model lacks is handled alike: kcatsFromDLKcat and kcats_from_dlkcat drop those rows (upgrade_gecko3_ectestgem).
+      Brings a GECKO 3 project to the GECKO 4 layout (dry run by default). Dry runs and applying the upgrade twice agree. A GECKO 4 model with a negative lower bound on a usage reaction is left alone by both. For a project with an adapter class and no model_adapter.toml, upgradeGECKOproject converts the class and upgrade_project lists the adapter 'by hand' and skips the custom kcats and predictions. This is a design difference: the adapter class is a MATLAB classdef whose constructor assigns the parameters, so only MATLAB can evaluate it, and upgrade_project documents that GECKO's upgradeGECKOproject converts it. A stored DLKcat output with substrates the model lacks is handled alike: kcatsFromDLKcat and kcats_from_dlkcat drop those rows (upgrade_gecko3_ectestgem).
   - matlab: TomlAdapter
     status: subsumed
     reason: geckopy.ModelAdapter.from_folder is already configured by model_adapter.toml. This is the MATLAB class
