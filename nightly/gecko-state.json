@@ -1,7 +1,7 @@
 {
   "revisions": {
-    "gecko.matlab": "4e9492b6efda94b95fae80363d714e6a3e211743",
-    "gecko.python": "edb342277cd6a5105909c54736bbe52807388fa6"
+    "gecko.matlab": "a9b3b5c4336288a49a8352e0318b9afafc7caef5",
+    "gecko.python": "d982091af8da0a700c0310face580e0ab0aad90f"
   },
   "verdicts": {
     "complex_data_edge_cases_ectestgem": "DIFFER",
@@ -10,8 +10,8 @@
     "ec_analysis_light_humangem": "MATCH",
     "ec_fseof_ectestgem": "MATCH",
     "ec_fva_ectestgem": "MATCH",
-    "ec_fva_ecyeastgem": "DIFFER",
-    "ec_fva_light_humangem": "DIFFER",
+    "ec_fva_ecyeastgem": "MATCH",
+    "ec_fva_light_humangem": "MATCH",
     "ec_lookup_edge_cases_ectestgem": "DIFFER",
     "ec_model_build_edge_cases_ectestgem": "MATCH",
     "ec_model_build_light_humangem": "MATCH",
@@ -45,7 +45,7 @@
     "model_edits_ectestgem": "MATCH",
     "molecular_weight_sequences": "MATCH",
     "okp_kcat_ectestgem": "MATCH",
-    "protein_data_filters_ectestgem": "DIFFER",
+    "protein_data_filters_ectestgem": "MATCH",
     "protein_pool_ectestgem": "MATCH",
     "sensitivity_tuning_ectestgem": "MATCH",
     "sensitivity_tuning_edge_cases_ectestgem": "DIFFER",
