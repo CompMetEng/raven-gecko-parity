@@ -111,6 +111,16 @@ def _genes(model) -> list[dict]:
     ]
 
 
+def _drop_enzymes(ec, rxn_id: str) -> None:
+    """Make ``rxn_id`` an ec reaction without enzymes, as a ``standard`` kcat row is."""
+    row = ec.rxns.index(rxn_id)
+    matrix = ec.rxn_enz_mat.tolil()
+    matrix[row, :] = 0
+    ec.rxn_enz_mat = matrix.tocsr()
+    ec.rxn_enz_mat.eliminate_zeros()
+    ec.source[row] = "standard"
+
+
 def _ec_data(ec) -> dict:
     matrix = ec.rxn_enz_mat
     if hasattr(matrix, "toarray"):
@@ -130,6 +140,7 @@ def _ec_data(ec) -> dict:
         "sequence": [str(s) for s in ec.sequence],
         "eccodes": [str(c) if c else "" for c in ec.eccodes],
         "kcat": [float(k) for k in ec.kcat],
+        "source": [str(s) for s in ec.source],
         "coupling": sorted(coupling, key=lambda e: (e["reaction"], e["enzyme"])),
     }
 
@@ -171,6 +182,7 @@ def run(ctx):
     data = Path(inputs["scenario_root"]) / "data"
     adapter = _adapter(inputs)
     ec_model = make_ec_model(load_conventional_gem(adapter), adapter, gecko_light=False)
+    _drop_enzymes(ec_model.ec, "R5")
 
     with tempfile.TemporaryDirectory(prefix="parity_ecmodel_cross_") as workdir:
         own = Path(workdir) / "ecModel.yml"

@@ -19,6 +19,10 @@ description: >-
 # `direct` and `roundtrip` summaries do not look at those fields; ec_model_io_crossload_ectestgem
 # does. A single `ec-code` is written as a list by both writers.
 #
+# R5 is made an ec reaction without enzymes (an empty row of the coupling matrix and source
+# `standard`, as a standard kcat row) before the write. Both writers give it the same lines
+# and no `enzymes` entry, and the round trip returns the row empty.
+#
 # One difference from yaml_roundtrip_smallyeast worth stating: that scenario's `direct`
 # checkpoint is the tutorial fixture *read*, because a real smallYeast.yml already exists.
 # ecTestGEM ships no ecModel.yml --- an ecModel only exists once makeEcModel has built one

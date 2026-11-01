@@ -120,11 +120,22 @@ def _file_record(path: Path) -> dict:
     return {"n_lines": len(lines), "n_chars": sum(len(line) for line in lines), "lines": lines}
 
 
+def _drop_enzymes(ec, rxn_id: str) -> None:
+    """Make ``rxn_id`` an ec reaction without enzymes, as a ``standard`` kcat row is."""
+    row = ec.rxns.index(rxn_id)
+    matrix = ec.rxn_enz_mat.tolil()
+    matrix[row, :] = 0
+    ec.rxn_enz_mat = matrix.tocsr()
+    ec.rxn_enz_mat.eliminate_zeros()
+    ec.source[row] = "standard"
+
+
 def run(ctx):
     inputs = ctx["inputs"]
     adapter = _adapter(inputs)
     model = load_conventional_gem(adapter)
     ec_model = make_ec_model(model, adapter, gecko_light=False)
+    _drop_enzymes(ec_model.ec, "R5")
 
     direct = _summary(ec_model)
 
