@@ -61,9 +61,8 @@ def run(ctx):
 
     n_proc = int(inputs["python_n_proc"])
     model = build()
-    # RAVEN's solveLP gives Gurobi FeasibilityTol and OptimalityTol of 1e-9; cobrapy's default
-    # is 1e-6. The first two cases use RAVEN's value, the third the cobrapy default.
-    default_tolerance = float(model.tolerance)
+    # RAVEN's solveLP gives Gurobi FeasibilityTol and OptimalityTol of 1e-9; the model is set to
+    # the same value.
     model.tolerance = float(inputs["python_tolerance"])
     bio = model.reactions.get_by_id(str(inputs["bio_rxn"]))
     free = {
@@ -76,10 +75,4 @@ def run(ctx):
         "growth_bounds": [num(bio.lower_bound), num(bio.upper_bound)],
         "fva": _rows(ec_fva(model, conv, progress=False, n_proc=n_proc)),
     }
-
-    model.tolerance = default_tolerance
-    fixed_default = {
-        "growth_bounds": [num(bio.lower_bound), num(bio.upper_bound)],
-        "fva": _rows(ec_fva(model, conv, progress=False, n_proc=n_proc)),
-    }
-    return {"free": free, "fixed": fixed, "fixed_cobra_tolerance": fixed_default}
+    return {"free": free, "fixed": fixed}

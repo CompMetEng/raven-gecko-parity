@@ -14,7 +14,7 @@ description: >-
 #   gene_with_or    the rule 'GNEW1 or orfX' (the gene id orfX contains 'or'). Both sides
 #                   read the gene ids as whole words and add the reaction.
 #   no_new_enzymes  the rule 'G1', a gene the model already has an enzyme for, and no new
-#                   enzymes. MATLAB raises; geckopy adds the reaction.
+#                   enzymes. Both sides add the reaction.
 #
 # ids_with_suffix_text: R1 is renamed to R_REVX or to R_EXP_1X, ids that contain the
 # suffix text without ending in it, before the ecModel is built. mapRxnsToConv maps one

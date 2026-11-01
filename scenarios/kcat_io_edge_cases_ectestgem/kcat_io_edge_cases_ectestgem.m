@@ -166,6 +166,12 @@ ecModel = build_model(adapter, false, false);
 rows = {};
 nInvalid = 0; nUnmatched = 0; nPartial = 0;
 try
+    loadKcatSource(ecModel, inputs.odd_quote_source, 'modelAdapter', adapter);
+    unclosedRaised = false;
+catch
+    unclosedRaised = true;
+end
+try
     [kcatList, report] = loadKcatSource(ecModel, inputs.odd_source, 'modelAdapter', adapter);
     raised = false;
     n = numel(kcatList.rxns);
@@ -186,6 +192,7 @@ out.rows = rows;
 out.n_invalid = nInvalid;
 out.n_unmatched = nUnmatched;
 out.n_partial = nPartial;
+out.unclosed_quote_raised = unclosedRaised;
 end
 
 

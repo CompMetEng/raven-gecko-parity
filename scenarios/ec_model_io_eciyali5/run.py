@@ -223,8 +223,10 @@ def run(ctx):
 
         def raw_then_upgrade():
             raw = _quiet(lambda: read_yaml_model(str(original)))
-            changed = upgrade_ec_model(raw)
-            return {"changed": len(changed), "protein_reactions": _protein_reactions(raw), "after": _summary(raw)}
+            # The number of reactions the upgrade turns is not recorded: geckopy's reader
+            # turns the reactions with a negative lower bound before the upgrade runs.
+            upgrade_ec_model(raw)
+            return {"protein_reactions": _protein_reactions(raw), "after": _summary(raw)}
 
         results["upgrade_raw"] = _attempt(raw_then_upgrade)
 

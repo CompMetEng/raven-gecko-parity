@@ -70,8 +70,10 @@ end
 
 function out = raw_then_upgrade(file)
 raw = readYAMLmodel(file);
-[raw, changed] = upgradeEcModel(raw);
-out = struct('changed', double(numel(changed)), 'protein_reactions', {protein_reactions(raw)}, ...
+% The number of reactions the upgrade turns is not recorded: geckopy's reader turns the
+% reactions with a negative lower bound before the upgrade runs.
+raw = upgradeEcModel(raw);
+out = struct('protein_reactions', {protein_reactions(raw)}, ...
     'after', summary(raw));
 end
 

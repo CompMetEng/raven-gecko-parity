@@ -98,6 +98,13 @@ end
 result = relaxProteomicsGreedy(m, 'minimalGrowth', target, args{:});
 relaxed = sort(fieldnames(result.relaxed));
 nTrace = numel(result.trace);
+if strcmp(kind, 'tied')
+    % Which enzyme is relaxed first follows the dual solution of the LP, so only the
+    % outcome of the loop is recorded.
+    out = struct('relaxed', {reshape(relaxed, 1, [])}, 'final_growth', num(result.finalGrowth), ...
+        'converged', logical(result.converged), 'n_steps', nTrace);
+    return
+end
 trace = cell(1, nTrace);
 for k = 1:nTrace
     t = result.trace(k);

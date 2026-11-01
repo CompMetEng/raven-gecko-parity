@@ -160,23 +160,30 @@ def _report(model, usage, inputs, *, high_cap=None, top=None) -> dict:
     }
 
 
-def _bottlenecks(model, top: int) -> dict:
-    df = get_enzyme_bottlenecks(model, top=top)
+def _bottlenecks(model, top: int, fold_change: float | None = None, price: bool = False) -> dict:
+    kwargs = {} if fold_change is None else {"fold_change": fold_change}
+    df = get_enzyme_bottlenecks(model, top=top, **kwargs)
     order = [str(u) for u in df.index]
-    rows = sorted(
-        (
-            {
-                "protein": str(u),
-                "shadow_price": num(r.shadow_price),
-                "flux": num(r.flux),
-                "cap_usage": num(r.cap_usage),
-                "upper_bound": num(r.upper_bound),
-            }
-            for u, r in df.iterrows()
-        ),
-        key=lambda r: r["protein"],
-    )
-    return {"order": order, "rows": rows}
+    rows = []
+    for u, r in df.iterrows():
+        row = {
+            "protein": str(u),
+            "objective_gain": num(r.objective_gain),
+            "flux": num(r.flux),
+            "cap_usage": num(r.cap_usage),
+            "upper_bound": num(r.upper_bound),
+            "multiple_active": bool(r.multiple_active),
+        }
+        if price:
+            row["shadow_price"] = num(r.shadow_price)
+        rows.append(row)
+    rows.sort(key=lambda row: row["protein"])
+    return {
+        "order": order,
+        "n_resolved": num(df.attrs["n_resolved"]),
+        "active_constraints": num(df.attrs["active_constraints"]),
+        "rows": rows,
+    }
 
 
 def _pfba(model, **kwargs) -> dict:
@@ -212,7 +219,13 @@ def run(ctx):
     usage = enzyme_usage(model, sol.fluxes)
     cases["control_usage"] = run_case(lambda: {"objective": num(sol.objective_value), "proteins": _usage_rows(usage)})
     cases["control_report"] = run_case(lambda: _report(model, usage, inputs))
-    cases["control_bottlenecks"] = run_case(lambda: _bottlenecks(model, int(inputs["top_abs_usage"])))
+    cases["control_bottlenecks"] = run_case(lambda: _bottlenecks(model, int(inputs["top_abs_usage"]), price=True))
+    cases["bottlenecks_fold_change_3"] = run_case(
+        lambda: _bottlenecks(model, int(inputs["top_abs_usage"]), fold_change=float(inputs["fold_change_3"]))
+    )
+    cases["bottlenecks_fold_change_1"] = run_case(
+        lambda: _bottlenecks(model, int(inputs["top_abs_usage"]), fold_change=1.0)
+    )
     cases["control_pfba"] = run_case(lambda: _pfba(model))
 
     # A measured concentration of 0 gives a usage upper bound of 0.
@@ -257,6 +270,20 @@ def run(ctx):
         tie_p4(m)
         return _bottlenecks(m, int(inputs["top_abs_usage"]))
     cases["tied_bottlenecks"] = run_case(tied_bottlenecks)
+
+    # Both caps bind, so each enzyme at its cap has an objective_gain of 0 (the other cap still
+    # holds) and the LP gives a nonzero dual to at least one of them.
+    def dual_without_gain():
+        m = build(inputs)
+        tie_p4(m)
+        df = get_enzyme_bottlenecks(m, top=100)
+        at_cap = df[(df.upper_bound > 0) & (df.cap_usage >= 1 - 1e-6)]
+        return {
+            "n_at_cap": num(len(at_cap)),
+            "max_objective_gain_at_cap": num(at_cap.objective_gain.max()),
+            "dual_nonzero_at_cap": bool((at_cap.shadow_price.abs() > 1e-9).any()),
+        }
+    cases["dual_without_gain"] = run_case(dual_without_gain)
 
     # Protein pool binding, no enzyme concentration constraints.
     def pool_binding_coeffs():

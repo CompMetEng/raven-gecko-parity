@@ -34,11 +34,7 @@ tolerance:
 # Cases and what each side does (verdicts of the run):
 #   load_control, constrain_control, constrain_condition_by_name, constrain_unknown_condition:
 #     both sides agree (the unknown condition raises on both).
-#   load_missing_file: MATLAB warns and returns [] (reported as loaded=false); Python raises.
-#   load_fixed_columns_only: MATLAB returns empty exchange fields; Python raises.
-#   load_ragged_row: Python pads the missing cell with NaN; MATLAB raises.
-#   load_nested_parentheses_header: for 'X (EX_a(e))' MATLAB reads the metabolite 'X (EX_a' and the
-#     reaction 'e)'; Python reads the whole header as both.
-#   constrain_missing_exchange: MATLAB ignores the exchange that is not in the model; Python raises.
-#   constrain_invalid_max_min_growth: MATLAB skips the growth constraint (the biomass bound stays
-#     unbounded); Python raises.
+#   load_missing_file, load_fixed_columns_only, load_ragged_row: both sides raise.
+#   load_nested_parentheses_header: for 'X (EX_a(e))' both sides read the metabolite 'X' and the
+#     reaction 'EX_a(e)'.
+#   constrain_missing_exchange, constrain_invalid_max_min_growth: both sides raise.

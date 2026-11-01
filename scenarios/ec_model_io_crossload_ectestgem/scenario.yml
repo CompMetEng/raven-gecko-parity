@@ -18,6 +18,10 @@ description: >-
 # notice. Regenerate them with regenerate_fixtures.py from the two result files of
 # ec_model_io_ectestgem.
 #
+# R5 is an ec reaction without enzymes in the ecModel both sides write (source `standard`,
+# no `enzymes` entry in either file); each reader returns an empty coupling row for it and
+# keeps its kcat and source, which the summary lists.
+#
 # Each loaded model is summarised with the fields of ec_model_io_ectestgem plus the ones in
 # which the two written files differ: metabolite charge, SBO terms on metabolites, reactions
 # and genes, reaction subsystem, EC codes, gene name, and the metaData description. A side

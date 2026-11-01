@@ -148,6 +148,19 @@ scoreFcn = @(vec) mean(abs(log(vec(:) ./ kcat)));
 points = parsimonyFrontier(scoreFcn, kcat, kcat0, sigma);
 best = bestParsimonious(points);
 
+tieRxns = cellstr(string(inputs.helper_tie_rxns));
+tieKcat0 = reshape(double(inputs.helper_tie_kcat0), [], 1);
+tieSources = cellstr(string(inputs.helper_tie_sources));
+tieMap.without_sources = reshape(double(isozymeTieMap(tieRxns, tieKcat0)) - 1, 1, []);
+tieMap.with_sources = reshape(double(isozymeTieMap(tieRxns, tieKcat0, 'sources', tieSources)) - 1, 1, []);
+try
+    isozymeTieMap(tieRxns, tieKcat0(1:end-1));
+    tieMap.length_mismatch = 'not raised';
+catch
+    tieMap.length_mismatch = 'raised';
+end
+out.tie_map = tieMap;
+
 out.n_changed = double(nChanged(kcat, kcat0));
 frontier = cell(1, numel(points));
 for i = 1:numel(points)

@@ -16,22 +16,11 @@ description: >-
   subset with a repeated reaction and an empty subset. A raise is a value on both sides. Nothing
   reaches the network.
 
-# Differences this scenario reports (the run decides, the sources explain):
-#   * config: geckopy validates [kcat_assignment] with a schema, MATLAB reads what is there. A
-#     capitalised criteria ('Median'), an empty preset ('') and a stage whose sources is a string
-#     raise in geckopy; kcatAssignmentConfig accepts them (validatestring, the default preset
-#     for an empty one, a char turned into a cell).
-#   * collect.select_*: with database_top and database_bottom in one stage, MATLAB's decisions
-#     report twice the candidates geckopy reports (2 for a reaction with one BRENDA row, 4 for
-#     two). collectKcats.m line 212, `if ~any(cellfun(@(l) isequal(l, list), lists))`, skips a
-#     list it has collected already, and isequal is false for a list that holds NaN, so the
-#     brenda list is collected twice. The kcat and the spread agree. ec.source reads
-#     'brenda (wc=0, origin=1)' in geckopy and 'brenda' in MATLAB for a value chosen from
-#     brenda.tsv; the combine stage agrees on kcat, sd and n.
-#   * ec_tree.k_nan: ECTree accepts k = NaN and returns NaN estimates; ecTreeEstimate raises.
-#   * ec_tree_model: an empty ec_rxns list raises in kcats_from_ec_tree and means every
-#     reaction in kcatsFromECTree; a repeated reaction gives one row per mention in MATLAB
-#     (it indexes the list) and one row in geckopy (it tests membership).
+# Cases that agree: ec.source reads 'brenda (wc=0, origin=1)' on both sides for a value chosen from
+# brenda.tsv, and kcat, spread, candidates and the combine stage agree; kcatAssignmentConfig / kcat_assignment_config raise for a capitalised criteria,
+# an empty preset and a stage whose sources is a string; ecTreeEstimate and ECTree raise for k = NaN;
+# an empty ec_rxns list selects no reaction in kcatsFromECTree and kcats_from_ec_tree, and a repeated
+# reaction gives one row; a source file named by database_top and database_bottom is one list.
 
 entries:
   - kcatAssignmentConfig

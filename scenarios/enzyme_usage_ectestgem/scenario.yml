@@ -59,14 +59,10 @@ inputs:
 # something real to report: relaxing P5's cap raises growth, relaxing any other
 # protein's does not, and the coefficient is the same number on both sides.
 #
-# getConcControlCoeffs itself carries a documented algorithmic difference between the
-# two implementations (MATLAB always runs the 2x finite-difference probe;
-# geckopy's default instead reads the LP shadow price of the binding prot_<id>
-# constraint, see geckopy's own MATLAB-COMPAT note in get_conc_control_coeffs.py) that
-# can differ by up to 4x at an LP active-set breakpoint. This fixture does not sit on
-# one --- P5's constraint is the only one binding, cleanly, with no other constraint
-# becoming active within the probe's 2x range --- so both methods agree here; the
-# difference is a real one but not one this scenario's fixture happens to expose.
+# Both sides run the finite-difference probe of getConcControlCoeffs (foldChange 2 by
+# default); geckopy's method="shadow_price" is python-only and is not called here. The
+# coefficient is the growth change for the raised bound, so it does not depend on the
+# duals of the LP.
 
 # Growth is a genuine LP solve on both sides (RAVEN's Gurobi call vs. cobrapy's), so
 # the tolerance is looser than the purely-arithmetic kcat_chain_ectestgem scenario, but

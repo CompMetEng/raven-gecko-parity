@@ -146,8 +146,17 @@ def _flex(model, inputs, exp_growth=None) -> dict:
     }
 
 
-def _relax(model, **kwargs) -> dict:
+def _relax(model, ordered=True, **kwargs) -> dict:
     result = relax_proteomics_greedy(model, **kwargs)
+    if not ordered:
+        # Which enzyme is relaxed first follows the dual solution of the LP, so only the
+        # outcome of the loop is recorded.
+        return {
+            "relaxed": sorted(str(k) for k in result.relaxed),
+            "final_growth": num(result.final_growth),
+            "converged": bool(result.converged),
+            "n_steps": len(result.trace),
+        }
     return {
         "relaxed": sorted(str(k) for k in result.relaxed),
         "final_growth": num(result.final_growth),
@@ -223,7 +232,7 @@ def run(ctx):
     def relax_tied():
         m = build(inputs)
         tie_p4(m)
-        return _relax(m, minimal_growth=1.5 * _growth(m))
+        return _relax(m, ordered=False, minimal_growth=1.5 * _growth(m))
     cases["relax_tied_enzymes"] = run_case(relax_tied)
 
     cases["relax_empty_enzyme_set"] = run_case(

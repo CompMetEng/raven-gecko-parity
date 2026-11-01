@@ -198,11 +198,13 @@ end
 
 
 function out = ccc_rows(model, inputs)
-[enz, coeffs] = getConcControlCoeffs(model, 'foldChange', 2, 'limit', double(inputs.ccc_limit));
+% The flag that says which enzymes were analysed follows the vertex of the LP; the
+% coefficient is 0 for an enzyme that was not analysed.
+[~, coeffs] = getConcControlCoeffs(model, 'foldChange', 2, 'limit', double(inputs.ccc_limit));
 n = numel(model.ec.enzymes);
 records = cell(1, n);
 for k = 1:n
-    records{k} = struct('protein', model.ec.enzymes{k}, 'analysed', logical(enz(k)), 'coeff', num(coeffs(k)));
+    records{k} = struct('protein', model.ec.enzymes{k}, 'coeff', num(coeffs(k)));
 end
 [~, order] = sort(model.ec.enzymes);
 out = records(order);

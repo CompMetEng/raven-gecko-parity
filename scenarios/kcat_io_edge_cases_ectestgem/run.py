@@ -141,9 +141,11 @@ def _case_save_source(inputs) -> dict:
 
 def _case_load_source(inputs) -> dict:
     model = _model(inputs)
+    unclosed_raised, _ = _attempt(lambda: load_kcat_source(model, Path(inputs["odd_quote_source"])))
     raised, result = _attempt(lambda: load_kcat_source(model, Path(inputs["odd_source"])))
     if raised:
-        return {"raised": True, "rows": [], "n_invalid": 0, "n_unmatched": 0, "n_partial": 0}
+        return {"raised": True, "rows": [], "n_invalid": 0, "n_unmatched": 0, "n_partial": 0,
+                "unclosed_quote_raised": unclosed_raised}
     df, report = result
     rows = sorted(
         ({"reaction": str(r.rxn_id), "kcat": float(r.kcat)} for r in df.itertuples()),
@@ -155,6 +157,7 @@ def _case_load_source(inputs) -> dict:
         "n_invalid": len(report["invalid"]),
         "n_unmatched": len(report["unmatched"]),
         "n_partial": len(report["partial"]),
+        "unclosed_quote_raised": unclosed_raised,
     }
 
 

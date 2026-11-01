@@ -12,6 +12,10 @@ adapter = ModelAdapterManager.getAdapter(ctx.inputs.adapter_matlab);
 dataDir = fullfile(ctx.inputs.scenario_root, 'data');
 model = loadConventionalGEM('modelAdapter', adapter);
 ecModel = makeEcModel(model, false, adapter);
+% R5 becomes an ec reaction without enzymes, as a standard kcat row is.
+row = find(strcmp(ecModel.ec.rxns, 'R5'));
+ecModel.ec.rxnEnzMat(row, :) = 0;
+ecModel.ec.source{row} = 'standard';
 
 workdir = tempname;
 mkdir(fullfile(workdir, 'models'));
@@ -197,6 +201,7 @@ out.mw       = reshape(double(ec.mw(:)), 1, []);
 out.sequence = reshape(ec.sequence(:), 1, []);
 out.eccodes  = reshape(blanks_for_empty(ec.eccodes), 1, []);
 out.kcat     = reshape(double(ec.kcat(:)), 1, []);
+out.source   = reshape(blanks_for_empty(ec.source), 1, []);
 out.coupling = pairs(ec.rxnEnzMat, ec.rxns, ec.enzymes, {'reaction', 'enzyme'}, true);
 end
 

@@ -229,11 +229,13 @@ def _pipeline(inputs: dict) -> dict:
     }
 
     def ccc():
-        enz, coeffs = get_conc_control_coeffs(model, fold_change=2.0, limit=float(inputs["ccc_limit"]))
+        # The flag that says which enzymes were analysed follows the vertex of the LP; the
+        # coefficient is 0 for an enzyme that was not analysed.
+        _, coeffs = get_conc_control_coeffs(model, fold_change=2.0, limit=float(inputs["ccc_limit"]))
         rows = sorted(
             (
-                {"protein": str(p), "analysed": bool(e), "coeff": num(c)}
-                for p, e, c in zip(model.ec.enzymes, enz, coeffs)
+                {"protein": str(p), "coeff": num(c)}
+                for p, c in zip(model.ec.enzymes, coeffs)
             ),
             key=lambda r: r["protein"],
         )

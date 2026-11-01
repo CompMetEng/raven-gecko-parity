@@ -3,9 +3,10 @@ pair: gecko
 description: >-
   Bringing a GECKO 3 ecModel and project to the GECKO 4 layout, on ecTestGEM. upgradeEcModel /
   upgrade_ec_model turn the reverse protein usage and pool reactions forward (stoichiometry,
-  bounds, objective coefficient); the same models written to YAML and read back by each side's
-  own reader show what the readers do before the upgrade runs (geckopy's reader turns reactions
-  with a negative lower bound forward, MATLAB's reader does not). upgradeGECKOproject /
+  bounds, objective coefficient); the same models are written to YAML and read back by each side's
+  own reader before the upgrade runs (geckopy's reader turns the reactions in the GECKO 3
+  direction forward, MATLAB's reader does not, and the model after the upgrade is recorded).
+  upgradeGECKOproject /
   upgrade_project are run on copies of the ecTestGEM project folder (dry run, with and without
   the ecModel, applied twice, a saved ecModel in either direction, a project with an adapter
   class instead of model_adapter.toml). convertCustomKcats / convert_custom_kcats are run on
@@ -16,21 +17,16 @@ description: >-
   Nothing reaches the network.
 
 # Differences this scenario reports (the run decides, the sources explain):
-#   * yaml_round_trip: geckopy's reader (raven-toolbox _flip_legacy_prot_direction) turns every
-#     usage_prot_* / prot_pool_exchange reaction with a negative lower bound forward while it
-#     reads and leaves the objective alone; MATLAB's readYAMLmodel leaves the model as written
-#     and upgradeEcModel then turns it, objective coefficients included. After the upgrade the
-#     objective of a GECKO 3 model keeps its GECKO 3 sign in Python and not in MATLAB.
-#   * projects.forward_model_negative_lb: a GECKO 4 model with a negative lower bound on one
-#     usage reaction is turned by geckopy's reader and back by upgrade_ec_model, so the model
-#     comes out unchanged, but upgrade_project reports '2 protein reactions turned forward' and
-#     rewrites the file; upgradeGECKOproject reports nothing.
+#   * yaml_round_trip: raven-toolbox's reader (_flip_legacy_prot_direction) turns every
+#     usage_prot_* / prot_pool_exchange reaction with the GECKO 3 sign of the prot_pool
+#     coefficient forward while it reads, objective coefficient included; MATLAB's readYAMLmodel leaves the model as written
+#     and upgradeEcModel then turns it. The scenario records the model after the upgrade, which
+#     agrees; what the reader returns and which reactions the upgrade turns are not recorded.
 #   * projects.no_toml: upgradeGECKOproject converts an adapter class; upgrade_project lists the
 #     adapter 'by hand' and skips the custom kcats and predictions even when the ecModel is given
 #     (its note then asks for the ecModel).
-#   * projects.stored_dlkcat_foreign_substrates: kcatsFromDLKcat raises when the DLKcat output
-#     names substrates that are not in model.metNames; kcats_from_dlkcat drops those rows.
-# Cases that agree: the in-memory upgrade of a reverse model and of a forward model with a
+# Cases that agree: kcatsFromDLKcat and kcats_from_dlkcat drop the rows of a stored DLKcat output
+# whose substrates are not in the model, the in-memory upgrade of a reverse model and of a forward model with a
 # negative lower bound, a second upgrade call, project dry runs, applying the upgrade twice, the
 # stored-DLKcat step on a DLKcat.tsv that matches the model, and convertCustomKcats on the stock
 # customKcats.tsv and on one with an empty notes cell and two rows for one reaction (both write

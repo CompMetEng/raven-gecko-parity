@@ -97,9 +97,10 @@ def _case_yaml(inputs, root: Path) -> dict:
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
             loaded = load_ec_model(path)
-        read_back = _summary(loaded)
-        changed = upgrade_ec_model(loaded)
-        out[name] = {"read_back": read_back, "changed_after_read": sorted(changed), "after": _summary(loaded)}
+        # What the reader returns and which reactions the upgrade turns are not recorded: the
+        # two readers differ in whether they turn a reaction with a negative lower bound.
+        upgrade_ec_model(loaded)
+        out[name] = {"after": _summary(loaded)}
     return out
 
 

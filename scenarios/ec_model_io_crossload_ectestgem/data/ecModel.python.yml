@@ -2,7 +2,7 @@
 - metaData: !!omap
   - id: testModel
   - name: testModel
-  - date: "2026-10-28"
+  - date: "2026-11-01"
   - description: Enzyme-constrained model of testModel
   - gecko_format: "4"
   - generator: geckopy 4.0.0b1
@@ -323,8 +323,7 @@
   - !!omap
     - id: R5
     - kcat: 0.0
-    - enzymes: !!omap
-      - P5: 1.0
+    - source: standard
 - ec-enzymes:
   - !!omap
     - genes: G1

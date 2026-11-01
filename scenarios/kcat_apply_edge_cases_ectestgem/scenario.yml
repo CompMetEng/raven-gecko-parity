@@ -15,11 +15,10 @@ entries:
   - getKcatAcrossIsozymes
   - applyCustomKcats
 
-# What this scenario compares (seed-independent, confirmed by running both sides). One
-# difference remains; every other case agrees.
-#   applyKcatConstraints, update-list vocabulary (light_update_ids): MATLAB accepts cobra
-#     reaction ids and rejects ec reaction ids in updateRxns; Python accepts ec reaction ids
-#     and rejects cobra ids.
+# What this scenario compares (seed-independent, confirmed by running both sides). No
+# difference remains.
+#   applyKcatConstraints, update-list vocabulary (light_update_ids): on a light model both
+#     sides accept cobra reaction ids and ec reaction ids in the update list.
 #   applyKcatConstraints, light model: both sides let every isozyme of a reaction compete for the
 #     cheapest cost when only some of its rows are named, and skip an isozyme row with a kcat
 #     but no enzymes (light_subset, light_empty_isozyme_row).

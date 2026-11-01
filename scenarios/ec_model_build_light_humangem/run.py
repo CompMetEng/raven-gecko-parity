@@ -62,8 +62,8 @@ def _patch_eccodes_from_yaml(conv: cobra.Model, yaml_path: Path) -> None:
 
 
 def _source_token(source: str) -> str:
-    """The base provenance token: 'brenda (wc=0, origin=1)' -> 'brenda'."""
-    return source.split(" (", 1)[0].lower()
+    """The lower case source label of a merged kcat list row."""
+    return source.lower()
 
 
 def _coupling(ec) -> list[dict]:
@@ -82,7 +82,7 @@ def _kcat_rows(model) -> list[dict]:
             {
                 "reaction": str(r),
                 "kcat": num(model.ec.kcat[i]),
-                "source": _source_token(str(model.ec.source[i])) if model.ec.source[i] else "",
+                "source": str(model.ec.source[i]),
             }
             for i, r in enumerate(model.ec.rxns)
         ),

@@ -180,14 +180,9 @@ idx = idx(keep);
 records = cell(1, numel(idx));
 for k = 1:numel(idx)
     i = idx(k);
-    % Lowercased: geckopy's apply_kcat_list lowercases MATLAB's raw kcatSource
-    % string and appends fuzzy wildcard/origin detail --- a documented
-    % MATLAB-COMPAT choice (select_kcat_value.py), not a divergence this
-    % scenario is asserting, so the checkpoint compares on the token both
-    % sides agree on (see run.py's _source_token, which strips that detail).
     src = '';
     if ~isempty(ecModel.ec.source{i})
-        src = lower(ecModel.ec.source{i});
+        src = ecModel.ec.source{i};
     end
     nt = '';
     if ~isempty(ecModel.ec.notes{i})
