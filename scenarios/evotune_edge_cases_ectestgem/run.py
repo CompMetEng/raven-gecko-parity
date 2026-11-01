@@ -28,6 +28,7 @@ from geckopy.kcat_tuning.evotune import (
     screen_kcat_leverage,
     select_tunable_mask,
 )
+from geckopy.kcat_tuning.evotune import isozyme_tie_map
 from geckopy.kcat_tuning.evotune.parsimony import (
     FrontierPoint,
     best_parsimonious,
@@ -165,7 +166,21 @@ def _helpers(inputs: dict) -> dict:
     except Exception:
         nan_best = {"raised": True}
 
+    tie_rxns = list(inputs["helper_tie_rxns"])
+    tie_kcat0 = np.array(inputs["helper_tie_kcat0"], dtype=float)
+    tie_sources = list(inputs["helper_tie_sources"])
+    try:
+        short = [int(i) for i in isozyme_tie_map(tie_rxns, tie_kcat0[:-1])]
+    except Exception:
+        short = "raised"
+    tie_map = {
+        "without_sources": [int(i) for i in isozyme_tie_map(tie_rxns, tie_kcat0)],
+        "with_sources": [int(i) for i in isozyme_tie_map(tie_rxns, tie_kcat0, tie_sources)],
+        "length_mismatch": short,
+    }
+
     return {
+        "tie_map": tie_map,
         "n_changed": int(n_changed(kcat, kcat0)),
         "frontier": [
             {

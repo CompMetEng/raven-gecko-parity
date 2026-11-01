@@ -4,7 +4,7 @@ description: >-
   Edge cases of the evotune functions on ecTestGEM's single-route ecModel with a binding protein pool: the
   leverage screen (screenKcatLeverage) with source groups, a weight on the max-growth data and zero-flux
   reactions, the tunable mask selection, the stopping rule of the CMA-ES tuning on a flat objective, and the
-  pure helpers nChanged, parsimonyFrontier and bestParsimonious.
+  pure helpers nChanged, parsimonyFrontier, bestParsimonious and isozymeTieMap.
 
 entries:
   - screenKcatLeverage
@@ -79,6 +79,10 @@ inputs:
   helper_points_rmse: [1.0, 1.0, 1.005]
   helper_points_n_changed: [5, 3, 2]
   helper_nan_index: 1
+  # isozymeTieMap / isozyme_tie_map: ec rxn ids, prior kcat and source of each row
+  helper_tie_rxns: [R2_EXP_1, R2_EXP_2, R3, R3_EXP_1, R3_EXP_2, R5_EXP_1, R5_EXP_2]
+  helper_tie_kcat0: [10.0, 10.0, 5.0, 5.0, 5.0, 3.0, 4.0]
+  helper_tie_sources: [standard, standard, brenda, brenda, dlkcat, brenda, brenda]
 
 # Cases and what they exercise
 #

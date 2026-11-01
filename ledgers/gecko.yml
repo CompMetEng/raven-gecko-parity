@@ -88,12 +88,13 @@ entries:
     notes: >-
       [3->4] writes coefficients with the forward-direction usage_prot_* / prot_pool_exchange convention. In the full formulation, two enzyme rows mapping to the same prot_<accession> metabolite (distinct genes sharing one UniProt entry) are summed on both sides, with every kcat 0 the old coefficients are cleared, and an empty update list means all reactions. In the light formulation, an isozyme with no usable kcat (and a row without enzymes or without a positive enzyme mass) is excluded before selecting the cheapest isozyme on both sides (GECKO#463), and when only some rows of a reaction are named every isozyme of it competes for the cheapest cost. On a light model the update list takes cobra reaction ids and ec reaction ids with the ###_ prefix on both sides, and an id of neither kind or of both kinds raises. With every kcat 0 both sides clear the pool coefficients of the affected reactions of a light ecModel (kcat_apply_edge_cases_ectestgem). On the scipy solver geckopy writes the pool coefficients on glpk and moves the model to the sparse scipy problem in one pass (geckopy.solver_support, python-only), so the build of the light Human-GEM ecModel matches MATLAB with GLPK and with Gurobi, and its Python step takes 6.8 and 6.9 minutes against 2.1 minutes on Gurobi (ec_model_build_light_humangem). No difference of its own in ec_analysis_ecyeastgem and ec_analysis_ecyeastgem911, which differ for getEnzymeBottlenecks, and in ec_model_build_yarrowia, which differs for getECfromGEM.
   - matlab: bestParsimonious
-    status: python-pending
+    python: geckopy.kcat_tuning.evotune.best_parsimonious
+    status: parity
     scenarios:
       - evotune_edge_cases_ectestgem
     differs: []
     notes: >-
-      Picks the sparsest CMA-ES kcat-tuning result within tolerance of the best RMSE on a parsimony frontier. geckopy#51 implements the same frontier sweep in kcat_tuning.evotune.parsimony; best_parsimonious is an internal helper there, not exported through __all__, so the entry stays python-pending until it is. A point with a NaN RMSE does not set the best RMSE and is never chosen on both sides; with a NaN at the first point both return the sparsest point within tolerance of the best of the others (evotune_edge_cases_ectestgem).
+      Picks the sparsest CMA-ES kcat-tuning result within tolerance of the best RMSE on a parsimony frontier. geckopy#51 implements the same frontier sweep in kcat_tuning.evotune.parsimony. A point with a NaN RMSE does not set the best RMSE and is never chosen on both sides; when every point is NaN both raise (evotune_edge_cases_ectestgem, helper cases).
   - matlab: cmaesKcatTuning
     python: geckopy.kcat_tuning.evotune.cmaes_kcat_tuning
     status: parity
@@ -117,28 +118,33 @@ entries:
       simulate half, internal there) and kcat_tuning.evotune.distance.evotune_distance/dataset_rmse (geckopy#51,
       the RMSE half --- evotune_distance is the top-level entry point, dataset_rmse its per-dataset helper).'
   - matlab: isozymeTieMap
-    status: python-pending
-    notes: Groups isozyme-copy kcat rows sharing a base reaction/prior/source into one tied tuning parameter.
-      geckopy's kcat_tuning.evotune.tying.isozyme_tie_map (geckopy#51) does the same, but is an internal
-      helper there, not yet re-exported as public API.
+    python: geckopy.kcat_tuning.evotune.isozyme_tie_map
+    status: parity
+    scenarios:
+      - evotune_edge_cases_ectestgem
+    differs: []
+    notes: >-
+      Groups isozyme-copy kcat rows that share a base reaction (the id before _EXP_), a prior value (to relTol) and, when sources are given, a source, into one tied tuning parameter; each entry is the lowest index of its group. geckopy has isozyme_tie_map in kcat_tuning/evotune/tying.py, which returns 0-based indices where isozymeTieMap returns 1-based ones. The tie_map case of evotune_edge_cases_ectestgem agrees with and without sources and for a length mismatch, which raises on both sides.
   - matlab: loadEvotuneData
     python: geckopy.kcat_tuning.evotune.load_evotune_data
     status: parity
     notes: 'Loads the optional flux/max-growth/zero-flux experimental TSVs for CMA-ES tuning. Matches kcat_tuning.evotune.data.load_evotune_data (geckopy#51).'
   - matlab: nChanged
-    status: python-pending
+    python: geckopy.kcat_tuning.evotune.n_changed
+    status: parity
     scenarios:
       - evotune_edge_cases_ectestgem
     differs: []
     notes: >-
-      Counts kcats moved from their prior beyond a relative tolerance. geckopy's kcat_tuning.evotune.parsimony.n_changed (geckopy#51) does the same but is an internal helper there, not yet re-exported as public API. geckopy has n_changed in kcat_tuning/evotune/parsimony.py, which is not exported through __all__. The helper cases of evotune_edge_cases_ectestgem agree for it. No difference of its own in evotune_edge_cases_ectestgem, which differs for other functions.
+      Counts kcats moved from their prior beyond a relative tolerance. geckopy has n_changed in kcat_tuning/evotune/parsimony.py. The helper cases of evotune_edge_cases_ectestgem agree for it.
   - matlab: parsimonyFrontier
-    status: python-pending
+    python: geckopy.kcat_tuning.evotune.parsimony_frontier
+    status: parity
     scenarios:
       - evotune_edge_cases_ectestgem
     differs: []
     notes: >-
-      Sweeps a revert threshold, reporting the RMSE-vs-sparsity trade-off. geckopy's kcat_tuning.evotune.parsimony.parsimony_frontier (geckopy#51) does the same but is not yet re-exported as public API. geckopy has parsimony_frontier in kcat_tuning/evotune/parsimony.py, which is not exported through __all__. The helper cases of evotune_edge_cases_ectestgem agree for it. No difference of its own in evotune_edge_cases_ectestgem, which differs for other functions.
+      Sweeps a revert threshold, reporting the RMSE-vs-sparsity trade-off. geckopy has parsimony_frontier in kcat_tuning/evotune/parsimony.py. The helper cases of evotune_edge_cases_ectestgem agree for it.
   - matlab: resolveTunableContext
     status: subsumed
     reason: Resolves the tunable kcat subset, source-group tiers, and tie groups shared by screenKcatLeverage
