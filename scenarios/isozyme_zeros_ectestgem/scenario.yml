@@ -1,0 +1,66 @@
+id: isozyme_zeros_ectestgem
+pair: gecko
+description: >-
+  Measured zeros and isozyme coverage on ecTestGEM: getIsozymeCoverage with a partially measured
+  reaction, a measured zero, no measurement, full measurement and an enzyme shared with another
+  reaction; zeroUnmeasuredIsozymes with method zero and detectionLimit (default and explicit
+  limit), a bound that is not raised, a shared enzyme and invalid arguments; constrainEnzConcs
+  with a measured zero; flexibilizeEnzConcs with a measured zero; levelComplexConcs with a
+  measured zero subunit.
+
+entries:
+  - getIsozymeCoverage
+  - zeroUnmeasuredIsozymes
+  - constrainEnzConcs
+  - flexibilizeEnzConcs
+  - levelComplexConcs
+
+inputs:
+  adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
+  adapter_python: "{python_repo}/examples/ecTestGEM"
+  fixture_dir: "{matlab_repo}/test/unit_tests/ecTestGEM"
+
+  matlab_solver: gurobi
+  python_solver: gurobi
+
+  # The fixture of flexibilize_edge_cases_ectestgem: R2 and R4 blocked, P5 the one binding enzyme.
+  kcats:
+    R3: 15.0
+    R5: 200.0
+  exp_growth: 2.5
+  fold_change: 2.0
+  iter_per_enzyme: 5
+
+  # ec.concs written into the model after fillEnzConcs; null is NaN (not measured). R2_EXP_1 is
+  # catalysed by P1 and P2, R2_EXP_2 by P3, R3 by P4 and R5 by P5.
+  concs:
+    partial: {P1: 0.5, P2: 0.5, P3: null, P4: 0.4, P5: 0.3}
+    measured_zero_entry: {P1: 0, P2: 0, P3: null, P4: 0.4, P5: 0.3}
+    zero_subunit: {P1: 0, P2: 0.5, P3: null, P4: 0.4, P5: 0.3}
+    all_measured: {P1: 0.5, P2: 0.5, P3: 0.2, P4: 0.4, P5: 0.3}
+    none_measured: {P1: null, P2: null, P3: null, P4: null, P5: null}
+    zero_p5: {P1: 0.5, P2: 0.5, P3: 0.2, P4: 0.4, P5: 0}
+
+  # Rows of ec.rxnEnzMat (copies per subunit) written into the model before the case.
+  layouts:
+    # P3 is also a subunit of R3
+    shared:
+      R2_EXP_1: {P1: 1, P2: 1}
+      R2_EXP_2: {P3: 1}
+      R3: {P4: 1, P3: 1}
+      R5: {P5: 1}
+    # P1:P2 = 1:4 on R2_EXP_1
+    pair:
+      R2_EXP_1: {P1: 1, P2: 4}
+      R2_EXP_2: {P3: 1}
+      R3: {P4: 1}
+      R5: {P5: 1}
+
+  detection_limit: 0.2
+
+# Cases: coverage_* record the coverage table (reaction, counts, the three enzyme lists, sorted)
+# and the zeroable enzymes. zero_* record the changed enzymes with their new bound, the upper
+# bounds of all usage reactions and ec.concs. A case that raises is a result (`raised`).
+tolerance:
+  rel: 1.0e-6
+  abs: 1.0e-9

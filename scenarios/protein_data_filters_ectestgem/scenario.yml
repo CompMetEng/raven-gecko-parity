@@ -20,6 +20,12 @@ description: loadProtData / load_prot_data on replicate proteomics, one filter a
 # validation difference (a column count that does not match the replicate counts) shows up as
 # a flag and not as a crash of one side.
 
+# data/proteomics_zeros.tsv: 20 well-behaved proteins and five rows with zeros: Z1 [0, 0, 0],
+# Z2 [4, 0, 6], Z3 [0, 0, 5], Z4 [0, 3, 3] and Z5 [0, 0, NA]. By default a 0 is read as not
+# measured before any filter, with filter_data true and false; zeros_as_measured true keeps a
+# 0 as a replicate, a protein with only zeros is returned as 0 and is not removed by min_val or
+# cut_lowest.
+
 # Both sides raise when the replicate counts do not add up to the columns of the file. The two
 # sides agree on the RSD filter (a row above maxRSD is dropped in every replicate, so
 # X1 [1, 1, 10] and X5 [20, 1, 1] are gone on both sides), cutLowest (floor of that percent of
@@ -131,6 +137,76 @@ inputs:
       max_missing: [1, 0.5]
       cut_lowest: 0
       add_stdevs: 1
+    zeros_default:
+      file: proteomics_zeros.tsv
+      repl: [3]
+      filter_data: true
+      min_val: 0
+      max_rsd: 100
+      max_missing: 0.6666666666666666
+      cut_lowest: 0
+      add_stdevs: 1
+      zeros_as_measured: false
+    zeros_measured:
+      file: proteomics_zeros.tsv
+      repl: [3]
+      filter_data: true
+      min_val: 0
+      max_rsd: 100
+      max_missing: 0.6666666666666666
+      cut_lowest: 0
+      add_stdevs: 1
+      zeros_as_measured: true
+    zeros_measured_no_filter:
+      file: proteomics_zeros.tsv
+      repl: [3]
+      filter_data: false
+      min_val: 0
+      max_rsd: 100
+      max_missing: 0.6666666666666666
+      cut_lowest: 0
+      add_stdevs: 1
+      zeros_as_measured: true
+    zeros_unmeasured_no_filter:
+      file: proteomics_zeros.tsv
+      repl: [3]
+      filter_data: false
+      min_val: 0
+      max_rsd: 100
+      max_missing: 0.6666666666666666
+      cut_lowest: 0
+      add_stdevs: 1
+      zeros_as_measured: false
+    zeros_measured_min_val:
+      file: proteomics_zeros.tsv
+      repl: [3]
+      filter_data: true
+      min_val: 3
+      max_rsd: 100
+      max_missing: 0.6666666666666666
+      cut_lowest: 0
+      add_stdevs: 1
+      zeros_as_measured: true
+    zeros_measured_cut_lowest:
+      file: proteomics_zeros.tsv
+      repl: [3]
+      filter_data: true
+      min_val: 0
+      max_rsd: 100
+      max_missing: 0.6666666666666666
+      cut_lowest: 20
+      add_stdevs: 1
+      zeros_as_measured: true
+    zeros_default_cut_lowest:
+      file: proteomics_zeros.tsv
+      repl: [3]
+      filter_data: true
+      min_val: 0
+      max_rsd: 100
+      max_missing: 0.6666666666666666
+      cut_lowest: 20
+      add_stdevs: 1
+      zeros_as_measured: false
     column_count_mismatch:
       file: proteomics_3rep.tsv
       repl: [2]
