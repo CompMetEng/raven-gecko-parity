@@ -14,7 +14,7 @@ results = struct();
 [ecModel, ~] = build_model(ctx, true);
 sol = solveLP(ecModel);
 usage = getEnzymeUsage(ecModel, sol.x);
-results.control_usage = run_case(@() struct('objective', num(sol.f), 'proteins', {usage_rows(usage)}));
+results.control_usage = run_case(@() struct('objective', num(sol.f), 'proteins', {usage_rows(usage)}, 'demand', demand_fields(usage)));
 results.control_report = run_case(@() report_struct(ecModel, usage, inputs, []));
 results.control_bottlenecks = run_case(@() bottleneck_struct(ecModel, double(inputs.top_abs_usage), [], true));
 results.bottlenecks_fold_change_3 = run_case(@() bottleneck_struct(ecModel, double(inputs.top_abs_usage), double(inputs.fold_change_3)));
@@ -26,6 +26,9 @@ results.usage_exclude_zero = run_case(@() exclude_zero_case(ecModel, sol, inputs
 results.report_negative_top = run_case(@() report_struct(ecModel, usage, inputs, -1));
 results.report_top_one = run_case(@() report_struct(ecModel, usage, inputs, 1));
 results.usage_missing_reaction = run_case(@() missing_usage_case(ctx));
+results.demand_relaxed_bound = run_case(@() demand_relaxed_case(ctx));
+results.demand_partial_measurement = run_case(@() demand_partial_case(ctx));
+results.demand_unmeasured = run_case(@() demand_unmeasured_case(ctx));
 
 results.pfba_fraction_09 = run_case(@() pfba_struct(ecModel, {'fractionOfOptimum', 0.9}));
 results.pfba_unknown_objective = run_case(@() pfba_struct(ecModel, {'rxnId', 'NOSUCH'}));
@@ -77,7 +80,9 @@ report = reportEnzymeUsage(ecModel, usageData, ...
     'highCapUsage', double(inputs.high_cap_usage), 'topAbsUsage', top);
 out = struct('high_cap_usage', {table_rows(report.highCapUsage, 'capUsage', 'cap_usage')}, ...
     'top_abs_usage', {table_rows(report.topAbsUsage, 'percUsage', 'perc_usage')}, ...
-    'total_usage_flux', num(report.totalUsageFlux));
+    'total_usage_flux', num(report.totalUsageFlux), ...
+    'demand_ratio', num(report.demandRatio), ...
+    'demand_ratio_active', num(report.demandRatioActive));
 end
 
 
@@ -138,6 +143,43 @@ function out = missing_usage_case(ctx)
 m = removeReactions(m, 'usage_prot_P1');
 s = solveLP(m);
 out = struct('proteins', {usage_rows(getEnzymeUsage(m, s.x))});
+end
+
+
+function out = demand_fields(usageData)
+out = struct('measured_protein', num(usageData.measuredProtein), ...
+    'measured_protein_active', num(usageData.measuredProteinActive), ...
+    'demanded_protein', num(usageData.demandedProtein), ...
+    'demand_ratio', num(usageData.demandRatio), ...
+    'demand_ratio_active', num(usageData.demandRatioActive));
+end
+
+
+function out = demand_relaxed_case(ctx)
+% The usage upper bound of P5 is raised to twice its measured concentration.
+[m, ~] = build_model(ctx, true);
+k = strcmp(m.rxns, 'usage_prot_P5');
+m.ub(k) = 2 * m.ub(k);
+s = solveLP(m);
+u = getEnzymeUsage(m, s.x);
+out = struct('demand', demand_fields(u), 'report', report_struct(m, u, ctx.inputs, []));
+end
+
+
+function out = demand_partial_case(ctx)
+% P1 to P3 have no measured concentration; P4 and P5 keep theirs.
+[m, ~] = build_model(ctx, true);
+m.ec.concs(1:3) = NaN;
+s = solveLP(m);
+out = struct('demand', demand_fields(getEnzymeUsage(m, s.x)));
+end
+
+
+function out = demand_unmeasured_case(ctx)
+[m, ~] = build_model(ctx, true);
+s = solveLP(m);
+m.ec.concs(:) = NaN;
+out = struct('demand', demand_fields(getEnzymeUsage(m, s.x)));
 end
 
 

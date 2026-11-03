@@ -469,7 +469,7 @@ entries:
       - ec_analysis_ecyeastgem
       - ec_analysis_ecyeastgem911
     notes: >-
-      [3->4] usage flux read from positive usage_prot_* flux. With a usage upper bound of 0, capUsage is NaN on both sides. An enzyme whose usage reaction is missing is left out with a warning on both sides (enzyme_usage_edge_cases_ectestgem). No difference of its own in enzyme_usage_edge_cases_ectestgem, ec_analysis_ecyeastgem and ec_analysis_ecyeastgem911, which differ for getEnzymeBottlenecks and getPfbaEnzymes.
+      [3->4] usage flux read from positive usage_prot_* flux. With a usage upper bound of 0, capUsage is NaN on both sides. An enzyme whose usage reaction is missing is left out with a warning on both sides (enzyme_usage_edge_cases_ectestgem). Both add measuredProtein, measuredProteinActive, demandedProtein, demandRatio and demandRatioActive (Python: measured_protein, measured_protein_active, demanded_protein, demand_ratio, demand_ratio_active): the usage of the enzymes with a measured concentration in ec.concs divided by their concentrations, over the enzymes with a usage above 1e-7 mg/gDCW for the Active pair, NaN when no concentration is measured and a missing or short ec.concs read as unmeasured (cases demand_relaxed_bound, demand_partial_measurement and demand_unmeasured of enzyme_usage_edge_cases_ectestgem, where all five values agree; raven-gecko-parity#118). No difference of its own in enzyme_usage_edge_cases_ectestgem, ec_analysis_ecyeastgem and ec_analysis_ecyeastgem911, which differ for getEnzymeBottlenecks and getPfbaEnzymes.
   - matlab: enzymeUsage
     status: subsumed
     reason: Deprecated alias for getEnzymeUsage (src/deprecated/enzymeUsage.m); warns with GECKO:deprecatedName
@@ -783,7 +783,7 @@ entries:
       - ec_analysis_ecyeastgem
       - ec_analysis_ecyeastgem911
     notes: >-
-      [3->4] reads positive usage_prot_* flux. With zero=false (include_zero=False) both sides report the enzymes that have usage, and a negative topAbsUsage raises on both sides (enzyme_usage_edge_cases_ectestgem). No difference of its own in enzyme_usage_edge_cases_ectestgem, ec_analysis_ecyeastgem and ec_analysis_ecyeastgem911, which differ for getEnzymeBottlenecks and getPfbaEnzymes.
+      [3->4] reads positive usage_prot_* flux. With zero=false (include_zero=False) both sides report the enzymes that have usage, and a negative topAbsUsage raises on both sides (enzyme_usage_edge_cases_ectestgem). The report carries demandRatio and demandRatioActive (Python: demand_ratio, demand_ratio_active) from the usage data, NaN in MATLAB when the usage data has no demandRatio field (demand_relaxed_bound). No difference of its own in enzyme_usage_edge_cases_ectestgem, ec_analysis_ecyeastgem and ec_analysis_ecyeastgem911, which differ for getEnzymeBottlenecks and getPfbaEnzymes.
   - matlab: runDLKcat
     python: geckopy.run_dlkcat
     status: parity
