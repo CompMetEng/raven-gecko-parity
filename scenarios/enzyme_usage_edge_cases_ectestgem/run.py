@@ -157,6 +157,18 @@ def _report(model, usage, inputs, *, high_cap=None, top=None) -> dict:
         "high_cap_usage": _table_rows(report.high_cap_usage, "cap_usage"),
         "top_abs_usage": _table_rows(report.top_abs_usage, "perc_usage"),
         "total_usage_flux": num(report.total_usage_flux),
+        "demand_ratio": num(report.demand_ratio),
+        "demand_ratio_active": num(report.demand_ratio_active),
+    }
+
+
+def _demand(usage) -> dict:
+    return {
+        "measured_protein": num(usage.measured_protein),
+        "measured_protein_active": num(usage.measured_protein_active),
+        "demanded_protein": num(usage.demanded_protein),
+        "demand_ratio": num(usage.demand_ratio),
+        "demand_ratio_active": num(usage.demand_ratio_active),
     }
 
 
@@ -217,7 +229,7 @@ def run(ctx):
     model = build(inputs)
     sol = model.optimize()
     usage = enzyme_usage(model, sol.fluxes)
-    cases["control_usage"] = run_case(lambda: {"objective": num(sol.objective_value), "proteins": _usage_rows(usage)})
+    cases["control_usage"] = run_case(lambda: {"objective": num(sol.objective_value), "proteins": _usage_rows(usage), "demand": _demand(usage)})
     cases["control_report"] = run_case(lambda: _report(model, usage, inputs))
     cases["control_bottlenecks"] = run_case(lambda: _bottlenecks(model, int(inputs["top_abs_usage"]), price=True))
     cases["bottlenecks_fold_change_3"] = run_case(
@@ -253,6 +265,31 @@ def run(ctx):
         s = m.optimize()
         return {"proteins": _usage_rows(enzyme_usage(m, s.fluxes))}
     cases["usage_missing_reaction"] = run_case(missing_usage_reaction)
+
+    # The usage upper bound of P5 is raised to twice its measured concentration.
+    def demand_relaxed_bound():
+        m = build(inputs)
+        rxn = m.reactions.get_by_id("usage_prot_P5")
+        rxn.upper_bound = 2 * rxn.upper_bound
+        s = m.optimize()
+        u = enzyme_usage(m, s.fluxes)
+        return {"demand": _demand(u), "report": _report(m, u, inputs)}
+    cases["demand_relaxed_bound"] = run_case(demand_relaxed_bound)
+
+    # P1 to P3 have no measured concentration; P4 and P5 keep theirs.
+    def demand_partial_measurement():
+        m = build(inputs)
+        s = m.optimize()
+        m.ec.concs[:3] = np.nan
+        return {"demand": _demand(enzyme_usage(m, s.fluxes))}
+    cases["demand_partial_measurement"] = run_case(demand_partial_measurement)
+
+    def demand_unmeasured():
+        m = build(inputs)
+        s = m.optimize()
+        m.ec.concs[:] = np.nan
+        return {"demand": _demand(enzyme_usage(m, s.fluxes))}
+    cases["demand_unmeasured"] = run_case(demand_unmeasured)
 
     cases["pfba_fraction_09"] = run_case(lambda: _pfba(model, fraction_of_optimum=0.9))
     cases["pfba_unknown_objective"] = run_case(lambda: _pfba(model, objective="NOSUCH"))

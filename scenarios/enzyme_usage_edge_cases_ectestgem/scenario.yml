@@ -54,6 +54,11 @@ tolerance:
 #   usage_exclude_zero: with zero=false both sides report the two enzymes that carry flux.
 #   report_negative_top: topAbsUsage -1 raises on both sides.
 #   usage_missing_reaction: an enzyme without usage_prot_<id> is left out with a warning on both sides.
+#   demand_relaxed_bound, demand_partial_measurement, demand_unmeasured: measuredProtein,
+#     measuredProteinActive, demandedProtein, demandRatio and demandRatioActive agree on both sides, and
+#     so do the ratios of the report. Raising the usage bound of P5 to twice its measurement doubles the
+#     demand (ratio 0.2836 to 0.5672; no case in this fixture exceeds 1). With P1 to P3 unmeasured only P4 and P5 count, and with no
+#     measured concentration both ratios are NaN.
 #   pfba_fraction_09: the default fraction of both sides is 0.999999 of the optimum (control_pfba
 #     agrees). Both sides multiply a given fraction by 0.999999 (0.9 gives growth_over_optimum
 #     0.8999991). An unknown objective and an empty objective raise on both sides.
