@@ -53,6 +53,7 @@ def run(ctx):
                 max_missing=max_missing,
                 cut_lowest=float(case["cut_lowest"]),
                 add_stdevs=float(case["add_stdevs"]),
+                zeros_as_measured=bool(case.get("zeros_as_measured", False)),
             )
             results[name] = {"raised": False, "rows": _rows(prot_data)}
         except Exception:  # noqa: BLE001 --- whether one was raised is the finding, not its type
