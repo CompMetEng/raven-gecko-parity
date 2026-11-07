@@ -1,479 +1,86 @@
-# Plan: behavioural parity for RAVEN ↔ raven-toolbox
+# Behavioural parity for RAVEN and raven-toolbox
 
-The ledger carries **75 rows marked `parity`** — both sides implement this and are intended to
-behave the same — and the repository holds **thirty-four raven-pair scenarios**, covering **43 of
-those rows**.
-Matching names prove nothing, as the README says. This is the plan to make the claim real, and
-to keep it true nightly.
+The RAVEN ledger (`ledgers/raven.yml`) has 314 rows, of which 94 are marked `parity`: both sides implement the function and are intended to behave the same. Matching names prove nothing, as the README says, so a scenario runs both sides on the same input and compares the results. The repository holds 88 raven-pair scenarios (138 scenario folders in total, 50 of them for the gecko pair), and 85 of the 94 `parity` rows list at least one scenario. In the nightly report of 2026-11-04, 87 of the 88 scenarios match. The one that differs is `edge_model_toy`, in two details of the written YAML: whether a duplicated name is written, and the order of two genes. This document describes what exists, how it runs and what is still open. The gecko pair is described in [gecko-behaviour-parity-plan.md](gecko-behaviour-parity-plan.md).
 
-## What already exists
+## Scenarios by area
 
-The scenarios, in the order they were written:
+The full list is the folder `scenarios/`, and the rows that each scenario covers are in the `scenarios:` field of the ledger. The table names examples.
 
-| Scenario | Covers | Verdict |
-|---|---|---|
-| `elemental_balance_smallyeast` | `getElementalBalance` | match |
-| `homology_chain` | `getBlast`, `getModelFromHomology`, `makeFakeBlastStructure` | match |
-| `gpr_dnf_rules` | `grRuleToDNF`, `isDnfGrRule` | match |
-| `model_manipulation_smallyeast` | `convertToIrrev`, `expandModel`, `sortIdentifiers` | match |
-| `yaml_roundtrip_smallyeast` | `readYAMLmodel`, `writeYAMLmodel` | **differs** — writer layout, see below |
-| `task_list_parsing` | `parseTaskList` | match |
-| `merge_models_smallyeast` | `mergeModels` | match |
-| `task_checking_smallyeast` | `checkTasks` | **differs** — task LP set-up, see below |
-| `gapfill_topology_smallyeast` | `gapFillTopological` | match |
-| `init_scores_smallyeast` | `scoreModel` | match |
-| `init_merge_linear_smallyeast` | `mergeLinear`, `groupRxnScores` | match |
-| `model_simplification_smallyeast` | `simplifyModel` | match |
-| `merge_compartments_smallyeast` | `mergeCompartments` | match |
-| `duplicate_reactions_smallyeast` | `findDuplicateRxns` | match |
-| `gapfill_connect_smallyeast` | `fillGaps` | match |
-| `copy_to_compartment_smallyeast` | `copyToComps` | match |
-| `add_reactions_from_model_smallyeast` | `addRxnsGenesMets` | match |
-| `add_reactions_from_equations_smallyeast` | `addRxns` | match |
-| `add_transport_reactions_smallyeast` | `addTransport` | match |
-| `remove_genes_smallyeast` | `removeGenes` | match |
-| `remove_metabolites_smallyeast` | `removeMets` | match |
-| `change_reaction_equations_smallyeast` | `changeRxns` | match |
-| `change_gene_rules_smallyeast` | `changeGrRules` | match |
-| `remove_low_score_genes_smallyeast` | `removeLowScoreGenes` | match |
-| `set_variance_bounds_smallyeast` | `setParam` (var mode) | match |
-| `diff_models_smallyeast` | `diffModels` | match |
-| `compare_multiple_models_smallyeast` | `compareMultipleModels` | match |
-| `check_model_struct_smallyeast` | `checkModelStruct` | match |
-| `close_model_smallyeast` | `closeModel` | match |
-| `apply_condition_smallyeast` | `applyCondition` | **differs** — reset_exchanges direction, see below |
-| `assign_sbo_terms_smallyeast` | `assignSBOterms` | match |
-| `standardize_gr_rules_smallyeast` | `standardizeGrRules` | match |
-| `delta_g_csv_smallyeast` | `deltaGCSV` | **differs** — ΔG sentinel handling, see below |
-| `export_to_excel_smallyeast` | `exportToExcelFormat` | **differs** — default-bound hiding, see below |
-
-And the machinery around them, which the plan builds on rather than around:
-
-- `parity run` / `parity compare` — run a scenario against one implementation, diff two result
-  documents within a declared tolerance.
-- `.github/workflows/nightly.yml` — checks out both repos, installs MATLAB through
-  `matlab-actions/setup-matlab` (licence-free for public repositories), runs every scenario on
-  both sides and compares. **MATLAB in CI is already solved.**
-- `parity.local.toml` — per-machine path overrides, so a local run can point at any checkout.
-- Ledger rows already cross-reference the scenarios that cover them.
-
-What is missing is scenarios, and a runner that watches all four repos on the branches the
-ledger actually tracks.
-
-## Two corrections from this round
-
-**Run the aligners; do not pin their output.** Both toolboxes execute the *same* binaries:
-RAVEN ships them in `software/`, and raven-toolbox fetches the same builds — BLAST+ 2.17.0,
-DIAMOND 2.1.17, HMMER 3.4.0 — from the **raven-data** release assets. Identical binaries on
-identical inputs give identical hits, so the end-to-end route is deterministic and worth
-testing directly. Confirmed: the `homology_chain` BLAST checkpoint matches exactly.
-
-One caveat to respect: on **Windows** raven-toolbox ships HMMER **3.3.2** (no native Windows
-3.4 exists) against RAVEN's 3.4. The formats are compatible, but "same binary" only strictly
-holds on Linux and macOS — so aligner scenarios run on Linux, where the claim is exact.
-
-**Test the intermediate stages as well as the result.** A whole-pipeline diff says the models
-differ but never where. The chains below emit *checkpoints*: one run per implementation,
-several named stages inside the result document. `parity compare` already walks results
-structurally, so per-stage differences fall out of a single run — and the first stage that
-diverges is the one to fix.
-
-## The scenario programme
-
-### Reconstruction from homology
-
-One run per side, four checkpoints:
-
-| Checkpoint | Covers | Compares |
-|---|---|---|
-| `blast` | `getBlast` / `run_blast` | hit table: query, target, e-value, identity, alignment length, bitscore |
-| `orthologs` | (internal to both) | the ortholog map after cutoffs and bidirectional filtering |
-| `model` | `getModelFromHomology` / `get_model_from_homology` | reaction ids, gene ids, GPRs as logic, stoichiometry, bounds |
-| ~~`exchange`~~ | `addRxnsGenesMets` / `add_reactions_from_model` | **done**, as its own scenario rather than a checkpoint here: `add_reactions_from_model_smallyeast` |
-
-Inputs: two small proteomes and a template model from the RAVEN repo, so both sides read the
-same bytes.
-
-### Reconstruction from KEGG
-
-| Checkpoint | Covers | Compares |
-|---|---|---|
-| `hmmsearch` | `run_hmmsearch` and RAVEN's equivalent | per-KO hits and scores |
-| `ko_assignment` | `assign_kos` | KO → gene assignment after cutoffs |
-| `reactions` | reaction selection from KOs | reaction id set |
-| `model` | `getKEGGModelForOrganism` / `get_kegg_model_for_organism` | reactions, genes, GPRs, compartments |
-
-Pin the KEGG artefact version in the scenario declaration: a different HMM library is a
-different question.
-
-### ftINIT, stage by stage
-
-The five stages fail in different ways and need different fixes, so each is a checkpoint:
-
-| Checkpoint | Covers | Tier |
-|---|---|---|
-| ~~`scores`~~ | `scoreModel` / `score_reactions_from_genes` | **done** — `init_scores_smallyeast` |
-| `prep` | `prepINITModel` / `prep_init_model` | exact (prepared sets, task-essential reactions) |
-| ~~`merge_linear`~~ | `mergeLinear` / `merge_linear` | **done** — `init_merge_linear_smallyeast` |
-| `steps` | `ftINITInternalAlg`, `getINITSteps` / `run_ftinit`, `get_init_steps` | set-level per step |
-| `model` | `ftINIT` / `ftinit` | set-level |
-| `taskfill` | `fitTasks` (gapFillMode `preMerged`) / `fill_tasks` | set-level |
-
-A divergence in `scores` explains everything downstream; a divergence that appears only at
-`steps` is the MILP. Without the split the two are indistinguishable.
-
-### Compartment assignment
-
-**Needs a feature diff before a scenario.** Both sides carry the name, but the Python one has
-grown certification, gap-fill coupling and flux-gated multi-localisation, and work may have
-landed on either side since the port. A scenario written first would measure the gap between
-two different algorithms and call it a parity failure. Diff what each does, record it on the
-ledger row, *then* write checkpoints for `scores` → `placement` → `certification` → `model`.
-
-`predictLocalization` is a declared divergence, not a parity target: MATLAB anneals, Python
-solves a MILP.
-
-### Cheap deterministic scenarios worth having anyway
-
-Each is seconds to run and pins a `parity` row that would otherwise be unverified.
-
-Done: GPR normalisation (`gpr_dnf_rules`), `convertToIrrev` / `expandModel` / `sortIdentifiers`
-(`model_manipulation_smallyeast`), YAML round-trip (`yaml_roundtrip_smallyeast`). All three are
-solver-free and run in seconds on RAVEN's smallYeast tutorial model, which both sides read out
-of the RAVEN checkout so the fixture cannot drift.
-
-Still to write, and what each one needs first:
-
-`fillGaps` is done too (`gapfill_connect_smallyeast`), and it settles the MILP question the table
-used to raise: on a fixture where the template is the draft plus exactly the removed reactions the
-minimum repair is unique, so the chosen set is safe to compare, and SCIP against Gurobi agreed on it.
-A fixture offering two ways to repair the same gap would still need the comparison moved to the size
-of the repair.
-
-| Candidate | Needs |
+| Area | Examples |
 |---|---|
-| `getPhylDist` | a pinned KEGG artefact; it belongs with the KEGG chain |
-| `sortModel` | nothing — it is a `subsumed` row, so there is no Python entry point to compare it against |
-| biomass scaling | a model whose biomass reaction is worth scaling; smallYeast's is not |
+| Editing and combining models | `add_reactions_from_equations_smallyeast`, `add_reactions_from_model_smallyeast`, `add_transport_reactions_smallyeast`, `change_gene_rules_smallyeast`, `change_reaction_equations_smallyeast`, `remove_genes_smallyeast`, `remove_metabolites_smallyeast`, `copy_to_compartment_smallyeast`, `merge_compartments_smallyeast`, `merge_models_smallyeast`, `contract_model_toy`, `sort_model_toy`, `scale_biomass_toy` |
+| Formats | `yaml_roundtrip_smallyeast`, `yaml_float_digits_smallyeast`, `export_to_excel_smallyeast`, `delta_g_csv_smallyeast`, `save_delta_g_csv_smallyeast`, `export_for_git_toy`, `edge_model_toy` |
+| Gene rules | `gpr_dnf_rules`, `standardize_gr_rules_smallyeast` |
+| Reconstruction from homology | `homology_chain`, `homology_toy`, `hits_from_supporth_toy`, `hpa_scores_toy`, `uniprot_scores_toy`, `process_protein_fasta_fixture`, `remove_low_score_genes_smallyeast` |
+| ftINIT, tasks and gap-filling | `init_scores_smallyeast`, `init_merge_linear_smallyeast`, `init_steps_toy`, `min_nr_fluxes_toy`, `ftinit_toy`, `init_output_model_smallyeast`, `ftinit_task_metabolites_toy`, `task_list_parsing`, `task_checking_smallyeast`, `gapfill_connect_smallyeast`, `gapfill_topology_smallyeast`, `gap_fill_toy`, `gap_fill_milp_toy` |
+| Analysis and checks | `fseof_toy`, `reporter_metabolites_toy`, `random_sampling_toy`, `differential_sampling_toy`, `walk_fluxes_smallyeast`, `elemental_balance_smallyeast`, `check_model_struct_smallyeast`, `close_model_smallyeast`, `apply_condition_smallyeast`, `model_simplification_smallyeast` |
 
-`checkTasks` and `mergeModels` are done. The id-collision convention was checked first, as this table
-used to require: both sides rename a clash to `<id>_<source model id>`, and they only part company on a
-*second* collision of the same id, which needs three or more models to reach.
+## How the comparison is built
 
-### Divergences to encode, not fix
+**Both sides run the same binaries.** RAVEN and raven-toolbox both download BLAST+ 2.17.0, DIAMOND 2.1.17 and HMMER 3.4.0 from the release assets of `CompMetEng/toolbox-assets` (`downloadRavenBinaries.m`, `binaries.py`). On Windows both sides use HMMER 3.3.2, because no native Windows build of 3.4 exists. Identical binaries on identical inputs give identical hits, so the aligner steps are compared directly.
 
-Found while building raven-toolbox's own checks; each is real and currently invisible:
+**Intermediate stages are compared as well as the result.** A whole-pipeline difference says that two models differ and not where. A chain emits named checkpoints in one run per implementation, and `parity compare` walks the results structurally, so the first stage that diverges is visible. `homology_chain` has two checkpoints (the BLAST hits and the draft model built from a synthetic ortholog mapping), and `yaml_roundtrip_smallyeast` has checkpoints as well. The other scenarios cover one function or one stage each. The ftINIT stages are separate scenarios (`init_scores_smallyeast`, `init_merge_linear_smallyeast`, `init_steps_toy`, `min_nr_fluxes_toy`, `ftinit_toy`).
 
-| Pair | Difference |
-|---|---|
-| `contractModel` / `remove_duplicate_reactions` | **measured, raven-gecko-parity#8**: expand-then-contract is a round trip in RAVEN (first member survives, `_EXP_N` stripped, `grRules` merged with `or`) and lossy in raven-toolbox (last member survives, keeps its expanded id and its own rule). They also disagree on whether bounds have to match for two reactions to count as duplicates. *Detection* is a separate function on both sides and is at parity |
-| `reporterMetabolites` / `reporter_metabolites` | one-sided p-value, z-sorted vs two-tailed ordering |
-| `FSEOF` / `fseof` | slope of \|flux\| vs endpoint comparison |
-| `predictLocalization` / `predict_localization` | simulated annealing vs MILP |
+**Solver scenarios name the solver.** Eleven raven-pair scenarios name Gurobi on both sides in their `scenario.yml`, so that a difference cannot be blamed on a solver preference. They do not run without a licence.
 
-A scenario should *assert* each difference, so a silent change to either side fails.
+## Differences between the two tools
 
-### Divergences the scenarios found
+**Resolved.** Each of these was found by a scenario, tracked as an issue, and closed with the scenario matching. The ledger rows hold the current statement of each behaviour.
 
-Nineteen so far. Five are asserted and currently red (`yaml_roundtrip_smallyeast`,
-`task_checking_smallyeast`, `apply_condition_smallyeast`, `delta_g_csv_smallyeast`,
-`export_to_excel_smallyeast`); the rest are recorded on their ledger rows because no fixture here
-reaches them, or because the scenario that does exist works around the divergence rather than
-asserting it.
+| Issue | Function | Subject |
+|---|---|---|
+| [#6](https://github.com/CompMetEng/raven-gecko-parity/issues/6) | `writeYAMLmodel` | layout of the written file, and the reader (see [yaml-reconciliation.md](yaml-reconciliation.md)) |
+| [#7](https://github.com/CompMetEng/raven-gecko-parity/issues/7) | `checkTasks` | the linear program that checks a task |
+| [#8](https://github.com/CompMetEng/raven-gecko-parity/issues/8) | `contractModel` | expand and contract as a round trip |
+| [#9](https://github.com/CompMetEng/raven-gecko-parity/issues/9) | `addRxns`, `changeRxns` | names of metabolites created from an equation |
+| [#10](https://github.com/CompMetEng/raven-gecko-parity/issues/10) | `addTransport` | the default call |
+| [#12](https://github.com/CompMetEng/raven-gecko-parity/issues/12) | `changeGrRules` | appending a rule to a reaction without one |
+| [#15](https://github.com/CompMetEng/raven-gecko-parity/issues/15) | `applyCondition` | the direction of `reset_exchanges` |
+| [#16](https://github.com/CompMetEng/raven-gecko-parity/issues/16) | `deltaGCSV` | the "no measurement" sentinel of yeast-GEM |
+| [#17](https://github.com/CompMetEng/raven-gecko-parity/issues/17) | `exportToExcelFormat` | hiding of default bounds |
+| [#104](https://github.com/CompMetEng/raven-gecko-parity/issues/104) | `ftINIT` | pinning of tied optima with `resolveTies` |
 
-**`writeYAMLmodel` / `write_yaml_model` do not write the same file.** The *content* is at
-parity — the two readers produce the same model, and a read-write-read round trip is lossless
-on either side — but the layout is not, so the byte-stability `writeYAMLmodel.m` claims in its
-own docstring does not hold. MATLAB reproduces the historical RAVEN layout (4-space sequence
-indent, long scalars inline in double quotes) and emits an empty `version:` line into
-`metaData`; the Python side dumps through cobra's ruamel instance at its defaults (2-space
-indent, scalars folded at 80 columns) and quotes the date. On smallYeast that is 1415 lines
-against 1571 — and MATLAB's output is within 107 lines of the input file, where Python's
-differs on essentially all of it. **Open question: which layout is the target?** Deciding that
-is a prerequisite to the scenario going green; until then `yaml_roundtrip_smallyeast` is the
-one red scenario, deliberately.
-
-Following that up turned out to matter more than the layout does:
-[docs/yaml-reconciliation.md](yaml-reconciliation.md) takes it apart and finds that
-`readYAMLmodel` cannot read a file written by *any* cobrapy-based tool --- it raises on ruamel's
-folded scalars, keeps single quotes, and has a latent bug where a list-valued `ec-code` swallows
-the rest of the annotation block. The report carries the reproducers and a tiered plan; the
-short version is that the reader fixes belong in RAVEN and are needed whatever is decided about
-the writers, and that the writer layout is cheapest to settle on the Python side.
-
-**`convertToIrrev` splits reversible exchange reactions; `convert_to_irreversible` does not.**
-RAVEN splits every reaction with `rev ~= 0`; the Python side skips boundary reactions whatever
-their bounds. smallYeast has eight exchange reactions and none is reversible, so the scenario
-passes and would not on a model where one is. RAVEN also moves a negative objective coefficient
-onto the reverse reaction, which the Python side leaves in place; smallYeast's objective is a
-single positive coefficient.
-
-**`changeGrRules` leaves an unparseable grRule behind when appending onto a reaction with no GPR yet
-(raven-gecko-parity#12).** It unconditionally builds `"(old) or (new)"`, so on an empty `old` that is the
-literal string `"() or (new)"` — not a valid gene, complex or isozyme. It does not raise: `rxnGeneMat` comes
-out correctly populated, but the *text* is left broken, and anything that re-parses it later —
-`grRuleToDNF`, `isDnfGrRule`, `expandModel` — throws `RAVEN:badGrRule` far from the call that caused it.
-`change_gene_reaction_rules` explicitly guards this case. `change_gene_rules_smallyeast` covers the two paths
-that do agree (replace outright; append onto an existing GPR) and does not assert this one.
-
-**A metabolite created by rewriting a reaction's equation is nameless on the Python side, same as
-`addRxns` / `add_reactions_from_equations` (raven-gecko-parity#9).** `changeRxns` and
-`change_reaction_equations` share the same metabolite-matching machinery those two do, so the same gap
-shows up here rather than being a separate bug. Not re-filed; `change_reaction_equations_smallyeast`
-creates a metabolite as part of its fixture and does not compare its name, pointing at #9 instead.
-
-**`compareMultipleModels`'s similarity statistic is not `compare_models`'s.** RAVEN's `structComp` is
-`(1 - Hamming distance)`, counting "both models lack this reaction" as agreement; `compare_models`'s is
-Jaccard, counting only shared presence. Two models that mostly agree by both lacking most of a big
-universal reaction set score high on one, low on the other. RAVEN also has no metabolite/gene presence
-matrix at all (reaction-space only, by its own docstring) and reads only a reaction's first subsystem
-where Python joins every one with `;`. `compare_multiple_models_smallyeast` cross-validates the one thing
-that does line up — the reaction presence matrix, on three models covering every presence pattern.
-
-**`removeMets`'s cleanup flags have no Python counterpart, and cobra's `destructive` is not a
-substitute for them.** RAVEN never deletes a reaction just because a metabolite it needed is gone —
-`removeUnusedRxns=true` only prunes one left with literally zero metabolites. `remove_metabolites`
-offers only cobra's `destructive`, which deletes every reaction touching the removed metabolite
-outright, whatever else that reaction still has — a much more aggressive removal, not the same
-behaviour under another name. `remove_metabolites_smallyeast` runs both sides at their shared
-non-destructive default, where they agree exactly, including a reaction reduced to zero metabolites
-and left in the model on both sides rather than pruned.
-
-**`removeGenes` and `remove_genes` share their default policy for a reaction a deletion blocks.**
-RAVEN's `removeBlockedRxns=false` and the Python default `blocked_reactions="constrain"` both keep the
-reaction with the rule dropped and bounds (0, 0); `removeBlockedRxns=true` and `"remove"` delete it.
-Both sides also remove every gene that no remaining reaction named before the removal, including an
-orphan gene that was not requested. `remove_genes_smallyeast` names the policy explicitly on both sides
-and `edge_model_toy` runs both defaults. Python also has a third, one-sided policy (`"keep"`) with no
-RAVEN equivalent.
-
-**`addTransport` crashes on its own natural default call.** Asked to transport every metabolite from
-one compartment when not all of them exist in the target, it builds the new reaction names from the full
-requested list and the reactions themselves from the filtered subset, then concatenates arrays of two
-different lengths. Not a Python-side difference — a latent bug, reproducible on RAVEN's own tutorial
-model. Filed as raven-gecko-parity#10; `add_transport_reactions_smallyeast` uses an explicit metabolite
-subset to avoid it and has no coverage of the default path until it is fixed.
-
-**A metabolite created from an equation comes out nameless on the Python side.** `addRxns` sets its
-`metNames` to the id; `add_reactions_from_equations` leaves the name empty. Tracked as
-raven-gecko-parity#9, and worth more than its size suggests: a nameless metabolite defeats the
-name-keyed matching that `merge_compartments` and `add_reactions_from_model` both depend on.
-
-**`copyToComps` and `copy_to_compartment` name compartment copies differently.** `copyToComps`
-appends the target compartment to the id a metabolite already has (`ADP_c` → `ADP_c_p`) where
-`copy_to_compartment` rewrites the suffix (`ADP_p`). The scenario compares metabolites as (name,
-compartment) as a result, which leaves everything else about the transform under test.
-
-**`mergeCompartments` and `merge_compartments` keep the same copy of a merged metabolite.** Both
-give it the id and the other fields of the copy already in the merged compartment, if there is one,
-otherwise of the copy whose id sorts first (`ACCOA_c` for `ACCOA_c` and `ACCOA_m`). With
-`deleteRxnsWithOneMet` (`drop_single_metabolite_reactions`) on, both keep the reactions that had a
-single metabolite before the merge and delete those the merge reduced to one. The scenario
-compares the merged metabolites by id, name and ChEBI annotation, with the flag off on smallYeast,
-on in one toy case, and with both functions on their defaults.
-
-**`simplifyModel`'s dead-end pass consults the bounds on one side and not the other.** RAVEN reads
-dead ends off the sign pattern of S, with reversible reactions counted in both directions; the Python
-side additionally consults the bounds, so a reaction locked at zero flux does not count as a producer.
-Run alone against smallYeast, whose exchanges ship shut, the Python pass removes 5 reactions where
-RAVEN removes none (21 against 2 on a stranded model). Composed after `deleteZeroInterval` — the order
-RAVEN documents and ftINIT uses — the two agree exactly, so this is a precondition rather than a
-disagreement about the pass, and `model_simplification_smallyeast` compares the composed form.
-Recorded on the ledger row.
-
-**`checkTasks` and `check_tasks` build a different LP.** RAVEN relaxes the metabolite balance
-(`model.b`) for a task's declared inputs and outputs and leaves the model's own reactions alone; the
-Python side closes the model's boundary reactions and works through exchange reactions. A metabolite
-the model can already excrete through its own open exchange therefore stays available to a RAVEN task
-that does not list it. On smallYeast that flips one of six task verdicts. Tracked as
-raven-gecko-parity#7, asserted by `task_checking_smallyeast`, and the second scenario that is red on
-purpose. It matters beyond `checkTasks`: this is the task layer under ftINIT, `fitTasks` (gapFillMode
-`preMerged`), so the ftINIT chain should not be written until it is settled.
-
-**`ftinit`'s `resolve_ties` reproducibility pinning has no MATLAB counterpart at all
-(raven-gecko-parity#104).** Both of ftINIT's MILP stages are degenerate --- many reaction sets score
-identically --- and both sides fix a solver `Seed` for that reason (RAVEN's `getMinNrFluxes.m`/
-`ftINITFillGaps.m` at `26`, matching raven-toolbox's own default). Only the Python side goes
-further: `run_ftinit`'s `_resolve_ties` (the main extraction) and `fill_tasks`'s
-`_resolve_ties_fill` (gap-filling), both added in raven-toolbox#114, spend two extra lexicographic
-solve phases pinning the arbitrary incumbent to a canonical answer --- fewest changed/added
-reactions, then lowest reaction id --- rather than trusting the seed to reproduce it. RAVEN has no
-equivalent secondary phase anywhere in the ftINIT chain, and its own test suite works around the
-consequence rather than closing it: `testing/function_tests/tINIT.m:448` accepts either of two tied
-outcomes, with a comment noting "which of the two is returned is a tie-break that differs between
-solvers." Demonstrated concretely while speeding up `_gap_fill_task` (raven-toolbox#148): with
-`resolve_ties` at its Python default (off) on both runs, changing only the gap-fill MILP's
-*construction path* (mutate the reference model in place instead of copying it per call) --- same
-seed, same problem, same solver --- flipped 2 of 9586 kept reactions on a genome-scale Human-GEM
-extraction. Both swaps are textbook ties (`MAR01557`/`MAR01558` share a gene and reaction name,
-differing only in a duplicate-annotated metabolite; `MAR10033`/`MAR10036` are gene-less bulk pooling
-reactions), and running the changed code twice gave byte-identical results both times, so the tie is
-real and stable rather than ongoing noise --- but nothing in RAVEN would catch the same tie tipping
-after a solver upgrade or an unrelated change upstream of the MILP. Recorded on the
-`fitTasks` and `ftINITInternalAlg` ledger rows; not scenario-covered, and porting
-the pinning phases into `getMinNrFluxes.m`/`ftINITFillGaps.m` is queued rather than started.
-
-**`gapFillTopological` and `analyse_topology` default their seeds and targets differently.** RAVEN
-seeds from every exchange reaction whose bounds allow uptake and targets the substrates of the
-objective reaction; the Python side seeds from one-metabolite reactions with `lower_bound < 0` and
-targets every metabolite in the model. `gapfill_topology_smallyeast` passes both explicitly, since a
-scenario on the defaults would measure the defaults rather than the traversal. Recorded on the ledger
-row.
-
-**The two GPR parsers accept different syntax.** RAVEN's tokeniser takes `&&`, `||` and
-mixed-case operators (`Or`); cobra's parser takes only `&`, `|` and fully uppercase `AND`/`OR`,
-and anything else warns and yields an *empty* GPR — so the reaction loses its genes silently
-rather than raising. `gpr_dnf_rules` covers the syntax both accept and leaves those spellings
-out on purpose: they are a difference in accepted input, not in behaviour, and asserting them
-would leave the scenario permanently red over a triviality.
-
-**`applyCondition` and `apply_condition` disagree about what a condition's exchange-reset
-direction means (raven-gecko-parity#15).** `applyCondition` forwards `prelude.reset_exchanges`
-straight through to `getExchangeRxns` as a direction filter — `"out"` resets only the reactions
-where the boundary metabolite is a product, leaving every other exchange, including uptakes,
-untouched. `apply_condition` cannot make this distinction at all (cobra has no concept of
-RAVEN's in/out split) and resets every exchange it finds for any truthy value, whatever
-direction was actually named. On smallYeast (three uptake reactions shipped shut), applying the
-identical condition takes maximum growth from unreachable on the RAVEN side to ~90 on the
-Python side — glucose and oxygen uptake silently reopened, neither of which the condition
-named. Not a toy case: `applyCondition`'s own docstring names yeast-GEM as its first consumer
-and uses `"out"`, not a bare boolean, as its own worked example — exactly the shape of condition
-a real yeast-GEM file plausibly writes. `apply_condition_smallyeast` asserts the split directly
-and is the third deliberately red scenario.
-
-**`deltaGCSV` and `load_delta_g_csv` disagree about yeast-GEM's ΔG "no measurement" sentinel
-(raven-gecko-parity#16).** Both match a CSV row to a model id and leave anything the CSV doesn't
-mention untouched — that much agrees. yeast-GEM's own side-car CSVs use `10000000.0` to mean "no
-measurement" (`load_delta_g_csv`'s own docstring cites yeast-GEM's `checkrxnDirection.m` gating on
-this exact value, true for 777 of its 4102 reaction rows). `deltaGCSV` has no concept of this
-sentinel and copies it verbatim into `metDeltaG`/`rxnDeltaG`, indistinguishable from a real
-measurement; `load_delta_g_csv` checks every matched value against it and leaves the entity
-unstamped when it matches, the same state a truly unmentioned id gets. Applying the identical CSV
-to the identical model leaves the two sides disagreeing about whether an entity has a ΔG value on
-record at all. `delta_g_csv_smallyeast` asserts the split directly and is the fourth deliberately
-red scenario.
-
-**`exportToExcelFormat` hides a bound that equals the model's own declared default;
-`export_to_excel` always writes it literally (raven-gecko-parity#17).** The two are a faithful,
-deliberate port on layout — same sheets, same headers, same column order, even RAVEN's own
-unusual "RXNS' ID column is the real id but METS' ID column is name[comp]" convention reproduced
-exactly. `exportToExcelFormat` hides a LOWER BOUND / UPPER BOUND cell when it equals
-`model.annotation.defaultLB`/`defaultUB`, and separately hides an irreversible reaction's lower
-bound whenever it is exactly 0; `export_to_excel` has no equivalent logic and always writes the
-literal bound. Not a corner case: smallYeast's bounds are drawn entirely from `{-1000, 0, 1000}`
-(its own declared defaults plus zero), so nearly every reaction's bound cells hit one of RAVEN's
-hiding rules — of five reactions tested, three come back fully blank from RAVEN and fully
-populated from raven-toolbox, and the other two agree only on the one bound that happens to
-differ from the default. `export_to_excel_smallyeast` asserts the split directly and is the fifth
-deliberately red scenario.
+**Remaining.**
+- `predictLocalization` and `predict_localization` differ by design: RAVEN places reactions by a random search, and Python solves a MILP. The ledger row says so, and no scenario covers it.
+- `contractModel`: the ledger row lists the remaining differences, which are the definition of a reversible reaction (`lb<0<ub` against `lb<0`) and the mirroring of bounds of opposite direction. `contract_model_toy` matches.
+- `edge_model_toy` differs in the two YAML details named above.
+- The ledger row of `FSEOF` says that `fseof_toy` gives DIFFER on three seeds, and the nightly report has `fseof_toy` as MATCH. The row and the scenario need to be reconciled.
 
 ## How it runs
 
-### Nightly, across all four repos, only when something moved
+### Nightly
 
-`nightly.yml` runs at 05:00 daily for the **raven pair**, and:
+`.github/workflows/nightly.yml` runs at 05:00 daily as a matrix over the pairs `raven` and `gecko`, one at a time.
+1. **It skips when nothing moved.** `nightly/state.json` (for the gecko pair `nightly/gecko-state.json`) holds the revisions of the last comparison. The job resolves the tracked branches with `git ls-remote` and stops when the pair is unchanged. `workflow_dispatch` takes a `force` input and a `scenario` input.
+2. **It uses the branches that `parity.toml` names.** `parity refs` reads them. All four repositories default to `main` on GitHub, and `parity.toml` tracks `develop` in all four. The raven entry checks out RAVEN and raven-toolbox. The gecko entry checks out all four, because geckopy installs raven-toolbox from git.
+3. **It writes a report.** `nightly/report.md` (gecko: `nightly/gecko-report.md`) is regenerated and committed each time the comparison runs, so drift has a history.
+4. **It separates a crash from agreement.** A scenario without a result file is recorded as `ERROR`, never as a match, and the job fails. One failing scenario does not stop the others.
+5. **It provides a Gurobi licence.** The licence comes from the organisation secret `GUROBI_EDUARD` (a licence file) or from the three fields `GUROBI_WLSACCESSID`, `GUROBI_WLSSECRET` and `GUROBI_LICENSEID`. When neither is configured, the job says so and the solver-free scenarios still run. Only a WLS licence works on a hosted runner.
+6. **It runs the Python side on several Python versions.** A `python-versions` job runs Python 3.11, 3.13, 3.14 and 3.15 against the MATLAB results of the compare job.
 
-1. **Skips when nothing moved.** `nightly/state.json` holds the revisions of the last real
-   comparison; the job resolves both tracked branches with `git ls-remote` and stops there if
-   the pair is unchanged. `workflow_dispatch` takes a `force` input for when you want the run
-   anyway.
-2. **Uses the branches the ledger tracks.** Both workflows get them from `parity refs`, which
-   reads `parity.toml`. Not one of the four repos defaults to its integration branch: RAVEN
-   and GECKO both default to `main` while the ledgers describe `develop3` and `develop4`, so
-   taking defaults compared release branches against development ones.
-3. **Writes a report, not just a red tick.** `nightly/report.md` is regenerated and committed
-   each time the comparison actually runs, so drift has a history.
-4. **Distinguishes a crash from agreement.** A scenario whose result file is missing is
-   recorded as `ERROR`, never as a match, and the job goes red. One scenario failing does not
-   stop the others.
-5. **Gurobi for the solver scenarios** — `task_checking_smallyeast` (LP) and
-   `gapfill_connect_smallyeast` (MILP) both name it explicitly on both sides rather than
-   inheriting a preference, so a difference cannot be blamed on the solver. The consequence is
-   that those two, alone among the raven scenarios, do not run without a licence. The licence
-   comes either from the organisation secret
-   `GUROBI_EDUARD`, which holds a licence file verbatim, or from the three-field
-   `GUROBI_WLSACCESSID` / `GUROBI_WLSSECRET` / `GUROBI_LICENSEID` form that raven-toolbox
-   uses. Both are accepted; when neither is configured the job says so and carries on, so
-   solver-free scenarios still run. Only a **WLS** licence works on a hosted runner --- a
-   named-user academic licence is tied to one machine --- so the step says which kind it
-   found.
+MATLAB comes from `matlab-actions/setup-matlab` (R2024b). A weekly job, `.github/workflows/gecko-genome-scale.yml` (Sundays 06:00), runs the genome-scale scenario `ec_model_full_yeastgem` of the gecko pair.
 
-Done: the **gecko pair** joined the nightly as a second matrix entry --- see
-[gecko-behaviour-parity-plan.md](gecko-behaviour-parity-plan.md) for its own scenarios. Its
-entry checks out all four repos, because geckopy installs raven-toolbox from git and would
-otherwise be compared against a revision the run never recorded; RAVEN and raven-toolbox are
-resolved unconditionally in both entries so the gecko one can depend on them, and each pair
-writes its own `nightly/*state.json` / `nightly/*report.md` so a push from one entry cannot
-race a push from the other --- the matrix runs one entry at a time for the same reason.
-
-### On demand, on any branch, locally
-
-The same comparison must be runnable against work in progress — that is what makes it useful
-before a merge rather than after:
+### On demand
 
 ```bash
-parity run ftinit_smallmodel --impl python --python-ref feat/my-branch
-parity run ftinit_smallmodel --impl matlab --matlab-ref fix/their-branch
-parity compare results/python/... results/matlab/... --scenario ftinit_smallmodel
+parity run <scenario> --impl python
+parity run <scenario> --impl matlab
+parity compare results/python/<scenario>.json results/matlab/<scenario>.json --scenario <scenario>
 ```
 
-Two ways to reach that, and the choice is worth making deliberately: resolve refs by checking
-out a git worktree per ref (isolated, no effect on the user's checkout, needs disk), or keep
-using `parity.local.toml` paths and let the user switch branches themselves (simplest, but
-silently compares whatever happens to be checked out). The worktree route is the one that
-makes a result reproducible from the command alone; every result document should record the
-four commit shas it came from either way.
+`parity.local.toml` points a run at any checkout, and `parity run` takes `--output` and `--matlab`. `parity prepare`, `parity collect` and `parity seeds` (the Python side under several `PYTHONHASHSEED` values) support runs on a cluster, which [hpc-handover.md](hpc-handover.md) describes. `docs/workflow.md` describes the day-to-day workflow with the ledger.
 
-A `parity verify` wrapper that runs both sides and compares in one command would make the
-local path a single step instead of three.
+## Open work
 
-## Order of work
-
-1. ~~**Homology chain** — deterministic, shared binaries, seconds to run, covers half of one
-   reconstruction route. Proves the checkpoint pattern.~~ Done; two of its four checkpoints
-   (`blast`, `draft`) are in, `orthologs` and `exchange` are not.
-2. ~~**Fix the runner**: explicit refs (RAVEN `develop3`), nightly, change detection, report
-   on difference.~~ Done; the gecko pair still needs scenarios before it can join.
-3. ~~**The cheap deterministic scenarios**, in a batch — they are mostly declaration plus a
-   dozen lines each.~~ Done: `gpr_dnf_rules`, `model_manipulation_smallyeast`,
-   `yaml_roundtrip_smallyeast`, `task_list_parsing`, `merge_models_smallyeast` and
-   `task_checking_smallyeast`. Only `fillGaps` and the two that need a decision or an artefact
-   are left — see the table above.
-4. **ftINIT chain**, stage by stage. Started: the `scores` checkpoint is in
-   (`init_scores_smallyeast`) and matches, so a divergence appearing further down the chain is
-   not coming from the scoring. The stages that follow are **blocked on raven-gecko-parity#7**
-   from `prep` onwards: ftINIT's task layer runs through `checkTasks`, and until the two agree
-   on what a task constrains, a difference in an ftINIT model cannot be attributed to ftINIT.
-   `merge_linear` was the one later checkpoint that touches no tasks, and it is now done
-   (`init_merge_linear_smallyeast`, which covers `groupRxnScores` alongside it). The gene-pruning step
-   at the far end of ftINIT is also task-free and is now done too (`removeLowScoreGenes` /
-   `remove_low_score_genes_smallyeast`). Everything still outstanding in between runs through the task
-   layer.
-5. **Encode the four known divergences.**
-6. **KEGG chain** (needs an artefact version pinned and a small proteome).
-7. **Compartment-assignment feature diff**, then its chain.
-8. **Branch-targeted local runs** (`--python-ref` / `--matlab-ref`, or documented worktree
-   workflow) — do this as soon as step 1 proves the pattern, since it is what makes the tool
-   usable day to day.
+- **KEGG chain.** There is no scenario. `getKEGGModelForOrganism` and `getPhylDist` are `parity` rows without a scenario. `getPhylDist` needs a pinned KEGG artefact that the harness does not hold.
+- **Compartment assignment.** `assignCompartments` has no scenario. The Python side certifies and gap-fills, and a scenario written before the two algorithms are diffed would measure the difference between two algorithms. The diff comes first, recorded on the ledger row.
+- **Homology chain.** The checkpoint `orthologs` (the ortholog map after the cutoffs) is not in `homology_chain`.
+- **Rows without a scenario.** Nine `parity` rows list none. Examples are `getDiamond`, `runSuppOrth`, `fitTasks` and `ftINITInternalAlg` (the ftINIT stages are covered through `ftinit_toy` and the other ftINIT scenarios, and the rows do not list them).
+- **Pending rows.** 13 rows are `matlab-pending`.
+- **Branch-targeted runs.** `--python-ref` and `--matlab-ref` and a single-command `parity verify` do not exist. A run against another branch uses `parity.local.toml`.
 
 ## Open questions
 
-- **Which branch is RAVEN's parity target** — `develop3` (what the ledger and docs track) or
-  `main`? Everything downstream depends on the answer, and today the two runners disagree.
-- **Which YAML layout is the target** — RAVEN's historical one, which `writeYAMLmodel`
-  reproduces and the tutorial fixtures are written in, or cobra's ruamel defaults, which
-  `write_yaml_model` emits? `yaml_roundtrip_smallyeast` is red until this is answered, and it
-  is the only scenario in the repository that is.
-  See [docs/yaml-reconciliation.md](yaml-reconciliation.md) for the evidence and a
-  recommendation --- in short: the Python side moves, and neither writer matches the
-  yeast-GEM / Human-GEM corpus today.
-  Tracked as raven-gecko-parity#6.
-- **Where do MATLAB results live between runs?** Committing them gives CI something to compare
-  against without MATLAB and gives drift a history; it also means a stale committed result can
-  quietly become the reference. Recording the RAVEN sha in the result and warning on mismatch
-  covers that.
-- **Does the ledger need a `divergence` status?** The four known differences are neither
-  `parity` nor `matlab-only`, and today fit only in `notes`, which nothing validates.
-- **How large should the fixtures be?** Small enough for a nightly, large enough that a
-  divergence has somewhere to hide. The genome-scale comparison behind the published Jaccard
-  figures is ~1 h per side and belongs in a separate, slower job.
+- **Where do the MATLAB results live between runs?** The nightly commits only the report and the state file, and uploads the results as a workflow artifact. Committing the results would let CI compare without MATLAB, and a stale committed result could become the reference. Recording the revisions in the result and warning on a mismatch avoids that.
+- **Does the ledger need a `divergence` status?** The statuses are `parity`, `python-pending`, `matlab-pending`, `matlab-only`, `python-only`, `via-dependency`, `subsumed`, `internal` and `unreviewed`. A known difference is recorded in `notes` and in the `differs` field, which `parity ledger-audit` checks with the option `strict_differs`. No raven row uses `differs`.
+- **How large should the fixtures be?** Small enough for a nightly, and large enough that a difference has somewhere to hide. The gecko pair has a weekly genome-scale job, and the raven pair has none. The genome-scale comparison behind the published Jaccard figures takes about one hour per side.
