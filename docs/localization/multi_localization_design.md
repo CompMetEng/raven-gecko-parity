@@ -1,10 +1,7 @@
 # Design: reaction-level multi-localization
 
-**Status: solved — sound via flux-activity coupling (path 2).** `assign_compartments` does
-**mono-localization** by default; the opt-in `multi_localization=True` flag now runs the sound
-**path-2 flux-activity coupling** formulation (a placement earns its score only if it carries flux),
-which is solver-independent. The earlier path-1 capability pre-pass was found **unsound** (it could
-not exclude conditionally-dead placements — on Gurobi *and* GLPK) and was replaced. This note
+**Status: the flux-activity coupling (path 2) is designed here and is not in the current raven-toolbox code.** `assign_compartments` does **mono-localization** by default. Its option `multi_localize=True` adds second compartments after certification: a compartment is proposed where a gene has a DeepLoc score at or above `multi_localize_threshold`, and kept only when a loopless FVA on the materialised model shows a flux of at least `multi_localize_eps`. There is no option `multi_localization`, and the placement MILP has no activity binaries. The earlier path-1 capability pre-pass was found **unsound** (it could
+not exclude conditionally-dead placements, on Gurobi *and* GLPK). This note
 specifies what reaction-level *multi*-localization should do, why a naive implementation is unsound,
 what the pre-pass experiment showed (path-1 outcome), and the sound formulation that replaced it
 (path-2 outcome). It exists because several attempts (the raven-toolbox Phase-2 spike, the yeast-GEM
@@ -83,12 +80,11 @@ the whole model active, which a real model never is.
 ## Recommendation
 
 Path 1 (capability pre-pass) was tried first and found **unsound** — see the path-1 outcome below.
-Path 2 (**flux-activity coupling**) was then implemented and **is** what `multi_localization=True`
-now runs; it removes the dead-placement exploit by construction and is solver-independent (see the
-path-2 outcome). Mono-localization (`multi_localization=False`) remains the **default**: it is the
+Path 2 (**flux-activity coupling**) was then implemented as a prototype; it removes the dead-placement exploit by construction and is solver-independent (see the
+path-2 outcome). The current code does not contain it (see the status above). Mono-localization remains the **default**: it is the
 simplest, smallest MILP and is sufficient for the common case — isozyme separation (`expand_model`)
 already lets *different gene copies* of one reaction land in different compartments without any
-dead-placement risk. Enable `multi_localization=True` when you specifically need a *single* gene's
+dead-placement risk. Enable `multi_localize=True` when you specifically need a *single* gene's
 reaction in two compartments at once (genuine dual-targeting) and can afford the larger MILP.
 
 ## Outcome (path 1 was tried)
@@ -125,9 +121,9 @@ dead-placement exploit "structurally" as hoped above. Two things were learned:
 The implementation was kept behind `multi_localization=False`. It has since been **replaced** by the
 sound path-2 formulation below.
 
-## Outcome (path 2 implemented — SOUND)
+## Outcome (path 2 prototype: sound, not in the current code)
 
-Path 2 (**flux-activity coupling**) was implemented and is now what `multi_localization=True` runs.
+Path 2 (**flux-activity coupling**) was implemented as a prototype and is not what `multi_localize=True` runs in the current code.
 The idea: a placement earns its localization score **only if it carries flux**. Per movable reaction
 `r`, compartment `c`, with the existing compartment flux `v[r,c]`:
 

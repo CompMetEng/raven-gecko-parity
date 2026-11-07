@@ -199,7 +199,7 @@ benchmark-specific scaffolding — in [yeast_validation.md](yeast_validation.md)
 
 * [**Replicate yeast-GEM**](yeast_validation.md#1-recovering-curated-yeast-gem-comparison-1)
   — flatten curated yeast-GEM to one compartment with `merge_compartments`, then run
-  `annotate_proteome` -> `evidence_aware_transport_cost` -> `assign_compartments` and score the
+  `assign_compartments` (which accepts `transport_cost` and does not use it, so the evidence layer is not part of this run) and score the
   recovered compartmentalisation (reaction- and gene-level agreement, added-transport count,
   functional connectivity, growth) against the curated original.
 * [**vs CarveFungi**](yeast_validation.md#2-head-to-head-with-carvefungi-comparison-2)

@@ -143,8 +143,7 @@ The optimisation has **zero continuous variables and zero flux gates**:
   confined precursor (or a certified growth failure) forces it there — enforced by real flux.
   `test_functionality_overrides_score` and `test_pathway_coherence_overrides_individual_score` remain
   meaningful: a confined metabolite fires §2.3 and forces co-location / pinning.
-- **Evidence-aware transports.** `evidence_aware_transport_cost` still supplies the `{base_met: cost}`
-  mapping weighting which split pool is worth a transport and which reconnection is preferred.
+- **Evidence-aware transports.** `evidence_aware_transport_cost` supplies a `{base_met: cost}` mapping to `predict_localization`. `assign_compartments` accepts `transport_cost` and does not use it: the placement master is score-only, and `minimize_transports` prunes transports by flux.
 - **Gap-fill stays strictly optional and parsimonious** — generated only when a real FBA proves
   reconnection alone cannot restore growth; with `universal=None` it never fires.
 - **The carbon panel is the authoritative test**, and it is *the same object* the algorithm optimises
@@ -166,7 +165,7 @@ solver tolerance.
 ## 6. Results (CERTAIN — measured on the yeast-GEM replication task)
 
 `scripts/benchmark_certified_yeast.py` on the flattened yeast-GEM draft (2569 rxns / 1337 mets,
-draft growth 0.1426; `min_growth = 0.5 × 0.0809 = 0.0405`; scalar `transport_cost = 0.5`):
+draft growth 0.1426; `min_growth = 0.5 × 0.0809 = 0.0405`; scalar `transport_cost = 0.5`, which `assign_compartments` does not use):
 
 | Method | wall | certified? | materialised growth | reaction agr | gene agr | transports |
 |---|---|--:|--:|--:|--:|--|
