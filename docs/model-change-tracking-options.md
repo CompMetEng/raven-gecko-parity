@@ -3,7 +3,7 @@
 Status: decided 2026-10-05, option 2 with decisions E1 to E4 (section 8).
 The plan is `kcat-assignment-plan.md`. Applies to geckopy and GECKO
 alike, and to RAVEN and raven-toolbox where the model file format is
-involved. Companion to `kcat-assignment-options.md`.
+involved.
 
 ## 1. What should be tracked
 
@@ -45,7 +45,7 @@ Uses:
 - rebuilding a model and checking that the result is the same;
 - condition-specific models that branch from a common parent.
 
-All three options use the stable keys of `kcat-assignment-options.md`: a
+All three options use the same stable keys: a
 kcat is identified by `model.ec.rxns` plus `rxn` (conventional reaction,
 `_REV` for direction) and `enzymes`. An enzyme is identified by its UniProt
 accession.

@@ -2,8 +2,6 @@
 
 Status: plan, 2026-10-15. Replaces the 2026-10-05 version of this file.
 Background:
-- `kcat-assignment-options.md` (designs A to C, and the choices C1 to C9
-  that led to this plan);
 - `model-change-tracking-options.md` (option 2, decisions E1 to E4);
 - the kcat-benchmark results (`docs/results.md` in that repository),
   which set the presets and defaults.
