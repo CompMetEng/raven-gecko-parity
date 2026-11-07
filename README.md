@@ -377,5 +377,4 @@ pairs and every public function on all four sides carries a declared status.
 | gecko | 137 | 54 | 1 | 63 | 19 |
 
 What remains between here and `parity check --strict` is tracking issues: the queued rows
-warn until each carries an `issue`. See [docs/triage.md](docs/triage.md) for how the
-decisions were made and how to keep new rows honest.
+warn until each carries an `issue`.
