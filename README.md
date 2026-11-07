@@ -307,14 +307,12 @@ since that repository implements the pipeline.
 ## raven-toolbox development records
 
 raven-toolbox retired its own documentation tree in favour of
-[raven-docs](https://raven-docs.readthedocs.io/), which covers both toolboxes. Three
-records that are about the development of the port rather than about using it moved
+[raven-docs](https://raven-docs.readthedocs.io/), which covers both toolboxes. One
+record that is about the development of the port rather than about using it moved
 here:
 
 | Document | What it is |
 |---|---|
-| [docs/raven_toolbox_roadmap.md](docs/raven_toolbox_roadmap.md) | The plan: phases, dependencies, and how each one is known to be finished |
-| [docs/raven_toolbox_todo.md](docs/raven_toolbox_todo.md) | The item-level backlog behind the roadmap |
 | [docs/matlab_raven_backports.md](docs/matlab_raven_backports.md) | What MATLAB RAVEN still needs from raven-toolbox, and what raven-toolbox deliberately does not have |
 
 ## Work in progress, documented here rather than on the site
@@ -377,5 +375,4 @@ pairs and every public function on all four sides carries a declared status.
 | gecko | 137 | 54 | 1 | 63 | 19 |
 
 What remains between here and `parity check --strict` is tracking issues: the queued rows
-warn until each carries an `issue`. See [docs/triage.md](docs/triage.md) for how the
-decisions were made and how to keep new rows honest.
+warn until each carries an `issue`.

@@ -2,9 +2,6 @@
 
 Status: plan, 2026-10-15. Replaces the 2026-10-05 version of this file.
 Background:
-- `kcat-assignment-options.md` (designs A to C, and the choices C1 to C9
-  that led to this plan);
-- `model-change-tracking-options.md` (option 2, decisions E1 to E4);
 - the kcat-benchmark results (`docs/results.md` in that repository),
   which set the presets and defaults.
 
@@ -30,7 +27,7 @@ configuration is `model_adapter.toml`, shared by both tools
 | Default preset | `brenda_ec_tree`, in the project template and when `[kcat_assignment]` is left out |
 | Reference data | Release assets in `CompMetEng/toolbox-assets`, which raven-data becomes (transferred and renamed, M1). All BRENDA files form one asset release; the DLKcat files form another |
 | One-way rule | Source files feed `model.ec.kcat`; nothing in the model is written back to them |
-| Tracking | Change log next to the model and the `ec.source` format (sections 9 and 10, unchanged from the previous plan) |
+| Tracking | The `ec.source` format (section 9) |
 
 ## 2. Two layers of data
 
@@ -347,8 +344,7 @@ and then:
 
 1. writes `ec.kcat` and `ec.source`, and appends curated notes to
    `ec.notes`;
-2. records one summary entry in the change log (E1);
-3. runs `applyKcatConstraints`.
+2. runs `applyKcatConstraints`.
 
 `mergeKcats`, `assignKcatValues`, `getKcatAcrossIsozymes` and
 `getStandardKcat` stay callable on their own.
@@ -404,93 +400,7 @@ okp_catapro (similarity=42) | tuned=sensitivity+cmaes (prior=5.48)
   combination's uncertainty per kcat. Tuning uses it as the prior width when
   present, and the adapter's per-group width otherwise.
 
-## 10. Change log
-
-### 10.1 Files and in-memory form
-
-- In memory: a top-level model field, MATLAB `model.changeLog` and Python
-  `model.change_log`, with two tables, `runs` and `changes`. Copies of the
-  model carry it, and functions that rebuild `model.ec` do not drop it.
-- On disk: `<model>.runs.tsv` and `<model>.changes.tsv` next to the model.
-  `saveEcModel` writes them, and `loadEcModel` reads them if present.
-- **Integrity checks:**
-  - Each run stores `state_after`, a hash of `ec.kcat`, `ec.concs`, the
-    protein usage bounds and the pool bound.
-  - `loadEcModel` warns when the log is missing, or when the last
-    `state_after` does not match the loaded model.
-- The YAML model format does not change.
-
-### 10.2 Columns
-
-`runs`:
-
-| Column | Meaning |
-|---|---|
-| `run` | Identifier (time and short hash) |
-| `function`, `tool` | E.g. `cmaesKcatTuning`; `GECKO 4.x / MATLAB R2023b` or `geckopy 4.x` |
-| `time` | ISO 8601 |
-| `parameters`, `seed` | JSON; RNG seed |
-| `inputs` | Data files with checksums |
-| `summary` | JSON: RMSE before and after; growth before and after; counts |
-| `state_before`, `state_after` | Hashes as above |
-
-`changes`:
-
-| Column | Meaning |
-|---|---|
-| `event`, `run` | Sequence number; run |
-| `parameter` | `kcat`, `conc`, `conc_bound`, `pool`, `sigma`, `f`, `flux_bound` |
-| `target` | `model.ec.rxns` entry, UniProt accession, reaction, or `*` for a summary |
-| `rxn`, `enzymes` | Stable key for kcats |
-| `old`, `new` | Values |
-| `action` | Fixed vocabulary, see 8.3 |
-| `reason` | `key=value` pairs for the action |
-| `note` | Free text |
-
-### 10.3 What each function records
-
-| Function | Parameter | Action | Reason |
-|---|---|---|---|
-| `assignKcats` | kcat (summary) | `assign` | rows per stage and source |
-| `setKcatForReactions` | kcat | `manual` | note |
-| `sensitivityTuning` | kcat | `sensitivity_tuning` | steps, fold step, growth before and after, control coefficient |
-| `cmaesKcatTuning` | kcat | `cmaes_tuning` | leverage share and rank, prior group and width, run RMSE before and after |
-| `removeStandardKcat` | kcat | `remove_standard` | |
-| `fillEnzConcs` | conc | `proteomics_fill` | data file, column or condition |
-| `constrainEnzConcs` | conc_bound | `constrain` | |
-| `flexibilizeEnzConcs` | conc_bound | `flexibilize` | growth reached and expected, condition, fold step, steps |
-| `relaxProteomicsGreedy` | conc_bound | `relax` | growth before and after |
-| `setProtPoolSize`, `updateProtPool` | pool | `pool_update` | Ptot, f, sigma |
-| `sigmaFitter` | sigma | `sigma_fit` | data, fit |
-| `constrainFluxData` (E2, when `params.logFluxConstraints` is true) | flux_bound | `flux_constraint` | condition, data file |
-
-Granularity: one event per parameter per run. Iterative steps (sensitivity
-tuning, flexibilization) are summarised in `reason`. CMA-ES writes one event
-per changed kcat, not per generation.
-
-### 10.4 Helpers and tools
-
-- **Recording:** `run = startChangeRun(model, functionName, parameters,
-  inputs)` and `model = recordChanges(model, run, parameter, targets, old,
-  new, action, reason, note)`, on both sides.
-- **Reporting:** `reportChanges(model, ...)` gives filtered views. The
-  corrections table of a CMA-ES run and the flexibilization table are views.
-- **Re-tuning:** `priorValues(model)` gives the pre-tuning value per kcat,
-  from `ec.source` (`prior=`) or the log.
-- **Undo:** `revertChanges(model, run)` writes back the `old` values of one
-  run and records the revert.
-- **Verification:** `checkChangeLog(model, parent)` replays the log on the
-  parent model (for example the stage-2 model) and confirms that the current
-  values come out.
-
-### 10.5 Lineage
-
-The log records the history of this model. Runs that are not applied (other
-seeds, budgets) stay as reports in `output/`. A condition-specific model
-saved under a new name starts with its parent's log. Parallel jobs work on
-copies; only the applied result's events join the model's log.
-
-## 11. Parity scenarios
+## 10. Parity scenarios
 
 | Scenario | Checks |
 |---|---|
@@ -501,10 +411,10 @@ copies; only the applied result's events join the model's log.
 | `kcat_custom_first` | Custom kcats decide first, also on a light model |
 | `kcat_one_way` | After assignment, tuning and flexibilization every file in `data/kcats/` is unchanged |
 | `brenda_asset_identical` | Both tools load the same BRENDA asset to the same tables |
-| `ec_source_format`, `change_log_*` | As in sections 9 and 10 |
+| `ec_source_format` | As in section 9 |
 | `ec_tree_fixture`, `homologs_fixture`, `combine_fixed` | New sources on a fixture of a few hundred measurement rows |
 
-## 12. Phases
+## 11. Phases
 
 Each phase is one PR in each affected repository, merged together once its
 parity scenarios pass.
@@ -518,12 +428,11 @@ parity scenarios pass.
 | K3 | Custom kcats as a source, `convertCustomKcats` | GECKO, geckopy | K1 |
 | K4 | BRENDA measurement files, sequences, substrate dictionary, combination parameters in the BRENDA asset; `kcatsFromECTree` and `kcatsFromHomologs` (MMseqs2); the `combine` stage; presets `ec_tree_homologs`, `ec_tree`, `combined_all`; validation on the benchmark's development split and an ecYeastGEM build; template default switched | toolbox-assets, geckopy, GECKO | K2 |
 | L1 | `ec.source` format and parser (section 9) | GECKO, geckopy | — |
-| L2 | Change log (section 10) | GECKO, geckopy | L1 |
 | U1 | `upgradeGECKOproject` / `geckopy upgrade` and `upgradeEcModel` (O6) | GECKO, geckopy | K3, GECKO#486 |
 
-T1 and L1 can start at once; L1 and L2 ship independently of the kcat work.
+T1 and L1 can start at once; L1 ships independently of the kcat work.
 
-## 13. Open decisions
+## 12. Open decisions
 
 - **O2.** Combination parameter sets: ship K1 and K3, chosen by the number
   of measurements for the organism, overridable in the adapter (proposed).
