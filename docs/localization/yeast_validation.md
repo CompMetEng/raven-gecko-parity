@@ -14,9 +14,8 @@ The controlled question: given yeast-GEM's exact reactions and genes but with it
 *erased*, how much does the pipeline recover? Flatten curated yeast-GEM to one compartment
 (`merge_compartments(..., base_metabolite=lambda m: m.name)` — yeast keys the same species to a
 different `s_####` id per compartment, so grouping is by name), score with the committed DeepLoc-2.1
-predictions, cost transports with the substrate-aware evidence layer (`annotate_proteome` +
-`evidence_aware_transport_cost` + the `SubstrateOntology` ChEBI layer), then `assign_compartments` +
-`apply_assignment`, and score against the curated original (organelle membranes collapsed onto their
+predictions, then `assign_compartments` +
+`apply_assignment` (the method is score-driven and does not use `transport_cost`, so no proteome annotation is run), and score against the curated original (organelle membranes collapsed onto their
 parent organelle, matching DeepLoc's resolution).
 
 | metric | `assign_compartments` |

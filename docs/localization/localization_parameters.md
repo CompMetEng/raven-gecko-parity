@@ -55,12 +55,10 @@ governs a different kind of process (see the correction above):
 
 **Parameter:** `transport_cost=0.5` (Python and MATLAB)
 
-Not benchmarked. This parameter was introduced in the MATLAB RAVEN implementation
+This parameter was introduced in the MATLAB RAVEN implementation
 without a published sensitivity analysis. Both implementations use 0.5.
 
-Proposed future test: run `predict_localization` on yeast-GEM at `transport_cost`
-∈ {0.1, 0.25, 0.5, 1.0, 2.0} and compare the number of reactions relocated
-and whether the result matches the known yeast-GEM compartment assignments.
+Sensitivity analyses are in [predictlocalization_comparison.md](predictlocalization_comparison.md) (0.05 calibration), [yeast_localization_benchmark.md](yeast_localization_benchmark.md) (calibration insight) and [deeploc_normalisation_benchmark.md](deeploc_normalisation_benchmark.md) (accuracy against `transport_cost`). `assign_compartments` accepts `transport_cost` and does not use it.
 
 ---
 

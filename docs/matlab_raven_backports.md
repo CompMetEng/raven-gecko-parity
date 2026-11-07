@@ -34,8 +34,7 @@ no longer equivalent — the MATLAB side needs a re-sync, not a fresh port.
 **Re-sync plan.** Rework `assignCompartments.m` to match the current design: drop the fused
 biomass/flux-gating constraints from the placement MILP, add a separate real-FBA certification pass
 (`optimizeProb` on the materialised model) plus the confinement-repair and feedback-loop steps, and the
-multi-localisation flux-activity coupling ([multi_localization_design.md](https://github.com/CompMetEng/raven-gecko-parity/blob/develop/docs/localization/multi_localization_design.md)
-path 2). Verify the `.m` filename does not clash with a COBRA Toolbox function before committing (it
+multi-localisation by loopless FVA after certification (the option `multi_localize` of `assign_compartments`; the flux-activity coupling of [multi_localization_design.md](https://github.com/CompMetEng/raven-gecko-parity/blob/develop/docs/localization/multi_localization_design.md) is not in the current code). Verify the `.m` filename does not clash with a COBRA Toolbox function before committing (it
 already exists on `develop3`, so this is a rework in place, not a new file). Tests under `testing/`
 mirroring `tests/test_localization_certify.py`. Reference implementation:
 `src/raven_toolbox/localization/certify.py` (the algorithm) and
