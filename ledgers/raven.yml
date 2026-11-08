@@ -352,12 +352,12 @@ entries:
     scenarios:
       - find_leak_metabolite_toy
   - matlab: contractModel
-    python: raven_toolbox.manipulation.remove_duplicate_reactions
+    python: raven_toolbox.manipulation.contract_model
     status: parity
     scenarios:
       - contract_model_toy
     notes: >-
-      Expand-then-contract is a lossless round trip on both sides. contractModel keeps the FIRST member of each duplicate set, strips the _EXP_N suffix (documented behaviour: the model is assumed to have come through expandModel) and merges the set's grRules with "or", so HXK returns with "YCL040W or YFR053C or YGL253W". remove_duplicate_reactions does the same: keep=rxns[0], a _merge_gene_reaction_rules helper combining every survivor's top-level OR-clauses (via cobra's own GPR AST, not hand-rolled bracket parsing), and the _EXP_ suffix stripped when every duplicate in the group carries one.  Detection is a different function on both sides --- see findDuplicateRxns. contract_model_toy: both sides group reactions by stoichiometry and reversibility and merge a group to the widest bounds and the largest objective coefficient (with a warning). Differences that remain: Python takes reversible as lower_bound < 0 < upper_bound where RAVEN uses lb < 0, and a duplicate written in the opposite direction is merged without mirroring its bounds. Python ignores reserved reactions for duplicates as RAVEN does (a reserved reaction is merged away like any other). The merged gene rules, the survivor and the _EXP_ suffix handling match.
+      Expand-then-contract is a lossless round trip on both sides. contractModel keeps the FIRST member of each duplicate set, strips the _EXP_N suffix (documented behaviour: the model is assumed to have come through expandModel) and merges the set's grRules with "or", so HXK returns with "YCL040W or YFR053C or YGL253W". contract_model does the same: keep=rxns[0], a _merge_gene_reaction_rules helper combining every survivor's top-level OR-clauses (via cobra's own GPR AST, not hand-rolled bracket parsing), and the _EXP_ suffix stripped when every duplicate in the group carries one.  Detection is a different function on both sides --- see findDuplicateRxns. contract_model_toy: both sides group reactions by stoichiometry and reversibility and merge a group to the widest bounds and the largest objective coefficient (with a warning). contract_model takes dist_reverse, the distReverse option of contractModel (default true: reactions with the same metabolites and a different reversibility stay apart; false: they merge), and contract_model_toy runs both settings. The third output of contractModel, indexedDuplicateRxns, has no Python counterpart. Differences that remain: Python takes reversible as lower_bound < 0 < upper_bound where RAVEN uses lb < 0, and a duplicate written in the opposite direction is merged without mirroring its bounds. Python ignores reserved reactions for duplicates as RAVEN does (a reserved reaction is merged away like any other). The merged gene rules, the survivor and the _EXP_ suffix handling match.
   - matlab: convertCharArray
     status: internal
     reason: MATLAB argument-validation glue. Python uses ordinary keyword arguments and type hints.
@@ -1479,7 +1479,7 @@ entries:
       metabolite sharing a (name, compartment) with a just-renamed one and merges those too, not
       just the ones explicitly named -- replicated exactly. The post-merge duplicate-reaction
       cleanup (contractModel restricted to reactions touching the replacement) is shared with
-      remove_duplicate_reactions via a new restrict_to_metabolites parameter, rather than
+      contract_model via a new restrict_to_metabolites parameter, rather than
       reimplemented. Two disclosed decisions: (1) identifiers=True''s stoichiometry reassignment
       sums into any pre-existing coefficient the replacement already has in a reaction, where
       replaceMets.m overwrites (a plain assignment) -- both agree unless a reaction already
