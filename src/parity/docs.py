@@ -8,7 +8,7 @@ keyed by the repo's short name (`RAVEN`, `GECKO`, `raven-toolbox`, `geckopy`) so
 a Python side never share an appendix by accident. Most documents need only one substitution
 point (`{{APPENDIX}}`); a workflow file that differs from its sibling in more than one place
 (e.g. an optional extra checkout step, and a separate test-command block) declares one
-placeholder per substitution instead of forcing everything through a single spot. Seven
+placeholder per substitution instead of forcing everything through a single spot. Eight
 placeholders are always available, filled in from `parity.toml` itself rather than an
 appendix file: `{{FULL_REPO}}` (this repo's own `org/repo` slug, for issue search/Discussions/
 security-advisory links), `{{REPO}}` (just the short name, e.g. `raven-toolbox`, for display

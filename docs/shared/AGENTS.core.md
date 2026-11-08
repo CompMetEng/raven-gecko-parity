@@ -17,8 +17,8 @@ for it.
 Follow `CONTRIBUTING.md`: [Conventional Commits](https://www.conventionalcommits.org/)
 (`type: description`) for commit messages and pull request titles, and
 `feat/`, `fix/`, `docs/`, `chore/`, `refactor/`, `style/`, `test/` branch
-prefixes. PR titles are lint-checked in CI, so set the type correctly the first
-time instead of relying on a reviewer to catch it.
+prefixes. Set the type of a pull request title correctly the first time instead
+of relying on a reviewer to catch it.
 
 ## Cross-implementation parity
 
@@ -45,8 +45,8 @@ you change before you change it. A record with status `accepted` binds. `propose
 is context, `rejected` states what was considered and not chosen, and `superseded`
 is history that names its successor. When a task conflicts with an accepted record,
 stop, say so in your summary, and propose changing the task or adding a record that
-supersedes it. An accepted record is edited to mark it superseded and for no other
-reason.
+supersedes it. An accepted record changes only to mark it superseded (its `status` and
+`superseded_by` lines) and to append one note.
 `python3 .github/scripts/decision_records.py check` validates the folder.
 
 ## Repository specifics
