@@ -3,7 +3,7 @@
 geckopy's `fuzzy_kcat_matching` carries a `MATLAB-COMPAT` note claiming MATLAB's search order
 inside `mainMatch` tries an organism-specific specific-activity match ("org-SA") *before* a
 looser any-organism direct-kcat match ("any-org-kcat"), and that when both are available for a
-reaction, MATLAB's `kcatList.origin` reports the org-SA match as origin `5` --- geckopy replicates
+reaction, MATLAB's `kcatList.origin` reports the org-SA match as origin `5`; geckopy replicates
 this. [gecko-behaviour-parity-plan.md](gecko-behaviour-parity-plan.md) flagged this as needing
 confirmation before the kcat-chain scenario is written: is it a real MATLAB behaviour geckopy is
 right to copy, or a misreading of a MATLAB bug that would need fixing upstream instead?
@@ -14,8 +14,8 @@ Tracked against gecko-behaviour-parity-plan.md, Tier 2.
 
 **geckopy is right. There is no divergence here.** Confirmed by executing both implementations on
 the same purpose-built case: MATLAB really does try org-SA before any-org-kcat, org-SA really does
-win when both are available, and MATLAB's own final `origin` output really is `5` for that match
---- exactly what geckopy's `MATLAB-COMPAT` note says and exactly what geckopy's own test suite
+win when both are available, and MATLAB's own final `origin` output really is `5` for that match,
+exactly what geckopy's `MATLAB-COMPAT` note says and exactly what geckopy's own test suite
 already asserts. The `fuzzy` checkpoint can compare `origin` directly with no special-casing.
 
 The one thing worth recording is *why* this took two rounds to confirm: `fuzzyKcatMatching.m`
@@ -41,7 +41,7 @@ else
         origin = 5;
 ```
 
-Read on its own, this says org-SA is `4` and any-org-kcat is `5` --- the *opposite* of the
+Read on its own, this says org-SA is `4` and any-org-kcat is `5`, the *opposite* of the
 top-of-file docstring, which documents `4: any organism, any substrate, kcat` and
 `5: correct organism, specific activity`. This is the reading that led to a wrong prediction
 before executing anything (see "What went wrong first," below).
@@ -66,12 +66,12 @@ for i=1:6
 end
 ```
 
-`org_sa` is the **5th** entry in that array and `rest_ns` is the **4th** --- so a match that set
+`org_sa` is the **5th** entry in that array and `rest_ns` is the **4th**, so a match that set
 `dir.org_sa` (via local `origin == 4`) is reported to the caller as **origin 5**, and a match that
 set `dir.rest_ns` (via local `origin == 5`) is reported as **origin 4**. The second renumbering
 exactly undoes the first. MATLAB's own authors flag the awkwardness in a comment right above it:
 `% This can be refactored, iterativeMatch and their nested functions can just directly report the
-origin number.` --- they did not.
+origin number.` They did not.
 
 ### Executed, not just read
 
@@ -79,10 +79,10 @@ A model with one reaction (`r1`, EC `1.1.1.1`, one substrate `alpha`), organism 
 BRENDA fixture built so that:
 
 * `max_KCAT.txt` has one row for EC `1.1.1.1`: substrate `different_substrate`, organism `ecoli`,
-  kcat `100` --- available only via the any-org-kcat level (wrong substrate for the org+substrate
+  kcat `100`, available only via the any-org-kcat level (wrong substrate for the org+substrate
   levels, wrong organism for the org-only levels).
 * `max_SA.txt` / `max_MW.txt` have one matching pair for EC `1.1.1.1`, organism `yeast`, scaled to
-  derive kcat `23` --- available via the org-SA level.
+  derive kcat `23`, available via the org-SA level.
 
 Both candidates are reachable; only their search order decides which one is returned. Run against
 `fuzzyKcatMatching` on `develop4` (`2937e0b3`):
@@ -103,11 +103,11 @@ org-SA wins (kcat `23`, not the ecoli row's `100`), and MATLAB's own `kcatList.o
 
 The first pass at this question read only `mainMatch`'s local `origin = 4` / `origin = 5` lines,
 cross-checked them against `iterativeMatch`'s `dir.org_sa` / `dir.rest_ns` naming, and concluded
-MATLAB's real output must be the reverse of geckopy's --- org-SA as `4`, any-org-kcat as `5`. That
+MATLAB's real output must be the reverse of geckopy's: org-SA as `4`, any-org-kcat as `5`. That
 cross-check was real but insufficient: it confirmed *which flag* each local origin value sets, not
 what number the outer function assigns to that flag afterwards. Only running `fuzzyKcatMatching`
 end to end surfaces the second renumbering. Recorded here as the reason this document exists at
-all rather than a one-line "confirmed" note --- the wrong reading was plausible enough to have
+all rather than a one-line "confirmed" note: the wrong reading was plausible enough to have
 shipped in a less careful pass, and the hand-built scenario fixtures (their `sa.tsv` has no rows, see
 [brenda-reconciliation.md](brenda-reconciliation.md)) can't be used to catch it, since they never
 reach the org-SA level at all.
@@ -116,8 +116,8 @@ reach the org-SA level at all.
 
 Nothing needs fixing on either side, and the `fuzzy` checkpoint does not need to assert a
 divergence for the search order or for `origin`. It should still assert `origin` (not just `kcat`)
-at that checkpoint, precisely because it is derived through the confusing double-renumbering above
---- a future refactor of `mainMatch`/`iterativeMatch` on the MATLAB side (the kind the function's
+at that checkpoint, precisely because it is derived through the confusing double-renumbering above:
+a future refactor of `mainMatch`/`iterativeMatch` on the MATLAB side (the kind the function's
 own comment invites) could easily fix the *local* numbering while leaving the *external* one
 unchanged, or vice versa, and only a scenario that checks the actual returned value would notice.
 

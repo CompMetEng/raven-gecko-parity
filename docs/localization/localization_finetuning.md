@@ -9,7 +9,7 @@ triage per-compartment trust table.
   (`--organism 559292` adds the UniProt corroboration column).
 * Model `yeastGEM_develop`, 1143 slow-model predictions, 2207 single-compartment GPR reactions.
 * **Overfitting guard:** yeast-GEM's curation carries ~10% noise (two curated sources agree only
-  ~90% — see [§4 of the DeepLoc benchmark](deeploc_yeast_benchmark.md)), so the confidence gate is
+  ~90%; see [§4 of the DeepLoc benchmark](deeploc_yeast_benchmark.md)), so the confidence gate is
   judged on *corroboration against the consensus* (yeast-GEM **or** UniProt), never raw agreement
   with yeast-GEM alone.
 
@@ -40,7 +40,7 @@ Among 441 reactions DeepLoc placed in `m` (152 curated `m`, 289 curated `mm`): p
 curated `mm` reaction clears 0.55 (100% recall) while the matrix recall keeps climbing, so the whole
 plateau `0.45–0.55` is ≥93% balanced. The current **default 0.50 sits inside that plateau**; 0.55 is
 ~2pp better but the gap is ~6 reactions on a single species' in-sample ROC, so the default is left at
-0.50 (changing it to chase an in-sample optimum would over-fit). Above ~0.58 the signal collapses —
+0.50 (changing it to chase an in-sample optimum would over-fit). Above ~0.58 the signal collapses:
 DeepLoc gives most inner-membrane proteins a membrane score in `[0.55, 0.6)`.
 
 ## 2. Confidence gate (`min_confidence`)
@@ -95,7 +95,7 @@ DEEPLOC_COMPARTMENT_TRUST = {
 ```
 
 The slow model reshuffles the trust order versus the earlier fast values: **mitochondrion jumps
-0.67 → 0.86** (the slow model's big win — see the [yeast benchmark](deeploc_yeast_benchmark.md) §3),
+0.67 → 0.86** (the slow model's big win; see the [yeast benchmark](deeploc_yeast_benchmark.md) §3),
 vacuole 0.14 → 0.36, and `mm` becomes trustworthy (0 → 0.86) now that the validated split reaches it.
 Golgi drops 0.23 → 0.01 (the slow model rarely calls Golgi correctly). This refreshed table is
 applied as the default in
@@ -103,10 +103,10 @@ applied as the default in
 
 ## Applied
 
-* **`DEEPLOC_COMPARTMENT_TRUST`** — refreshed to the slow values above (triage default).
-* **`min_confidence`** — recommendation refreshed to 0.7 (corroboration 88.3%, 80% kept); loader
+* **`DEEPLOC_COMPARTMENT_TRUST`**: refreshed to the slow values above (triage default).
+* **`min_confidence`**: recommendation refreshed to 0.7 (corroboration 88.3%, 80% kept); loader
   default unchanged (0.0, opt-in).
-* **`membrane_threshold`** — default left at 0.50 (inside the optimal plateau; 0.55 marginally better
+* **`membrane_threshold`**: default left at 0.50 (inside the optimal plateau; 0.55 marginally better
   but in-sample on one species).
 
 ## Reproducing

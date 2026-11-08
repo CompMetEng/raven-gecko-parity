@@ -12,7 +12,7 @@ driven by `scripts/benchmark_certified_yeast.py` (→ `.research_tmp/certified_y
 
 The controlled question: given yeast-GEM's exact reactions and genes but with its compartmentalisation
 *erased*, how much does the pipeline recover? Flatten curated yeast-GEM to one compartment
-(`merge_compartments(..., base_metabolite=lambda m: m.name)` — yeast keys the same species to a
+(`merge_compartments(..., base_metabolite=lambda m: m.name)`; yeast keys the same species to a
 different `s_####` id per compartment, so grouping is by name), score with the committed DeepLoc-2.1
 predictions, then `assign_compartments` +
 `apply_assignment` (the method is score-driven and does not use `transport_cost`, so no proteome annotation is run), and score against the curated original (organelle membranes collapsed onto their
@@ -31,15 +31,15 @@ Gene agreement (88.7 %) sits well above DeepLoc's ~64 % raw ceiling because func
 placements; the model stays functional because the method provisions the ~970 transports the placement
 actually needs, and the blocked 29.7 % is yeast-GEM's *intrinsic* dead-end floor, not a placement
 artefact. Every number is authoritative because the growth column is a real FBA on the materialised
-model — the certificate, not a separate solver floor.
+model, the certificate, not a separate solver floor.
 
 Reaction placement is **deterministic and score-aligned.** The placement master maximises a
-gene-localisation objective, which never mentions the per-reaction placement variable — so each
+gene-localisation objective, which never mentions the per-reaction placement variable, so each
 reaction's compartment was a free co-optimum: reproducible once the solver is pinned, but an *arbitrary*
 vertex (which on its own scored only 52.8 %). A lexicographic second pass fixes the gene layout to the
 primary optimum, then places each reaction in the compartment its own enzymes are predicted to occupy
 (the summed DeepLoc score of the reaction's genes, with a small default-compartment prior for genes-free
-and score-tied reactions). The gene layout — hence gene agreement — is untouched; the 72.5 % reaction
+and score-tied reactions). The gene layout (hence gene agreement) is untouched; the 72.5 % reaction
 agreement now rests on the localisation evidence itself, not on a solver's arbitrary tie-break, and the
 coherent placement needs fewer transports (967 vs 1001).
 
@@ -52,9 +52,9 @@ categories (ER / mitochondrion / peroxisome / other), on the 236 shared genes:
 | method | accuracy | vs CarveFungi |
 |---|--:|---|
 | **`assign_compartments`** | **94.1 %** | +3.0 pts, McNemar *p* = 0.21, 95 % CI [−0.9, +7.2] |
-| CarveFungi | 91.1 % | — |
+| CarveFungi | 91.1 % | n/a |
 
-**The method *matches* CarveFungi on gene-level accuracy — it does not beat it.** The +3-point edge on
+**The method *matches* CarveFungi on gene-level accuracy; it does not beat it.** The +3-point edge on
 236 genes is not statistically significant (McNemar exact test on the 15-vs-8 discordant pairs, *p* =
 0.21; the bootstrap CI crosses zero). The honest claim is a **tie on localisation accuracy**. Where it
 genuinely wins is **transport architecture**: it reproduces 67 % of curated yeast-GEM's inter-compartment
@@ -68,8 +68,8 @@ Scored by `scripts/score_biology.py` against curated yeast-GEM and the CarveFung
 ### 3.1 Transporter connectivity per compartment
 
 A functional multi-compartment model needs the transporters that connect organelles. CarveFungi adds
-almost none (161 total vs curated 1467); `assign_compartments` provisions 980 — 67 % of the curated
-count — restoring the inter-organelle connectivity that makes the model usable.
+almost none (161 total vs curated 1467); `assign_compartments` provisions 980 (67 % of the curated
+count), restoring the inter-organelle connectivity that makes the model usable.
 
 | compartment | yeast-GEM (truth) | `assign_compartments` | CarveFungi |
 |---|--:|--:|--:|
@@ -78,9 +78,9 @@ count — restoring the inter-organelle connectivity that makes the model usable
 | endoplasmic reticulum | 495 | 226 | 27 |
 | peroxisome | 50 | 103 | 20 |
 | nucleus | 58 | 159 | 4 |
-| Golgi | 473 | 98 | — |
-| vacuole | 131 | 116 | — |
-| plasma membrane | 109 | 65 | — |
+| Golgi | 473 | 98 | n/a |
+| vacuole | 131 | 116 | n/a |
+| plasma membrane | 109 | 65 | n/a |
 | extracellular | 272 | 44 | 44 |
 | **total transports** | **1467** | **980** | **161** |
 
@@ -89,13 +89,13 @@ count — restoring the inter-organelle connectivity that makes the model usable
 Across 13 pathways with a literature-known compartment, `assign_compartments` reaches **86.4 % mean
 marker coverage** (45/48 markers) vs curated yeast-GEM's 88.3 % and CarveFungi's 80.6 % (23/48). It
 replicates glycolysis (c), TCA cycle (m), oxidative phosphorylation (m), branched-chain-AA (m), sulfate
-assimilation (c), and — notably — **corrects ergosterol biosynthesis to the ER (33 % → 100 %)** where
+assimilation (c), and (notably) **corrects ergosterol biosynthesis to the ER (33 % → 100 %)** where
 even the erased curated draft placed it poorly. The remaining misses are on genuinely *split* pathways
 (heme m/c, glyoxylate c/p, lysine m/c), which single-compartment placement cannot fully resolve.
 
-### 3.3 Dual-localised enzymes — the known gap
+### 3.3 Dual-localised enzymes: the known gap
 
-Six single-gene dual-localised yeast enzymes (FUM1, ACO1, HTS1, VAS1, GLR1, GPD2 — all cytosol +
+Six single-gene dual-localised yeast enzymes (FUM1, ACO1, HTS1, VAS1, GLR1, GPD2: all cytosol +
 mitochondrion). Mono-placement captures **0/6** (as does CarveFungi); the optional `multi_localize` mode
 (second compartments admitted only when a loopless FVA on the materialised model shows real flux)
 captures **3/6** at the default threshold, at the cost of over-placing (717 of 2296 reactions become

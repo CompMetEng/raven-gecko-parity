@@ -2,15 +2,15 @@
 
 Does keeping DeepLoc's **raw** probabilities (`load_deeploc(normalise=False)`) instead of rescaling
 each gene's best compartment to 1.0 change a compartment assignment's agreement with curated
-yeast-GEM? Run on the **entire** model. Short answer: **no — it is accuracy-neutral**, so
+yeast-GEM? Run on the **entire** model. Short answer: **no: it is accuracy-neutral**, so
 normalisation stays the default and `normalise=False` is an opt-in.
 
 * Driver: [`scripts/benchmark_deeploc_normalisation.py`](https://github.com/CompMetEng/raven-toolbox/blob/develop/scripts/benchmark_deeploc_normalisation.py)
-* Model: `yeast-GEM.xml` — 4102 reactions, 1143 genes, 14 compartments (perfect DeepLoc-gene
+* Model: `yeast-GEM.xml`: 4102 reactions, 1143 genes, 14 compartments (perfect DeepLoc-gene
   coverage: the input FASTA was prepared from this model).
 * Scores: the three committed yeast DeepLoc 2.1 CSVs (`data/deeploc/yeast-GEM_deeploc_00{1,2,3}.csv`),
-  loaded twice from the *same* files — `normalise=True` (top→1.0, the default) vs `normalise=False`
-  (raw probabilities) — and swept over `transport_cost`. `multi_compartment_penalty=0.5`,
+  loaded twice from the *same* files: `normalise=True` (top→1.0, the default) vs `normalise=False`
+  (raw probabilities), and swept over `transport_cost`. `multi_compartment_penalty=0.5`,
   `mip_gap=0.01`, Gurobi.
 
 ## Method
@@ -26,8 +26,8 @@ from the DeepLoc score table.
 
 The MILP objective is `max Σ score[g,c]·y[g,c] − transport_cost·transports −
 multi_compartment_penalty·extra_compartments`. The score enters **linearly**, so normalisation makes
-every gene vote with weight 1.0, while raw lets a confident gene outvote a shaky one and — because
-`transport_cost` and the penalty are **absolute constants** — raises the bar a reaction must clear to
+every gene vote with weight 1.0, while raw lets a confident gene outvote a shaky one and (because
+`transport_cost` and the penalty are **absolute constants**) raises the bar a reaction must clear to
 leave the default compartment or a gene to occupy a second one. Normalisation is a monotone per-row
 rescale, so **both arms agree on each gene's preferred (argmax) compartment**; they can only diverge
 on placement.
@@ -45,13 +45,13 @@ methodology review:
 
 ### Reproducibility floor (read this before the tables)
 
-`predict_localization`'s objective has **no term in the reaction-placement variable** — when a gene
+`predict_localization`'s objective has **no term in the reaction-placement variable**: when a gene
 sits in several compartments the MILP does not pin *which* of them its reaction lands in. That tie is
 broken by the solver (sensitive to variable/set ordering and `mip_gap`), so:
 
 * **Gene-level** quantities (multi-localisation counts) are **exactly reproducible**.
 * **Reaction-level** `overall`/`addressable` are stable to ~1pp run-to-run.
-* **`macro`** (the unweighted mean of per-compartment accuracies) **is not** — it equal-weights
+* **`macro`** (the unweighted mean of per-compartment accuracies) **is not**; it equal-weights
   compartments with n = 7–13, so a handful of tie-broken reactions swing it by ~0.1.
 
 Two independent runs of the *identical* configuration (`transport_cost=0.01`) make this concrete:
@@ -64,7 +64,7 @@ Two independent runs of the *identical* configuration (`transport_cost=0.01`) ma
 | 2 | raw | 0.399 | 0.674 | 0.470 | 392 |
 
 `multi-loc genes` is identical to the unit; `overall`/`addressable` move ≤1pp; normalised `macro`
-swings **0.113** between runs — far larger than any cross-arm difference below. **Treat sub-1pp
+swings **0.113** between runs, far larger than any cross-arm difference below. **Treat sub-1pp
 accuracy deltas and all `macro` differences as within noise.**
 
 ## Accuracy vs. transport_cost
@@ -99,12 +99,12 @@ Only the scores differ (same model, truth set, knobs, operating point).
 | multi-loc genes | 617 | 392 | −225 |
 
 Against the *leave-everything-in-`c`* baseline (overall 0.316 / addressable 0.535), both arms add
-the same ~9 / ~14 pp. Every accuracy delta is within the reproducibility floor — **the arms are
+the same ~9 / ~14 pp. Every accuracy delta is within the reproducibility floor: **the arms are
 indistinguishable on agreement.** The only difference that exceeds noise is structural and at the
 gene level: **raw assigns far fewer genes to multiple compartments** (392 vs 617), because its
 calibrated magnitudes (~0.5–0.9) clear the absolute `multi_compartment_penalty` less often than the
 normalised 1.0. The same effect is reachable by *raising* `multi_compartment_penalty` on normalised
-scores — i.e. raw is a re-scaling of the existing knobs, not new information.
+scores, i.e. raw is a re-scaling of the existing knobs, not new information.
 
 ## Where the arms actually differ
 
@@ -114,7 +114,7 @@ poorly and raw is no better**: normalised 29/157 = 0.185, raw 21/157 = 0.134. (T
 tie-break-sensitive; the takeaway is "both bad", not the exact split.)
 
 **Confidence-stratified (single-gene reactions, binned by the gene's raw DeepLoc top probability).**
-If raw probabilities helped, the gain would concentrate in the high-confidence bins. It does not —
+If raw probabilities helped, the gain would concentrate in the high-confidence bins. It does not:
 raw is flat-to-slightly-worse everywhere, including the high-confidence tail:
 
 | raw top prob | n | normalised | raw | delta |
@@ -126,7 +126,7 @@ raw is flat-to-slightly-worse everywhere, including the high-confidence tail:
 
 **Per-compartment (matched `transport_cost = 0.01`).** Differences sit inside the noise floor; the
 big addressable compartments (`m` n=219, `p` n=115) favour normalised or tie, and the tiny ones
-(`e`, `g`, `v`) are equal here — the `g` swing that inflated `macro` in an earlier run did not
+(`e`, `g`, `v`) are equal here; the `g` swing that inflated `macro` in an earlier run did not
 reproduce.
 
 | compartment | n | normalised | raw |
@@ -150,16 +150,16 @@ reproduce.
 
 * **Per-gene normalisation is accuracy-neutral for assignment.** On the whole model, normalised and
   raw agree with curated yeast-GEM to within the reproducibility floor on every metric. This is
-  partly structural — the arms share each gene's argmax, so 2050/2207 reactions are placed
+  partly structural: the arms share each gene's argmax, so 2050/2207 reactions are placed
   identically and they can only diverge on 157 contested reactions, where both do badly.
 * **Confidence-gating does not help.** Raw does not rescue the high-confidence calls (it is slightly
   *worse* on the [0.9, 1.0] bin) nor the contested ones. The hypothesis that keeping calibrated
-  magnitudes would let confident genes be placed better is **not supported** here — the most robust
+  magnitudes would let confident genes be placed better is **not supported** here, the most robust
   finding in the study (large n, conservative direction).
 * **The one reproducible difference is a knob re-scaling.** Raw's fewer multi-localisations (392 vs
   617) follow mechanically from comparing calibrated probabilities against the *absolute*
   `multi_compartment_penalty`; the same is obtainable by tuning that penalty (and `transport_cost`)
-  on normalised scores — the calibration lesson already in the
+  on normalised scores, the calibration lesson already in the
   [yeast localization benchmark](yeast_localization_benchmark.md).
 * **Scope.** This isolates the *scoring* effect: topology is flattened and there are no
   flux/functionality constraints, so the absolute accuracies are not expected real-world performance,
@@ -167,7 +167,7 @@ reproduce.
 
 **Decision:** keep per-gene normalisation the **default** (`parseScores` convention, comparable
 multi-source scales); expose `load_deeploc(normalise=False)` as an **opt-in** for callers who want
-DeepLoc's calibrated magnitudes — e.g. the confidence signal
+DeepLoc's calibrated magnitudes, e.g. the confidence signal
 [`triage_localization`](https://github.com/CompMetEng/raven-toolbox/blob/develop/docs/guide/localization.md) consumes, or to avoid hand-tuning the transport
 scale. Flipping the default is not justified by this benchmark.
 
@@ -176,12 +176,12 @@ scale. Flipping the default is not justified by this benchmark.
 ```bash
 python scripts/benchmark_deeploc_normalisation.py \
     --yeast-gem /path/to/yeast-GEM/model/yeast-GEM.xml \
-    --doc /tmp/normbench.md      # scratch — this study page is curated by hand
+    --doc /tmp/normbench.md      # scratch; this study page is curated by hand
 ```
 
 The script regenerates every table above (the head-to-head, contested, confidence and
 per-compartment sections at the matched `--operating-point`, default 0.01). This page is curated, so
 point `--doc` at a scratch file rather than overwriting it. A single run cannot reproduce the
-cross-run reproducibility table either — that compares two independent runs to expose the `macro`
+cross-run reproducibility table either; that compares two independent runs to expose the `macro`
 tie-break noise; numbers in the other tables are from one representative run and vary within the
 floor described above.
