@@ -25,8 +25,8 @@ See the repository's README for local development setup.
 
 ### Branching model
 
-- The default development branch (`develop`/`devel`) is what every pull
-  request is based on and targets.
+- The integration branch, `develop`, is what every pull request is based on and
+  targets.
 - `main` carries only tested, released code; it is not committed to
   directly.
 - Name your branch after the change, prefixed with its type:

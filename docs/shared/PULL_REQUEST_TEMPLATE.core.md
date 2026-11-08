@@ -13,5 +13,5 @@
 - [ ] Tests cover the new or changed behavior, and CI passes.
 - [ ] I checked [raven-gecko-parity](https://github.com/CompMetEng/raven-gecko-parity)
       for parity implications of this change, and updated or referenced the ledger if needed.
-- [ ] This PR targets `develop`/`devel` (squash-merge), or `main`, following the release
+- [ ] This PR targets `develop` (squash-merge), or `main`, following the release
       process in `CONTRIBUTING.md`.

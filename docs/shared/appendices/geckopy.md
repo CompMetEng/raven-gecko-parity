@@ -1,7 +1,8 @@
 **geckopy** (Python)
 
-Integration branch `main`; pull requests target it. This is the Python implementation of
-GECKO, built on raven-toolbox, and the ledger is `ledgers/gecko.yml` in raven-gecko-parity.
+Integration branch `develop`; pull requests target it, and `main` receives releases. This is
+the Python implementation of GECKO, built on raven-toolbox, and the ledger is
+`ledgers/gecko.yml` in raven-gecko-parity.
 
 ### Layout
 
