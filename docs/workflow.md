@@ -102,11 +102,11 @@ and run the scenarios for anything that changed since the last tag.
 
 ## Working with a coding agent
 
-The `common` plugin in this repository gives a coding agent the ledger duties above in
-every session in the four code repositories, and its `parity-ledger` skill has the statuses
-and commands. See [agent-plugins.md](agent-plugins.md) for the plugins and how a repository
-enables them. The purpose is the same as that of the git hooks: the cross-check happens
-without anyone having to remember it.
+The `AGENTS.md` of each code repository, rendered from `docs/shared/AGENTS.core.md`, gives a
+coding agent the ledger duties above, and the `parity-ledger` skill of the `raven-gecko`
+plugin in [CompMetEng/skills](https://github.com/CompMetEng/skills) has the statuses and
+commands. The purpose is the same as that of the git hooks: the cross-check happens without
+anyone having to remember it.
 
 ## Shared documentation and CI workflows
 
@@ -146,22 +146,7 @@ reports a change that arrived without a pull request.
 
 ## Writing documentation
 
-The same four checks apply to prose in every markdown file across these four repositories,
-not only to code the ledger tracks:
-
-1. **Subject and verb.** A file, field, option, table or toolbox can be, contain, return,
-   raise, or take precedence. It cannot win, know, want, or do something quietly, silently,
-   loudly or conveniently. A manner adverb on an inanimate subject is the most common fault.
-2. **No advice about worth.** State the behavior and the condition it holds under, not
-   "worth using," "worth having," or "the usual way." The reader decides what is worth
-   doing.
-3. **Describe the software, not the document.** No "this page is about," "that is the
-   point of the example," or "as mentioned above."
-4. **Cut minimizers.** "just," "simply," "only," "of course," "not a bug." Delete the word
-   and check the sentence still holds.
-
-A sentence that would stay true regardless of how the software behaves is not
-documentation, and belongs in a comment or an issue instead.
-
-No em dashes in any file under this convention. Use a comma, a semicolon, a colon, or
-parentheses, whichever the sentence actually calls for.
+The prose rules for every markdown file, docstring, comment and commit or pull request text
+in these repositories are in the `writing` skill of the `craft` plugin in
+[CompMetEng/skills](https://github.com/CompMetEng/skills). They include the ban on em dashes
+and the per-sentence checks.

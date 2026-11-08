@@ -324,12 +324,13 @@ predictor benchmarks and validation runs are in
 claims about current behaviour if they sat on the user-facing site. They move back
 to [raven-docs](https://github.com/edkerk/raven-docs) when the features settle.
 
-## Coding agent plugins
+## Coding agent instructions
 
-[`ai/`](ai/) holds one plugin per code repository plus a `common` plugin for all of them,
-published as the Claude Code plugin marketplace `raven-gecko`. Each code repository enables
-its own plugin through a committed `.claude/settings.json`. See
-[docs/agent-plugins.md](docs/agent-plugins.md).
+The skills a coding agent uses in these repositories are in the plugin marketplace
+`compmeteng` ([CompMetEng/skills](https://github.com/CompMetEng/skills)): the `craft` plugin
+for all our software and the `raven-gecko` plugin for the five repositories. The
+instructions that belong to one repository are in its `AGENTS.md`, which `parity docs render`
+writes from `docs/shared/` (see [docs/workflow.md](docs/workflow.md)).
 
 ## CI
 
