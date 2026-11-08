@@ -127,6 +127,8 @@ DOCS: tuple[DocSpec, ...] = (
         "workflows/matlab-release.core.yml",
         sides=("matlab",),
     ),
+    DocSpec(".github/scripts/decision_records.py", "scripts/decision_records.py"),
+    DocSpec(".github/workflows/decision-records.yml", "workflows/decision-records.core.yml"),
 )
 
 

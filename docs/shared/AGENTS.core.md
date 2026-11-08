@@ -38,6 +38,17 @@ New public functions need a ledger row in the same pull request;
 `parity check` fails without one. Run `parity mirror --since <base>..HEAD`
 from the raven-gecko-parity checkout to see what a change implies.
 
+## Decision records
+
+If the repository has a `decisions/` folder, read the records that concern the code
+you change before you change it. A record with status `accepted` binds. `proposed`
+is context, `rejected` states what was considered and not chosen, and `superseded`
+is history that names its successor. When a task conflicts with an accepted record,
+stop, say so in your summary, and propose changing the task or adding a record that
+supersedes it. An accepted record is edited to mark it superseded and for no other
+reason.
+`python3 .github/scripts/decision_records.py check` validates the folder.
+
 ## Repository specifics
 
 {{APPENDIX}}
