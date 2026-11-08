@@ -34,7 +34,7 @@ inputs:
 # difference rather than a behavioural one.
 #
 # What this scenario does NOT cover, deliberately: contractModel /
-# remove_duplicate_reactions, which is the *merging* step and a declared
+# contract_model, which is the *merging* step and a declared
 # divergence --- MATLAB merges the duplicates' grRules with "or" while the
 # Python side keeps only the surviving reaction's, and the two also disagree on
 # whether bounds have to match for two reactions to count as duplicates.
