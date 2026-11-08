@@ -808,7 +808,10 @@ entries:
     python: geckopy.remove_standard_kcat
     status: parity
     scenarios:
-      - kcat_chain_ectestgem A row counts as the standard kcat when its parsed origin is `standard` and it has no tuning status. MATLAB compares the origin without regard to letter case and Python exactly.
+      - kcat_chain_ectestgem
+    differs: []
+    notes: >-
+      A row counts as the standard kcat when its parsed origin is `standard` and it has no tuning status. MATLAB compares the origin without regard to letter case and Python exactly.
   - matlab: reportEnzymeUsage
     python: geckopy.report_enzyme_usage
     status: parity
