@@ -1,6 +1,6 @@
-"""The decision-record lint that `parity docs render` copies into the code repositories.
+"""The decision-record lint in `scripts/decision_records.py`.
 
-The script is a stand-alone file under `docs/shared/scripts/`, not part of the `parity`
+The script is a stand-alone file, not part of the `parity`
 package, so it is loaded by path. The diff checks run against real git repositories built in
 a temporary directory, because what they decide depends on merge bases, renames and line
 endings.
@@ -14,7 +14,7 @@ from pathlib import Path
 
 import pytest
 
-SCRIPT = Path(__file__).resolve().parents[1] / "docs" / "shared" / "scripts" / "decision_records.py"
+SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "decision_records.py"
 spec = importlib.util.spec_from_file_location("decision_records", SCRIPT)
 dr = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(dr)
@@ -304,31 +304,6 @@ def test_an_unknown_base_is_skipped(repo: Path, capsys: pytest.CaptureFixture[st
     head = branch_from_main(repo, {"decisions/0001-a.md": record("accepted")})
     assert diff("0" * 40, head) == []
     assert "not in this clone" in capsys.readouterr().err
-
-
-# --- the files that `parity docs render` copies ---------------------------------------------
-
-SHARED = SCRIPT.parents[1]
-
-
-def test_the_script_has_nothing_that_looks_like_a_docs_placeholder():
-    from parity import docs
-
-    assert docs._PLACEHOLDER.findall(SCRIPT.read_text(encoding="utf-8")) == []
-
-
-def test_the_workflow_template_has_only_the_tracked_branch_placeholder():
-    import yaml
-
-    from parity import docs
-
-    text = (SHARED / "workflows" / "decision-records.core.yml").read_text(encoding="utf-8")
-    assert set(docs._PLACEHOLDER.findall(text)) == {"{{OWN_REF}}"}
-    workflow = yaml.safe_load(text.replace("{{OWN_REF}}", "develop"))
-    assert workflow[True]["push"]["branches"] == ["develop"]
-    commands = [step["run"] for step in workflow["jobs"]["records"]["steps"] if "run" in step]
-    assert all("decision_records.py" in command for command in commands)
-    assert len(commands) == 3
 
 
 # --- command line --------------------------------------------------------------------------

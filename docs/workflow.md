@@ -131,19 +131,9 @@ To change any of it:
 `parity docs check` lists which sibling files are missing or differ from the current
 rendered output, without writing anything.
 
-### Decision records
+## Decision records
 
-`docs/shared/scripts/decision_records.py` and `docs/shared/workflows/decision-records.core.yml`
-are rendered into every code repository as `.github/scripts/decision_records.py` and
-`.github/workflows/decision-records.yml`. The workflow checks the records in a repository's
-`decisions/` folder on every pull request and on every push to the tracked branch, and succeeds
-without output when the folder does not exist. A repository adopts decision records by
-creating the folder; the rules for a record (statuses, what a frozen record may change) are in
-the docstring of the script and in the `decision-records` skill of the `craft` plugin of
-CompMetEng/skills. The script has its own tests in `tests/test_decision_records.py`. Pull request
-review on the tracked branch is what keeps an accepted record from changing; the check on a push
-reports a change that arrived without a pull request.
-
+`scripts/decision_records.py` validates the records in a `decisions/` folder (statuses, names, links, and what a frozen record may change) and the `decision-records` job of `ci.yml` runs it on every pull request and on every push to `develop`. The rules of a record are in the docstring of the script and in the `decision-records` skill of the `craft` plugin of CompMetEng/skills. The script has its own tests in `tests/test_decision_records.py`. The four code repositories do not receive the script.
 ## Writing documentation
 
 The prose rules for every markdown file, docstring, comment and commit or pull request text

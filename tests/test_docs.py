@@ -71,11 +71,6 @@ def _write_shared_source(root: Path) -> None:
     (shared / "workflows" / "matlab-release.core.yml").write_text(
         "name: Release\nbranch: {{OWN_REF}}\n", encoding="utf-8"
     )
-    (shared / "workflows" / "decision-records.core.yml").write_text(
-        "name: Decision records\nbranches: [{{OWN_REF}}]\n", encoding="utf-8"
-    )
-    (shared / "scripts").mkdir()
-    (shared / "scripts" / "decision_records.py").write_text("VERSION = '1'\n", encoding="utf-8")
 
     (shared / "appendices" / "FAKE.md").write_text("- fake matlab specifics\n", encoding="utf-8")
     (shared / "appendices" / "fakepy.md").write_text("- fake python specifics\n", encoding="utf-8")
@@ -148,13 +143,6 @@ def test_compose_substitutes_pair_and_sibling_placeholders(config: Config):
     assert "pair: fake" in parity_yml
     assert "env_prefix: FAKE" in parity_yml
     assert "sibling: org/fakepy@main" in parity_yml
-
-
-def test_both_sides_get_the_decision_record_script_and_workflow(config: Config):
-    for target in (_matlab_target(config), _python_target(config)):
-        documents = docs.compose(config, target)
-        assert documents[".github/scripts/decision_records.py"] == "VERSION = '1'\n"
-        assert "branches: [main]" in documents[".github/workflows/decision-records.yml"]
 
 
 def test_python_side_gets_no_parity_workflow(config: Config):
