@@ -1,4 +1,4 @@
-﻿# raven-gecko-parity
+# raven-gecko-parity
 
 Keeps the MATLAB and Python implementations of RAVEN and GECKO honest about their differences.
 
@@ -328,8 +328,9 @@ to [raven-docs](https://github.com/edkerk/raven-docs) when the features settle.
 
 The skills a coding agent uses in these repositories are in the plugin marketplace
 `compmeteng` ([CompMetEng/skills](https://github.com/CompMetEng/skills)): the `craft` plugin
-for all our software and the `raven-gecko` plugin for the five repositories. The
-instructions that belong to one repository are in its `AGENTS.md`, which `parity docs render`
+for all our software and the `raven-gecko` plugin for the five repositories. They are
+installed for the user; the four code repositories hold no agent files. What belongs to one
+repository is in the repository specifics of its `CONTRIBUTING.md`, which `parity docs render`
 writes from `docs/shared/` (see [docs/workflow.md](docs/workflow.md)).
 
 ## CI

@@ -1,6 +1,6 @@
 """Composing the shared GitHub docs and writing them into the siblings.
 
-Four repos otherwise mean four hand-maintained copies of CONTRIBUTING.md, AGENTS.md, issue
+Four repos otherwise mean four hand-maintained copies of CONTRIBUTING.md, issue
 and PR templates, CI workflows, and so on, drifting the moment one of them is edited and
 not the others. The shared source lives here (`docs/shared/`); each document is a core file
 plus zero or more per-repo appendices, each substituted into its own `{{NAME}}` placeholder,
@@ -67,7 +67,6 @@ class DocSpec:
 
 DOCS: tuple[DocSpec, ...] = (
     DocSpec(".github/CONTRIBUTING.md", "CONTRIBUTING.core.md", appendices={"APPENDIX": ".md"}),
-    DocSpec("AGENTS.md", "AGENTS.core.md", appendices={"APPENDIX": ".md"}),
     DocSpec(".github/pull_request_template.md", "PULL_REQUEST_TEMPLATE.core.md"),
     DocSpec(
         ".github/ISSUE_TEMPLATE/bug_report.md",

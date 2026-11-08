@@ -102,18 +102,17 @@ and run the scenarios for anything that changed since the last tag.
 
 ## Working with a coding agent
 
-The `AGENTS.md` of each code repository, rendered from `docs/shared/AGENTS.core.md`, gives a
-coding agent the ledger duties above, and the `parity-ledger` skill of the `raven-gecko`
-plugin in [CompMetEng/skills](https://github.com/CompMetEng/skills) has the statuses and
-commands. The purpose is the same as that of the git hooks: the cross-check happens without
-anyone having to remember it.
+The `parity-ledger` skill of the `raven-gecko` plugin in
+[CompMetEng/skills](https://github.com/CompMetEng/skills) gives a coding agent the ledger duties
+above, with the statuses and commands: check this ledger before closing a bug or finishing a
+feature. The code repositories hold no agent files; the plugin is installed for the user. The
+purpose is the same as that of the git hooks: the cross-check happens without anyone having to
+remember it.
 
 ## Shared documentation and CI workflows
 
 `docs/shared/` in this repository is the single source for each code repository's
-`CONTRIBUTING.md`, `AGENTS.md`, issue and PR templates, and CI workflow files.
-Every generated `AGENTS.md` has a "Cross-implementation parity" section that tells an agent
-to check this ledger before closing a bug or finishing a feature.
+`CONTRIBUTING.md`, issue and PR templates, and CI workflow files.
 
 To change any of it:
 
