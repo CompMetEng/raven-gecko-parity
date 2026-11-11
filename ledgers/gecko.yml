@@ -36,8 +36,10 @@ python: CompMetEng/geckopy
 entries:
   - matlab: adapterTemplate
     status: subsumed
-    reason: Adapter skeleton generation lives in the `geckopy init` CLI and templates/model_adapter.toml rather
-      than in a library function.
+    reason: The template of the deprecated adapter class (src/deprecated/adapterTemplate.m). A project is
+      configured by model_adapter.toml (template adapterTemplate.toml, written by `geckopy init` in geckopy),
+      which replaces the class; convertAdapterToToml converts an adapter class, and createGECKOproject
+      'adapterFormat', 'class' is deprecated. Not a library function in geckopy.
   - matlab: fillCarbonNum
     status: internal
     reason: Helper of evotuneScore (adds a per-reaction carbon weight for CMA-ES tuning's RMSE, clamping the
@@ -248,7 +250,8 @@ entries:
   - matlab: kcatsFromDLKcat
     python: geckopy.kcats_from_dlkcat
     status: parity
-    notes: Predicts kcats with DLKcat and keeps them as a source file.
+    notes: >-
+      Predicts kcats with DLKcat and keeps them as a source file. The option via ('okp', 'file' or 'docker') sets where the predictions come from; the default is 'file' when data/DLKcat.tsv exists and 'okp' otherwise, and run=true is the same as via='docker'. Both functions return (kcatList, done) / (kcat_list, done); done is false while an OKP job runs, and the list is empty then (MATLAB [], Python None). Two differences are recorded, found by reading the code and not by a scenario: that empty value, and the error for run=true with another via (kcatsFromDLKcat:arguments in MATLAB, a ValueError in Python).
   - matlab: kcatsFromECTree
     python: geckopy.kcats_from_ec_tree
     status: parity
@@ -292,7 +295,8 @@ entries:
   - matlab: updateKcatSources
     python: geckopy.update_kcat_sources
     status: parity
-    notes: Gathers the kcat source files that [kcat_assignment] in model_adapter.toml needs.
+    notes: >-
+      Gathers the kcat source files that [kcat_assignment] in model_adapter.toml needs. The dlkcat source reads data/DLKcat.tsv if it exists; otherwise it is gathered through OpenKineticsPredictor, which needs an API key and is reported as pending while the job runs (it formerly needed Docker).
   - matlab: upgradeEcModel
     python: geckopy.upgrade_ec_model
     status: parity
@@ -738,8 +742,9 @@ entries:
     scenarios:
       - kcat_merge_edge_cases_ectestgem
       - ec_model_build_light_humangem
-    reason: Deprecated thin wrapper around mergeKcats, kept for the legacy two-input call shape and emitting
-      a deprecation warning. The canonical name carries the parity row.
+    reason: Deprecated thin wrapper around mergeKcats (src/deprecated/mergeDLKcatAndFuzzyKcats.m), kept for
+      the legacy two-input call shape; warns with GECKO:deprecatedName and forwards to it. The canonical name
+      carries the parity row.
   - matlab: mergeKcats
     python: geckopy.merge_kcats
     status: parity
@@ -842,7 +847,7 @@ entries:
       - ec_tuning_ecyeastgem
     differs: []
     notes: >-
-      Both pick the usage or pool reaction with the largest forward draw: MATLAB reads max(drawFluxes), and geckopy makes the same choice. Both stop once growth gains less than 1e-9, list the tuned reactions in model order, report the kcat and source of the input model, write the pre-tune kcat into ec.notes as num2str prints it, let a tuned kcat pass 1e7, match a protToIgnore id without regard to case, raise for a protToIgnore id that has no usage reaction on a full model and tune a gecko-light model. No difference of its own in sensitivity_tuning_edge_cases_ectestgem, which differs for truncateValues. On ecYeastGEM before its tuning (ec_tuning_ecyeastgem) the tuned reactions, kcats and growth rates agree with Gurobi on both sides, with GLPK on both sides and with GLPK in MATLAB and scipy in geckopy, when the python model has RAVEN's solver tolerance of 1e-9 (python_tolerance): solveLP gives the solver 1e-9 and cobrapy leaves GLPK at 1e-7, and at 1e-7 the growth before the tuning is 0.126351575673 in geckopy against 0.126351105513 in MATLAB. With GLPK on both sides at 1e-9 the growth rates after the tuning differ by 4.4e-10 to 6.6e-10 (absolute).
+      Both pick the usage or pool reaction with the largest forward draw: MATLAB reads max(drawFluxes), and geckopy makes the same choice. Both stop once growth gains less than 1e-9, list the tuned reactions in model order, report the kcat and source of the input model, write the pre-tune kcat into ec.notes as num2str prints it, let a tuned kcat pass 1e7, match a protToIgnore id without regard to case, raise for a protToIgnore id that has no usage reaction on a full model and tune a gecko-light model. No difference in sensitivity_tuning_edge_cases_ectestgem. On ecYeastGEM before its tuning (ec_tuning_ecyeastgem) the tuned reactions, kcats and growth rates agree with Gurobi on both sides, with GLPK on both sides and with GLPK in MATLAB and scipy in geckopy, when the python model has RAVEN's solver tolerance of 1e-9 (python_tolerance): solveLP gives the solver 1e-9 and cobrapy leaves GLPK at 1e-7, and at 1e-7 the growth before the tuning is 0.126351575673 in geckopy against 0.126351105513 in MATLAB. With GLPK on both sides at 1e-9 the growth rates after the tuning differ by 4.4e-10 to 6.6e-10 (absolute).
   - matlab: setKcatForReactions
     python: geckopy.set_kcat_for_reactions
     status: parity
@@ -879,19 +884,13 @@ entries:
   - matlab: createGECKOproject
     status: subsumed
     reason: Project skeleton generation lives in `geckopy init my_project` on the CLI rather than in a library
-      function.
+      function. Both write a project .gitignore with data/okpApiKey.txt. The adapterFormat 'class' of
+      createGECKOproject is deprecated (warning GECKO:deprecatedOption); model_adapter.toml replaces the
+      adapter class.
   - matlab: startGECKOproject
     status: subsumed
     reason: Deprecated alias for createGECKOproject (src/deprecated/startGECKOproject.m); warns with
       GECKO:deprecatedName and forwards to it. Not a separate function to track.
-  - matlab: truncateValues
-    python: geckopy.truncate_values
-    status: parity
-    scenarios:
-      - sensitivity_tuning_ectestgem
-      - sensitivity_tuning_edge_cases_ectestgem
-    notes: >-
-      Both sides round an exact tie away from zero (100000.5 gives 100001, 1234565 gives 1234570). Inf is returned unchanged on both sides (sensitivity_tuning_edge_cases_ectestgem).
   - matlab: buildGECKOdoc
     status: internal
     reason: Regenerates MATLAB Toolbox doc metadata. Python docs are docstring-driven, so there is nothing
@@ -902,8 +901,9 @@ entries:
       and forwards to it. Not a separate function to track.
   - matlab: updateProtPool
     status: matlab-only
-    reason: Obsolete since GECKO 3.2.0 --- set_prot_pool_size supersedes it. A candidate for removal from
-      MATLAB GECKO too. geckopy docs/migrating_from_gecko_matlab.md §5.
+    reason: Deprecated in src/deprecated/updateProtPool.m; warns with GECKO:deprecatedFunction and errors on
+      an ecModel of GECKO 3.2.0 or later. setProtPoolSize (set_prot_pool_size in geckopy) supersedes it, so
+      it was never ported. geckopy docs/migrating_from_gecko_matlab.md §5.
   - matlab: writeDLKcatInput
     python: geckopy.write_dlkcat_input
     status: parity
