@@ -249,8 +249,8 @@ confirms has no callers anywhere in GECKO, so documented rather than fixed: its 
 matching can never actually match anything (the EC-prefix slice it builds is always the
 literal string `".-"`, never a substring of a real EC code), and when nothing matches at all
 it mislabels the empty result as `'SA*Mw'` rather than leaving the label blank.
-`sensitivityTuning` and `truncateValues`, this scenario's other two functions, matched
-exactly --- the former also correcting a stale MATLAB-COMPAT note in geckopy's own source,
+`sensitivityTuning`, this scenario's other function, matched
+exactly, also correcting a stale MATLAB-COMPAT note in geckopy's own source,
 obsoleted by an intervening GECKO change (usage/pool reactions switched to the forward
 direction in [GECKO#419](https://github.com/SysBioChalmers/GECKO/pull/419)) rather than
 confirming a still-current one.
