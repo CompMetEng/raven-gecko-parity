@@ -228,8 +228,11 @@ entries:
   - matlab: extractEnzymeSubstratePairs
     python: geckopy.gather_kcats.extract_enzyme_substrate_pairs
     status: parity
-    notes: Lists the enzymes and substrates of each model.ec reaction, the input of the DLKcat, OKP and
-      homolog sources.
+    scenarios:
+      - kcat_chain_ectestgem
+      - kcat_merge_edge_cases_ectestgem
+    notes: >-
+      Lists the enzymes and substrates of each model.ec reaction, the input of the DLKcat, OKP and homolog sources. An empty selection lists no pair on both sides, and the pairs follow the order of ec.rxns whatever the order of the selection given to geckopy (kcat_merge_edge_cases_ectestgem).
   - matlab: getEcRxnKeys
     python: geckopy.gather_kcats.ec_rxn_keys
     status: parity
@@ -250,8 +253,11 @@ entries:
   - matlab: kcatsFromDLKcat
     python: geckopy.kcats_from_dlkcat
     status: parity
+    scenarios:
+      - kcat_chain_ectestgem
+      - kcat_merge_edge_cases_ectestgem
     notes: >-
-      Predicts kcats with DLKcat and keeps them as a source file. The Docker route and the reading of data/DLKcat.tsv are local functions of kcatsFromDLKcat and of the private helpers of geckopy; runDLKcat, readDLKcatOutput and writeDLKcatInput are deprecated. The option via ('okp', 'file' or 'docker') sets where the predictions come from; the default is 'file' when data/DLKcat.tsv exists and 'okp' otherwise, and run=true is the same as via='docker'. Both functions return (kcatList, done) / (kcat_list, done); done is false while an OKP job runs, and the list is empty then (MATLAB [], Python None). Two differences are recorded, found by reading the code and not by a scenario: that empty value, and the error for run=true with another via (kcatsFromDLKcat:arguments in MATLAB, a ValueError in Python).
+      Predicts kcats with DLKcat and keeps them as a source file. The Docker route and the reading of data/DLKcat.tsv are local functions of kcatsFromDLKcat and of the private helpers of geckopy; runDLKcat, readDLKcatOutput and writeDLKcatInput are deprecated. The option via ('okp', 'file' or 'docker') sets where the predictions come from; the default is 'file' when data/DLKcat.tsv exists and 'okp' otherwise, and run=true is the same as via='docker'. Both functions return (kcatList, done) / (kcat_list, done); done is false while an OKP job runs, and the list is empty then (MATLAB [], Python None). Reading data/DLKcat.tsv with via 'file' gives the same kcat list on both sides, including the rows dropped for a kcat that is not a finite number or a substrate that is not in the model (kcat_merge_edge_cases_ectestgem). Two differences are recorded, found by reading the code and not by a scenario: that empty value, and the error for run=true with another via (kcatsFromDLKcat:arguments in MATLAB, a ValueError in Python).
   - matlab: kcatsFromECTree
     python: geckopy.kcats_from_ec_tree
     status: parity
@@ -267,8 +273,11 @@ entries:
   - matlab: kcatsFromOKP
     python: geckopy.kcats_from_okp
     status: parity
+    scenarios:
+      - okp_kcat_ectestgem
+      - kcat_io_edge_cases_ectestgem
     notes: >-
-      Gathers kcats from OpenKineticsPredictor and keeps them as a source file. It is the only public entry point of the OKP engine: submitting a job, fetching the result, writing the input and reading the output are local functions of kcatsFromOKP and private functions of geckopy (submitOpenKineticsPredictor, fetchOpenKineticsPredictor, writeOpenKineticsPredictorInput, readOpenKineticsPredictorOutput and their geckopy counterparts are no longer public). The default method of okp.method is KinForm-H on both sides, and the okp stage of the presets reads [kcat_sources.okp] methods, by default KinForm-H alone. While a job runs the kcat list is empty: [] in MATLAB and None in geckopy (a recorded difference, found by reading the code and not by a scenario).
+      Gathers kcats from OpenKineticsPredictor and keeps them as a source file. It is the only public entry point of the OKP engine: submitting a job, fetching the result, writing the input and reading the output are local functions of kcatsFromOKP and private functions of geckopy (submitOpenKineticsPredictor, fetchOpenKineticsPredictor, writeOpenKineticsPredictorInput, readOpenKineticsPredictorOutput and their geckopy counterparts are no longer public). The default method of okp.method is KinForm-H on both sides, and the okp stage of the presets reads [kcat_sources.okp] methods, by default KinForm-H alone. The job input of a call is the same on both sides, one enzyme-substrate pair per line, only for the metabolites with a SMILES and for the selected reactions, and the stored result of a job (useStored / use_stored) gives the same kcat list with the OKP- source labels (okp_kcat_ectestgem, kcat_io_edge_cases_ectestgem). The input is not written without the SMILES filter any more. Recorded differences, found by reading the code and not by a scenario: while a job runs the kcat list is empty ([] in MATLAB and None in geckopy), and kcatsFromOKP writes the job input before it resolves the API key, where kcats_from_okp resolves the key first and writes nothing without one.
   - matlab: loadBrendaMeasurements
     python: geckopy.databases.load_brenda_measurements
     status: parity
@@ -775,8 +784,6 @@ entries:
     python: geckopy.read_dlkcat_output
     status: parity
     scenarios:
-      - kcat_chain_ectestgem
-      - kcat_merge_edge_cases_ectestgem
       - ec_model_build_light_humangem
     differs: []
     notes: >-
@@ -875,7 +882,7 @@ entries:
       - sigma_fitter_edge_cases_ectestgem
       - ec_tuning_ecyeastgem
     notes: >-
-      The fitted sigma agrees on both sides: both scan the 0.01 grid by default (geckopy's fit_sigma with method='bisect' gives a continuous sigma instead), return the first sigma of the growth plateau for a target that growth cannot reach, and open the bounds of the objective reaction to [0, 1000] on the fitted model (sigma_fitter_edge_cases_ectestgem). A target that growth cannot reach gives the same sigma on every solver: sigmaFitter takes the first sigma whose growth is within 1e-9 (relative) of the best growth, as fit_sigma does, so the rounding noise on the plateau (with GLPK 49.999999999999986 at sigma 0.06 and 50 at sigma 1) does not move the result. A target growth rate that is not above 0 raises sigmaFitter:growthRate in MATLAB; fit_sigma raises a ValueError for 0 but not for a negative rate (a recorded difference). The alias sigma_fitter takes the method option of fit_sigma. MATLAB on Gurobi and GLPK and geckopy on Gurobi, GLPK and scipy all give sigma 0.06 and a pool bound of 120 (sigma_fitter_edge_cases_ectestgem).
+      The fitted sigma agrees on both sides: both scan the 0.01 grid by default (geckopy's fit_sigma with method='bisect' gives a continuous sigma instead), return the first sigma of the growth plateau for a target that growth cannot reach, and open the bounds of the objective reaction to [0, 1000] on the fitted model (sigma_fitter_edge_cases_ectestgem). A target that growth cannot reach gives the same sigma on every solver: sigmaFitter takes the first sigma whose growth is within 1e-9 (relative) of the best growth, as fit_sigma does, so the rounding noise on the plateau (with GLPK 49.999999999999986 at sigma 0.06 and 50 at sigma 1) does not move the result. A target growth rate that is not above 0 (NaN included) raises sigmaFitter:growthRate in MATLAB and a ValueError in geckopy. The alias sigma_fitter takes the method option of fit_sigma. MATLAB on Gurobi and GLPK and geckopy on Gurobi, GLPK and scipy all give sigma 0.06 and a pool bound of 120 (sigma_fitter_edge_cases_ectestgem).
   - matlab: createGECKOproject
     status: subsumed
     reason: Project skeleton generation lives in `geckopy init my_project` on the CLI rather than in a library
@@ -894,6 +901,11 @@ entries:
     status: subsumed
     reason: Deprecated alias for buildGECKOdoc (src/deprecated/updateGECKOdoc.m); warns with GECKO:deprecatedName
       and forwards to it. Not a separate function to track.
+  - matlab: bayesianSensitivityTuning
+    status: matlab-only
+    reason: Removed in GECKO 4 with the evotune functions; src/deprecated/bayesianSensitivityTuning.m is a stub
+      that raises GECKO:removedFunction and names cmaesKcatTuning (advanced kcat tuning) and sensitivityTuning
+      (standard kcat tuning). The Bayesian ABC-SMC tuning of GECKO 3.2.5 was never ported to geckopy.
   - matlab: updateProtPool
     status: matlab-only
     reason: Deprecated in src/deprecated/updateProtPool.m; warns with GECKO:deprecatedFunction and errors on
@@ -901,9 +913,6 @@ entries:
       it was never ported. geckopy docs/migrating_from_gecko_matlab.md §5.
   - matlab: writeDLKcatInput
     status: subsumed
-    scenarios:
-      - kcat_chain_ectestgem
-      - kcat_merge_edge_cases_ectestgem
     reason: Deprecated stub (src/deprecated/writeDLKcatInput.m); warns with GECKO:deprecatedFunction and
       raises an error that names kcatsFromDLKcat(model, 'via', 'docker'), which writes the input itself.
       extractEnzymeSubstratePairs lists the pairs the input holds. geckopy's write_dlkcat_input is a

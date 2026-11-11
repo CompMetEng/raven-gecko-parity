@@ -1,6 +1,6 @@
 # Behavioural parity for GECKO and geckopy
 
-The gecko ledger (`ledgers/gecko.yml`) has 207 rows, of which 82 are marked `parity`, and 67 of those list at least one scenario. A scenario runs both sides on the same input and compares the results; a row without one is a claim about matching names. This document describes the scenarios, the fixture they share, what each reports, how the nightly runs them and what is open. It is the companion to [behaviour-parity-plan.md](behaviour-parity-plan.md), which does the same job for RAVEN.
+The gecko ledger (`ledgers/gecko.yml`) has 208 rows, of which 82 are marked `parity`, and 70 of those list at least one scenario. A scenario runs both sides on the same input and compares the results; a row without one is a claim about matching names. This document describes the scenarios, the fixture they share, what each reports, how the nightly runs them and what is open. It is the companion to [behaviour-parity-plan.md](behaviour-parity-plan.md), which does the same job for RAVEN.
 
 ## What exists now
 
