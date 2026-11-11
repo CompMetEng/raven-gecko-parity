@@ -232,7 +232,7 @@ entries:
       - kcat_chain_ectestgem
       - kcat_merge_edge_cases_ectestgem
     notes: >-
-      Lists the enzymes and substrates of each model.ec reaction, the input of the DLKcat, OKP and homolog sources. An empty selection lists no pair on both sides, and the pairs follow the order of ec.rxns whatever the order of the selection given to geckopy (kcat_merge_edge_cases_ectestgem).
+      Lists the enzymes and substrates of each model.ec reaction, the input of the DLKcat, OKP and homolog sources. An empty selection lists no pair on both sides, and the pairs follow the order of ec.rxns whatever the order of the selection given to geckopy (kcat_merge_edge_cases_ectestgem). The scenarios pass only_with_smiles=False. Recorded differences: geckopy drops the pairs of a substrate without a SMILES by default (only_with_smiles=True), where MATLAB has no such filter; and the return shapes differ, a struct of indices (ecRxn into model.ec.rxns, protein into model.ec.genes, met into model.mets) in MATLAB and a DataFrame with the columns rxn_id, gene, substrate, smiles, sequence and met_id in geckopy.
   - matlab: getEcRxnKeys
     python: geckopy.gather_kcats.ec_rxn_keys
     status: parity
@@ -791,7 +791,7 @@ entries:
       - ec_model_build_light_humangem
     differs: []
     notes: >-
-      Deprecated on both sides; both read the file through kcats_from_dlkcat / kcatsFromDLKcat with via 'file' (MATLAB reads a file given as outFile from a temporary copy; its stub accepts the option strict and ignores it, where geckopy.read_dlkcat_output honours strict=True). A row whose kcat is not a finite number ('NA', 'None', empty, 'inf', '1.2.3') is dropped before the reactions are checked, on both sides; a file without such a number raises, and a reaction that is not in model.ec.rxns raises when its row has a kcat. A substrate name that is not in model.metNames (matched case-insensitively) drops its row with a warning on both sides; strict (strict=True in geckopy) raises instead. read_dlkcat_output reports the non-numeric-kcat and unrecognised-substrate drop counts separately (kcat_merge_edge_cases_ectestgem).
+      Deprecated on both sides; both read the file through kcats_from_dlkcat / kcatsFromDLKcat with via 'file' (MATLAB reads a file given as outFile from a temporary copy; its stub accepts the option strict and ignores it, where geckopy.read_dlkcat_output honours strict=True). The drop and raise behaviour below is checked through kcatsFromDLKcat / kcats_from_dlkcat with via 'file' in kcat_merge_edge_cases_ectestgem; the drop counts are from reading the code. A row whose kcat is not a finite number ('NA', 'None', empty, 'inf', '1.2.3') is dropped before the reactions are checked, on both sides; a file without such a number raises, and a reaction that is not in model.ec.rxns raises when its row has a kcat. A substrate name that is not in model.metNames (matched case-insensitively) drops its row with a warning on both sides; strict (strict=True in geckopy) raises instead. read_dlkcat_output reports the non-numeric-kcat and unrecognised-substrate drop counts separately.
   - matlab: removeStandardKcat
     python: geckopy.remove_standard_kcat
     status: parity
@@ -979,9 +979,12 @@ entries:
   - matlab: downloadUniProt
     python: geckopy.databases.download_uniprot
     status: parity
-    notes: Direct port; same default query fields (taxonomy_id, gene_oln, reviewed=true) and output TSV
-      schema. Called by loadDatabases when its expected uniprot.tsv is missing, and directly callable to
-      refresh one organism's snapshot on either side.
+    notes: Direct port; same default query fields (taxonomy_id, gene_oln) and output TSV schema. Called by
+      loadDatabases when its expected uniprot.tsv is missing, and directly callable to refresh one
+      organism's snapshot on either side. The default of reviewed differs for a direct call.
+      downloadUniProt restricts the query to reviewed entries (reviewed true), where download_uniprot and
+      load_uniprot_tsv do not (reviewed False, as the adapter default uniprot.reviewed); the MATLAB default
+      is to change to false. loadDatabases and make_ec_model both pass uniprot.reviewed of the adapter.
   - python: geckopy.databases.KeggDB
     status: python-only
     reason: Loaded-data type. MATLAB GECKO passes parallel cell arrays and structs; geckopy wraps them in
@@ -1231,9 +1234,10 @@ entries:
   - matlab: relaxEnzConcs
     python: geckopy.relax_enz_concs
     status: parity
-    scenarios: []
+    scenarios:
+      - relax_enz_concs_ectestgem
     notes: >-
-      Raises the upper bounds of the measured enzymes (and, at poolWeight times the price of an enzyme, of the protein pool exchange) by the least total fold that reaches expGrowth, in one LP, so the result does not depend on a ranking of the most limiting enzyme. Both have the options expGrowth, bioRxn, perComplex, weight ('relative' or 'absolute'), poolWeight and floor, never lower a bound, leave ec.concs unchanged and return the relaxed enzymes as in flexibilizeEnzConcs (MATLAB [model, flexEnz], geckopy the relaxed model in place and a FlexEnzResult). The unit tests of both repositories give the same bounds on the test model. No scenario compares the two sides. The errors differ in type: relaxEnzConcs:noMeasured, relaxEnzConcs:infeasible and relaxEnzConcs:arguments in MATLAB, a ValueError in geckopy.
+      Raises the upper bounds of the measured enzymes (and, at poolWeight times the price of an enzyme, of the protein pool exchange) by the least total fold that reaches expGrowth, in one LP, so the result does not depend on a ranking of the most limiting enzyme. Both have the options expGrowth, bioRxn, perComplex, weight ('relative' or 'absolute'), poolWeight and floor, never lower a bound, leave ec.concs unchanged and return the relaxed enzymes as in flexibilizeEnzConcs (MATLAB [model, flexEnz], geckopy the relaxed model in place and a FlexEnzResult). On ecTestGEM with the complex of R5 (relax_enz_concs_ectestgem) both sides relax the same enzymes to the same bounds and reach the same growth, with perComplex false and true, with measured and median-levelled concentrations, and for a growth rate that needs the protein pool raised. The errors differ in type: relaxEnzConcs:noMeasured, relaxEnzConcs:infeasible and relaxEnzConcs:arguments in MATLAB, a ValueError in geckopy.
   - python: geckopy.kcat_tuning.evotune.MaskSizePoint
     status: python-only
     reason: Return type of sweep_tunable_mask_size. GECKO has no mask-size sweep.
