@@ -10,8 +10,8 @@ description: >-
   row is dropped. Each case builds its own state. A raise is a value on both sides.
 
 entries:
-  - readDLKcatOutput
-  - writeDLKcatInput
+  - kcatsFromDLKcat
+  - extractEnzymeSubstratePairs
   - loadBRENDAdata
   - fuzzyKcatMatching
   - mergeKcats
@@ -56,7 +56,6 @@ inputs:
   outlier_brenda_dir: "{scenario_dir}/outlier/data"
 
   data_dir: "{scenario_dir}/data"
-  dlkcat_write_target: "{repo_root}/results/.kcat_merge_dlkcat_input.tsv"
 
 tolerance:
   rel: 1.0e-9

@@ -24,8 +24,11 @@ isozymes of which only one has a kcat: both sides price the reaction with the is
 has one.
 """
 
+import copy
 import importlib.util
+import shutil
 import sys
+import tempfile
 from pathlib import Path
 
 import cobra
@@ -33,6 +36,7 @@ import numpy as np
 import pandas as pd
 from scipy import sparse
 
+from geckopy.gather_kcats import extract_enzyme_substrate_pairs
 from geckopy import (
     EcData,
     ModelAdapter,
@@ -50,9 +54,8 @@ from geckopy import (
     load_uniprot_tsv,
     make_ec_model,
     merge_kcats,
-    read_dlkcat_output,
     remove_standard_kcat,
-    write_dlkcat_input,
+    kcats_from_dlkcat,
 )
 
 
@@ -183,14 +186,13 @@ def _checkpoint_fuzzy(model, inputs: dict):
 
 
 # --------------------------------------------------------------------------- #
-# dlkcat: writeDLKcatInput + readDLKcatOutput + mergeDLKcatAndFuzzyKcats
+# dlkcat: extractEnzymeSubstratePairs + kcatsFromDLKcat(via 'file') + mergeDLKcatAndFuzzyKcats
 # --------------------------------------------------------------------------- #
 
 def _checkpoint_dlkcat(model, fuzzy_df, inputs: dict):
     ignore_lists = load_dlkcat_ignore_lists()
-    written = write_dlkcat_input(
-        model, Path(inputs["dlkcat_write_target"]), ignore_lists,
-        ec_rxns=["R2a_EXP_1", "R2a_EXP_2"], overwrite=True, only_with_smiles=False,
+    written = extract_enzyme_substrate_pairs(
+        model, ignore_lists, ec_rxns=["R2a_EXP_1", "R2a_EXP_2"], only_with_smiles=False,
     )
     written_rows = sorted(
         (
@@ -200,7 +202,14 @@ def _checkpoint_dlkcat(model, fuzzy_df, inputs: dict):
         key=lambda r: (r["reaction"], r["gene"]),
     )
 
-    dlkcat_df = read_dlkcat_output(model, inputs["dlkcat_output_path"])
+    # kcats_from_dlkcat(via="file") reads data/DLKcat.tsv of the project: a scratch project
+    # holds the file.
+    with tempfile.TemporaryDirectory() as tmp:
+        scratch = copy.deepcopy(model.adapter)
+        scratch.params.path = Path(tmp)
+        (Path(tmp) / "data").mkdir()
+        shutil.copyfile(inputs["dlkcat_output_path"], Path(tmp) / "data" / "DLKcat.tsv")
+        dlkcat_df, _ = kcats_from_dlkcat(model, via="file", save=False, adapter=scratch)
     dlkcat_rows = sorted(
         (
             {
