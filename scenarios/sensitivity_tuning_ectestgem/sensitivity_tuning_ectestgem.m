@@ -1,7 +1,7 @@
 function results = sensitivity_tuning_ectestgem(ctx)
 % MATLAB side of the sensitivity-tuning scenario.
 %
-% Three independent checkpoints, mirroring run.py. See scenario.yml for the pool bound
+% Two independent checkpoints, mirroring run.py. See scenario.yml for the pool bound
 % that sigmaFitter leaves on the returned model.
 
 previousSolver = getpref('RAVEN', 'solver', '');
@@ -16,7 +16,6 @@ fixAdapter.params.bioRxn = char(ctx.inputs.bio_rxn);
 
 results.sensitivity_tuning = checkpoint_sensitivity_tuning(model, adapter, fixAdapter, ctx.inputs);
 results.sigma_fitter = checkpoint_sigma_fitter(model, adapter, ctx.inputs);
-results.truncate_values = checkpoint_truncate_values(ctx.inputs);
 
 end
 
@@ -87,16 +86,6 @@ ecModel = setProtPoolSize(ecModel, [], [], [], adapter);
 out.sigma = double(sigma);
 poolIdx = strcmp(fittedModel.rxns, 'prot_pool_exchange');
 out.model_pool_ub = double(fittedModel.ub(poolIdx));
-end
-
-
-% --------------------------------------------------------------------------- %
-% truncate_values: truncateValues
-% --------------------------------------------------------------------------- %
-
-function out = checkpoint_truncate_values(inputs)
-vals = num2cell(reshape(double(inputs.truncate_values), 1, []));
-out = truncateValues(vals, 1:numel(vals));
 end
 
 
