@@ -1,19 +1,22 @@
 id: okp_kcat_ectestgem
 pair: gecko
 description: >-
-  OpenKineticsPredictor (OKP): findMetSmiles feeding writeOpenKineticsPredictorInput's
-  CSV-building (and its onlyWithSmiles filter), then readOpenKineticsPredictorOutput
-  parsing a result file back into a kcatList, all on ecTestGEM. OKP is one of several
-  interchangeable kcat-prediction sources (alongside DLKcat, already covered by
-  kcat_chain_ectestgem) --- a REST-submitted CSV round trip through
-  predictor.openkinetics.org rather than a locally-run model, so this scenario stops at
-  the CSV boundary on both sides rather than hitting the real API: MATLAB's
-  submitOpenKineticsPredictor.m/fetchOpenKineticsPredictor.m and geckopy's OKPClient are
-  both out of scope here, same reasoning kcat_chain_ectestgem uses to leave DLKcat's own
-  neural network out of ec_model_full_yeastgem.
+  OpenKineticsPredictor (OKP): findMetSmiles feeding the job input that kcatsFromOKP /
+  kcats_from_okp writes (with the submission stopped before it reaches the network), then
+  the stored result of a job read through kcatsFromOKP / kcats_from_okp (useStored /
+  use_stored) into a kcatList, all on ecTestGEM. OKP is one of several interchangeable
+  kcat-prediction sources (alongside DLKcat, already covered by kcat_chain_ectestgem) --- a
+  REST-submitted CSV round trip through predictor.openkinetics.org rather than a locally-run
+  model, so this scenario stops at the CSV boundary on both sides rather than hitting the
+  real API. No network and no key is used: MATLAB stops at the missing API key, which
+  kcatsFromOKP resolves after it has written the input; geckopy resolves the key first, so
+  the scenario sets a placeholder and replaces the OKP client with one that refuses to
+  submit. The job input is no longer written without the onlyWithSmiles filter, because
+  kcatsFromOKP always applies it.
 
 entries:
   - findMetSmiles
+  - kcatsFromOKP
 
 inputs:
   adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"

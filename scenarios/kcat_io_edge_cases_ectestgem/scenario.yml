@@ -11,6 +11,7 @@ description: >-
 
 entries:
   - findMetSmiles
+  - kcatsFromOKP
   - saveKcatSource
   - loadKcatSource
   - getStandardKcat
