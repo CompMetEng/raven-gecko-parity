@@ -14,8 +14,6 @@ description: >-
 
 entries:
   - findMetSmiles
-  - writeOpenKineticsPredictorInput
-  - readOpenKineticsPredictorOutput
 
 inputs:
   adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
