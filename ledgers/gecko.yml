@@ -208,7 +208,7 @@ entries:
       - kcat_assignment_pipeline_ectestgem
     differs: []
     notes: >-
-      Decides one kcat per reaction from the kcat source files in data/kcats, without applying them. A source file that several tokens of one stage name (database_top and database_bottom both read brenda.tsv) is one list on both sides, so kcat, spread, candidates and the source text of a decision ('brenda (wc=0, origin=1)') agree. A leading okp_ of a row's source label is dropped when the labels of a file are put into the priority, as in geckopy (kcat_assignment_pipeline_ectestgem). A project with only the GECKO 3 data/customKcats.tsv (no data/kcats/custom.tsv) raises collectKcats:legacyCustomKcats in MATLAB and a ValueError in geckopy, both naming convertCustomKcats, and the decisions have no stage custom. collect_kcats returns the copy without the isozyme constraints applied, as collectKcats does. The kcatDecisions.tsv written by both has snake_case column headers (ec_rxn, spread_log10, sd_log10, ...); the MATLAB decisions table keeps its camelCase fields. A [kcat_sources.<name>] table of model_adapter.toml overrides only the keys it sets and keeps the other settings of the preset, on both sides; a source file made with other settings then counts as outdated.
+      Decides one kcat per reaction from the kcat source files in data/kcats, without applying them. A source file that several tokens of one stage name (database_top and database_bottom both read brenda.tsv) is one list on both sides, so kcat, spread, candidates and the source text of a decision ('brenda (wc=0, origin=1)') agree. A leading okp_ of a row's source label is dropped when the labels of a file are put into the priority, as in geckopy (kcat_assignment_pipeline_ectestgem). A project with only the GECKO 3 data/customKcats.tsv (no data/kcats/custom.tsv) raises collectKcats:legacyCustomKcats in MATLAB and a ValueError in geckopy, both naming convertCustomKcats, and the decisions have no stage custom. A missing data/kcats/custom.tsv is reported as missing and left out on both sides, without naming updateKcatSources. collect_kcats returns the copy without the isozyme constraints applied, as collectKcats does. The kcatDecisions.tsv written by both has snake_case column headers (ec_rxn, spread_log10, sd_log10, ...); the MATLAB decisions table keeps its camelCase fields. A [kcat_sources.<name>] table of model_adapter.toml overrides only the keys it sets and keeps the other settings of the preset, on both sides; a source file made with other settings then counts as outdated.
   - matlab: convertCustomKcats
     python: geckopy.convert_custom_kcats
     status: parity
@@ -332,7 +332,8 @@ entries:
   - matlab: loadAdapterParams
     status: subsumed
     reason: Reads model_adapter.toml into the adapter parameters, which geckopy does in ModelAdapter.from_folder
-      (validated by ModelParameters).
+      (validated by ModelParameters). A parameter whose default in adapterParameters.tsv is empty (uniprot.id,
+      kegg.id, c_source, bio_rxn) is kept as an empty value on both sides.
   - matlab: readAdapterToml
     status: via-dependency
     reason: MATLAB has no TOML parser, so this reads the subset that adapter files use. Python uses the standard
@@ -527,7 +528,7 @@ entries:
       - kcat_io_edge_cases_ectestgem
     differs: []
     notes: >-
-      Both take the last row of a name that is duplicated in smilesDB.tsv, and skip a metabolite without a name with a warning (MATLAB id findMetSmiles:emptyName, geckopy a logged warning), so it gets no SMILES (kcat_io_edge_cases_ectestgem).
+      Both take the last row of a name that is duplicated in smilesDB.tsv, and skip a metabolite without a name with a warning (MATLAB id findMetSmiles:emptyName, geckopy a logged warning), so it gets no SMILES (kcat_io_edge_cases_ectestgem). Neither queries PubChem for an empty name, also when smilesDB.tsv exists.
   - matlab: flexibilizeEnzConcs
     python: geckopy.flexibilize_enz_concs
     status: parity
@@ -981,10 +982,9 @@ entries:
     status: parity
     notes: Direct port; same default query fields (taxonomy_id, gene_oln) and output TSV schema. Called by
       loadDatabases when its expected uniprot.tsv is missing, and directly callable to refresh one
-      organism's snapshot on either side. The default of reviewed differs for a direct call.
-      downloadUniProt restricts the query to reviewed entries (reviewed true), where download_uniprot and
-      load_uniprot_tsv do not (reviewed False, as the adapter default uniprot.reviewed); the MATLAB default
-      is to change to false. loadDatabases and make_ec_model both pass uniprot.reviewed of the adapter.
+      organism's snapshot on either side. Both default to reviewed=false (unreviewed entries included),
+      as the adapter default uniprot.reviewed, and both follow uniprot.reviewed from loadDatabases and
+      make_ec_model.
   - python: geckopy.databases.KeggDB
     status: python-only
     reason: Loaded-data type. MATLAB GECKO passes parallel cell arrays and structs; geckopy wraps them in
