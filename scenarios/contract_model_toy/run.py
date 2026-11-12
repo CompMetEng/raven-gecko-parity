@@ -58,7 +58,9 @@ def run(ctx):
             restrict = [model.metabolites.get_by_id(str(m)) for m in case["mets"]]
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
-            removed = contract_model(model, restrict_to_metabolites=restrict)
+            removed = contract_model(
+                model, restrict_to_metabolites=restrict, dist_reverse=bool(case.get("dist_reverse", True))
+            )
         results[case["name"]] = {
             "reactions": [
                 {

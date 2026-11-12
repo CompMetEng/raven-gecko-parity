@@ -2,7 +2,7 @@ id: contract_model_toy
 pair: raven
 description: >-
   contractModel against contract_model on hand-written models: isozymes that merge into one gene rule,
-  duplicates with different bounds, with different reversibility, with different objective coefficients, reversible
+  duplicates with different bounds, with different reversibility (kept apart, and merged with distReverse false), with different objective coefficients, reversible
   reactions written in opposite directions, the expandModel suffix, and a restriction to the reactions of one
   metabolite. Per case the surviving reactions with bounds, objective coefficient and the clauses of the gene rule,
   and the removed reactions.
@@ -30,6 +30,12 @@ inputs:
     - {id: R2, lb: 0, ub: 20, c: 0, rule: g2, stoichiometry: [{met: A_c, coefficient: -1}, {met: B_c, coefficient: 1}]}
   - name: reversibility_differs
     mets: null
+    reactions:
+    - {id: R1, lb: 0, ub: 1000, c: 0, rule: g1, stoichiometry: [{met: A_c, coefficient: -1}, {met: B_c, coefficient: 1}]}
+    - {id: R2, lb: -1000, ub: 1000, c: 0, rule: g2, stoichiometry: [{met: A_c, coefficient: -1}, {met: B_c, coefficient: 1}]}
+  - name: reversibility_ignored
+    mets: null
+    dist_reverse: false
     reactions:
     - {id: R1, lb: 0, ub: 1000, c: 0, rule: g1, stoichiometry: [{met: A_c, coefficient: -1}, {met: B_c, coefficient: 1}]}
     - {id: R2, lb: -1000, ub: 1000, c: 0, rule: g2, stoichiometry: [{met: A_c, coefficient: -1}, {met: B_c, coefficient: 1}]}
