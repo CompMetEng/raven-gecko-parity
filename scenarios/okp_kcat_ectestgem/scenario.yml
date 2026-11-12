@@ -1,21 +1,22 @@
 id: okp_kcat_ectestgem
 pair: gecko
 description: >-
-  OpenKineticsPredictor (OKP): findMetSmiles feeding writeOpenKineticsPredictorInput's
-  CSV-building (and its onlyWithSmiles filter), then readOpenKineticsPredictorOutput
-  parsing a result file back into a kcatList, all on ecTestGEM. OKP is one of several
-  interchangeable kcat-prediction sources (alongside DLKcat, already covered by
-  kcat_chain_ectestgem) --- a REST-submitted CSV round trip through
-  predictor.openkinetics.org rather than a locally-run model, so this scenario stops at
-  the CSV boundary on both sides rather than hitting the real API: MATLAB's
-  submitOpenKineticsPredictor.m/fetchOpenKineticsPredictor.m and geckopy's OKPClient are
-  both out of scope here, same reasoning kcat_chain_ectestgem uses to leave DLKcat's own
-  neural network out of ec_model_full_yeastgem.
+  OpenKineticsPredictor (OKP): findMetSmiles feeding the job input that kcatsFromOKP /
+  kcats_from_okp writes (with the submission stopped before it reaches the network), then
+  the stored result of a job read through kcatsFromOKP / kcats_from_okp (useStored /
+  use_stored) into a kcatList, all on ecTestGEM. OKP is one of several interchangeable
+  kcat-prediction sources (alongside DLKcat, already covered by kcat_chain_ectestgem) --- a
+  REST-submitted CSV round trip through predictor.openkinetics.org rather than a locally-run
+  model, so this scenario stops at the CSV boundary on both sides rather than hitting the
+  real API. No network and no key is used: MATLAB stops at the missing API key, which
+  kcatsFromOKP resolves after it has written the input; geckopy resolves the key first, so
+  the scenario sets a placeholder and replaces the OKP client with one that refuses to
+  submit. The job input is no longer written without the onlyWithSmiles filter, because
+  kcatsFromOKP always applies it.
 
 entries:
   - findMetSmiles
-  - writeOpenKineticsPredictorInput
-  - readOpenKineticsPredictorOutput
+  - kcatsFromOKP
 
 inputs:
   adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
@@ -23,11 +24,11 @@ inputs:
   fixture_dir: "{matlab_repo}/test/unit_tests/ecTestGEM"
 
   # Vendored, not pointed-at --- same reasoning kcat_chain_ectestgem gives for its own
-  # data/ folder: both write checkpoints below redirect the adapter's params.path here
-  # (a *copy*, ModelAdapter/ModelParameters being value types on both sides), so OKP.csv
-  # lands in scratch space rather than the shared ecTestGEM fixture, and findMetSmiles
-  # reads its cache from here too. Content is an exact copy of
-  # test/unit_tests/ecTestGEM/data/smilesDB.tsv, keyed by metabolite *name* (e1, e2, m1,
+  # data/ folder: findMetSmiles reads its cache from here through a *copy* of the adapter whose
+  # params.path is redirected (ModelAdapter/ModelParameters being value types on both sides). Each
+  # kcatsFromOKP / kcats_from_okp call of the write and read checkpoints uses its own scratch
+  # project, so OKP.csv, the job file and the stored result never touch the shared ecTestGEM fixture. Content is an exact
+  # copy of test/unit_tests/ecTestGEM/data/smilesDB.tsv, keyed by metabolite *name* (e1, e2, m1,
   # m2 --- ecTestGEM's own metNames), not id: it covers every metabolite name in the
   # stock model, so findMetSmiles/find_met_smiles resolve entirely from this local cache
   # with zero PubChem calls on either side --- confirmed by direct execution (no network
@@ -38,21 +39,21 @@ inputs:
   # column order, read identically by both sides (unlike BRENDA/DLKcat, no format
   # conversion needed here). Two rows resolve (R2_EXP_1/G1 via CataPro, R3/G4 via
   # BRENDA); one (sequence 'UNKNOWN') deliberately does not, exercising the
-  # warn-and-skip path both readOpenKineticsPredictorOutput and parse_okp_output take on
-  # an unmatched row rather than failing the whole read.
+  # warn-and-skip path the readers of kcatsFromOKP (a local function) and kcats_from_okp
+  # take on an unmatched row rather than failing the whole read.
   okp_result_path: "{scenario_dir}/data/okp_result.csv"
 
 # Found and fixed one real MATLAB bug while building this scenario's write checkpoint
 # (confirmed by an isolated regression test, not just "differs on this fixture"):
-# writeOpenKineticsPredictorInput.m indexed model.ec.rxnEnzMat with reactionIdxs, a
-# position *within the requested ecRxns subset*, instead of mapping it back through
+# the job-input writer of kcatsFromOKP (formerly writeOpenKineticsPredictorInput.m) indexed
+# model.ec.rxnEnzMat with reactionIdxs, a position *within the requested ecRxns subset*, instead of mapping it back through
 # ecRxnsIdx to ec.rxns' own absolute numbering. The two only coincide when the subset is
 # "everything, in ec.rxns order" --- any subset excluding an earlier ec.rxns entry (this
-# scenario's own write_with_smiles checkpoint: {R2_EXP_1, R2_EXP_2, R3}, which skips the
+# scenario's own with_smiles checkpoint: {R2_EXP_1, R2_EXP_2, R3}, which skips the
 # two REV entries sitting between R2_EXP_2 and R3 in ec.rxns) silently read the wrong
 # rxnEnzMat row for everything after the gap: R3's own gene (G4) never appeared, and an
 # earlier isozyme's genes (R2_REV_EXP_1's G1/G2) appeared as spurious duplicates instead.
-# geckopy's build_okp_input_csv has no equivalent bug --- confirmed by direct execution
+# geckopy's job-input builder has no equivalent bug --- confirmed by direct execution
 # on the identical subset. Filed and fixed: [GECKO #437], merged. This scenario's own
 # MATLAB result was generated against a worktree with the fix applied ahead of merge, so
 # it already reflects the corrected behaviour regardless of merge status.

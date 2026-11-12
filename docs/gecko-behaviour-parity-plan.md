@@ -1,10 +1,10 @@
 # Behavioural parity for GECKO and geckopy
 
-The gecko ledger (`ledgers/gecko.yml`) has 209 rows, of which 88 are marked `parity`, and 71 of those list at least one scenario. A scenario runs both sides on the same input and compares the results; a row without one is a claim about matching names. This document describes the scenarios, the fixture they share, what each reports, how the nightly runs them and what is open. It is the companion to [behaviour-parity-plan.md](behaviour-parity-plan.md), which does the same job for RAVEN.
+The gecko ledger (`ledgers/gecko.yml`) has 208 rows, of which 82 are marked `parity`, and 71 of those list at least one scenario. A scenario runs both sides on the same input and compares the results; a row without one is a claim about matching names. This document describes the scenarios, the fixture they share, what each reports, how the nightly runs them and what is open. It is the companion to [behaviour-parity-plan.md](behaviour-parity-plan.md), which does the same job for RAVEN.
 
 ## What exists now
 
-The repository has 50 scenarios for the gecko pair. In the nightly report of 2026-11-01 (GECKO `a9b3b5c43362`, geckopy `d982091af8da`), 48 of them ran: 27 match, 16 report differences and 5 have no result (ERROR). Two scenarios were added after that report. No gecko comparison has completed since 2026-11-01 (see the open questions), so the table does not show the effect of the changes merged on 2026-11-01 and later. A scenario reports DIFFER while any case differs; the differences are described in its `scenario.yml` and in the ledger notes of the functions concerned, and a deliberate difference is said to be deliberate there.
+The repository has 51 scenarios for the gecko pair. In the nightly report of 2026-11-01 (GECKO `a9b3b5c43362`, geckopy `d982091af8da`), 48 of them ran: 27 match, 16 report differences and 5 have no result (ERROR). Three scenarios were added after that report. No gecko comparison has completed since 2026-11-01 (see the open questions), so the table does not show the effect of the changes merged on 2026-11-01 and later. A scenario reports DIFFER while any case differs; the differences are described in its `scenario.yml` and in the ledger notes of the functions concerned, and a deliberate difference is said to be deliberate there.
 
 | Scenario | Covers | Verdict of the nightly of 2026-11-01 |
 |---|---|---|
@@ -42,17 +42,18 @@ The repository has 50 scenarios for the gecko pair. In the nightly report of 202
 | `fuzzy_kcat_coefficient_ectestgem` | `fuzzyKcatMatching`, `loadBRENDAdata` | match |
 | `kcat_apply_edge_cases_ectestgem` | `applyKcatConstraints`, `setKcatForReactions`, `getKcatAcrossIsozymes`, `applyCustomKcats` | differs: the id vocabulary of the update list in `applyKcatConstraints` |
 | `kcat_assignment_pipeline_ectestgem` | `kcatAssignmentConfig`, `collectKcats`, `assignKcats`, `ecTreeEstimate`, `kcatsFromECTree` | differs: config validation, doubled candidates and the `ec.source` text in `collectKcats`, NaN `k` and subsets in the EC tree |
-| `kcat_chain_ectestgem` | `fuzzyKcatMatching`, `loadBRENDAdata`, `writeDLKcatInput`, `readDLKcatOutput`, `mergeKcats`, `assignKcatValues`, `applyCustomKcats`, `getKcatAcrossIsozymes`, `getStandardKcat`, `removeStandardKcat`, `applyKcatConstraints` | match |
-| `kcat_io_edge_cases_ectestgem` | `findMetSmiles`, `writeOpenKineticsPredictorInput`, `saveKcatSource`, `loadKcatSource`, `getStandardKcat` | differs: `findMetSmiles` duplicates and unnamed metabolites, invalid rows in `loadKcatSource`, `getStandardKcat` |
-| `kcat_merge_edge_cases_ectestgem` | `readDLKcatOutput`, `writeDLKcatInput`, `loadBRENDAdata`, `fuzzyKcatMatching`, `mergeKcats`, `mergeDLKcatAndFuzzyKcats`, `assignKcatValues` | differs: `OKP-` sources in `mergeKcats`, `readDLKcatOutput`, `writeDLKcatInput` |
+| `kcat_chain_ectestgem` | `fuzzyKcatMatching`, `loadBRENDAdata`, `extractEnzymeSubstratePairs`, `kcatsFromDLKcat`, `mergeKcats`, `assignKcatValues`, `applyCustomKcats`, `getKcatAcrossIsozymes`, `getStandardKcat`, `removeStandardKcat`, `applyKcatConstraints` | match |
+| `kcat_io_edge_cases_ectestgem` | `findMetSmiles`, `kcatsFromOKP`, `saveKcatSource`, `loadKcatSource`, `getStandardKcat` | differs: `findMetSmiles` duplicates and unnamed metabolites, invalid rows in `loadKcatSource`, `getStandardKcat` |
+| `kcat_merge_edge_cases_ectestgem` | `kcatsFromDLKcat`, `extractEnzymeSubstratePairs`, `loadBRENDAdata`, `fuzzyKcatMatching`, `mergeKcats`, `mergeDLKcatAndFuzzyKcats`, `assignKcatValues` | differs: `OKP-` sources in `mergeKcats`, the DLKcat reading, the enzyme-substrate pairs |
 | `kcat_review_stats_ectestgem` | `ecStatsFromBrenda`, `reviewKcatAssignment`, `loadBrendaMeasurements` | ERROR: no result from python; the report gives no cause. Local runs: differs: `ecStatsFromBrenda`, the case of the source in `reviewKcatAssignment`, `measurements.tsv.xz` |
 | `model_edits_ectestgem` | `getReactionsFromEnzyme`, `setKcatForReactions`, `applyECcodes`, `mapRxnsToConv`, `addNewRxnsToEC` | match |
 | `molecular_weight_sequences` | `calculateMW` | match |
-| `okp_kcat_ectestgem` | `findMetSmiles`, `writeOpenKineticsPredictorInput`, `readOpenKineticsPredictorOutput` | match |
+| `okp_kcat_ectestgem` | `findMetSmiles`, `kcatsFromOKP` | match |
 | `protein_data_filters_ectestgem` | `loadProtData` | match |
 | `protein_pool_ectestgem` | `setProtPoolSize`, `calculateFfactor`, `loadProtData`, `fillEnzConcs`, `constrainEnzConcs` | match |
-| `sensitivity_tuning_ectestgem` | `sensitivityTuning`, `sigmaFitter`, `truncateValues` | match |
-| `sensitivity_tuning_edge_cases_ectestgem` | `sensitivityTuning`, `truncateValues` | differs: `Inf` in `truncateValues` |
+| `sensitivity_tuning_ectestgem` | `sensitivityTuning`, `sigmaFitter` | match |
+| `sensitivity_tuning_edge_cases_ectestgem` | `sensitivityTuning` | match in a local run with Gurobi on both sides (it differed in `truncateValues` in the nightly of 2026-11-01; the function no longer exists) |
+| `relax_enz_concs_ectestgem` | `relaxEnzConcs` | match in a local run with Gurobi on both sides |
 | `sigma_fitter_edge_cases_ectestgem` | `sigmaFitter` | match |
 | `standard_kcat_subsystem_ectestgem` | `getStandardKcat` | match |
 | `upgrade_gecko3_ectestgem` | `upgradeEcModel`, `upgradeGECKOproject`, `convertCustomKcats` | differs: how the readers turn reverse protein reactions, the project report, a project with an adapter class, DLKcat output with foreign substrates |
@@ -166,7 +167,7 @@ never assumes the two sides agree on row order, only on the set of ids), keeping
 |---|---|
 | `fuzzy` | `fuzzyKcatMatching`, `loadBRENDAdata` |
 | `standard` | `getStandardKcat`, `removeStandardKcat` |
-| `dlkcat` | `writeDLKcatInput`, `readDLKcatOutput`, `mergeDLKcatAndFuzzyKcats`, `mergeKcats` |
+| `dlkcat` | `extractEnzymeSubstratePairs`, `kcatsFromDLKcat` (via 'file'), `mergeDLKcatAndFuzzyKcats`, `mergeKcats` |
 | `selection` | `assignKcatValues`, `applyCustomKcats`, `getKcatAcrossIsozymes` |
 | `constraints` | `applyKcatConstraints` |
 
@@ -177,9 +178,9 @@ The behaviours the checkpoints pin down:
 - `applyKcatConstraints`, light formulation, partial isozyme coverage: when only some isozymes of a reaction have a usable kcat, both sides skip the others before taking the cheapest. The shared ecTestGEM fixture cannot reach this case, so a small purpose-built light model inside the scenario does.
 - `getStandardKcat` aggregates a subsystem's kcat as the median on both sides. The ecTestGEM fixture has no `subSystems` data, so the scenario exercises the global fallback only.
 
-The BRENDA files are read by both loaders and are described in [docs/brenda-reconciliation.md](brenda-reconciliation.md). geckopy's BRENDA search order and its `origin` output match MATLAB's ([docs/brenda-search-order.md](brenda-search-order.md)). `runDLKcat` is out of scope because it needs the DLKcat container: the scenario reads a stored `DLKcat.tsv`.
+The BRENDA files are read by both loaders and are described in [docs/brenda-reconciliation.md](brenda-reconciliation.md). geckopy's BRENDA search order and its `origin` output match MATLAB's ([docs/brenda-search-order.md](brenda-search-order.md)). `kcatsFromDLKcat` with via 'docker' is out of scope because it needs the DLKcat container: the scenario reads a stored `DLKcat.tsv` with via 'file'.
 
-`okp_kcat_ectestgem` covers OpenKineticsPredictor, the REST-submitted alternative to DLKcat: `findMetSmiles` feeding `writeOpenKineticsPredictorInput` (both `onlyWithSmiles` branches), then `readOpenKineticsPredictorOutput` parsing a result file into a kcat list. It stops at the CSV boundary on both sides. Both sides prefix each entry's source with `OKP-` (for example `OKP-CataPro`), and the scenario compares the source verbatim. It reports MATCH.
+`okp_kcat_ectestgem` covers OpenKineticsPredictor, the REST-submitted alternative to DLKcat: `findMetSmiles` feeding the job input that `kcatsFromOKP` writes (the call stops at the missing API key in MATLAB and at an offline client in geckopy, so nothing is sent), then the stored result of a job read through `kcatsFromOKP` with `useStored` into a kcat list. The input without the SMILES filter is no longer covered, because `kcatsFromOKP` always applies the filter. It stops at the CSV boundary on both sides. Both sides prefix each entry's source with `OKP-` (for example `OKP-CataPro`), and the scenario compares the source verbatim. It reports MATCH.
 
 The edge cases of the chain are in `kcat_apply_edge_cases_ectestgem`, `kcat_merge_edge_cases_ectestgem`, `kcat_io_edge_cases_ectestgem`, `kcat_assignment_pipeline_ectestgem`, `kcat_review_stats_ectestgem` and `upgrade_gecko3_ectestgem`. Each reports DIFFER while a case differs (`kcat_review_stats_ectestgem` had no result in the nightly of 2026-11-01), and its `scenario.yml` and the ledger notes of the functions concerned describe each difference.
 
@@ -192,7 +193,7 @@ These scenarios need Gurobi, which `nightly.yml` provisions for both pairs. They
 | `enzyme_usage_ectestgem` | `getEnzymeUsage`, `reportEnzymeUsage`, `getConcControlCoeffs` | match |
 | `ec_fva_ectestgem` | `ecFVA` | match |
 | `flexibilize_concs_ectestgem` | `loadFluxData`, `constrainFluxData`, `flexibilizeEnzConcs` | match |
-| `sensitivity_tuning_ectestgem` | `sensitivityTuning`, `sigmaFitter`, `truncateValues` | match |
+| `sensitivity_tuning_ectestgem` | `sensitivityTuning`, `sigmaFitter` | match |
 | `ec_fseof_ectestgem` | `ecFSEOF` | match |
 
 `enzyme_usage_ectestgem`: with both of ecTestGEM's parallel m1 to m2 routes (R2, R4) open, MATLAB and geckopy solve to different, equally optimal vertices of the same LP once proteomics narrows every protein's cap and leaves the protein pool with slack. The scenario blocks R2 and R4 and leaves R3, ecTestGEM's only single-gene, single-isozyme reaction, as the only route, which removes the degeneracy structurally. P5's measured concentration, the tightest of the five, is then the only binding constraint on growth. `getConcControlCoeffs` reads the reduced cost of each usage bound in geckopy and perturbs each bound in MATLAB, and both give the same coefficients here, because nothing else binds within the perturbation range.
@@ -201,7 +202,7 @@ These scenarios need Gurobi, which `nightly.yml` provisions for both pairs. They
 
 `flexibilize_concs_ectestgem`: `loadFluxData` and `constrainFluxData` match in both bound-setting modes (RAVEN's `setParam('var', ...)` sets `lb` and `ub` with the same sign-aware arithmetic as geckopy). `flexibilizeEnzConcs` reuses the R2/R4-blocked fixture of `enzyme_usage_ectestgem`, which has exactly one growth-limiting enzyme (P5): both sides flex it once from the same starting concentration and agree on the flexed concentration and the final growth. A harness note: MATLAB's `jsonencode` collapses a one-element numeric array to a bare scalar, so the MATLAB side converts such arrays with `num2cell` (see `docs/scenarios.md`).
 
-`sensitivity_tuning_ectestgem`: `sensitivityTuning` bumps the same reaction and enzyme on both sides (`R3`, `P4`) with the same old and new kcat. `sigmaFitter` and `fit_sigma` return the same sigma and the same protein pool bound for the returned model. `truncateValues` agrees for one value per order-of-magnitude regime, a negative value, and a value small enough to round away to zero. The edge cases are in `sigma_fitter_edge_cases_ectestgem` (match) and `sensitivity_tuning_edge_cases_ectestgem` (differs).
+`sensitivity_tuning_ectestgem`: `sensitivityTuning` bumps the same reaction and enzyme on both sides (`R3`, `P4`) with the same old and new kcat. `sigmaFitter` and `fit_sigma` return the same sigma and the same protein pool bound for the returned model. The edge cases are in `sigma_fitter_edge_cases_ectestgem` (match) and `sensitivity_tuning_edge_cases_ectestgem` (match; it differed only in `truncateValues`, which no longer exists on either side).
 
 **`ec_fseof_ectestgem`.** `geckopy.ec_fseof` is a thin wrapper over `raven_toolbox.analysis.fseof`, which classifies a reaction as a target by the correlation of its absolute flux with the enforced production flux, as RAVEN's `FSEOF` does, and `ecFSEOF` does the same. The scenario compares the enforced levels, the target set and the ranked order of the targets, on ecTestGEM:
 

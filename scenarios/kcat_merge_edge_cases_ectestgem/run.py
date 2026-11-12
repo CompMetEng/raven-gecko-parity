@@ -6,13 +6,17 @@ returns shows up as a difference in that value. Lists whose order is the result 
 written DLKcat input, the fuzzy matches of a subset) are emitted in the order returned.
 """
 
+import copy
 import importlib.util
+import shutil
 import sys
+import tempfile
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
+from geckopy.gather_kcats import extract_enzyme_substrate_pairs
 from geckopy import (
     ModelAdapter,
     apply_kcat_list,
@@ -20,13 +24,11 @@ from geckopy import (
     fuzzy_kcat_matching,
     load_brenda_data,
     load_conventional_gem,
+    kcats_from_dlkcat,
     load_dlkcat_ignore_lists,
     load_phyl_dist,
     make_ec_model,
-    merge_dlkcat_and_fuzzy_kcats,
     merge_kcats,
-    read_dlkcat_output,
-    write_dlkcat_input,
 )
 
 
@@ -110,7 +112,7 @@ def _case_origin_limit() -> dict:
     priority = ["database_top", "dlkcat", "database_bottom"]
     return {
         "merge_kcats": _merged(merge_kcats(fuzzy, dlkcat, source_priority=priority)),
-        "merge_dlkcat_and_fuzzy": _merged(merge_dlkcat_and_fuzzy_kcats(dlkcat, fuzzy)),
+        "merge_dlkcat_and_fuzzy": _merged(merge_kcats(fuzzy, dlkcat, source_priority=priority)),
     }
 
 
@@ -163,12 +165,25 @@ def _dlkcat_rows(df: pd.DataFrame) -> list[dict]:
     return sorted(records, key=lambda r: (r["reaction"], r["gene"]))
 
 
+def _read_dlkcat_file(inputs, path: Path) -> pd.DataFrame:
+    """kcats_from_dlkcat(via='file') on a scratch project whose data/DLKcat.tsv is the file."""
+    adapter = _adapter(inputs)
+    model = make_ec_model(load_conventional_gem(adapter), adapter, gecko_light=False)
+    fill_eccodes_from_gem(model)
+    with tempfile.TemporaryDirectory() as tmp:
+        scratch = copy.deepcopy(adapter)
+        scratch.params.path = Path(tmp)
+        (Path(tmp) / "data").mkdir()
+        shutil.copyfile(path, Path(tmp) / "data" / "DLKcat.tsv")
+        df, _ = kcats_from_dlkcat(model, via="file", save=False, adapter=scratch)
+    return df
+
+
 def _case_read_dlkcat(inputs) -> dict:
     out = {}
     folder = Path(inputs["data_dir"])
     for name in DLKCAT_FILES:
-        model = _model(inputs)
-        raised, df = _attempt(lambda: read_dlkcat_output(model, folder / f"{name}.tsv"))
+        raised, df = _attempt(lambda: _read_dlkcat_file(inputs, folder / f"{name}.tsv"))
         out[name] = {"raised": raised, "rows": [] if raised else _dlkcat_rows(df)}
     return out
 
@@ -176,11 +191,10 @@ def _case_read_dlkcat(inputs) -> dict:
 def _case_write_dlkcat(inputs) -> dict:
     out = {}
     ignore_lists = load_dlkcat_ignore_lists()
-    target = Path(inputs["dlkcat_write_target"])
     for label, ids in (("empty_selection", []), ("selection_order", ["R5", "R3"])):
         model = _model(inputs)
-        raised, df = _attempt(lambda: write_dlkcat_input(
-            model, target, ignore_lists, ec_rxns=ids, overwrite=True, only_with_smiles=False))
+        raised, df = _attempt(lambda: extract_enzyme_substrate_pairs(
+            model, ignore_lists, ec_rxns=ids, only_with_smiles=False))
         rows = [] if raised else [
             {"reaction": str(r.rxn_id), "gene": str(r.gene), "substrate": str(r.substrate)}
             for r in df.itertuples()

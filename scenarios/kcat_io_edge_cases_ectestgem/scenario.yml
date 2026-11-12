@@ -11,7 +11,7 @@ description: >-
 
 entries:
   - findMetSmiles
-  - writeOpenKineticsPredictorInput
+  - kcatsFromOKP
   - saveKcatSource
   - loadKcatSource
   - getStandardKcat

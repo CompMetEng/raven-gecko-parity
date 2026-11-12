@@ -57,7 +57,7 @@ configuration is `model_adapter.toml`, shared by both tools
 | RAVEN | `fetchToolboxAsset(destDir, tag, asset)` | Replaces `fetchRavenDataAsset`, which is removed (all its callers in RAVEN are updated); base URL `https://github.com/CompMetEng/toolbox-assets/releases/download/`; checks the SHA-256 from the manifest, as Python already does |
 | raven-toolbox | `raven_toolbox.manifest`, `data`, `binaries` | Baked registries, manifest and publishing scripts point to toolbox-assets; `RAVEN_PYTHON_MANIFEST` still overrides the manifest |
 | GECKO | BRENDA and DLKcat loaders | Fetch through `fetchToolboxAsset` into `databases/` on first use |
-| geckopy | BRENDA loaders, `run_dlkcat` | Fetch through raven-toolbox's registry |
+| geckopy | BRENDA loaders, `kcats_from_dlkcat(via="docker")` | Fetch through raven-toolbox's registry |
 
 GECKO and geckopy no longer carry BRENDA files in their repositories. The
 first BRENDA use downloads a few MB, as RAVEN already does for KEGG data.
@@ -106,7 +106,7 @@ rebuilt and released together.
 - **Building:** a workflow in toolbox-assets unpacks the asset, builds the
   image and pushes it. The same image tag is never pushed twice; a change
   gets a new version, as with the other assets.
-- **Running does not need the asset:** `runDLKcat` and `run_dlkcat` pull
+- **Running does not need the asset:** `kcatsFromDLKcat` and `kcats_from_dlkcat` with `via="docker"` pull
   the image and run it; DLKcat reads the copies of the files inside the
   image. Their default image name changes to the CompMetEng one.
 - **The old image** `ghcr.io/sysbiochalmers/dlkcat-gecko:0.1` stays

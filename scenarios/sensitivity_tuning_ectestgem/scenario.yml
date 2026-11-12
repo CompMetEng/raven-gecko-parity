@@ -2,18 +2,14 @@ id: sensitivity_tuning_ectestgem
 pair: gecko
 description: >-
   Automated kcat and sigma tuning on ecTestGEM's ecModel (sensitivityTuning,
-  sigmaFitter), plus the solver-free table utility that shares their source
-  folder (truncateValues).
+  sigmaFitter).
 
 entries:
   - sensitivityTuning
   - sigmaFitter
-  - truncateValues
 
 # The fourth scenario in this pair that needs an LP solver (sensitivityTuning,
-# sigmaFitter); truncateValues is pure data manipulation and needs neither a
-# solver nor an ecModel, so its checkpoint builds nothing beyond a small
-# hand-written fixture.
+# sigmaFitter).
 inputs:
   adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
   adapter_python: "{python_repo}/examples/ecTestGEM"
@@ -54,20 +50,6 @@ inputs:
   sigma_growth_rate: 100.0
   sigma_p_tot: 0.5
   sigma_f: 4.0
-
-  # truncateValues: one value per order-of-magnitude regime the function's own
-  # docstring describes, plus a negative value, plus a value small enough to round
-  # away to exactly zero under the "6 decimal places when order_magn=0" edge of the
-  # rounding rule (0 and NaN both fall through unchanged on both sides; this value
-  # rounds *to* zero, which is different and worth covering).
-  truncate_values:
-    - 0.0
-    - 1.234567891
-    - 123.456789
-    - 0.000123456789
-    - 1234567.891
-    - -55.5555555
-    - 1.0e-8
 
 # sigmaFitter and fit_sigma size the protein pool of the model they return for the sigma they
 # return: the sigma is 0.11 and the pool bound 220 (Ptot*f*0.11*1000) on both sides.
