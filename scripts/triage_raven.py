@@ -60,7 +60,7 @@ PAIR: dict[str, tuple[str, str | None]] = {
     # Manipulation and GPR handling.
     "changeGrRules": (f"{P}.manipulation.change_gene_reaction_rules", "Confirmed by the protocol table in todo.md."),
     "contractModel": (
-        f"{P}.manipulation.remove_duplicate_reactions",
+        f"{P}.manipulation.contract_model",
         "todo.md flags these as NOT exactly equivalent --- a behaviour row, so no scenario "
         "asserting identity until the difference is characterised.",
     ),

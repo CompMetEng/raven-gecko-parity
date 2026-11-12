@@ -1,0 +1,70 @@
+id: ec_source_format
+pair: gecko
+description: >-
+  The ec.source text of GECKO and geckopy: parseKcatSource and parse_kcat_source on well-formed and
+  legacy strings, formatKcatSource and format_kcat_source on origins, details, tuning methods and
+  priors, and the source that setKcatForReactions writes on ecTestGEM.
+
+entries:
+  - parseKcatSource
+  - formatKcatSource
+  - setKcatForReactions
+
+inputs:
+  adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
+  adapter_python: "{python_repo}/examples/ecTestGEM"
+  fixture_dir: "{matlab_repo}/test/unit_tests/ecTestGEM"
+
+  matlab_solver: gurobi
+  python_solver: gurobi
+
+  # Strings read by the parser: the formats of the plan, strings that earlier versions wrote, and
+  # strings that do not follow the format.
+  parse:
+    - "brenda (wc=0, origin=1)"
+    - "custom"
+    - "okp_catapro (similarity=42)"
+    - "combined (sd=0.61, n=6)"
+    - "brenda (wc=0, origin=2) | tuned=cmaes (prior=6.55)"
+    - "okp_catapro (similarity=42) | tuned=sensitivity+cmaes (prior=5.48)"
+    - "standard"
+    - "standard | tuned=sensitivity"
+    - "OKP-CataPro"
+    - "sensitivityTuning"
+    - "setKcatForReactions"
+    - "brenda (wc=0, origin=2, label=exact)"
+    - "  brenda  (wc=0)  "
+    - ""
+    - "brenda (wc=1"
+    - "brenda (wc=0, bad, origin=2)"
+    - "x | tuned=cmaes"
+    - "x | tuned=cmaes(prior=3)"
+    - "x (a=1_0, b=inf, 1c=3, d=.5, e=1e3)"
+
+  # Calls of the formatter: origin, detail (insertion order is the output order), tuning methods
+  # and prior. A detail value that is text is written as it is, a number with six significant digits.
+  format:
+    - {origin: standard}
+    - {origin: manual}
+    - {origin: brenda, detail: {wc: 0, origin: 1}}
+    - {origin: combined, detail: {sd: "0.61", n: 6}}
+    - {origin: okp_catapro, detail: {similarity: 42}}
+    - {origin: OKP-CataPro, detail: {similarity: 42}}
+    - {origin: "Sabio-RK"}
+    - {origin: brenda, detail: {wc: 0, origin: 2}, tuned: [cmaes], prior: 6.55}
+    - {origin: okp_catapro, detail: {similarity: 42}, tuned: [sensitivity, cmaes], prior: 5.48}
+    - {origin: brenda, tuned: [cmaes]}
+    - {origin: brenda, detail: {wc: 0.123456789}}
+    - {origin: "", tuned: [cmaes], prior: 2}
+    - {origin: ""}
+    - {origin: x, tuned: cmaes, prior: 2}
+
+  # The kcat of reaction R3 is tuned and then set by hand; setKcatForReactions writes manual.
+  set_kcat:
+    rxn: R3
+    kcat: 5.0
+    source_before: "brenda (wc=0, origin=1) | tuned=cmaes (prior=1)"
+
+tolerance:
+  rel: 1.0e-9
+  abs: 1.0e-12

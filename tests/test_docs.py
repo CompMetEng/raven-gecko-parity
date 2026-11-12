@@ -23,7 +23,6 @@ def _write_shared_source(root: Path) -> None:
     (shared / "ISSUE_TEMPLATE").mkdir()
 
     (shared / "CONTRIBUTING.core.md").write_text("# Contributing\n\n{{APPENDIX}}\n", encoding="utf-8")
-    (shared / "AGENTS.core.md").write_text("# Agents\n\n{{APPENDIX}}\n", encoding="utf-8")
     (shared / "PULL_REQUEST_TEMPLATE.core.md").write_text("### Checklist\n", encoding="utf-8")
     (shared / "CODE_OF_CONDUCT.core.md").write_text("# Code of Conduct\n", encoding="utf-8")
     (shared / "SECURITY.core.md").write_text(
@@ -111,9 +110,7 @@ def _python_target(config: Config) -> docs.Target:
 def test_compose_substitutes_the_repo_appendix(config: Config):
     documents = docs.compose(config, _matlab_target(config))
     assert "fake matlab specifics" in documents[".github/CONTRIBUTING.md"]
-    assert "fake matlab specifics" in documents["AGENTS.md"]
     assert "{{APPENDIX}}" not in documents[".github/CONTRIBUTING.md"]
-    assert "{{APPENDIX}}" not in documents["AGENTS.md"]
 
 
 def test_compose_substitutes_the_full_repo_slug(config: Config):
@@ -202,12 +199,12 @@ def test_check_is_clean_immediately_after_a_render(config: Config):
 
 def test_check_reports_stale_after_a_hand_edit(config: Config):
     docs.render(config, None)
-    agents_md = config.pairs["fake"].matlab.path / "AGENTS.md"
-    agents_md.write_text(agents_md.read_text(encoding="utf-8") + "\nhand edit\n", encoding="utf-8")
+    contributing = config.pairs["fake"].matlab.path / ".github" / "CONTRIBUTING.md"
+    contributing.write_text(contributing.read_text(encoding="utf-8") + "\nhand edit\n", encoding="utf-8")
 
     drift = docs.check(config, None)
     assert len(drift) == 1
-    assert drift[0].filename == "AGENTS.md"
+    assert drift[0].filename == ".github/CONTRIBUTING.md"
     assert drift[0].status == "stale"
 
 

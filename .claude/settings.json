@@ -1,13 +1,14 @@
 {
   "extraKnownMarketplaces": {
-    "raven-gecko": {
+    "compmeteng": {
       "source": {
         "source": "github",
-        "repo": "CompMetEng/raven-gecko-parity"
+        "repo": "CompMetEng/skills"
       }
     }
   },
   "enabledPlugins": {
-    "common@raven-gecko": true
+    "craft@compmeteng": true,
+    "raven-gecko@compmeteng": true
   }
 }

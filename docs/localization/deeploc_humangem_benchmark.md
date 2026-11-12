@@ -1,6 +1,6 @@
 # DeepLoc 2.1 vs Human-GEM gene localisations
 
-A human **positive control** — and a lesson in **circularity**. Human is the core of DeepLoc 2.x's
+A human **positive control**, and a lesson in **circularity**. Human is the core of DeepLoc 2.x's
 training, so high agreement is expected and proves little on its own (pair it with the stringent
 [AraCore](deeploc_aracore_benchmark.md) and [iCre1355](deeploc_icre1355_benchmark.md) tests). The
 real value here is methodological: Human-GEM's own gene localisations are **partly DeepLoc-derived**,
@@ -30,14 +30,14 @@ dropped, and only SwissProt/CellAtlas-sourced genes are scored.
 | all (incl. circular) | 2801 | 78.1% |
 
 The circular rows score **93.8%** (DeepLoc agreeing with DeepLoc) versus **75.2%** on the independent
-set — a stark illustration of why provenance matters. Including them inflates the naive number by
+set, a stark illustration of why provenance matters. Including them inflates the naive number by
 +2.9 pp; the inflation would be larger on a model with a higher DeepLoc-sourced fraction.
 
 **Addressability.** Dropping the circular rows also removes the entire `ce` (cell membrane) and `e`
 (extracellular) truth vocabulary: in Human-GEM *every* gene annotated to those two was DeepLoc2-
-sourced — the independent SwissProt/CellAtlas sources annotate no metabolic gene there. DeepLoc still
+sourced: the independent SwissProt/CellAtlas sources annotate no metabolic gene there. DeepLoc still
 routes 265 independent genes to `ce`/`e`, which then cannot be corroborated and count as misses. On
-the 7 compartments the independent truth can express, agreement is **84.7%** — the fair DeepLoc-skill
+the 7 compartments the independent truth can express, agreement is **84.7%**, the fair DeepLoc-skill
 number; 75.2% is the conservative floor.
 
 ## Per-compartment (independent genes)
@@ -69,14 +69,14 @@ annotated set.
 ## Conclusions
 
 * **On its home turf DeepLoc is strong (~85% addressable, 91% at high confidence).** The major
-  organelles — nucleus (93%), mitochondrion (91%), golgi (88%), ER (85%), cytosol (82%), peroxisome
-  (84%) — are recovered with high precision. As expected for a training-distribution positive
+  organelles (nucleus (93%), mitochondrion (91%), golgi (88%), ER (85%), cytosol (82%), peroxisome
+  (84%)) are recovered with high precision. As expected for a training-distribution positive
   control, this is the ceiling, not a generalisation claim.
-* **Lysosome is the weak organelle (43.5%)** — DeepLoc's `Lysosome/Vacuole` call corroborates the
+* **Lysosome is the weak organelle (43.5%)**: DeepLoc's `Lysosome/Vacuole` call corroborates the
   human lysosome annotation only ~half the time, the one clear soft spot among the addressable
   compartments.
 * **The circularity correction is the transferable lesson.** 15% of Human-GEM's gene compartments are
-  DeepLoc-derived and score 94% against DeepLoc — any model that bootstraps localisation from DeepLoc
+  DeepLoc-derived and score 94% against DeepLoc: any model that bootstraps localisation from DeepLoc
   must be de-circularised before it can validate DeepLoc, and `compDataSource`-style provenance is
   what makes that possible. Confidence stays well calibrated (68% → 91%), so the `min_confidence`
   gate transfers to human.

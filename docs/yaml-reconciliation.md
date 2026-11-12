@@ -10,11 +10,11 @@ Tracked as [CompMetEng/raven-gecko-parity#6](https://github.com/CompMetEng/raven
 ## Status: resolved (Tiers 1 and 2), Tier 3 outstanding
 
 The analysis below (evidence, the four mechanical causes, Options A/B/C) is left as written
-because it is still an accurate record of what was investigated and why --- but the recommended
+because it is still an accurate record of what was investigated and why, but the recommended
 direction it lands on ("Option B: Python adopts RAVEN's layout") is **not what was implemented**.
 Once RAVEN's reader could actually load a cobrapy-written file, the real question stopped being
 "which existing layout wins" and became "does either writer need to match cobrapy's layout at
-all" --- and the answer turned out to be no: nothing outside this project's own two writers reads
+all", and the answer turned out to be no: nothing outside this project's own two writers reads
 these files as a matched pair, so the two of them only ever need to agree with *each other*.
 
 That reframing changes the folding trade-off in particular. Matching ruamel's line-folding would
@@ -28,11 +28,11 @@ plain cobrapy still reads a file written here) but not byte-identical to it:
 - 2-space indentation throughout (this part *does* match ruamel's own defaults, so it cost
   nothing on the Python side).
 - Single-quoting only where YAML requires it (also already ruamel's default behaviour).
-- Every number formatted as an explicit float (`2.0`, never `2`) --- one rule for every numeric
+- Every number formatted as an explicit float (`2.0`, never `2`), one rule for every numeric
   field, rather than tracking which fields cobra happens to treat as int vs float, which RAVEN's
   model struct (everything stored as `double`) cannot see anyway.
 - Annotation keys sorted alphabetically (already cobra's own dict-conversion behaviour).
-- Optional fields omitted entirely when empty, including `subsystem` --- dropping cobra's
+- Optional fields omitted entirely when empty, including `subsystem`, dropping cobra's
   round-trip preservation of older RAVEN files' "single blank list entry" convention for "no
   subsystem" in favour of just not emitting the key. A reaction that does carry a subsystem is
   always written as a list, even a single one, since a reaction can have more than one.
@@ -46,12 +46,12 @@ between the two writers on both a plain model and one exercising every optional 
 (notes, ec-code, references, deltaG, confidence_score, protein, smiles, charge), with each
 side's full test suite passing.
 
-**Tier 3 (rewriting yeast-GEM / Human-GEM to the agreed format) has not been done** --- it is a
+**Tier 3 (rewriting yeast-GEM / Human-GEM to the agreed format) has not been done**: it is a
 one-time, do-it-once corpus change that should happen deliberately, in a commit that does
 nothing else, once this decision has had a chance to settle.
 
 **Addendum (2026-08-28):** the "verified byte-identical... exercising every optional field" claim
-above did not actually hold for every field --- re-verifying it directly (rather than trusting
+above did not actually hold for every field: re-verifying it directly (rather than trusting
 this record) found the two writers still disagreed on `metaData` field order, on whether
 `defaultLB`/`defaultUB` were emitted at all, and on whether a singleton MIRIAM annotation
 collapsed to a bare scalar. Fixed in
@@ -65,7 +65,7 @@ metabolite in the file happened to carry that field.
 
 ## The short answer
 
-**No --- "cobrapy uses ruamel" does not mean MATLAB has to adopt ruamel's output.** ruamel is a
+**No, "cobrapy uses ruamel" does not mean MATLAB has to adopt ruamel's output.** ruamel is a
 library, not a format. cobra's dumper is `CobraYAML(typ="rt")` with every knob left at its
 default, and `width` and `indent()` are per-instance settings that `raven_toolbox` can set on an
 instance of its own without touching cobra. The layout is a choice nobody has made yet, not a
@@ -77,7 +77,7 @@ But the question splits in two, and the halves have different answers:
   matters, it keeps the diffs on the model repositories small, and RAVEN's line-based writer
   cannot practically reproduce ruamel's line folding anyway.
 * **The readers.** RAVEN has to move regardless of what any writer does. Today `readYAMLmodel`
-  **cannot read a file written by cobrapy at all** --- not by `write_yaml_model`, and not by
+  **cannot read a file written by cobrapy at all**: not by `write_yaml_model`, and not by
   plain `cobra.io.save_yaml_model` either. That is a hole in RAVEN's interoperability with the
   wider cobrapy ecosystem that exists independently of this parity question, and it is the
   highest-value item here.
@@ -101,7 +101,7 @@ Everything below is reproducible; the commands are at the end.
 
 ### 1. Content is already at parity
 
-The two readers produce the same model from the same file --- ids, names, bounds, objective,
+The two readers produce the same model from the same file: ids, names, bounds, objective,
 formulae, compartments, gene sets and stoichiometry all agree, on smallYeast and on yeast-GEM.
 A read-write-read round trip is lossless on both sides. `cobra.io.load_yaml_model` also reads
 RAVEN's output correctly (53 reactions, 52 metabolites, 61 genes on smallYeast). **Nothing
@@ -113,7 +113,7 @@ below is a disagreement about what a model is.**
 |---|---|---|
 | `raven_toolbox.io.read_yaml_model` | RAVEN's output | correct |
 | `cobra.io.load_yaml_model` | RAVEN's output | correct |
-| `readYAMLmodel` | cobrapy's smallYeast | *silently wrong* --- 37/52 InChIs gain a leading space |
+| `readYAMLmodel` | cobrapy's smallYeast | *silently wrong*: 37/52 InChIs gain a leading space |
 | `readYAMLmodel` | cobrapy's yeast-GEM | **hard error**: `Unknown entry in yaml file: #222)'` |
 
 Three independent defects in `readYAMLmodel`, each isolated:
@@ -123,7 +123,7 @@ line. `readYAMLmodel` is a line parser: a continuation line matches no key patte
 to the `otherwise` branch and either raises `Unknown entry in yaml file` or, when the break came
 straight after the key, is taken as the value with its indentation still attached. Python emits
 37 such lines for smallYeast and 1143 for yeast-GEM. **Plain `cobra.io.save_yaml_model` emits
-exactly the same 37** --- this is not a `raven_toolbox` quirk.
+exactly the same 37**; this is not a `raven_toolbox` quirk.
 
 **(b) Single-quoted scalars.** `readYAMLmodel` strips quotes with
 `regexprep(tline_value,'^ +- "?(.*)"?$','$1')`, which knows about `"` and not about `'`. ruamel
@@ -168,7 +168,7 @@ So, in order of how much churn each causes:
 3. **Quoting.** RAVEN quotes nothing by default (`preserveQuotes` is opt-in) and always
    double-quotes when asked; ruamel quotes only where YAML requires it, with single quotes.
 4. **Number formatting.** RAVEN writes every number as a double, so `charge: 0` becomes
-   `charge: 0.0` --- 31,358 lines of yeast-GEM. Python preserves whatever type the reader
+   `charge: 0.0`: 31,358 lines of yeast-GEM. Python preserves whatever type the reader
    produced, which for that file is the integer.
 
 The residual 1.7% on yeast-GEM is key ordering (RAVEN puts `notes` before `annotation` and
@@ -179,7 +179,7 @@ The residual 1.7% on yeast-GEM is key ordering (RAVEN puts `notes` before `annot
 
 yeast-GEM and Human-GEM are in a *third* format: a `---` document header, `metaData` as a plain
 mapping rather than an `!!omap`, every string double-quoted, bare integers, and reaction EC codes
-and notes as top-level `eccodes` / `rxnNotes` keys. Neither current writer reproduces it --- both
+and notes as top-level `eccodes` / `rxnNotes` keys. Neither current writer reproduces it; both
 have moved to `- metaData: !!omap`, to `ec-code` inside `annotation`, and to `notes`.
 
 Round-tripping yeast-GEM through each writer, counting how many of the source's 120,443 lines
@@ -192,7 +192,7 @@ survive anywhere in the output:
 | `write_yaml_model` | 126,754 | 6 (0.0%) |
 
 **A one-time rewrite of the corpus is coming whichever way this is decided.** That is worth
-knowing before treating "don't churn the GEMs" as an argument for the status quo --- the status
+knowing before treating "don't churn the GEMs" as an argument for the status quo; the status
 quo already churns them. What it does argue is that the rewrite should happen once, from an
 agreed format, rather than twice.
 
@@ -200,15 +200,15 @@ agreed format, rather than twice.
 
 **A. MATLAB adopts ruamel's layout.** `writeYAMLmodel` would have to reproduce ruamel's folding
 algorithm in hand-written MATLAB, and `readYAMLmodel` would have to parse folded scalars. The
-cost is concentrated in the hardest place --- a line-based emitter and parser imitating a real
-YAML implementation --- and MATLAB ships no YAML library to fall back on (`yamlread` and
+cost is concentrated in the hardest place: a line-based emitter and parser imitating a real
+YAML implementation, and MATLAB ships no YAML library to fall back on (`yamlread` and
 `yamlwrite` do not exist in R2024b; RAVEN bundles libSBML but nothing for YAML). Benefit: files
 from any cobrapy tool become readable.
 
 **B. Python adopts RAVEN's layout.** `raven_toolbox` stops dumping through cobra's shared ruamel
 instance at its defaults and configures its own. The cost is small and in the easy place.
 Benefit: the corpus stays legible, RAVEN's reader keeps working, and cobrapy can still read the
-result --- which it can today.
+result, which it can today.
 
 One honest caveat: **exact byte-identity is not reachable through ruamel settings alone, because
 RAVEN's own layout is not internally consistent.** In RAVEN's output a sequence that is a mapping
@@ -228,23 +228,23 @@ This section is left as originally written, for the reasoning trail. See "Status
 actually happened at Tier 2: not the specific `raven_toolbox`-only, RAVEN-matching config
 described below, but a layout shared by (and now implemented on) both sides.
 
-**Tier 1 --- the readers. Do this regardless of any layout decision. (Done.)** In RAVEN:
+**Tier 1: the readers. Do this regardless of any layout decision. (Done.)** In RAVEN:
 
 1. Accept folded scalars: join a continuation line to the value being read, stripping the
    indentation, instead of raising `Unknown entry in yaml file`.
 2. Strip single quotes as well as double.
 3. Reset `readList` at the end of a nested list, so a list-valued `ec-code` cannot swallow the
-   rest of the annotation block. This one is a bug on its own terms --- reproducer above.
+   rest of the annotation block. This one is a bug on its own terms: reproducer above.
 
 Until (1) and (2) land, RAVEN cannot open a model produced by any cobrapy-based tool, which is a
 larger problem than the writer disagreement.
 
-**Tier 2 --- the writers. (Done, but see "Status" above --- not this specific plan.)** In
+**Tier 2: the writers. (Done, but see "Status" above, not this specific plan.)** In
 `raven_toolbox`, in two steps:
 
 1. **Stop folding.** Give `io/yaml.py` its own ruamel instance rather than importing cobra's
-   module-level one --- mutating the shared instance would change `cobra.io.save_yaml_model` for
-   everything else in the process --- and set `width` high. Verified: this removes all 37
+   module-level one (mutating the shared instance would change `cobra.io.save_yaml_model` for
+   everything else in the process) and set `width` high. Verified: this removes all 37
    continuation lines on smallYeast and all 1143 on yeast-GEM, and RAVEN then reads the Python
    output with **zero field differences**. This is the whole of the correctness problem on the
    writer side.
@@ -252,7 +252,7 @@ larger problem than the writer disagreement.
    offset=2)`, double quoting, integer formatting, key order. Each is independently measurable
    against the table in section 3.
 
-**Tier 3 --- the corpus.** Once both writers agree, rewrite yeast-GEM and Human-GEM once, in a
+**Tier 3: the corpus.** Once both writers agree, rewrite yeast-GEM and Human-GEM once, in a
 commit that does nothing else, and note the format in each repository's contributing guide.
 
 ## What the parity suite should assert afterwards
@@ -260,8 +260,8 @@ commit that does nothing else, and note the format in each repository's contribu
 `yaml_roundtrip_smallyeast` compares the two writers against each other. It does not test the
 thing that actually broke, because each side only ever reads its own output.
 
-Add a **cross-read** scenario: commit two small fixtures --- one written by `writeYAMLmodel`, one
-by `cobra.io.save_yaml_model` --- and have *both* implementations read *both* and emit the same
+Add a **cross-read** scenario: commit two small fixtures (one written by `writeYAMLmodel`, one
+by `cobra.io.save_yaml_model`) and have *both* implementations read *both* and emit the same
 model summary. That is deterministic, needs no ordering between the two sides, and would have
 caught all three reader defects. It also keeps testing RAVEN against cobrapy-native output even
 if the writers converge, which is the case that has no other guard.

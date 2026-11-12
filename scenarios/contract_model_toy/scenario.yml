@@ -1,7 +1,7 @@
 id: contract_model_toy
 pair: raven
 description: >-
-  contractModel against remove_duplicate_reactions on hand-written models: isozymes that merge into one gene rule,
+  contractModel against contract_model on hand-written models: isozymes that merge into one gene rule,
   duplicates with different bounds, with different reversibility, with different objective coefficients, reversible
   reactions written in opposite directions, the expandModel suffix, and a restriction to the reactions of one
   metabolite. Per case the surviving reactions with bounds, objective coefficient and the clauses of the gene rule,

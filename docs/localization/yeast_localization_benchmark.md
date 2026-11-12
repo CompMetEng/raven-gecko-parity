@@ -1,7 +1,7 @@
 # yeast-GEM localisation benchmark
 
 Real-data validation of [`localization.predict_localization`](https://github.com/CompMetEng/raven-toolbox/blob/develop/src/raven_toolbox/localization/predict.py)
-on the curated yeast-GEM. The benchmark is end-to-end — model, scoring, MILP — and
+on the curated yeast-GEM. The benchmark is end-to-end (model, scoring, MILP) and
 sweeps predictor noise so the failure modes are visible, not just the headline accuracy.
 
 * Driver: [`scripts/benchmark_localization_yeast.py`](https://github.com/CompMetEng/raven-toolbox/blob/develop/scripts/benchmark_localization_yeast.py)
@@ -28,18 +28,18 @@ sweeps predictor noise so the failure modes are visible, not just the headline a
 2. **Flattening**: the model is squashed into one compartment with
    [`manipulation.merge_compartments`](https://github.com/CompMetEng/raven-toolbox/blob/develop/src/raven_toolbox/manipulation/compartments.py)
    so the predictor cannot lean on metabolite-topology evidence. Without this step
-   every GPR'd reaction's "predicted" compartment is just its current one — vacuous.
+   every GPR'd reaction's "predicted" compartment is just its current one, vacuous.
 3. **Reference scores**: each gene gets `1.0` in every compartment that hosts one of
    its reactions in the original (multi-compartment) model. This is the
    *perfect-predictor* upper bound; real DeepLoc 2 / MULocDeep output will be noisier.
 4. **Noise injection**: at noise level `p` each gene independently has probability
    `p` of having a confidently *wrong* compartment grafted in as the new top score
    (the true compartment is demoted to half its score). This simulates a predictor
-   that's right `1-p` of the time and confidently wrong otherwise — a more
+   that's right `1-p` of the time and confidently wrong otherwise, a more
    pessimistic stand-in than uniform Gaussian jitter.
 5. **MILP**: `transport_cost=0.05`, `multi_compartment_penalty=0.5`, `mip_gap=0.01`,
    `time_limit=300s`, Gurobi. The MILP has 7 982 binaries, 2 691 rows, 29 842
-   nonzeros at this scale — solves in 30–50 s.
+   nonzeros at this scale, solves in 30–50 s.
 
 ## Accuracy vs. predictor noise
 
@@ -54,7 +54,7 @@ compartment.
 | 0.50  | 31      | 298     | 115       | 0          | 0.386    |
 
 Monotone degradation, no MILP infeasibilities at any noise level. At 10 % confident
-mis-scoring the accuracy drops only ~4.7 pp — the algorithm largely shrugs off small
+mis-scoring the accuracy drops only ~4.7 pp; the algorithm largely shrugs off small
 predictor noise because each compartment's evidence is the sum of all its genes'
 scores, so a few wrong genes get out-voted by their neighbours. At 50 % the algorithm
 is still better than the 1/12 = 8.3 % uniform baseline, but the loss is steep.
@@ -111,10 +111,10 @@ reaction shares its genes with cytosolic reactions, and the algorithm picks `c`)
   correct) lose to `c` because their genes are *also* annotated to cytosolic
   reactions. The algorithm sees gene `X` with score `1.0` in both `c` and `mm`,
   and `c` wins on the larger pool of co-localised reactions. This is faithful to
-  the predictor evidence — a real DeepLoc 2 / MULocDeep score table that distinguishes
+  the predictor evidence; a real DeepLoc 2 / MULocDeep score table that distinguishes
   inner-membrane from matrix would do better here, but the
   derive-scores-from-the-model harness can't see that distinction.
-* **Membrane / non-membrane pairs split correctly.** `erm` vs `er`, `gm` vs `g` —
+* **Membrane / non-membrane pairs split correctly.** `erm` vs `er`, `gm` vs `g`;
   the algorithm prefers the membrane sub-compartment when its genes are more
   membrane-typical, which the score harness reproduces. 60–75 % is honest signal.
 * **No MILP infeasibilities.** Even at 50 % confident mis-scoring every reaction
@@ -128,7 +128,7 @@ overwhelmed the unit-scale gene reward, so the optimiser's best move was always
 "keep it in the default compartment, pay no transports." Dropping to
 `transport_cost=0.05` restored the per-compartment signal. For a real predictor with
 typical score magnitudes ≪ 1, the user should expect to dial `transport_cost` *down*
-into the same per-metabolite-per-compartment range as the typical gene-score-delta —
+into the same per-metabolite-per-compartment range as the typical gene-score-delta;
 the doc-string default of 0.5 is sized for clean integer-style scores, not
 soft-probability output.
 

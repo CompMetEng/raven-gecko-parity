@@ -1,10 +1,10 @@
-"""Python side of the contractModel scenario: remove_duplicate_reactions on hand-written models."""
+"""Python side of the contractModel scenario: contract_model on hand-written models."""
 
 import warnings
 
 import cobra
 
-from raven_toolbox.manipulation import remove_duplicate_reactions
+from raven_toolbox.manipulation import contract_model
 
 
 def clauses(rule):
@@ -58,7 +58,7 @@ def run(ctx):
             restrict = [model.metabolites.get_by_id(str(m)) for m in case["mets"]]
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
-            removed = remove_duplicate_reactions(model, restrict_to_metabolites=restrict)
+            removed = contract_model(model, restrict_to_metabolites=restrict)
         results[case["name"]] = {
             "reactions": [
                 {
