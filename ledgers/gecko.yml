@@ -66,15 +66,17 @@ entries:
     notes: >-
       Both sides assign a complex's stoichiometry by protein id, apply the first of two identical complexes and apply nothing for a superset or a complex of unknown proteins. A subunit with stoichiometry 0 has no stated stoichiometry and counts as a subunit with stoichiometry 1, so a stoichiometry [2, 0] applies 2 to the first protein and 1 to the second on both sides (complex_data_edge_cases_ectestgem).
   - matlab: applyCustomKcats
-    python: geckopy.apply_custom_kcats
-    status: parity
+    status: subsumed
+    reason: Deprecated in src/deprecated/applyCustomKcats.m (warns with GECKO:deprecatedFunction) and still
+      applies a GECKO 3 customKcats.tsv. geckopy has no function of that name; convert_custom_kcats reads the
+      same file and writes data/kcats/custom.tsv, which collect_kcats and assign_kcats read.
     scenarios:
       - kcat_chain_ectestgem
       - kcat_apply_edge_cases_ectestgem
       - ec_model_build_yarrowia
     differs: []
     notes: >-
-      Deprecated on both sides (src/deprecated/applyCustomKcats.m warns with GECKO:deprecatedFunction, geckopy.apply_custom_kcats with a DeprecationWarning) and still applies a GECKO 3 customKcats.tsv; convertCustomKcats converts that file to data/kcats/custom.tsv, which collectKcats and assignKcats read. A mode-A row (reaction id only, no protein listed) writes ec.kcat, sets ec.source to 'custom' and appends the note, as modes B and C do, on both sides. Both skip a blank kcat, append nothing for an empty note, match protein and reaction ids exactly, apply a protein-only row on a light model and read a quoted reaction list without its quotes. No difference of its own in kcat_apply_edge_cases_ectestgem, which differs for other functions.
+      The scenarios call applyCustomKcats in MATLAB and the reader of the GECKO 3 file behind convert_custom_kcats in geckopy (geckopy.upgrade._apply_custom_kcats); convertCustomKcats converts that file to data/kcats/custom.tsv, which collectKcats and assignKcats read. A mode-A row (reaction id only, no protein listed) writes ec.kcat, sets ec.source to 'custom' and appends the note, as modes B and C do, on both sides. Both skip a blank kcat, append nothing for an empty note, match protein and reaction ids exactly, apply a protein-only row on a light model and read a quoted reaction list without its quotes. No difference of its own in kcat_apply_edge_cases_ectestgem, which differs for other functions.
   - matlab: applyKcatConstraints
     python: geckopy.apply_kcat_constraints
     status: parity
@@ -514,12 +516,6 @@ entries:
   - python: geckopy.EcStats
     status: python-only
     reason: Data class of the per-EC statistics that review_assignment takes; ecStatsFromBrenda returns a containers.Map of structs with the same fields.
-  - python: geckopy.find_max_value
-    status: python-only
-    reason: 'findMaxValue.m was removed from GECKO (GECKO#465): it had no callers anywhere in the codebase
-      and three confirmed bugs (BRENDA matching could never succeed at all, a broken wildcard slice, and a
-      0-vs-0 tie mislabeled as a real result), not worth fixing dead code for. geckopy''s find_max_value keeps
-      working and is retained.'
   - matlab: findMetSmiles
     python: geckopy.find_met_smiles
     status: parity
@@ -753,13 +749,13 @@ entries:
     notes: >-
       Both strip _EXP_n and then _REV only at the end of an id, so R_REVX and R_EXP_1X map back (ec_model_edit_edge_cases_ectestgem, which differs for other functions).
   - matlab: mergeDLKcatAndFuzzyKcats
-    status: internal
+    status: subsumed
     scenarios:
       - kcat_merge_edge_cases_ectestgem
       - ec_model_build_light_humangem
     reason: Deprecated thin wrapper around mergeKcats (src/deprecated/mergeDLKcatAndFuzzyKcats.m), kept for
-      the legacy two-input call shape; warns with GECKO:deprecatedName and forwards to it. The canonical name
-      carries the parity row.
+      the legacy two-input call shape; warns with GECKO:deprecatedName and forwards to it. geckopy has no
+      function of that name; merge_kcats carries the parity row.
   - matlab: mergeKcats
     python: geckopy.merge_kcats
     status: parity
@@ -786,13 +782,15 @@ entries:
     reason: 'Not ported: plot directly from the ec_fva DataFrame with matplotlib or seaborn. geckopy docs/migrating_from_gecko_matlab.md
       §5.'
   - matlab: readDLKcatOutput
-    python: geckopy.read_dlkcat_output
-    status: parity
+    status: subsumed
+    reason: Deprecated stub (src/deprecated/readDLKcatOutput.m); warns with GECKO:deprecatedFunction and reads the
+      file through kcatsFromDLKcat(model, 'via', 'file'). geckopy has no function of that name;
+      kcats_from_dlkcat(via='file') reads the file.
     scenarios:
       - ec_model_build_light_humangem
     differs: []
     notes: >-
-      Deprecated on both sides; both read the file through kcats_from_dlkcat / kcatsFromDLKcat with via 'file' (MATLAB reads a file given as outFile from a temporary copy; its stub accepts the option strict and ignores it, where geckopy.read_dlkcat_output honours strict=True). The drop and raise behaviour below is checked through kcatsFromDLKcat / kcats_from_dlkcat with via 'file' in kcat_merge_edge_cases_ectestgem; the drop counts are from reading the code. A row whose kcat is not a finite number ('NA', 'None', empty, 'inf', '1.2.3') is dropped before the reactions are checked, on both sides; a file without such a number raises, and a reaction that is not in model.ec.rxns raises when its row has a kcat. A substrate name that is not in model.metNames (matched case-insensitively) drops its row with a warning on both sides; strict (strict=True in geckopy) raises instead. read_dlkcat_output reports the non-numeric-kcat and unrecognised-substrate drop counts separately.
+      Both sides read the file through kcats_from_dlkcat / kcatsFromDLKcat with via 'file' (MATLAB reads a file given as outFile from a temporary copy; its stub accepts the option strict and ignores it, where the geckopy reader honours strict=True). The drop and raise behaviour below is checked through kcatsFromDLKcat / kcats_from_dlkcat with via 'file' in kcat_merge_edge_cases_ectestgem; the drop counts are from reading the code. A row whose kcat is not a finite number ('NA', 'None', empty, 'inf', '1.2.3') is dropped before the reactions are checked, on both sides; a file without such a number raises, and a reaction that is not in model.ec.rxns raises when its row has a kcat. A substrate name that is not in model.metNames (matched case-insensitively) drops its row with a warning on both sides; strict (strict=True in geckopy) raises instead. The geckopy reader reports the non-numeric-kcat and unrecognised-substrate drop counts separately.
   - matlab: removeStandardKcat
     python: geckopy.remove_standard_kcat
     status: parity
@@ -812,13 +810,8 @@ entries:
   - matlab: runDLKcat
     status: subsumed
     reason: Deprecated stub (src/deprecated/runDLKcat.m); warns with GECKO:deprecatedFunction and raises an
-      error that names kcatsFromDLKcat(model, 'via', 'docker'), which runs DLKcat in Docker. geckopy's
-      run_dlkcat is a deprecated alias that still runs DLKcat after a DeprecationWarning, so the two sides
-      differ for a call of the deprecated name.
-  - python: geckopy.run_dlkcat
-    status: internal
-    reason: Deprecated alias of the private DLKcat run behind kcats_from_dlkcat(via='docker'); warns with a
-      DeprecationWarning and still runs DLKcat, where MATLAB's runDLKcat raises an error.
+      error that names kcatsFromDLKcat(model, 'via', 'docker'), which runs DLKcat in Docker. geckopy has no
+      function of that name; kcats_from_dlkcat(via='docker') runs DLKcat.
   - matlab: saveEcModel
     python: geckopy.save_ec_model
     status: parity
@@ -887,7 +880,7 @@ entries:
       - sigma_fitter_edge_cases_ectestgem
       - ec_tuning_ecyeastgem
     notes: >-
-      The fitted sigma agrees on both sides: both scan the 0.01 grid by default (geckopy's fit_sigma with method='bisect' gives a continuous sigma instead), return the first sigma of the growth plateau for a target that growth cannot reach, and open the bounds of the objective reaction to [0, 1000] on the fitted model (sigma_fitter_edge_cases_ectestgem). A target that growth cannot reach gives the same sigma on every solver: sigmaFitter takes the first sigma whose growth is within 1e-9 (relative) of the best growth, as fit_sigma does, so the rounding noise on the plateau (with GLPK 49.999999999999986 at sigma 0.06 and 50 at sigma 1) does not move the result. A target growth rate that is not above 0 (NaN included) raises sigmaFitter:growthRate in MATLAB and a ValueError in geckopy. The alias sigma_fitter takes the method option of fit_sigma. MATLAB on Gurobi and GLPK and geckopy on Gurobi, GLPK and scipy all give sigma 0.06 and a pool bound of 120 (sigma_fitter_edge_cases_ectestgem).
+      The fitted sigma agrees on both sides: both scan the 0.01 grid by default (geckopy's fit_sigma with method='bisect' gives a continuous sigma instead), return the first sigma of the growth plateau for a target that growth cannot reach, and open the bounds of the objective reaction to [0, 1000] on the fitted model (sigma_fitter_edge_cases_ectestgem). A target that growth cannot reach gives the same sigma on every solver: sigmaFitter takes the first sigma whose growth is within 1e-9 (relative) of the best growth, as fit_sigma does, so the rounding noise on the plateau (with GLPK 49.999999999999986 at sigma 0.06 and 50 at sigma 1) does not move the result. A target growth rate that is not above 0 (NaN included) raises sigmaFitter:growthRate in MATLAB and a ValueError in geckopy. MATLAB on Gurobi and GLPK and geckopy on Gurobi, GLPK and scipy all give sigma 0.06 and a pool bound of 120 (sigma_fitter_edge_cases_ectestgem).
   - matlab: createGECKOproject
     status: subsumed
     reason: Project skeleton generation lives in `geckopy init my_project` on the CLI rather than in a library
@@ -920,13 +913,8 @@ entries:
     status: subsumed
     reason: Deprecated stub (src/deprecated/writeDLKcatInput.m); warns with GECKO:deprecatedFunction and
       raises an error that names kcatsFromDLKcat(model, 'via', 'docker'), which writes the input itself.
-      extractEnzymeSubstratePairs lists the pairs the input holds. geckopy's write_dlkcat_input is a
-      deprecated alias that still writes the file after a DeprecationWarning, so the two sides differ for a
-      call of the deprecated name.
-  - python: geckopy.write_dlkcat_input
-    status: internal
-    reason: Deprecated alias of the private DLKcat input writer behind kcats_from_dlkcat(via='docker'); warns
-      with a DeprecationWarning and still writes the file, where MATLAB's writeDLKcatInput raises an error.
+      extractEnzymeSubstratePairs lists the pairs the input holds. geckopy has no
+      function of that name; kcats_from_dlkcat(via='docker') writes the input.
   - python: geckopy.adapter.ComplexParams
     status: python-only
     reason: Adapter parameter group; MATLAB uses ModelAdapter classdef properties.
@@ -956,10 +944,6 @@ entries:
     status: python-only
     reason: Loaded-data type. MATLAB GECKO passes parallel cell arrays and structs; geckopy wraps them in
       a dataclass.
-  - python: geckopy.constrain_flux_data
-    status: internal
-    reason: Deprecated alias of apply_flux_data_constraints, kept for backwards compatibility and emitting
-      a DeprecationWarning. The canonical name carries the parity row.
   - python: geckopy.databases.brenda.aggregate_and_write
     status: python-only
     reason: Part of the BRENDA JSON -> TSV refresh pipeline; no MATLAB equivalent generator.
@@ -1099,14 +1083,6 @@ entries:
     status: python-only
     reason: Exception type for the OKP client. MATLAB signals with error(), including from its own OKP REST
       calls.
-  - python: geckopy.get_ec_from_database
-    status: internal
-    reason: Deprecated alias of fill_eccodes_from_database, kept for backwards compatibility and emitting
-      a DeprecationWarning. The canonical name carries the parity row.
-  - python: geckopy.get_ec_from_gem
-    status: internal
-    reason: Deprecated alias of fill_eccodes_from_gem, kept for backwards compatibility and emitting a DeprecationWarning.
-      The canonical name carries the parity row.
   - matlab: getEnzymeBottlenecks
     python: geckopy.get_enzyme_bottlenecks
     status: parity
@@ -1117,14 +1093,6 @@ entries:
     differs: []
     notes: >-
       Both rank the enzymes by the re-solved change of the objective when the upper bound of one enzyme's usage reaction is raised by `fold_change` (geckopy) or `foldChange` (MATLAB), default 2, and return the top N (default 10). Only an enzyme at its bound (upper bound above 0 and |flux| / upper bound at least 1 - 1e-6) is solved again; every other enzyme has a gain of 0. A gain below 1e-10 and a solve that is not optimal count as 0. Rows are ordered by the gain rounded to 9 decimals, descending, and ties keep the order of the model's enzymes, so the order does not depend on the duals. Columns: geckopy `gene, objective_gain, shadow_price, flux, cap_usage, upper_bound, multiple_active` indexed by uniprot, with `df.attrs["n_resolved"]` and `df.attrs["active_constraints"]`; MATLAB `uniprot, gene, objectiveGain, shadowPrice, flux, capUsage, upperBound, multipleActive` with `Properties.UserData.nResolved` and `.activeConstraints`. `shadow_price` is the dual of the `prot_<id>` constraint and is reported for reference only; at a degenerate optimum the solver gives the dual to one of several active constraints, so it depends on the basis. When two enzymes are at their caps each has a gain of 0 and at least one has a nonzero dual (dual_without_gain, tied_bottlenecks in enzyme_usage_edge_cases_ectestgem). `multiple_active` is true for an enzyme when another capacity constraint is active at the same optimum: another enzyme at its bound, or `prot_pool_exchange` at a finite positive upper bound (within 1e-6 relative); it can depend on the vertex a solver returns on a degenerate model. A `fold_change` or `foldChange` that is not greater than 1 raises on both sides (bottlenecks_fold_change_1), and with 3 the gain of the binding enzyme of ecTestGEM is 4.5064, twice the gain at 2, on both sides (bottlenecks_fold_change_3). On ecYeastGEM (the tutorial model and 9.1.1) no enzyme is at its bound when the growth LP is solved, the protein pool is the one active constraint, so n_resolved is 0, all gains are 0, `multiple_active` is true, and the order is the model order, the same on both sides for the top 20 (ec_analysis_ecyeastgem, ec_analysis_ecyeastgem911). With the scipy solver the shadow prices come from the HiGHS row marginals (geckopy.solver_support.constraint_shadow_prices, python-only), and get_enzyme_bottlenecks and Enzyme.shadow_price give the prices of the Gurobi and GLPK interfaces.
-  - python: geckopy.get_kcat_across_isozymes
-    status: internal
-    reason: Deprecated alias of fill_kcats_from_isozymes, kept for backwards compatibility and emitting a
-      DeprecationWarning. The canonical name carries the parity row.
-  - python: geckopy.get_standard_kcat
-    status: internal
-    reason: Deprecated alias of assign_standard_kcat, kept for backwards compatibility and emitting a DeprecationWarning.
-      The canonical name carries the parity row.
   - python: geckopy.GreedyRelaxResult
     status: python-only
     reason: Return type. MATLAB GECKO returns several parallel outputs ([model, a, b] = f(...)); geckopy returns
@@ -1156,10 +1124,6 @@ entries:
     status: python-only
     reason: Return type. MATLAB GECKO returns several parallel outputs ([model, a, b] = f(...)); geckopy returns
       one dataclass instead, so this has no MATLAB counterpart by design.
-  - python: geckopy.merge_dlkcat_and_fuzzy_kcats
-    status: internal
-    reason: Deprecated alias of merge_kcats, kept for backwards compatibility and emitting a DeprecationWarning.
-      The canonical name carries the parity row.
   - python: geckopy.ModelParameters
     status: python-only
     reason: Validated adapter parameters. MATLAB reads them off the ModelAdapter classdef properties; geckopy
@@ -1202,14 +1166,6 @@ entries:
     status: python-only
     reason: Return type. MATLAB GECKO returns several parallel outputs ([model, a, b] = f(...)); geckopy returns
       one dataclass instead, so this has no MATLAB counterpart by design.
-  - python: geckopy.select_kcat_value
-    status: internal
-    reason: Deprecated alias of apply_kcat_list, kept for backwards compatibility and emitting a DeprecationWarning.
-      The canonical name carries the parity row.
-  - python: geckopy.sigma_fitter
-    status: internal
-    reason: Deprecated alias of fit_sigma, kept for backwards compatibility and emitting a DeprecationWarning; it takes the same method option as fit_sigma.
-      The canonical name carries the parity row.
   - python: geckopy.SigmaFitterResult
     status: python-only
     reason: Return type. MATLAB GECKO returns several parallel outputs ([model, a, b] = f(...)); geckopy returns
