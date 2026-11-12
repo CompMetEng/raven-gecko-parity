@@ -17,13 +17,15 @@ from scipy import sparse
 from geckopy import (
     EcData,
     ModelAdapter,
-    apply_custom_kcats,
     apply_kcat_constraints,
     fill_kcats_from_isozymes,
     load_conventional_gem,
     make_ec_model,
     set_kcat_for_reactions,
 )
+# The reader of a GECKO 3 customKcats.tsv that convert_custom_kcats uses; geckopy has no public
+# apply_custom_kcats.
+from geckopy.upgrade import _apply_custom_kcats
 
 
 def _adapter(inputs: dict) -> ModelAdapter:
@@ -239,11 +241,11 @@ def _case_custom(inputs) -> dict:
     folder = Path(inputs["custom_dir"])
     for name in CUSTOM_FILES:
         model = _model(inputs, light=False)
-        raised = _attempt(lambda: apply_custom_kcats(model, folder / f"{name}.tsv", apply=False))
+        raised = _attempt(lambda: _apply_custom_kcats(model, folder / f"{name}.tsv", apply=False))
         out[name] = {"raised": raised, "rows": _rows(model)}
     for label, name in (("light_model", "ck_empty_notes"), ("light_protein_only", "ck_protein_only")):
         model = _model(inputs, light=True)
-        raised = _attempt(lambda: apply_custom_kcats(model, folder / f"{name}.tsv", apply=False))
+        raised = _attempt(lambda: _apply_custom_kcats(model, folder / f"{name}.tsv", apply=False))
         out[label] = {"raised": raised, "rows": _rows(model)}
     return out
 

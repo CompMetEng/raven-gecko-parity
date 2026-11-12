@@ -28,7 +28,6 @@ from geckopy import (
     load_dlkcat_ignore_lists,
     load_phyl_dist,
     make_ec_model,
-    merge_dlkcat_and_fuzzy_kcats,
     merge_kcats,
 )
 
@@ -113,7 +112,7 @@ def _case_origin_limit() -> dict:
     priority = ["database_top", "dlkcat", "database_bottom"]
     return {
         "merge_kcats": _merged(merge_kcats(fuzzy, dlkcat, source_priority=priority)),
-        "merge_dlkcat_and_fuzzy": _merged(merge_dlkcat_and_fuzzy_kcats(dlkcat, fuzzy)),
+        "merge_dlkcat_and_fuzzy": _merged(merge_kcats(fuzzy, dlkcat, source_priority=priority)),
     }
 
 

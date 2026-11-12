@@ -40,7 +40,6 @@ from geckopy.gather_kcats import extract_enzyme_substrate_pairs
 from geckopy import (
     EcData,
     ModelAdapter,
-    apply_custom_kcats,
     apply_kcat_constraints,
     apply_kcat_list,
     assign_standard_kcat,
@@ -57,6 +56,9 @@ from geckopy import (
     remove_standard_kcat,
     kcats_from_dlkcat,
 )
+# The reader of a GECKO 3 customKcats.tsv that convert_custom_kcats uses; geckopy has no public
+# apply_custom_kcats.
+from geckopy.upgrade import _apply_custom_kcats
 
 
 def _bound(value: float) -> tuple[float, str]:
@@ -282,7 +284,7 @@ def _checkpoint_selection(model, merged, inputs: dict):
 
     # customKcats.tsv's only row targets R3 by reaction id alone (mode A: no protein
     # listed). Both sides write the new kcat, set ec.source to 'custom' and record the note.
-    apply_custom_kcats(model, Path(inputs["custom_kcats_path"]), apply=False)
+    _apply_custom_kcats(model, Path(inputs["custom_kcats_path"]), apply=False)
     out["after_custom_kcats"] = _kcat_rows(model, ["R3"])
 
     return out
