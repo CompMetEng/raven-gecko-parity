@@ -1,9 +1,0 @@
-{
-  "name": "common",
-  "version": "0.1.0",
-  "description": "Conventions shared by RAVEN, GECKO, raven-toolbox, geckopy and raven-gecko-parity.",
-  "author": {
-    "name": "CompMetEng"
-  },
-  "repository": "https://github.com/CompMetEng/raven-gecko-parity"
-}

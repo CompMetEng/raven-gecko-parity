@@ -48,7 +48,7 @@ inputs:
 #
 #   deleteMinMax          FVA, so it belongs with the solver scenarios.
 #   constrainReversible   FVA likewise.
-#   deleteDuplicates      contractModel / remove_duplicate_reactions is a
+#   deleteDuplicates      contractModel / contract_model is a
 #                         declared divergence (MATLAB merges the duplicates'
 #                         grRules with "or", the Python side drops the others'
 #                         gene associations). A scenario over it belongs with

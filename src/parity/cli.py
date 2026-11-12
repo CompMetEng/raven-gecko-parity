@@ -5,7 +5,7 @@
     parity ledger-audit       parity rows must name the differences their scenarios show
     parity report             render the Markdown parity document
     parity mirror             what does my current change mean for the other side?
-    parity docs render        compose CONTRIBUTING.md/AGENTS.md into each sibling
+    parity docs render        compose CONTRIBUTING.md and the templates into each sibling
     parity docs check         report which sibling repos have stale or missing docs
     parity scenarios          list the cross-implementation scenarios
     parity refs               print the branch each repo is compared at
@@ -408,7 +408,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     mirror_cmd.set_defaults(func=cmd_mirror)
 
-    docs_cmd = sub.add_parser("docs", help="compose CONTRIBUTING.md/AGENTS.md for the sibling repos")
+    docs_cmd = sub.add_parser("docs", help="compose CONTRIBUTING.md and the templates for the sibling repos")
     docs_sub = docs_cmd.add_subparsers(dest="docs_command", required=True)
 
     docs_render = docs_sub.add_parser("render", help="write the composed docs into each sibling checkout")

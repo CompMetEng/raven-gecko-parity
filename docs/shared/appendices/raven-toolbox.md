@@ -1,9 +1,47 @@
 **raven-toolbox** (Python)
 
-- Lint and format with `ruff check` / `ruff format` before opening a pull
-  request.
-- Tests run with `pytest`; add coverage for new behavior rather than relying
-  on the parity ledger alone.
-- Versioning follows [PEP 440](https://peps.python.org/pep-0440/); document
-  changes in `CHANGELOG.md` using the
-  [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format.
+Integration branch `develop`; pull requests target it. This is the Python implementation of
+RAVEN, and the ledger is `ledgers/raven.yml` in raven-gecko-parity. geckopy depends on this
+package.
+
+### Layout
+
+- Source is `src/raven_toolbox/`. Subpackages follow RAVEN's folders (`analysis`,
+  `annotation`, `biomass`, `comparison`, `conditions`, `curation`, `gapfilling`, `init`,
+  `io`, `localization`, `manipulation`, `reconstruction`, `tasks`, `utils`).
+- Tests are `tests/test_<package>_<topic>.py`, with data in `tests/data/`. Tests that
+  compare against MATLAB RAVEN are in `tests/parity/`.
+- `data/manifest.json` is the source of the data and binary registries. Do not edit
+  `_DATA_REGISTRY` or `_REGISTRY` by hand; run `python scripts/make_registry_snippet.py sync`.
+- RAVEN is GPL-licensed; no RAVEN source is copied into this repository.
+- User documentation is on raven-docs, which builds its API reference from the docstrings.
+  This repository has no user documentation tree.
+
+### Code
+
+- Module and function names are snake_case ports of RAVEN functions (`replaceMets`
+  becomes `manipulation.replace_metabolite`).
+- Each subpackage's `__init__.py` re-exports its public functions and lists them in
+  `__all__`. A new name in `__all__` needs a ledger row.
+- Docstrings are NumPy style.
+- Versioning follows [PEP 440](https://peps.python.org/pep-0440/). `CHANGELOG.md` uses the
+  [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format, and an entry names the new
+  function and the RAVEN function it ports, for example "New: `x.y`, ported from `camelName`".
+
+### Checks
+
+```bash
+pip install -e ".[dev,excel]"
+ruff check .
+mypy
+pytest -v --timeout=300
+```
+
+- ruff is pinned to the version in `pyproject.toml` (line length 100, rules
+  `E,F,W,I,UP,B`). mypy checks `src/raven_toolbox`.
+- CI runs pytest on Python 3.11 to 3.15 on Linux, and 3.12 on macOS and Windows.
+- `pytest -m "parity and not slow"` runs the MATLAB comparison tests. They need a RAVEN
+  checkout in `RAVEN_ROOT`, and several need Gurobi (`gurobipy`); without Gurobi they skip.
+  The `slow` marker selects genome-scale tests.
+- New behavior gets its own test; the parity ledger does not replace one.
+- The `python-tests` skill of the `raven-gecko` plugin has the CI commands.

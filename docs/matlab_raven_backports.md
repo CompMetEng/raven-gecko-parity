@@ -12,24 +12,24 @@ raven-toolbox functionality still to be back-ported into MATLAB RAVEN.
 ## Back-ported but diverged: functionality-constrained compartment-assignment MILP
 
 raven-toolbox's `localization/` hosts **two** compartment-assignment algorithms:
-`predict_localization` (score-driven MILP) and **`assign_compartments`** (`localization/certify.py`) —
+`predict_localization` (score-driven MILP) and **`assign_compartments`** (`localization/certify.py`),
 the *functionality-constrained* method, seeded by the port of the retired `edkerk/assignCompartments`
 repo. Over the score-driven version it adds a **biomass/growth floor** enforced by certification:
 placement is decided by a flux-free score MILP and the result is confirmed by a real FBA on the
 materialised model. It also adds optional **gap-fill coupling** (universal-DB candidates added only when
 biomass feasibility needs them) and **sound reaction-level multi-localisation** (a second compartment is
-kept only if a loopless FVA on the materialised model shows it carries real flux — design in
+kept only if a loopless FVA on the materialised model shows it carries real flux, design in
 [multi_localization_design.md](https://github.com/CompMetEng/raven-gecko-parity/blob/develop/docs/localization/multi_localization_design.md)).
 
 MATLAB RAVEN's default branch has no equivalent (`core/predictLocalization.m` is a
 *simulated-annealing* heuristic: one gene → one compartment, no biomass constraint, no flux gating),
-**but `develop3` already has `localization/assignCompartments.m`** — a port of raven-toolbox's
+**but `develop3` already has `localization/assignCompartments.m`**, a port of raven-toolbox's
 *earlier* design, from around the original `assign_compartments` (PR #58): a single MILP with the
 biomass floor and flux gating fused directly into the placement problem (`bigM`-gated flux variables,
 `minGrowth`), mono-localisation only. It predates raven-toolbox's rework (PR #62 onward) to a
 flux-free placement MILP + separate real-FBA certification, and has none of the certification/feedback
 loop, gap-fill coupling, or sound multi-localisation described above. The two `assign_compartments` are
-no longer equivalent — the MATLAB side needs a re-sync, not a fresh port.
+no longer equivalent; the MATLAB side needs a re-sync, not a fresh port.
 
 **Re-sync plan.** Rework `assignCompartments.m` to match the current design: drop the fused
 biomass/flux-gating constraints from the placement MILP, add a separate real-FBA certification pass
@@ -44,7 +44,7 @@ mirroring `tests/test_localization_certify.py`. Reference implementation:
 
 ## Functionality in MATLAB RAVEN not in raven-toolbox
 
-Principled omissions — present in MATLAB RAVEN, deliberately **not** ported to
+Principled omissions: present in MATLAB RAVEN, deliberately **not** ported to
 raven-toolbox.
 
 * **MetaCyc-based reconstruction** (`external/metacyc/*`, `getMetaCycModelForOrganism`).
@@ -53,6 +53,6 @@ raven-toolbox.
   (~64 % of reaction assignments wrong at the default cutoff; no cutoff rescues it).
   Full evidence and the MATLAB removal list in
   [IMPROVEMENTS.md § R-MetaCyc](https://github.com/CompMetEng/raven-toolbox/blob/develop/IMPROVEMENTS.md).
-* **Dynamic FBA.** Not ported — maintained Python packages already cover it
+* **Dynamic FBA.** Not ported; maintained Python packages already cover it
   ([`dfba`](https://pypi.org/project/dfba/), [`reframed`](https://pypi.org/project/reframed/),
   [`mewpy`](https://pypi.org/project/mewpy/)).

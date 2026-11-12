@@ -1,6 +1,6 @@
 """Composing the shared GitHub docs and writing them into the siblings.
 
-Four repos otherwise mean four hand-maintained copies of CONTRIBUTING.md, AGENTS.md, issue
+Four repos otherwise mean four hand-maintained copies of CONTRIBUTING.md, issue
 and PR templates, CI workflows, and so on, drifting the moment one of them is edited and
 not the others. The shared source lives here (`docs/shared/`); each document is a core file
 plus zero or more per-repo appendices, each substituted into its own `{{NAME}}` placeholder,
@@ -8,7 +8,7 @@ keyed by the repo's short name (`RAVEN`, `GECKO`, `raven-toolbox`, `geckopy`) so
 a Python side never share an appendix by accident. Most documents need only one substitution
 point (`{{APPENDIX}}`); a workflow file that differs from its sibling in more than one place
 (e.g. an optional extra checkout step, and a separate test-command block) declares one
-placeholder per substitution instead of forcing everything through a single spot. Seven
+placeholder per substitution instead of forcing everything through a single spot. Eight
 placeholders are always available, filled in from `parity.toml` itself rather than an
 appendix file: `{{FULL_REPO}}` (this repo's own `org/repo` slug, for issue search/Discussions/
 security-advisory links), `{{REPO}}` (just the short name, e.g. `raven-toolbox`, for display
@@ -67,7 +67,6 @@ class DocSpec:
 
 DOCS: tuple[DocSpec, ...] = (
     DocSpec(".github/CONTRIBUTING.md", "CONTRIBUTING.core.md", appendices={"APPENDIX": ".md"}),
-    DocSpec("AGENTS.md", "AGENTS.core.md", appendices={"APPENDIX": ".md"}),
     DocSpec(".github/pull_request_template.md", "PULL_REQUEST_TEMPLATE.core.md"),
     DocSpec(
         ".github/ISSUE_TEMPLATE/bug_report.md",
