@@ -26,6 +26,22 @@ jobs:
       - run: pip install -e ".[dev]"
       - run: pytest -q
 
+  decision-records:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - run: python3 -I scripts/decision_records.py check
+      - name: Changes of the pull request
+        if: github.event_name == 'pull_request'
+        run: python3 -I scripts/decision_records.py diff --base HEAD^1 --head HEAD
+      - name: Changes of the push
+        if: github.event_name == 'push' && github.event.before != '0000000000000000000000000000000000000000'
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: python3 -I scripts/decision_records.py diff --base "$BEFORE" --head "$GITHUB_SHA"
+
   parity:
     runs-on: ubuntu-latest
     steps:

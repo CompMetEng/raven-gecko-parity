@@ -102,7 +102,7 @@ entries:
       - evotune_edge_cases_ectestgem
     differs: []
     notes: >-
-      Main CMA-ES kcat-tuning entry point (GECKO#477, closes raven-gecko-parity#21). Its docstring says it was written to match "what geckopy's own port actually runs"; that port is kcat_tuning.evotune.tuning.cmaes_kcat_tuning (geckopy#51). With a flat objective both sides run all max_generations generations and change no kcat: cmaes_kcat_tuning does not stop on the flat-fitness criteria of cma (tolfun, tolfunhist, tolflatfitness), while the other cma criteria still apply (evotune_edge_cases_ectestgem).
+      Main CMA-ES kcat-tuning entry point (GECKO#477, closes raven-gecko-parity#21). Its docstring says it was written to match "what geckopy's own port actually runs"; that port is kcat_tuning.evotune.tuning.cmaes_kcat_tuning (geckopy#51). With a flat objective both sides run all max_generations generations and change no kcat: cmaes_kcat_tuning does not stop on the flat-fitness criteria of cma (tolfun, tolfunhist, tolflatfitness), while the other cma criteria still apply (evotune_edge_cases_ectestgem). Both sides add the tuning method `cmaes` to the ec.source of every kcat that changed, with the same rules as sensitivityTuning.
   - matlab: ecStatsFromBrenda
     python: geckopy.ec_stats_from_brenda
     status: parity
@@ -544,6 +544,22 @@ entries:
     notes: >-
       Both sides convert the concentrations to molar amounts with the molecular weights, replace the amount of every owned subunit by the median (default) or mean over the measured owned subunits of amount divided by copies, times the copies, and convert back. With the 1:4 pair both statistics give the same result; with three measured subunits (1, 4 and 2 copies) the median and the mean differ and the sides agree on each. A subunit shared with another complex is left as measured and reported in shared. For an isozyme variant the sides level the merged complex of four subunits. An owned subunit without a measurement is given the level of the complex with fillMissing true (reported in added) and stays NaN with false, and the usage bound of a NaN concentration stays at 1000 on both sides. A complex without any measured owned subunit is left unchanged and reported in skipped. An unknown statistic raises on both sides. The usage-reaction bounds after constrainEnzConcs equal the levelled concentrations. The result type differs: MATLAB gives a struct with the fields adjusted, added, shared and skipped (skipped is a cell array of cell arrays), geckopy the dataclass LevelComplexResult with skipped as tuples. A subunit with a concentration of 0 stays at 0 on both sides and is neither adjusted nor filled (level_zero_subunit of isozyme_zeros_ectestgem).
 
+  - matlab: parseKcatSource
+    python: geckopy.parse_kcat_source
+    status: parity
+    scenarios:
+      - ec_source_format
+    differs: []
+    notes: >-
+      Both sides split a string of ec.source of the form `<origin>[ (<detail>)][ | tuned=<methods> (prior=<value>)]` into the origin (as written, in the case it was written in), the detail pairs (a key must start with a letter, or the pair is ignored; a value is a number when it is a plain decimal number and text otherwise), the tuning methods in order and the prior (NaN in MATLAB, None in Python). A string that does not follow the format is one origin with no detail and no status: a string of an earlier version (`brenda`, `OKP-CataPro`, `sensitivityTuning`), an empty string, and an unclosed bracket (parse_* cases of ec_source_format). The result is a struct in MATLAB and a frozen dataclass (KcatSource) in Python.
+  - matlab: formatKcatSource
+    python: geckopy.format_kcat_source
+    status: parity
+    scenarios:
+      - ec_source_format
+    differs: []
+    notes: >-
+      Both sides write the origin and every detail key in lower case with each run of other characters as one underscore (`OKP-CataPro` gives `okp_catapro`), a number with six significant digits and text as it is, leave out a detail pair without a finite value or with a key that does not start with a letter, and the brackets when no pair is left, and write the tuning status only when there are methods, with the prior only when one is given. An empty origin with a detail or a status is written as `unknown` (format_* cases of ec_source_format). MATLAB takes a struct for the detail and a cell array for the methods, Python a dict and an iterable.
   - matlab: getIsozymeCoverage
     python: geckopy.get_isozyme_coverage
     status: parity
@@ -644,7 +660,7 @@ entries:
       - standard_kcat_subsystem_ectestgem
     differs: []
     notes: >-
-      Both sides aggregate a subsystem's kcat as the median (kcats span orders of magnitude, so a mean is dominated by the largest member), count only reactions with a real (nonzero, non-NaN) kcat toward a subsystem's threshold, so both take the same branch (subsystem-specific kcat or global fallback) for the same input, and treat a NaN kcat as unset when they fill zero kcats. Both leave out an exchange reaction as RAVEN's getExchangeRxns defines it (no substrate or no product, so a reaction without a GPR and with two substrates is one), a reaction whose name contains 'pseudoreaction' or 'SLIME rxn' in any letter case, and add the standard enzyme once: a second call on a light model removes the first call's standard rows and adds them again (kcat_io_edge_cases_ectestgem). Names of subsystems that differ by letter case count as one subsystem on both sides (Human-GEM has "Pentose phosphate pathway" and "Pentose Phosphate Pathway"), and a reaction without a subsystem gets the model-wide kcat while other reactions have one (iYali5-GEM); the standard kcats agree on Human-GEM light (1365 new reactions) and on iYali5-GEM (standard_kcat_subsystem_ectestgem, ec_model_build_light_humangem, ec_model_build_yarrowia).
+      Both sides aggregate a subsystem's kcat as the median (kcats span orders of magnitude, so a mean is dominated by the largest member), count only reactions with a real (nonzero, non-NaN) kcat toward a subsystem's threshold, so both take the same branch (subsystem-specific kcat or global fallback) for the same input, and treat a NaN kcat as unset when they fill zero kcats. Both leave out an exchange reaction as RAVEN's getExchangeRxns defines it (no substrate or no product, so a reaction without a GPR and with two substrates is one), a reaction whose name contains 'pseudoreaction' or 'SLIME rxn' in any letter case, and add the standard enzyme once: a second call on a light model removes the first call's standard rows and adds them again (kcat_io_edge_cases_ectestgem). Names of subsystems that differ by letter case count as one subsystem on both sides (Human-GEM has "Pentose phosphate pathway" and "Pentose Phosphate Pathway"), and a reaction without a subsystem gets the model-wide kcat while other reactions have one (iYali5-GEM); the standard kcats agree on Human-GEM light (1365 new reactions) and on iYali5-GEM (standard_kcat_subsystem_ectestgem, ec_model_build_light_humangem, ec_model_build_yarrowia). A row counts as the standard kcat when its parsed origin is `standard` and it has no tuning status.
   - matlab: getSubsetEcModel
     python: geckopy.get_subset_ec_model
     status: parity
@@ -793,6 +809,9 @@ entries:
     status: parity
     scenarios:
       - kcat_chain_ectestgem
+    differs: []
+    notes: >-
+      A row counts as the standard kcat when its parsed origin is `standard` and it has no tuning status. MATLAB compares the origin without regard to letter case and Python exactly.
   - matlab: reportEnzymeUsage
     python: geckopy.report_enzyme_usage
     status: parity
@@ -842,7 +861,7 @@ entries:
       - ec_tuning_ecyeastgem
     differs: []
     notes: >-
-      Both pick the usage or pool reaction with the largest forward draw: MATLAB reads max(drawFluxes), and geckopy makes the same choice. Both stop once growth gains less than 1e-9, list the tuned reactions in model order, report the kcat and source of the input model, write the pre-tune kcat into ec.notes as num2str prints it, let a tuned kcat pass 1e7, match a protToIgnore id without regard to case, raise for a protToIgnore id that has no usage reaction on a full model and tune a gecko-light model. No difference of its own in sensitivity_tuning_edge_cases_ectestgem, which differs for truncateValues. On ecYeastGEM before its tuning (ec_tuning_ecyeastgem) the tuned reactions, kcats and growth rates agree with Gurobi on both sides, with GLPK on both sides and with GLPK in MATLAB and scipy in geckopy, when the python model has RAVEN's solver tolerance of 1e-9 (python_tolerance): solveLP gives the solver 1e-9 and cobrapy leaves GLPK at 1e-7, and at 1e-7 the growth before the tuning is 0.126351575673 in geckopy against 0.126351105513 in MATLAB. With GLPK on both sides at 1e-9 the growth rates after the tuning differ by 4.4e-10 to 6.6e-10 (absolute).
+      Both pick the usage or pool reaction with the largest forward draw: MATLAB reads max(drawFluxes), and geckopy makes the same choice. Both stop once growth gains less than 1e-9, list the tuned reactions in model order, report the kcat and source of the input model, write the pre-tune kcat into ec.notes as num2str prints it, let a tuned kcat pass 1e7, match a protToIgnore id without regard to case, raise for a protToIgnore id that has no usage reaction on a full model and tune a gecko-light model. No difference of its own in sensitivity_tuning_edge_cases_ectestgem, which differs for truncateValues. On ecYeastGEM before its tuning (ec_tuning_ecyeastgem) the tuned reactions, kcats and growth rates agree with Gurobi on both sides, with GLPK on both sides and with GLPK in MATLAB and scipy in geckopy, when the python model has RAVEN's solver tolerance of 1e-9 (python_tolerance): solveLP gives the solver 1e-9 and cobrapy leaves GLPK at 1e-7, and at 1e-7 the growth before the tuning is 0.126351575673 in geckopy against 0.126351105513 in MATLAB. With GLPK on both sides at 1e-9 the growth rates after the tuning differ by 4.4e-10 to 6.6e-10 (absolute). Both sides keep the origin and detail of ec.source and add the tuning method `sensitivity` with the kcat before the first tuning as prior, add no second method on a second run, write the origin `unknown` for a reaction without a source,, no longer write the old kcat and source into ec.notes, and extend the status also on a gecko-light model.
   - matlab: setKcatForReactions
     python: geckopy.set_kcat_for_reactions
     status: parity
@@ -851,9 +870,10 @@ entries:
       - kcat_apply_edge_cases_ectestgem
       - ec_analysis_ecyeastgem
       - ec_analysis_ecyeastgem911
+      - ec_source_format
     differs: []
     notes: >-
-      Both sides write ec.source = 'setKcatForReactions' and accept a per-isozyme kcat list for an unsuffixed base name of a full model, assigned positionally in ec.rxns order (the ordering reliance is fragile on both sides; passing suffixed ids explicitly is safer). Both change S only when asked (apply defaults to false), match ids without regard to case, ignore an unknown id and take a light-model id with its prefix as it stands, so a base id matches no light row. geckopy's per-input-id broadcast mode (a kcat list of length len(rxn_ids)) has no MATLAB equivalent and is a Python-only convenience. No difference of its own in kcat_apply_edge_cases_ectestgem, which differs for other functions.
+      Both sides write ec.source = 'setKcatForReactions' and accept a per-isozyme kcat list for an unsuffixed base name of a full model, assigned positionally in ec.rxns order (the ordering reliance is fragile on both sides; passing suffixed ids explicitly is safer). Both change S only when asked (apply defaults to false), match ids without regard to case, ignore an unknown id and take a light-model id with its prefix as it stands, so a base id matches no light row. geckopy's per-input-id broadcast mode (a kcat list of length len(rxn_ids)) has no MATLAB equivalent and is a Python-only convenience. No difference of its own in kcat_apply_edge_cases_ectestgem, which differs for other functions. Both sides write the origin `manual` into ec.source and drop any tuning status of the reaction (set_kcat_manual of ec_source_format).
   - matlab: setProtPoolSize
     python: geckopy.set_prot_pool_size
     status: parity
@@ -1083,9 +1103,9 @@ entries:
     status: python-only
     reason: Loaded-data type. MATLAB GECKO passes parallel cell arrays and structs; geckopy wraps them in
       a dataclass.
-  - python: geckopy.gather_kcats.format_kcat_source
+  - python: geckopy.KcatSource
     status: python-only
-    reason: Helper exported alongside apply_kcat_list; MATLAB keeps it inline in assignKcatValues.m.
+    reason: The dataclass that parse_kcat_source returns; parseKcatSource returns a struct with the same four fields.
   - python: geckopy.gather_kcats.normalize_source
     status: python-only
     reason: Helper exported alongside merge_kcats; MATLAB keeps it inline in mergeDLKcatAndFuzzyKcats.m.

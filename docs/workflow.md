@@ -102,18 +102,17 @@ and run the scenarios for anything that changed since the last tag.
 
 ## Working with a coding agent
 
-The `common` plugin in this repository gives a coding agent the ledger duties above in
-every session in the four code repositories, and its `parity-ledger` skill has the statuses
-and commands. See [agent-plugins.md](agent-plugins.md) for the plugins and how a repository
-enables them. The purpose is the same as that of the git hooks: the cross-check happens
-without anyone having to remember it.
+The `parity-ledger` skill of the `raven-gecko` plugin in
+[CompMetEng/skills](https://github.com/CompMetEng/skills) gives a coding agent the ledger duties
+above, with the statuses and commands: check this ledger before closing a bug or finishing a
+feature. The code repositories hold no agent files; the plugin is installed for the user. The
+purpose is the same as that of the git hooks: the cross-check happens without anyone having to
+remember it.
 
 ## Shared documentation and CI workflows
 
 `docs/shared/` in this repository is the single source for each code repository's
-`CONTRIBUTING.md`, `AGENTS.md`, issue and PR templates, and CI workflow files.
-Every generated `AGENTS.md` has a "Cross-implementation parity" section that tells an agent
-to check this ledger before closing a bug or finishing a feature.
+`CONTRIBUTING.md`, issue and PR templates, and CI workflow files.
 
 To change any of it:
 
@@ -131,24 +130,12 @@ To change any of it:
 `parity docs check` lists which sibling files are missing or differ from the current
 rendered output, without writing anything.
 
+## Decision records
+
+`scripts/decision_records.py` validates the records in a `decisions/` folder (statuses, names, links, and what a frozen record may change) and the `decision-records` job of `ci.yml` runs it on every pull request and on every push to `develop`. The rules of a record are in the docstring of the script and in the `decision-records` skill of the `craft` plugin of CompMetEng/skills. The script has its own tests in `tests/test_decision_records.py`. The four code repositories do not receive the script.
 ## Writing documentation
 
-The same four checks apply to prose in every markdown file across these four repositories,
-not only to code the ledger tracks:
-
-1. **Subject and verb.** A file, field, option, table or toolbox can be, contain, return,
-   raise, or take precedence. It cannot win, know, want, or do something quietly, silently,
-   loudly or conveniently. A manner adverb on an inanimate subject is the most common fault.
-2. **No advice about worth.** State the behavior and the condition it holds under, not
-   "worth using," "worth having," or "the usual way." The reader decides what is worth
-   doing.
-3. **Describe the software, not the document.** No "this page is about," "that is the
-   point of the example," or "as mentioned above."
-4. **Cut minimizers.** "just," "simply," "only," "of course," "not a bug." Delete the word
-   and check the sentence still holds.
-
-A sentence that would stay true regardless of how the software behaves is not
-documentation, and belongs in a comment or an issue instead.
-
-No em dashes in any file under this convention. Use a comma, a semicolon, a colon, or
-parentheses, whichever the sentence actually calls for.
+The prose rules for every markdown file, docstring, comment and commit or pull request text
+in these repositories are in the `writing` skill of the `craft` plugin in
+[CompMetEng/skills](https://github.com/CompMetEng/skills). They include the ban on em dashes
+and the per-sentence checks.

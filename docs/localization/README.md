@@ -1,4 +1,4 @@
-# Compartment assignment and confidence tracking — evidence base
+# Compartment assignment and confidence tracking: evidence base
 
 The measurement and design record behind raven-toolbox's compartment-assignment
 method (`assign_compartments`, `predict_localization`) and its per-reaction
@@ -39,10 +39,10 @@ chosen for their distance from its training data.
 
 | Document | Organism / question |
 |---|---|
-| [deeploc_yeast_benchmark.md](deeploc_yeast_benchmark.md) | yeast-GEM — the reference case |
-| [deeploc_humangem_benchmark.md](deeploc_humangem_benchmark.md) | Human-GEM — a positive control, and the circularity it exposes |
-| [deeploc_aracore_benchmark.md](deeploc_aracore_benchmark.md) | AraCore (*Arabidopsis*) — cross-kingdom, fully independent |
-| [deeploc_icre1355_benchmark.md](deeploc_icre1355_benchmark.md) | iCre1355 (*Chlamydomonas*) — the most training-distant test |
+| [deeploc_yeast_benchmark.md](deeploc_yeast_benchmark.md) | yeast-GEM: the reference case |
+| [deeploc_humangem_benchmark.md](deeploc_humangem_benchmark.md) | Human-GEM: a positive control, and the circularity it exposes |
+| [deeploc_aracore_benchmark.md](deeploc_aracore_benchmark.md) | AraCore (*Arabidopsis*): cross-kingdom, fully independent |
+| [deeploc_icre1355_benchmark.md](deeploc_icre1355_benchmark.md) | iCre1355 (*Chlamydomonas*): the most training-distant test |
 | [deeploc_normalisation_benchmark.md](deeploc_normalisation_benchmark.md) | Whether raw predictor probabilities beat rescaled ones |
 | [localization_finetuning.md](localization_finetuning.md) | Tuning the DeepLoc-loading hyperparameters against curated yeast-GEM |
 
@@ -52,7 +52,7 @@ chosen for their distance from its training data.
 |---|---|
 | [yeast_validation.md](yeast_validation.md) | Three yeast checks of certified assignment, including recovery of curated yeast-GEM |
 | [multiorganism_validation.md](multiorganism_validation.md) | Whether the method generalises at genome scale across four kingdoms |
-| [yeast_localization_benchmark.md](yeast_localization_benchmark.md) | End-to-end run — model, scoring, MILP — with a predictor-noise sweep |
+| [yeast_localization_benchmark.md](yeast_localization_benchmark.md) | End-to-end run (model, scoring, MILP) with a predictor-noise sweep |
 | [predictlocalization_comparison.md](predictlocalization_comparison.md) | Head-to-head against RAVEN's `predictLocalization`, which optimises the same objective by a different method |
 
 ## Comparison with CarveFungi

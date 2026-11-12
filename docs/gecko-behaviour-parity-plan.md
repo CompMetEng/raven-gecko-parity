@@ -69,7 +69,7 @@ UniProt / KEGG / Complex Portal / BRENDA / proteomics snapshot. It is the model 
 suite (`tests/test_gecko_matlab_parity.py`) against its own copy under `examples/ecTestGEM`.
 
 Both sides of a scenario read the **GECKO** copy. geckopy's adapter is loaded from its own
-`model_adapter.toml` --- that file is one of the things being compared --- and only its `path`
+`model_adapter.toml` (that file is one of the things being compared) and only its `path`
 and `conv_gem` are repointed at the GECKO fixture, so the parameter values stay geckopy's while
 the data bytes are shared. Where the two would otherwise read different files, the scenario
 declaration says so.
@@ -77,8 +77,8 @@ declaration says so.
 Three consequences worth stating up front:
 
 **The SBML readers get tested for free.** MATLAB's own tests build the test model in code
-(`getGeckoTestModel.m`) rather than reading `models/testModel.xml`. A scenario cannot do that
---- the two sides have to start from the same bytes --- so both read the SBML file, one through
+(`getGeckoTestModel.m`) rather than reading `models/testModel.xml`. A scenario cannot do that:
+the two sides have to start from the same bytes, so both read the SBML file, one through
 RAVEN's `importModel` and one through cobrapy. That is why `ec_model_expansion_ectestgem` emits
 a `conventional` checkpoint before it emits anything about `makeEcModel`: a divergence there is
 the readers, not GECKO. Today they agree on every reaction, bound, metabolite, gene association
@@ -96,7 +96,7 @@ Ordered by what each one needs, cheapest first. Every tier below is one scenario
 table unless it says otherwise, and each emits checkpoints rather than a single verdict, so the
 first stage that diverges is the one to fix.
 
-### Tier 1 --- deterministic, offline, solver-free
+### Tier 1: deterministic, offline, solver-free
 
 | Scenario | Covers | Status |
 |---|---|---|
@@ -114,8 +114,8 @@ first stage that diverges is the one to fix.
 with both writers and reads each file back with its own reader. `saveEcModel` /
 `save_ec_model` are thin wrappers around `writeYAMLmodel` / `write_yaml_model`, and
 `loadEcModel` / `load_ec_model` around the matching readers. The model before any write and
-the model after write-then-read agree on every field on both sides --- reactions, bounds, gene
-associations, stoichiometry, and every `ec.*` array down to the coupling matrix --- so each
+the model after write-then-read agree on every field on both sides: reactions, bounds, gene
+associations, stoichiometry, and every `ec.*` array down to the coupling matrix, so each
 side's own round trip is lossless. The written *files* have the same layout (2-space indent,
 the same key order and quoting, identical `ec-rxns`, `ec-enzymes` and `gecko_light` blocks)
 and differ in content: 353 lines / 6828 characters from `save_ec_model` against 297 / 5496
@@ -158,7 +158,7 @@ never assumes the two sides agree on row order, only on the set of ids), keeping
 
 `protein_pool_ectestgem` matches on `setProtPoolSize`, `calculateFfactor`, `loadProtData`, `fillEnzConcs` and `constrainEnzConcs`. MATLAB's `calculateFfactor` needs a `modelAdapter` in every call, to read `params.path`, where geckopy's `calculate_f_factor` needs one only when there is no `prot_data` at all: resolving that path does no I/O of its own. `loadProtData` is called with the filters switched on on both sides.
 
-### Tier 2 --- the kcat chain
+### Tier 2: the kcat chain
 
 `kcat_chain_ectestgem` is one flowing ecModel with one checkpoint per stage, on ecTestGEM plus two reactions: `R2a` (the same gene rule shape as `R2` but no EC code, so it goes through DLKcat and the isozyme fill) and `R6` (no gene rule, the one shape the stock fixture lacks, needed for the new-standard-pseudo-protein path). It reports MATCH at every checkpoint.
 
@@ -183,7 +183,7 @@ The BRENDA files are read by both loaders and are described in [docs/brenda-reco
 
 The edge cases of the chain are in `kcat_apply_edge_cases_ectestgem`, `kcat_merge_edge_cases_ectestgem`, `kcat_io_edge_cases_ectestgem`, `kcat_assignment_pipeline_ectestgem`, `kcat_review_stats_ectestgem` and `upgrade_gecko3_ectestgem`. Each reports DIFFER while a case differs (`kcat_review_stats_ectestgem` had no result in the nightly of 2026-11-01), and its `scenario.yml` and the ledger notes of the functions concerned describe each difference.
 
-### Tier 3 --- the solver tier
+### Tier 3: the solver tier
 
 These scenarios need Gurobi, which `nightly.yml` provisions for both pairs. They compare at set level and on magnitudes, not on the exact vertex an LP happened to land on.
 
@@ -223,7 +223,7 @@ Only the levels, the target set and its ranked order are compared. The ranked or
 essentiality column (one knockout LP per gene) and reports the absolute regression slope; `ec_fseof` does neither, pointing callers
 at `cobra.flux_analysis.single_gene_deletion` and a subsystem/metabolite check instead.
 
-### Tier 4 --- a real model
+### Tier 4: a real model
 
 ecTestGEM proves the functions agree on every behaviour MATLAB itself pins down. It does not
 prove they agree on yeast-GEM: 7 reactions leave a divergence nowhere to hide. The GECKO
@@ -275,7 +275,7 @@ A whole-model diff on top of an unchecked base reports many differences with one
 ## The GECKO nightly
 
 `nightly.yml` runs both pairs as two entries in one matrix, one at a time rather
-than in parallel --- both entries commit `nightly/` back to this repo, and a concurrent push
+than in parallel: both entries commit `nightly/` back to this repo, and a concurrent push
 from the other entry would race it, which running sequentially avoids without needing retry
 logic. Each writes its own state and report (`nightly/state.json` / `nightly/report.md` for
 raven, unchanged; `nightly/gecko-state.json` / `nightly/gecko-report.md` for gecko), so
@@ -319,7 +319,7 @@ The verdict of every scenario is in the table under "What exists now", as of the
 - **How much of MATLAB's multi-output API is a divergence worth asserting?** `applyComplexData`
   returns `foundComplex` / `proposedComplex` tables that geckopy only logs; `applyCustomKcats`
   and `findMetSmiles` are the same shape of difference. None of it changes a model, so no
-  scenario can see it --- it belongs on the ledger rows, and today only some of it is there.
+  scenario can see it; it belongs on the ledger rows, and today only some of it is there.
 - **Why do two scenarios have no result?** `evotune_edge_cases_ectestgem` and `kcat_review_stats_ectestgem` report `no result from python` in the nightly of 2026-11-01, and the report gives no cause.
 - **Should the scenarios that need Vera data run elsewhere?** `ec_analysis_ecyeastgem911`, `ec_model_build_yarrowia` and `ec_model_load_ecyeastgem911` name folders on Vera in their `inputs`, so they do not run in the nightly.
 

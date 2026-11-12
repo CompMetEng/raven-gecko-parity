@@ -4,7 +4,7 @@
 [2023.08.23.554328](https://doi.org/10.1101/2023.08.23.554328)) is the only recent method besides
 RAVEN's `predictLocalization` that does network-aware, predictor-driven, optimization-based
 compartmentalisation of eukaryotic metabolic models. This note records how it actually works (from a
-source read of the repo) and the mechanistic differences from our assignment MILP — for the
+source read of the repo) and the mechanistic differences from our assignment MILP, for the
 methods-comparison section of a paper.
 
 ## What it is
@@ -12,7 +12,7 @@ methods-comparison section of a paper.
 An **end-to-end fungal GEM reconstruction** pipeline: EggNOG annotation → a 20-model deep-learning
 protein-localisation ensemble → per-(reaction, compartment) scores → a **carveMe-derived MILP** (IBM
 CPLEX) that *carves* a fungal universal model into a functional, compartmentalised model. It is not a
-stand-alone compartment assigner — localisation is one signal inside a reconstruction-and-carving
+stand-alone compartment assigner; localisation is one signal inside a reconstruction-and-carving
 optimisation.
 
 ## The MILP (the core to compare against)
@@ -24,14 +24,14 @@ compartment) pair is a distinct universal reaction with its own binary.
 * **Variables:** continuous flux per universal reaction (objective coeff 0); binary direction
   indicators `yf_r`/`yr_r` per reaction (objective coeff = the reaction's score); binary uptake
   indicators for exchanges.
-* **Objective:** `max Σ_r score(r)·(yf_r + yr_r) + Σ uptake_score·y_e` — a score-weighted **reaction
+* **Objective:** `max Σ_r score(r)·(yf_r + yr_r) + Σ uptake_score·y_e`: a score-weighted **reaction
   selection**. Compartmentalisation is implicit in *which compartment-specific copy* is kept.
 * **Constraints:** steady-state `S·v = 0`; big-M/ε indicator coupling so a reaction is "on" iff it
-  carries ≥ ε flux (the connectivity guarantee — no dead reactions); **hard biomass ≥ min_growth and
+  carries ≥ ε flux (the connectivity guarantee: no dead reactions); **hard biomass ≥ min_growth and
   ATP-maintenance ≥ min_atpm** (every output model grows by construction).
 * **No transport-cost term and no multi-localisation penalty.** Transport reactions are ordinary
   compartmental reactions given a near-zero score (1e-11), so the optimiser keeps a transporter only
-  when connectivity forces it — it does not *reward* transport, but it does not *penalise* it either,
+  when connectivity forces it; it does not *reward* transport, but it does not *penalise* it either,
   and it never counts transported metabolites. The same enzymatic reaction may be switched on in
   several compartments simultaneously with **zero** penalty and no coupling between a gene's copies.
 
@@ -63,7 +63,7 @@ minimises a localisation-disagreement + transport-cost + multi-localisation-pena
 objective over a fixed reaction set (an "assign with transport minimisation" objective).** CarveFungi
 decides *whether a reaction exists and grows*; ours decides *where existing reactions live, as
 parsimoniously as the transport budget allows*. Placement parsimony is simply not in CarveFungi's
-objective — only network functionality is.
+objective; only network functionality is.
 
 ## What we should borrow
 
@@ -74,7 +74,7 @@ objective — only network functionality is.
 * **Confidence-weighted localisation.** Down-weighting the localisation signal when annotation
   confidence is high (and up-weighting it when ambiguous) is a principled idea our flat score scale
   lacks.
-* **Per-compartment cutoffs** (predictor calibration differs by organelle — cf. our own per-
+* **Per-compartment cutoffs** (predictor calibration differs by organelle; cf. our own per-
   compartment trust table) and the **"don't delete a confident enzyme"** safeguard.
 * **Solution-pool enumeration** as an optional *diagnostic* of alternative-optima sensitivity (while
   keeping our single deterministic optimum as the headline output).
@@ -87,10 +87,10 @@ objective — only network functionality is.
 * **A real transport-cost objective and a multi-localisation penalty.** CarveFungi has neither, so it
   cannot discourage biologically implausible compartment fragmentation or parsimoniously limit
   multi-localisation; ours does both explicitly.
-* **Determinism.** One reproducible global optimum vs. an intrinsic ensemble — better for curation and
+* **Determinism.** One reproducible global optimum vs. an intrinsic ensemble, better for curation and
   reproducibility.
 * **Organism generality.** CarveFungi is fungal-locked (curated fungal universal DB, hand-coded fungal
-  biomass, genus-specific tweaks). Ours works from any curated model — demonstrated across fungus,
+  biomass, genus-specific tweaks). Ours works from any curated model, demonstrated across fungus,
   plant, alga and human.
 * **De-circularised evaluation.** We score against curation with the localisation-derived information
   removed (e.g. dropping Human-GEM's DeepLoc2-sourced compartments); CarveFungi reports nothing
@@ -98,7 +98,7 @@ objective — only network functionality is.
 
 ## Where CarveFungi is genuinely stronger / different (state honestly)
 
-* It is **end-to-end reconstruction** — it selects which reactions exist at all from a universal DB and
+* It is **end-to-end reconstruction**: it selects which reactions exist at all from a universal DB and
   compartmentalises in one pass, with **implicit gap-filling** (it adds low-score reactions when
   functionality requires). Ours assigns compartments to an existing reaction set; it does not carve or
   gap-fill.
@@ -109,8 +109,8 @@ objective — only network functionality is.
 
 ## Can we benchmark the assignment head-to-head? (why it needs the real MILP)
 
-We tried the cheap route — emulate CarveFungi's assignment as "place each reaction in every
-compartment whose DeepLoc score clears a cutoff" and compare to ours on yeast-GEM — and an
+We tried the cheap route (emulate CarveFungi's assignment as "place each reaction in every
+compartment whose DeepLoc score clears a cutoff" and compare to ours on yeast-GEM) and an
 adversarial source-checked review (3 independent reviewers) **rejected it as a strawman**. The
 emulation makes CarveFungi look like it over-multi-localises (≈4.5 compartments/reaction), but that is
 an artefact of three mechanisms it omits, each verified against the code:
@@ -124,16 +124,16 @@ an artefact of three mechanisms it omits, each verified against the code:
 2. **Connectivity.** The ε-flux indicator coupling + hard biomass/ATPM under `S·v=0`
    (`CarveMeFuncPool.py`) keeps a copy only if it carries ≥ ε flux in a connected, growing network;
    transporters are themselves scored reactions (~1e-11) that must be co-selected, so transport is not
-   free. Above-cutoff copies that cannot be wired up are pruned — the emulation kept them all.
+   free. Above-cutoff copies that cannot be wired up are pruned; the emulation kept them all.
 3. **Score sign.** The default reaction score is −1.0 and a below-cutoff copy gets a *negative* score
    (`(SCALE − ec_score)·(prob − cutoff)`), so `max Σ score·y` actively switches copies **off**.
-   CarveFungi's objective already pushes toward fewer, higher-evidence compartments — it is not the
+   CarveFungi's objective already pushes toward fewer, higher-evidence compartments; it is not the
    parsimony-indifferent objective the emulation assumed.
 
 The lesson: a fair head-to-head on the *assignment* requires running CarveFungi's **actual** MILP on
-its real candidate set, **not** a thresholding shortcut on yeast-GEM. We did exactly that — running
+its real candidate set, **not** a thresholding shortcut on yeast-GEM. We did exactly that, running
 CarveFungi's own `minmax_reduction` (CPLEX, unmodified) with our transport term swapped into its
-objective — in [the CarveFungi head-to-head study](carvefungi_milp_benchmark.md): our transport cost
+objective, in [the CarveFungi head-to-head study](carvefungi_milp_benchmark.md): our transport cost
 gives ~1.6× fewer transports per reaction (41% fewer) at no detectable assignment-accuracy cost. It
 still carries a gold-reference caveat (mapping universal-DB reactions to curated yeast-GEM compartments
 is only partial via EC/KEGG), and the big-M carve does not prove optimality, so the numbers are
@@ -146,7 +146,7 @@ Cite CarveFungi as the contemporary network-aware compartmentalisation method, b
 ensemble output, versus our predictor-agnostic, transport-minimising, deterministic, multi-
 localisation-sound **assignment** that generalises across kingdoms. Borrow its functionality-coupling
 and confidence-weighting ideas. The clean head-to-head benchmark belongs with `predictLocalization`
-(same task, same lineage — see [the comparison study](https://github.com/edkerk/raven-docs/blob/main/docs/parameter-tuning/studies/predictlocalization-comparison.md) (raven-docs)); CarveFungi
+(same task, same lineage; see [the comparison study](https://github.com/edkerk/raven-docs/blob/main/docs/parameter-tuning/studies/predictlocalization-comparison.md) (raven-docs)); CarveFungi
 is related work, not a same-objective baseline, and a fair empirical comparison needs its real MILP
 (above), not a cheap emulation.
 
