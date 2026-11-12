@@ -272,6 +272,10 @@ entries:
     python: geckopy.kcats_from_homologs
     status: parity
     notes: Estimates kcats from measured homologs (DIAMOND) and keeps them as a source file.
+  - matlab: kcatsFromWILDkCAT
+    python: geckopy.kcats_from_wildkcat
+    status: parity
+    notes: Reads the output table of a WILDkCAT run (kcat_full.tsv or kcat_retrieved.tsv) and keeps it as a source file. The kcat lists differ in type as for the other sources (MATLAB struct, geckopy DataFrame); the report fields are named in each language's style (noValue / no_value).
   - matlab: kcatsFromOKP
     python: geckopy.kcats_from_okp
     status: parity
