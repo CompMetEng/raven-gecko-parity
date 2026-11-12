@@ -924,6 +924,29 @@ entries:
     reason: Removed in GECKO 4 with the evotune functions; src/deprecated/bayesianSensitivityTuning.m is a stub
       that raises GECKO:removedFunction and names cmaesKcatTuning (advanced kcat tuning) and sensitivityTuning
       (standard kcat tuning). The Bayesian ABC-SMC tuning of GECKO 3.2.5 was never ported to geckopy.
+  - matlab: abc_max
+    status: matlab-only
+    reason: Helper of the Bayesian kcat tuning of GECKO 3.2.5, removed in GECKO 4; src/deprecated/abc_max.m is a
+      stub that raises GECKO:removedFunction and names cmaesKcatTuning and sensitivityTuning. Never ported to
+      geckopy.
+  - matlab: getrSample
+    status: matlab-only
+    reason: Helper of the Bayesian kcat tuning of GECKO 3.2.5, removed in GECKO 4; src/deprecated/getrSample.m is a
+      stub that raises GECKO:removedFunction and names cmaesKcatTuning and sensitivityTuning. Never ported to
+      geckopy.
+  - matlab: updateprior
+    status: matlab-only
+    reason: Helper of the Bayesian kcat tuning of GECKO 3.2.5, removed in GECKO 4; src/deprecated/updateprior.m is a
+      stub that raises GECKO:removedFunction and names cmaesKcatTuning and sensitivityTuning. Never ported to
+      geckopy.
+  - matlab: getcarbonnum
+    status: matlab-only
+    reason: Removed in GECKO 4 (a local function of fillCarbonNum now); src/deprecated/getcarbonnum.m is a stub
+      that raises GECKO:removedFunction and names fillCarbonNum.
+  - matlab: findMaxValue
+    status: matlab-only
+    reason: Removed in GECKO 4; src/deprecated/findMaxValue.m is a stub that raises GECKO:removedFunction and
+      names kcatsFromBrenda and kcatsFromECTree. geckopy has no counterpart.
   - matlab: updateProtPool
     status: matlab-only
     reason: Deprecated in src/deprecated/updateProtPool.m; warns with GECKO:deprecatedFunction and errors on
