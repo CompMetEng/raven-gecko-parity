@@ -11,8 +11,8 @@ description: >-
 entries:
   - fuzzyKcatMatching
   - loadBRENDAdata
-  - writeDLKcatInput
-  - readDLKcatOutput
+  - extractEnzymeSubstratePairs
+  - kcatsFromDLKcat
   - mergeKcats
   - assignKcatValues
   - applyCustomKcats
@@ -57,10 +57,9 @@ inputs:
   # a prediction. R2a_EXP_2 is deliberately uncovered, so isozyme-fill has something
   # real to do; R2a's reverse isozymes are uncovered by *anything*, so the
   # standard-kcat fallback has something real to do too. Carries a header line even
-  # though DLKcat's own real output does not, because readDLKcatOutput/
-  # read_dlkcat_output both unconditionally skip line 1.
+  # though DLKcat's own real output does not, because the file reader
+  # of kcatsFromDLKcat / kcats_from_dlkcat (via 'file') unconditionally skips line 1.
   dlkcat_output_path: "{scenario_dir}/data/DLKcat.tsv"
-  dlkcat_write_target: "{repo_root}/results/.kcat_chain_dlkcat_input.tsv"
 
   # One customKcats.tsv row, mode A (reaction id only, no protein): targets R3, which
   # already has a real BRENDA-derived kcat and source by this point in the pipeline.

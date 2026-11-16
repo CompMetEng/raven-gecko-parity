@@ -5,26 +5,31 @@ it raised. A raise is a value (`raised`). No case reaches PubChem: every metabol
 used is in the vendored smilesDB.tsv of its case.
 """
 
+import copy
 import importlib.util
+import os
 import sys
+import tempfile
 from pathlib import Path
+from unittest import mock
 
 import cobra
 import numpy as np
 import pandas as pd
 
 from geckopy import (
-    DLKcatIgnoreLists,
     ModelAdapter,
     assign_standard_kcat,
     find_met_smiles,
+    kcats_from_okp,
     load_conventional_gem,
     load_kcat_source,
     load_uniprot_tsv,
     make_ec_model,
     save_kcat_source,
 )
-from geckopy.gather_kcats.open_kinetics_predictor import build_okp_input_csv
+from geckopy.gather_kcats.open_kinetics_predictor import OKPError
+from geckopy.gather_kcats.open_kinetics_predictor import run as okp_run
 
 
 def _adapter(inputs: dict) -> ModelAdapter:
@@ -105,12 +110,36 @@ def _case_smiles(inputs) -> dict:
 # OpenKineticsPredictor input
 # --------------------------------------------------------------------------- #
 
+class _OfflineClient:
+    """Stands in for OKPClient: kcats_from_okp has written the job input when it asks the
+    client to submit, and the submission stops there, so nothing is sent."""
+
+    def __init__(self, *args, **kwargs):
+        pass
+
+    def submit(self, *args, **kwargs):
+        raise OKPError("offline")
+
+
 def _case_okp(inputs) -> dict:
     model = _model(inputs)
     find_met_smiles(model, cache_path=Path(inputs["okp_root"]) / "data" / "smilesDB.tsv")
-    ignore = DLKcatIgnoreLists(ignore_names=[], ignore_smiles=[], currency_pairs=[])
-    raised, text = _attempt(lambda: build_okp_input_csv(
-        model, ignore, ec_rxns=list(model.ec.rxns), only_with_smiles=True))
+    with tempfile.TemporaryDirectory() as tmp:
+        project = Path(tmp)
+        scratch = copy.deepcopy(_adapter(inputs))
+        scratch.params.path = project
+        (project / "data").mkdir()
+        # The API key is resolved before the input is written; a placeholder is enough because
+        # the offline client never sends it.
+        with mock.patch.dict(os.environ, {"OKP_API_KEY": "offline"}), \
+                mock.patch.object(okp_run, "OKPClient", _OfflineClient):
+            try:
+                kcats_from_okp(model, method="CataPro", save=False, adapter=scratch)
+            except OKPError:
+                pass
+        csv_file = project / "data" / "OKP.csv"
+        raised = not csv_file.is_file()
+        text = "" if raised else csv_file.read_text(encoding="utf-8")
     lines = [] if raised else sorted(line for line in text.strip("\n").split("\n")[1:] if line)
     return {"all_reactions": {"raised": raised, "lines": lines}}
 

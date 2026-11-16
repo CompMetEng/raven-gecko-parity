@@ -1,14 +1,13 @@
 id: sensitivity_tuning_edge_cases_ectestgem
 pair: gecko
 description: >-
-  Edge cases of sensitivityTuning and truncateValues on ecTestGEM's single-route ecModel: the order of the
+  Edge cases of sensitivityTuning on ecTestGEM's single-route ecModel: the order of the
   tuned reactions, tuning a model that was tuned before, how the pre-tune kcat is written to ec.notes, the
   tuned kcat above 1e7, protToIgnore with an unknown or a lower-case id, a model whose growth is
-  zero, a gecko-light model, and rounding ties.
+  zero and a gecko-light model.
 
 entries:
   - sensitivityTuning
-  - truncateValues
 
 inputs:
   adapter_matlab: "{matlab_repo}/test/unit_tests/ecTestGEM/TestGEMAdapter.m"
@@ -77,10 +76,6 @@ inputs:
     R5: 200.0
   light_desired_growth: 30.0
 
-  # truncate: exact ties in the decimal rounding of truncateValues, a value that needs no rounding, zero,
-  # and the non-finite values.
-  truncate_inputs: ["100000.5", "1234565", "-1234565", "0.5", "0", "Inf", "NaN"]
-
 # Results (seeds 0, 1 and 2 agree). No difference remains:
 #
 # order, rerun, notes_*, ceiling, ignore_unknown_id, ignore_lower_case_id, light: both sides agree. Both list the tuned
@@ -90,8 +85,6 @@ inputs:
 #   reaction, match a lower-case protToIgnore id without regard to case
 #   (R3, the reaction of the ignored enzyme P4, stays at 0.05 and only R5 is raised, to 2e10, with growth 4.5), stop once
 #   growth gains less than 1e-9, and tune a gecko-light model.
-# truncate_ties: both sides round an exact tie away from zero (100000.5 gives 100001, 1234565 gives 1234570). Inf is
-#   returned unchanged on both sides.
 # zero_growth: with growth 0 and no flux both sides return an empty result. The case of a forced flux that keeps a usage
 #   reaction active at zero growth needs a reaction that ecTestGEM does not have, and is not covered.
 

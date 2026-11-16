@@ -5,7 +5,7 @@ function results = kcat_io_edge_cases_ectestgem(ctx)
 % it raised. A raise is a value, not a failure. No case reaches PubChem: every metabolite
 % name used is in the vendored smilesDB.tsv of its case.
 %
-% findMetSmiles, writeOpenKineticsPredictorInput and getStandardKcat resolve their files
+% findMetSmiles, kcatsFromOKP and getStandardKcat resolve their files
 % through the adapter's own params.path, so a *copy* of the adapter (ModelAdapter is a value
 % class) is redirected to the root of each case.
 
@@ -111,19 +111,28 @@ function out = case_okp(adapter, inputs)
 okpAdapter = redirected(adapter, inputs.okp_root);
 ecModel = build_model(adapter, false, false);
 ecModel = findMetSmiles(ecModel, 'modelAdapter', okpAdapter, 'verbose', false);
-lines = {};
+% kcatsFromOKP resolves the API key after it has written the job input; without a key it
+% stops there, so nothing is sent. The input is written in a scratch project.
+previousKey = getenv('OKP_API_KEY');
+restoreKey = onCleanup(@() setenv('OKP_API_KEY', previousKey));
+setenv('OKP_API_KEY', '');
+project = tempname;
+mkdir(fullfile(project, 'data'));
+cleanup = onCleanup(@() rmdir(project, 's'));
+scratch = adapter;
+scratch.params.path = project;
 try
-    writeOpenKineticsPredictorInput(ecModel, 'ecRxns', true(numel(ecModel.ec.rxns), 1), ...
-        'modelAdapter', okpAdapter, 'onlyWithSmiles', true, 'overwrite', true);
-    raised = false;
-    csvFile = fullfile(okpAdapter.params.path, 'data', 'OKP.csv');
+    kcatsFromOKP(ecModel, 'method', 'CataPro', 'save', false, 'modelAdapter', scratch);
+catch
+end
+csvFile = fullfile(project, 'data', 'OKP.csv');
+raised = ~isfile(csvFile);
+lines = {};
+if ~raised
     fID = fopen(csvFile);
     raw = textscan(fID, '%s %s', 'Delimiter', ',', 'HeaderLines', 1);
     fclose(fID);
-    delete(csvFile);
     lines = reshape(sort(strcat(raw{1}, ',', raw{2})), 1, []);
-catch
-    raised = true;
 end
 out.all_reactions.raised = raised;
 out.all_reactions.lines = lines;

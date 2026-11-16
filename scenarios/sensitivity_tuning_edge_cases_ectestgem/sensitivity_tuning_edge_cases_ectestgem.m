@@ -44,7 +44,6 @@ else
     results.light.n_tuned = numel(light.tuned);
 end
 
-results.truncate_ties = truncate_ties(inputs);
 end
 
 
@@ -119,24 +118,6 @@ out.tuned = tuned;
 out.tuned_sorted = tuned(order);
 out.final_growth = num_value(sol.f);
 out.ec = ec;
-end
-
-
-function out = truncate_ties(inputs)
-texts = inputs.truncate_inputs;
-if ~iscell(texts)
-    texts = cellstr(texts);
-end
-out = cell(1, numel(texts));
-for i = 1:numel(texts)
-    value = str2double(texts{i});
-    try
-        truncated = truncateValues({value}, 1);
-        out{i} = struct('input', texts{i}, 'raised', false, 'output', num_value(truncated{1}));
-    catch
-        out{i} = struct('input', texts{i}, 'raised', true);
-    end
-end
 end
 
 

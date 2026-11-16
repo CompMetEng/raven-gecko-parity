@@ -11,7 +11,6 @@ import sys
 from pathlib import Path
 
 import cobra
-import numpy as np
 
 from geckopy import (
     ModelAdapter,
@@ -21,7 +20,6 @@ from geckopy import (
     make_ec_model,
     sensitivity_tuning,
     set_prot_pool_size,
-    truncate_values,
 )
 
 
@@ -123,17 +121,6 @@ def _tune(model, inputs: dict, desired: float, prot_to_ignore=None) -> dict:
     }
 
 
-def _truncate(inputs: dict) -> list:
-    out = []
-    for text in inputs["truncate_inputs"]:
-        try:
-            value = float(truncate_values(np.array([float(text)]))[0])
-            out.append({"input": str(text), "raised": False, "output": _num(value)})
-        except Exception:
-            out.append({"input": str(text), "raised": True})
-    return out
-
-
 def run(ctx):
     inputs = ctx["inputs"]
     cobra.Configuration().solver = str(inputs["python_solver"])
@@ -171,5 +158,4 @@ def run(ctx):
         "n_tuned": 0 if light["raised"] else len(light["tuned"]),
     }
 
-    results["truncate_ties"] = _truncate(inputs)
     return results

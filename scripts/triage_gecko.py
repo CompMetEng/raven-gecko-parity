@@ -5,9 +5,8 @@ function-by-function correspondence table), checked against what the two checkou
 contain rather than taken on trust. Three things the check turned up are recorded in the
 rows themselves:
 
-* geckopy exports both a canonical name and a deprecated alias for eight functions
-  (`assign_standard_kcat` / `get_standard_kcat`, ...). Name-based seeding paired the MATLAB
-  function to the *alias*; the canonical name is the real counterpart.
+* Name-based seeding paired eight MATLAB functions (`getStandardKcat`, ...) to a Python name
+  that is not the real counterpart; the canonical name (`assign_standard_kcat`, ...) is.
 * MATLAB's OpenKineticsPredictor REST client (`submitOpenKineticsPredictor`,
   `fetchOpenKineticsPredictor`) and `mergeKcats` exist only on the unmerged
   `feat/geckopy-compat` branch. On `develop4` the file-based round-trip is still what ships.
@@ -25,23 +24,23 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from parity.config import load_config  # noqa: E402
 from parity.inventory import build_inventory  # noqa: E402
-from parity.ledger import Entry, load_ledger, save_ledger  # noqa: E402
+from parity.ledger import load_ledger, save_ledger  # noqa: E402
 
 DOC = "geckopy docs/migrating_from_gecko_matlab.md §5"
 
 # --------------------------------------------------------------------------------------
-# Seeding paired these MATLAB functions to geckopy's deprecated aliases. Repoint them at
-# the canonical name; the alias gets its own row below.
+# Seeding paired these MATLAB functions to a Python name that is not their counterpart.
+# Repoint them at the canonical name.
 # --------------------------------------------------------------------------------------
-REPAIR: dict[str, tuple[str, str]] = {
-    "constrainFluxData": ("geckopy.apply_flux_data_constraints", "geckopy.constrain_flux_data"),
-    "getECfromDatabase": ("geckopy.fill_eccodes_from_database", "geckopy.get_ec_from_database"),
-    "getECfromGEM": ("geckopy.fill_eccodes_from_gem", "geckopy.get_ec_from_gem"),
-    "getKcatAcrossIsozymes": ("geckopy.fill_kcats_from_isozymes", "geckopy.get_kcat_across_isozymes"),
-    "getStandardKcat": ("geckopy.assign_standard_kcat", "geckopy.get_standard_kcat"),
-    "mergeDLKcatAndFuzzyKcats": ("geckopy.merge_kcats", "geckopy.merge_dlkcat_and_fuzzy_kcats"),
-    "selectKcatValue": ("geckopy.apply_kcat_list", "geckopy.select_kcat_value"),
-    "sigmaFitter": ("geckopy.fit_sigma", "geckopy.sigma_fitter"),
+REPAIR: dict[str, str] = {
+    "constrainFluxData": "geckopy.apply_flux_data_constraints",
+    "getECfromDatabase": "geckopy.fill_eccodes_from_database",
+    "getECfromGEM": "geckopy.fill_eccodes_from_gem",
+    "getKcatAcrossIsozymes": "geckopy.fill_kcats_from_isozymes",
+    "getStandardKcat": "geckopy.assign_standard_kcat",
+    "mergeDLKcatAndFuzzyKcats": "geckopy.merge_kcats",
+    "selectKcatValue": "geckopy.apply_kcat_list",
+    "sigmaFitter": "geckopy.fit_sigma",
 }
 
 # --------------------------------------------------------------------------------------
@@ -143,12 +142,6 @@ INTERNAL: dict[str, str] = {
         "MATLAB varargin parsing glue. Python uses ordinary keyword arguments."
     ),
 }
-
-# geckopy's deprecated aliases, filled in from REPAIR below.
-ALIAS_REASON = (
-    "Deprecated alias of {canonical}, kept for backwards compatibility and emitting a "
-    "DeprecationWarning. The canonical name carries the parity row."
-)
 
 # --------------------------------------------------------------------------------------
 # Deliberately Python-only.
@@ -260,7 +253,7 @@ PYTHON_ONLY: dict[str, str] = {
     ),
     # Helpers exported alongside a paired function.
     "geckopy.gather_kcats.extract_enzyme_substrate_pairs": (
-        "Helper exported alongside write_dlkcat_input; MATLAB keeps it inline in "
+        "Helper of the DLKcat input writer behind kcats_from_dlkcat; MATLAB keeps it inline in "
         "writeDLKcatInput.m."
     ),
     "geckopy.gather_kcats.format_kcat_source": (
@@ -337,8 +330,8 @@ def main() -> int:
     by_matlab, by_python = ledger.by_matlab(), ledger.by_python()
     applied = 0
 
-    # 1. Repoint the eight alias pairings at the canonical export, and give the alias a row.
-    for matlab, (canonical, alias) in REPAIR.items():
+    # 1. Repoint the eight pairings at the canonical export.
+    for matlab, canonical in REPAIR.items():
         entry = by_matlab.get(matlab)
         if entry is None:
             print(f"  ! no row for {matlab}")
@@ -359,18 +352,7 @@ def main() -> int:
         entry.python = canonical
         entry.status = "parity"
         entry.notes = NOTES.get(matlab)
-
-        alias_entry = by_python.get(alias)
-        if alias_entry is None or alias_entry is entry:
-            alias_entry = Entry(status="internal", python=alias)
-            ledger.entries.append(alias_entry)
-            by_python[alias] = alias_entry
-        alias_entry.status = "internal"
-        alias_entry.matlab = None
-        alias_entry.python = alias
-        alias_entry.reason = ALIAS_REASON.format(canonical=canonical.rsplit(".", 1)[-1])
-        alias_entry.notes = None
-        applied += 2
+        applied += 1
 
     # 2. Everything else the migration doc and the two checkouts settle.
     def decide(key: str, **fields) -> None:

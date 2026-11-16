@@ -4,7 +4,10 @@ The pipeline of GECKO's light_ecModel tutorial, from make_ec_model to set_prot_p
 with a checkpoint after each stage. See scenario.yml.
 """
 
+import copy
 import math
+import shutil
+import tempfile
 from pathlib import Path
 
 import cobra
@@ -24,8 +27,8 @@ from geckopy import (
     load_phyl_dist,
     load_uniprot_tsv,
     make_ec_model,
-    merge_dlkcat_and_fuzzy_kcats,
-    read_dlkcat_output,
+    kcats_from_dlkcat,
+    merge_kcats,
     set_prot_pool_size,
 )
 
@@ -158,7 +161,14 @@ def run(ctx):
     brenda = load_brenda_data(Path(inputs["databases_dir"]) / "brenda-2026.1-1")
     phyl_dist = load_phyl_dist(Path(inputs["adapter_matlab"]).parent / "PhylDist.mat")
     fuzzy_df = fuzzy_kcat_matching(model, brenda, phyl_dist)
-    dlkcat_df = read_dlkcat_output(model, Path(inputs["fixture_dir"]) / "data" / "DLKcat.tsv")
+    # kcats_from_dlkcat(via='file') reads data/DLKcat.tsv of the adapter's project; the fixture keeps
+    # it in another folder, so a scratch project holds a copy.
+    with tempfile.TemporaryDirectory() as tmp:
+        scratch = copy.deepcopy(model.adapter)
+        scratch.params.path = Path(tmp)
+        (Path(tmp) / "data").mkdir()
+        shutil.copyfile(Path(inputs["fixture_dir"]) / "data" / "DLKcat.tsv", Path(tmp) / "data" / "DLKcat.tsv")
+        dlkcat_df, _ = kcats_from_dlkcat(model, via="file", save=False, adapter=scratch)
     dlkcat_rows = sorted(
         (
             {
@@ -170,7 +180,9 @@ def run(ctx):
         ),
         key=lambda r: (r["reaction"], r["gene"], r["kcat"]["value"]),
     )
-    merged = merge_dlkcat_and_fuzzy_kcats(dlkcat_df, fuzzy_df)
+    merged = merge_kcats(
+        fuzzy_df, dlkcat_df, source_priority=["database_top", "dlkcat", "database_bottom"]
+    )
     merged_rows = sorted(
         (
             {"reaction": str(r.rxn_id), "kcat": num(r.kcat), "source": _source_token(str(r.source))}

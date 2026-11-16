@@ -84,24 +84,32 @@ end
 
 
 % --------------------------------------------------------------------------- %
-% dlkcat: writeDLKcatInput + readDLKcatOutput + mergeDLKcatAndFuzzyKcats
+% dlkcat: extractEnzymeSubstratePairs + kcatsFromDLKcat(via 'file') + mergeDLKcatAndFuzzyKcats
 % --------------------------------------------------------------------------- %
 
 function [out, mergedList] = checkpoint_dlkcat(ecModel, kcatListFuzzy, adapter, kcatAdapter, inputs)
 ecRxnsMask = ismember(ecModel.ec.rxns, {'R2a_EXP_1', 'R2a_EXP_2'});
-written = writeDLKcatInput(ecModel, 'ecRxns', ecRxnsMask, 'modelAdapter', adapter, ...
-    'onlyWithSmiles', false, 'filename', inputs.dlkcat_write_target, 'overwrite', true);
+pairs = extractEnzymeSubstratePairs(ecModel, 'ecRxns', ecRxnsMask, 'modelAdapter', adapter);
 
-n = size(written, 2);
+n = numel(pairs.ecRxn);
 writtenRecords = cell(1, n);
 for k = 1:n
-    writtenRecords{k} = struct('reaction', written{1,k}, 'gene', written{2,k}, 'substrate', written{3,k});
+    writtenRecords{k} = struct('reaction', ecModel.ec.rxns{pairs.ecRxn(k)}, ...
+        'gene', ecModel.ec.genes{pairs.protein(k)}, 'substrate', ecModel.metNames{pairs.met(k)});
 end
 keys = cellfun(@(r) [r.reaction char(1) r.gene], writtenRecords, 'UniformOutput', false);
 [~, order] = sort(keys);
 out.written_input = writtenRecords(order);
 
-kcatListDLKcat = readDLKcatOutput(ecModel, 'outFile', inputs.dlkcat_output_path, 'modelAdapter', adapter);
+% kcatsFromDLKcat(via 'file') reads data/DLKcat.tsv of the project: a scratch project holds
+% the file.
+project = tempname;
+mkdir(fullfile(project, 'data'));
+cleanup = onCleanup(@() rmdir(project, 's'));
+copyfile(inputs.dlkcat_output_path, fullfile(project, 'data', 'DLKcat.tsv'));
+scratch = adapter;
+scratch.params.path = project;
+kcatListDLKcat = kcatsFromDLKcat(ecModel, 'via', 'file', 'save', false, 'modelAdapter', scratch);
 m = numel(kcatListDLKcat.rxns);
 dlkcatRecords = cell(1, m);
 for k = 1:m

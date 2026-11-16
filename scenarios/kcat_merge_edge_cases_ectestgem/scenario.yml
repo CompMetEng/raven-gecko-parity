@@ -3,15 +3,15 @@ pair: gecko
 description: >-
   Edge cases of the steps between a kcat source and ec.kcat: reading a DLKcat output
   (unknown substrate, unknown reaction with a missing kcat, inf, a malformed number, a file
-  without numbers), writing the DLKcat input (an empty selection, row order), BRENDA loading
+  without numbers), listing the enzyme-substrate pairs of the DLKcat input (an empty selection, row order), BRENDA loading
   (outlier filtering), fuzzy BRENDA matching (a code with no relative in BRENDA, a tie between
   EC codes, a subset with a repeated reaction, an empty subset), merging kcat lists (the
   default origin limit, OKP-prefixed sources) and selecting a kcat per reaction when a zero
   row is dropped. Each case builds its own state. A raise is a value on both sides.
 
 entries:
-  - readDLKcatOutput
-  - writeDLKcatInput
+  - kcatsFromDLKcat
+  - extractEnzymeSubstratePairs
   - loadBRENDAdata
   - fuzzyKcatMatching
   - mergeKcats
@@ -23,10 +23,11 @@ entries:
 #     BRENDA match of origin 5 or 6 ranks after a DLKcat prediction. 'OKP-BRENDA' and
 #     'OKP-CataPro' lose the okp_ prefix for matching, so 'OKP-BRENDA' routes to the database
 #     tiers and 'OKP-CataPro' matches 'catapro'; the rows keep their OKP- label (kcat 3 and 4).
-#   readDLKcatOutput: a row with a kcat of 'inf', '1.2.3', 'NA' or 'None' is dropped before the
+#   kcatsFromDLKcat (via 'file', which reads data/DLKcat.tsv of a scratch project): a row with a kcat of 'inf', '1.2.3', 'NA' or 'None' is dropped before the
 #     reactions are checked; a file with only 'None' raises; an unknown reaction raises only when
 #     its row has a kcat; a row with an unknown substrate is dropped with a warning.
-#   writeDLKcatInput: an empty selection writes an empty file; rows follow ec.rxns order.
+#   extractEnzymeSubstratePairs (only_with_smiles=False in geckopy): an empty selection lists no pair; rows
+#     follow ec.rxns order.
 #   loadBRENDAdata: both sides drop a row four decades below the median of its EC when five or
 #     more values exist.
 #   fuzzyKcatMatching: an EC code with no relative in BRENDA reaches wildcard level 4 on both
@@ -56,7 +57,6 @@ inputs:
   outlier_brenda_dir: "{scenario_dir}/outlier/data"
 
   data_dir: "{scenario_dir}/data"
-  dlkcat_write_target: "{repo_root}/results/.kcat_merge_dlkcat_input.tsv"
 
 tolerance:
   rel: 1.0e-9

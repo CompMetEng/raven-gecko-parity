@@ -14,7 +14,6 @@ import pandas as pd
 
 from geckopy import (
     ModelAdapter,
-    apply_custom_kcats,
     apply_kcat_constraints,
     apply_kcat_list,
     assign_standard_kcat,
@@ -29,6 +28,9 @@ from geckopy import (
     set_prot_pool_size,
 )
 from geckopy.databases.kegg_loader import load_kegg_tsv
+# The reader of a GECKO 3 customKcats.tsv that convert_custom_kcats uses; geckopy has no public
+# apply_custom_kcats.
+from geckopy.upgrade import _apply_custom_kcats
 
 
 def num(x) -> dict:
@@ -153,7 +155,7 @@ def _pipeline(inputs: dict, data_root: Path) -> dict:
     apply_kcat_list(model, fuzzy_df, criteria="max")
     after_assign = _kcat_rows(model)
 
-    apply_custom_kcats(model, data / "customKcats.tsv", apply=False)
+    _apply_custom_kcats(model, data / "customKcats.tsv", apply=False)
     after_custom = _kcat_rows(model)
 
     # The standard-kcat step runs on a copy and its result is a checkpoint, whether it raises

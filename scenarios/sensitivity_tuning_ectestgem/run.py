@@ -1,6 +1,6 @@
 """Python side of the sensitivity-tuning scenario.
 
-Three independent checkpoints, matching the three ledger rows this scenario covers:
+Two independent checkpoints, matching the two ledger rows this scenario covers:
 
 ``sensitivity_tuning``
     sensitivity_tuning on enzyme_usage_ectestgem's own R2/R4-blocked, single-route
@@ -9,8 +9,6 @@ Three independent checkpoints, matching the three ledger rows this scenario cove
     fit_sigma (method='grid', matching MATLAB's own 100-point sweep exactly) on a
     separate instance of the same fixture shape. The returned model's pool bound is sized
     for the returned sigma on both sides --- see scenario.yml.
-``truncate_values``
-    Plain rounding, one value per order-of-magnitude regime.
 """
 
 import importlib.util
@@ -18,7 +16,6 @@ import sys
 from pathlib import Path
 
 import cobra
-import numpy as np
 
 from geckopy import (
     ModelAdapter,
@@ -29,7 +26,6 @@ from geckopy import (
     make_ec_model,
     sensitivity_tuning,
     set_prot_pool_size,
-    truncate_values,
 )
 
 
@@ -135,12 +131,6 @@ def _checkpoint_sigma_fitter(adapter, conv, inputs: dict) -> dict:
     }
 
 
-def _checkpoint_truncate_values(inputs: dict) -> list:
-    arr = np.array(inputs["truncate_values"], dtype=float)
-    out = truncate_values(arr)
-    return [float(v) for v in out]
-
-
 def run(ctx):
     inputs = ctx["inputs"]
     cobra.Configuration().solver = str(inputs["python_solver"])
@@ -151,5 +141,4 @@ def run(ctx):
     return {
         "sensitivity_tuning": _checkpoint_sensitivity_tuning(adapter, conv, inputs),
         "sigma_fitter": _checkpoint_sigma_fitter(adapter, conv, inputs),
-        "truncate_values": _checkpoint_truncate_values(inputs),
     }

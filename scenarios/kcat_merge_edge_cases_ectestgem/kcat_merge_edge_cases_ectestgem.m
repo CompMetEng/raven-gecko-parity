@@ -138,9 +138,16 @@ names = {'dl_unknown_substrate', 'dl_unknown_rxn_na', 'dl_inf', 'dl_dotted', 'dl
 for c = 1:numel(names)
     model = build_model(adapter);
     rows = {};
+    % kcatsFromDLKcat(via 'file') reads data/DLKcat.tsv of the project: a scratch project
+    % holds the file.
+    project = tempname;
+    mkdir(fullfile(project, 'data'));
+    cleanup = onCleanup(@() rmdir(project, 's'));
+    copyfile(fullfile(inputs.data_dir, [names{c} '.tsv']), fullfile(project, 'data', 'DLKcat.tsv'));
+    scratch = adapter;
+    scratch.params.path = project;
     try
-        list = readDLKcatOutput(model, 'outFile', fullfile(inputs.data_dir, [names{c} '.tsv']), ...
-            'modelAdapter', adapter);
+        list = kcatsFromDLKcat(model, 'via', 'file', 'save', false, 'modelAdapter', scratch);
         raised = false;
         n = numel(list.rxns);
         records = cell(1, n);
@@ -154,6 +161,7 @@ for c = 1:numel(names)
     end
     out.(names{c}).raised = raised;
     out.(names{c}).rows = rows;
+    clear cleanup
 end
 end
 
@@ -166,13 +174,13 @@ for c = 1:2
     rows = {};
     mask = ismember(model.ec.rxns, selections{c});
     try
-        written = writeDLKcatInput(model, 'ecRxns', mask, 'modelAdapter', adapter, ...
-            'onlyWithSmiles', false, 'filename', inputs.dlkcat_write_target, 'overwrite', true);
+        pairs = extractEnzymeSubstratePairs(model, 'ecRxns', mask, 'modelAdapter', adapter);
         raised = false;
-        n = size(written, 2);
+        n = numel(pairs.ecRxn);
         rows = cell(1, n);
         for k = 1:n
-            rows{k} = struct('reaction', written{1, k}, 'gene', written{2, k}, 'substrate', written{3, k});
+            rows{k} = struct('reaction', model.ec.rxns{pairs.ecRxn(k)}, ...
+                'gene', model.ec.genes{pairs.protein(k)}, 'substrate', model.metNames{pairs.met(k)});
         end
     catch
         raised = true;
