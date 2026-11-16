@@ -192,9 +192,10 @@ entries:
     notes: Downloads (once) the BRENDA files of the toolbox-assets release and returns their folder.
   - matlab: resolveKcatAggregation
     status: subsumed
-    reason: 'Settles which BRENDA aggregate (max or median) the kcat sources read. geckopy has no
-      function of this name: kcats_from_brenda reads adapter.params.kcat_aggregate_brenda, lower-cases
-      it and accepts only max or median where the source is gathered.'
+    reason: 'Settles which BRENDA aggregate (max or median) a direct call reads: the aggregation argument,
+      else [kcat_sources.brenda] aggregation as the preset or stages resolve it, else max. geckopy has no
+      function of this name: kcats_from_brenda and fuzzy_kcat_matching resolve it the same way through
+      brenda_aggregation, with the same message for an invalid value.'
   - matlab: assignKcats
     python: geckopy.assign_kcats
     status: parity
@@ -279,7 +280,7 @@ entries:
       - okp_kcat_ectestgem
       - kcat_io_edge_cases_ectestgem
     notes: >-
-      Gathers kcats from OpenKineticsPredictor and keeps them as a source file. It is the only public entry point of the OKP engine: submitting a job, fetching the result, writing the input and reading the output are local functions of kcatsFromOKP and private functions of geckopy (submitOpenKineticsPredictor, fetchOpenKineticsPredictor, writeOpenKineticsPredictorInput, readOpenKineticsPredictorOutput and their geckopy counterparts are no longer public). The default method of okp.method is KinForm-H on both sides, and the okp stage of the presets reads [kcat_sources.okp] methods, by default KinForm-H alone. The job input of a call is the same on both sides, one enzyme-substrate pair per line, only for the metabolites with a SMILES and for the selected reactions, and the stored result of a job (useStored / use_stored) gives the same kcat list with the OKP- source labels (okp_kcat_ectestgem, kcat_io_edge_cases_ectestgem). The input is not written without the SMILES filter any more. Recorded differences, found by reading the code and not by a scenario: while a job runs the kcat list is empty ([] in MATLAB and None in geckopy), and kcatsFromOKP writes the job input before it resolves the API key, where kcats_from_okp resolves the key first and writes nothing without one.
+      Gathers kcats from OpenKineticsPredictor and keeps them as a source file. It is the only public entry point of the OKP engine: submitting a job, fetching the result, writing the input and reading the output are local functions of kcatsFromOKP and private functions of geckopy (submitOpenKineticsPredictor, fetchOpenKineticsPredictor, writeOpenKineticsPredictorInput, readOpenKineticsPredictorOutput and their geckopy counterparts are no longer public). A call without a method uses the first entry of [kcat_sources.okp] methods on both sides (KinForm-H by default), and the okp stage of the presets reads the same list. The job input of a call is the same on both sides, one enzyme-substrate pair per line, only for the metabolites with a SMILES and for the selected reactions, and the stored result of a job (useStored / use_stored) gives the same kcat list with the OKP- source labels (okp_kcat_ectestgem, kcat_io_edge_cases_ectestgem). The input is not written without the SMILES filter any more. Recorded differences, found by reading the code and not by a scenario: while a job runs the kcat list is empty ([] in MATLAB and None in geckopy), and kcatsFromOKP writes the job input before it resolves the API key, where kcats_from_okp resolves the key first and writes nothing without one.
   - matlab: loadBrendaMeasurements
     python: geckopy.databases.load_brenda_measurements
     status: parity
@@ -335,7 +336,13 @@ entries:
     status: subsumed
     reason: Reads model_adapter.toml into the adapter parameters, which geckopy does in ModelAdapter.from_folder
       (validated by ModelParameters). A parameter whose default in adapterParameters.tsv is empty (uniprot.id,
-      kegg.id, c_source, bio_rxn) is kept as an empty value on both sides.
+      kegg.id, c_source, bio_rxn) is kept as an empty value on both sides. An unknown or malformed key (also under
+      evotune.source_groups, kcat_assignment.stage and kcat_sources) is an error on both sides, with the same
+      message.
+  - matlab: showAdapterParams
+    python: geckopy.show_adapter_params
+    status: parity
+    notes: Prints every adapter parameter with its value and where it came from (file, default, preset, not set), one line per item in the order of adapterParameters.tsv; `geckopy adapter show` prints the same. The output of both is identical for the full tutorial's model_adapter.toml.
   - matlab: readAdapterToml
     status: via-dependency
     reason: MATLAB has no TOML parser, so this reads the subset that adapter files use. Python uses the standard
@@ -691,7 +698,7 @@ entries:
       - kcat_merge_edge_cases_ectestgem
     differs: []
     notes: >-
-      MATLAB uses kcat.tsv/mw.tsv/sa.tsv, the same filenames and format geckopy's own brenda-refresh CLI produces and ships in geckopy's src/geckopy/data/brenda/, so pointing both toolboxes' BRENDA folder at the same directory works. Both select the max or the median column (kcatAggregation, kcat_aggregate_brenda), load a lowercase EC key and drop by default a BRENDA row whose kcat is more than four orders of magnitude below the median of its EC when at least five values exist (filterOutlierKcats and filter_outlier_kcats, both default true). On the brenda-2026.1-1 release both drop the same rows (265 of 39318 kcat maximum rows) and the yeast-GEM ecModel agrees (ec_model_full_yeastgem). kcat_merge_edge_cases_ectestgem differs for other functions.
+      MATLAB uses kcat.tsv/mw.tsv/sa.tsv, the same filenames and format geckopy's own brenda-refresh CLI produces and ships in geckopy's src/geckopy/data/brenda/, so pointing both toolboxes' BRENDA folder at the same directory works. Both select the max or the median column (the aggregation argument, else [kcat_sources.brenda] aggregation as the preset or stages resolve it), load a lowercase EC key and drop by default a BRENDA row whose kcat is more than four orders of magnitude below the median of its EC when at least five values exist (filterOutlierKcats and filter_outlier_kcats, both default true). On the brenda-2026.1-1 release both drop the same rows (265 of 39318 kcat maximum rows) and the yeast-GEM ecModel agrees (ec_model_full_yeastgem). kcat_merge_edge_cases_ectestgem differs for other functions.
   - matlab: loadConventionalGEM
     python: geckopy.load_conventional_gem
     status: parity
@@ -972,6 +979,13 @@ entries:
     status: python-only
     reason: Reads one adapter parameter with validation and a clear error. MATLAB indexes the classdef property
       directly.
+  - python: geckopy.adapter.resolve_gr_exp
+    status: python-only
+    reason: Takes the growth rate from the argument or gr_exp, and raises "gr_exp is not set in model_adapter.toml"
+      without either. The MATLAB functions that need gr_exp check params.gR_exp themselves, with the same message.
+  - python: geckopy.adapter.format_adapter_params
+    status: internal
+    reason: Returns the text that show_adapter_params prints; showAdapterParams returns a table instead.
   - python: geckopy.adapter.UniprotParams
     status: python-only
     reason: Adapter parameter group; MATLAB uses ModelAdapter classdef properties.
