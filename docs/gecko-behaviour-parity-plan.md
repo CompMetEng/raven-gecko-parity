@@ -40,9 +40,9 @@ The repository has 51 scenarios for the gecko pair. In the nightly report of 202
 | `flexibilize_edge_cases_ectestgem` | `flexibilizeEnzConcs`, `relaxProteomicsGreedy`, `constrainEnzConcs` | differs: `constrainEnzConcs` with a prior lower bound or a negative concentration, an empty `enzymeSet`, the first of two tied enzymes |
 | `flux_data_edge_cases_ectestgem` | `loadFluxData`, `constrainFluxData` | differs: argument handling of `loadFluxData` and `constrainFluxData` |
 | `fuzzy_kcat_coefficient_ectestgem` | `fuzzyKcatMatching`, `loadBRENDAdata` | match |
-| `kcat_apply_edge_cases_ectestgem` | `applyKcatConstraints`, `setKcatForReactions`, `getKcatAcrossIsozymes`, `applyCustomKcats` | differs: the id vocabulary of the update list in `applyKcatConstraints` |
+| `kcat_apply_edge_cases_ectestgem` | `applyKcatConstraints`, `setKcatForReactions`, `fillKcatsFromIsozymes`, `applyCustomKcats` | differs: the id vocabulary of the update list in `applyKcatConstraints` |
 | `kcat_assignment_pipeline_ectestgem` | `kcatAssignmentConfig`, `collectKcats`, `assignKcats`, `ecTreeEstimate`, `kcatsFromECTree` | differs: config validation, doubled candidates and the `ec.source` text in `collectKcats`, NaN `k` and subsets in the EC tree |
-| `kcat_chain_ectestgem` | `fuzzyKcatMatching`, `loadBRENDAdata`, `extractEnzymeSubstratePairs`, `kcatsFromDLKcat`, `mergeKcats`, `assignKcatValues`, `applyCustomKcats`, `getKcatAcrossIsozymes`, `getStandardKcat`, `removeStandardKcat`, `applyKcatConstraints` | match |
+| `kcat_chain_ectestgem` | `fuzzyKcatMatching`, `loadBRENDAdata`, `extractEnzymeSubstratePairs`, `kcatsFromDLKcat`, `mergeKcats`, `assignKcatValues`, `applyCustomKcats`, `fillKcatsFromIsozymes`, `getStandardKcat`, `removeStandardKcat`, `applyKcatConstraints` | match |
 | `kcat_io_edge_cases_ectestgem` | `findMetSmiles`, `kcatsFromOKP`, `saveKcatSource`, `loadKcatSource`, `getStandardKcat` | differs: `findMetSmiles` duplicates and unnamed metabolites, invalid rows in `loadKcatSource`, `getStandardKcat` |
 | `kcat_merge_edge_cases_ectestgem` | `kcatsFromDLKcat`, `extractEnzymeSubstratePairs`, `loadBRENDAdata`, `fuzzyKcatMatching`, `mergeKcats`, `mergeDLKcatAndFuzzyKcats`, `assignKcatValues` | differs: `OKP-` sources in `mergeKcats`, the DLKcat reading, the enzyme-substrate pairs |
 | `kcat_review_stats_ectestgem` | `ecStatsFromBrenda`, `reviewKcatAssignment`, `loadBrendaMeasurements` | ERROR: no result from python; the report gives no cause. Local runs: differs: `ecStatsFromBrenda`, the case of the source in `reviewKcatAssignment`, `measurements.tsv.xz` |
@@ -168,7 +168,7 @@ never assumes the two sides agree on row order, only on the set of ids), keeping
 | `fuzzy` | `fuzzyKcatMatching`, `loadBRENDAdata` |
 | `standard` | `getStandardKcat`, `removeStandardKcat` |
 | `dlkcat` | `extractEnzymeSubstratePairs`, `kcatsFromDLKcat` (via 'file'), `mergeDLKcatAndFuzzyKcats`, `mergeKcats` |
-| `selection` | `assignKcatValues`, `applyCustomKcats`, `getKcatAcrossIsozymes` |
+| `selection` | `assignKcatValues`, `applyCustomKcats`, `fillKcatsFromIsozymes` |
 | `constraints` | `applyKcatConstraints` |
 
 The behaviours the checkpoints pin down:

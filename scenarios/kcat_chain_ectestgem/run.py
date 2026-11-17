@@ -241,7 +241,7 @@ def _checkpoint_dlkcat(model, fuzzy_df, inputs: dict):
 
 
 # --------------------------------------------------------------------------- #
-# selection: assignKcatValues + applyCustomKcats + getKcatAcrossIsozymes
+# selection: assignKcatValues + applyCustomKcats + fillKcatsFromIsozymes
 # --------------------------------------------------------------------------- #
 
 def _checkpoint_selection(model, merged, inputs: dict):

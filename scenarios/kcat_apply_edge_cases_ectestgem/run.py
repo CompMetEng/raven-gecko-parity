@@ -210,7 +210,7 @@ def _case_set_kcat(inputs) -> dict:
 
 
 # --------------------------------------------------------------------------- #
-# getKcatAcrossIsozymes
+# fillKcatsFromIsozymes
 # --------------------------------------------------------------------------- #
 
 def _case_isozymes(inputs) -> dict:

@@ -36,7 +36,7 @@ REPAIR: dict[str, str] = {
     "constrainFluxData": "geckopy.apply_flux_data_constraints",
     "getECfromDatabase": "geckopy.fill_eccodes_from_database",
     "getECfromGEM": "geckopy.fill_eccodes_from_gem",
-    "getKcatAcrossIsozymes": "geckopy.fill_kcats_from_isozymes",
+    "fillKcatsFromIsozymes": "geckopy.fill_kcats_from_isozymes",
     "getStandardKcat": "geckopy.assign_standard_kcat",
     "mergeDLKcatAndFuzzyKcats": "geckopy.merge_kcats",
     "selectKcatValue": "geckopy.apply_kcat_list",

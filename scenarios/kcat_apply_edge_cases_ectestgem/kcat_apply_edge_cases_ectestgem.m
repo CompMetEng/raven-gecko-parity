@@ -221,14 +221,14 @@ end
 
 
 % --------------------------------------------------------------------------- %
-% getKcatAcrossIsozymes
+% fillKcatsFromIsozymes
 % --------------------------------------------------------------------------- %
 
 function out = case_isozymes(adapter)
 model = build_model(adapter, false);
 model = set_kcats(model, {'R2_EXP_1', 'R2_EXP_2', 'R2_REV_EXP_1', 'R2_REV_EXP_2', 'R3'}, [NaN 5 0 NaN 8]);
 try
-    model = getKcatAcrossIsozymes(model);
+    model = fillKcatsFromIsozymes(model);
     raised = false;
 catch
     raised = true;
@@ -239,7 +239,7 @@ out.nan_siblings.rows = kcat_rows(model);
 model = build_model(adapter, false);
 model = set_kcats(model, {'R2_EXP_1', 'R2_EXP_2', 'R3'}, [4 0 8]);
 try
-    model = getKcatAcrossIsozymes(model);
+    model = fillKcatsFromIsozymes(model);
     raised = false;
 catch
     raised = true;

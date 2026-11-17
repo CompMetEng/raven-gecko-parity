@@ -346,7 +346,7 @@ and then:
    `ec.notes`;
 2. runs `applyKcatConstraints`.
 
-`mergeKcats`, `assignKcatValues`, `getKcatAcrossIsozymes` and
+`mergeKcats`, `assignKcatValues`, `fillKcatsFromIsozymes` and
 `getStandardKcat` stay callable on their own.
 
 ## 8. Custom kcats

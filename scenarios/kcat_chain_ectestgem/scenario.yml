@@ -16,7 +16,7 @@ entries:
   - mergeKcats
   - assignKcatValues
   - applyCustomKcats
-  - getKcatAcrossIsozymes
+  - fillKcatsFromIsozymes
   - getStandardKcat
   - removeStandardKcat
   - applyKcatConstraints
