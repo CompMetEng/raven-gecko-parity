@@ -14,7 +14,7 @@ from geckopy import ModelAdapter, load_conventional_gem, make_ec_model
 from geckopy.databases import load_brenda_measurements
 from geckopy.gather_kcats import assign_kcats, collect_kcats, kcats_from_ec_tree
 from geckopy.gather_kcats.ec_tree import ECTree
-from geckopy.gather_kcats.kcat_assignment import kcat_assignment_config, okp_methods
+from geckopy.gather_kcats.kcat_assignment import kcat_assignment_config, _okp_names
 from geckopy.get_enzyme_data.ec_from_gem import fill_eccodes_from_gem
 
 SELECT = '''
@@ -44,8 +44,9 @@ CONFIGS = {
     "stage_sources_string": '[[kcat_assignment.stage]]\nsources = "custom"\n',
     "preset_empty": '[kcat_assignment]\npreset = ""\n',
     "criteria_capitalised": '[[kcat_assignment.stage]]\nsources = ["custom"]\ncriteria = "Median"\n',
-    "okp_methods_unknown": '[kcat_sources.okp]\nmethods = ["Nope"]\n',
-    "okp_methods_two": '[kcat_sources.okp]\nmethods = ["CataPro", "UniKP"]\n',
+    "okp_method_unknown": '[kcat_sources.okp]\nmethod = "Nope"\n',
+    "okp_method_unikp": '[kcat_sources.okp]\nmethod = "UniKP"\n',
+    "okp_methods_key": '[kcat_sources.okp]\nmethods = "UniKP"\n',
     "preset_and_stage": ('[kcat_assignment]\npreset = "okp"\n\n[[kcat_assignment.stage]]\n'
                          'sources = ["custom"]\n'),
     "brenda_aggregation_capitalised": '[kcat_sources.brenda]\naggregation = "Median"\n',
@@ -119,13 +120,13 @@ def _config_case(inputs: dict, root: Path, name: str) -> dict:
     def read():
         adapter = ModelAdapter.from_folder(project)
         config = kcat_assignment_config(adapter)
-        methods = okp_methods(config)
+        methods = _okp_names(config)
         return config, methods
 
     raised, result = _attempt(read)
     if raised:
         return {"raised": True, "preset": "", "isozymes": False, "standard": False, "stages": [],
-                "sources": [], "okp_methods": []}
+                "sources": [], "okp_method": []}
     config, methods = result
     stages = [{"action": s.action, "sources": [str(x) for x in s.sources], "criteria": s.criteria,
                "top_origin_limit": float(s.top_origin_limit), "bottom_origin_limit": float(s.bottom_origin_limit),
@@ -134,7 +135,7 @@ def _config_case(inputs: dict, root: Path, name: str) -> dict:
                for src in sorted(config.sources) for key in sorted(config.sources[src])]
     return {"raised": False, "preset": str(config.preset), "isozymes": bool(config.isozymes),
             "standard": bool(config.standard), "stages": stages, "sources": sources,
-            "okp_methods": [str(m) for m in methods]}
+            "okp_method": [str(m) for m in methods]}
 
 
 # --------------------------------------------------------------------------- #
