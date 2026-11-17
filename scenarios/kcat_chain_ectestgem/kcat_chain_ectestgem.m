@@ -134,7 +134,7 @@ end
 
 
 % --------------------------------------------------------------------------- %
-% selection: assignKcatValues + applyCustomKcats + getKcatAcrossIsozymes
+% selection: assignKcatValues + applyCustomKcats + fillKcatsFromIsozymes
 % --------------------------------------------------------------------------- %
 
 function [out, ecModel] = checkpoint_selection(ecModel, mergedList, kcatAdapter)
@@ -170,7 +170,7 @@ for k = 1:numel(criteria)
 end
 out.select_aggregates = aggregates;
 
-ecModel = getKcatAcrossIsozymes(ecModel);
+ecModel = fillKcatsFromIsozymes(ecModel);
 out.after_isozyme_fill = kcat_rows(ecModel, ecModel.ec.rxns);
 
 % customKcats.tsv's only row targets R3 by reaction id alone (mode A: no protein

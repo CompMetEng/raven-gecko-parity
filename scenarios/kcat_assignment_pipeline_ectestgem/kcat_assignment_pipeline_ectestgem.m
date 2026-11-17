@@ -56,8 +56,9 @@ c.unknown_key = sprintf('[kcat_assignment]\nbogus = 1\n');
 c.stage_sources_string = sprintf('[[kcat_assignment.stage]]\nsources = "custom"\n');
 c.preset_empty = sprintf('[kcat_assignment]\npreset = ""\n');
 c.criteria_capitalised = sprintf('[[kcat_assignment.stage]]\nsources = ["custom"]\ncriteria = "Median"\n');
-c.okp_methods_unknown = sprintf('[kcat_sources.okp]\nmethods = ["Nope"]\n');
-c.okp_methods_two = sprintf('[kcat_sources.okp]\nmethods = ["CataPro", "UniKP"]\n');
+c.okp_method_unknown = sprintf('[kcat_sources.okp]\nmethod = "Nope"\n');
+c.okp_method_unikp = sprintf('[kcat_sources.okp]\nmethod = "UniKP"\n');
+c.okp_methods_key = sprintf('[kcat_sources.okp]\nmethods = "UniKP"\n');
 c.preset_and_stage = sprintf(['[kcat_assignment]\npreset = "okp"\n\n[[kcat_assignment.stage]]\n' ...
     'sources = ["custom"]\n']);
 c.brenda_aggregation_capitalised = sprintf('[kcat_sources.brenda]\naggregation = "Median"\n');
@@ -151,7 +152,7 @@ end
 function out = config_case(inputs, root, name, toml)
 project = make_project(inputs, root, ['config_' name], [], toml);
 out = struct('raised', true, 'preset', '', 'isozymes', false, 'standard', false, 'stages', {{}}, ...
-    'sources', {{}}, 'okp_methods', {{}});
+    'sources', {{}}, 'okp_method', {{}});
 try
     adapter = TomlAdapter(project);
     config = kcatAssignmentConfig(adapter.params);
@@ -175,10 +176,10 @@ for k = 1:numel(srcNames)
             'value', {plain(opts.(optNames{j}))});
     end
 end
-methods = cellstr(config.okpMethods(:)')';
+methods = cellstr(config.okpMethod(:)')';
 out = struct('raised', false, 'preset', char(config.preset), 'isozymes', logical(config.isozymes), ...
     'standard', logical(config.standard), 'stages', {stages}, 'sources', {sources}, ...
-    'okp_methods', {methods(:)'});
+    'okp_method', {methods(:)'});
 end
 
 

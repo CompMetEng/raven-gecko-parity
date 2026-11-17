@@ -2,9 +2,9 @@ id: kcat_assignment_pipeline_ectestgem
 pair: gecko
 description: >-
   The kcat assignment pipeline on ecTestGEM, from hand-written kcat source files. kcatAssignmentConfig /
-  kcat_assignment_config read twelve variants of [kcat_assignment] and [kcat_sources] from
+  kcat_assignment_config read thirteen variants of [kcat_assignment] and [kcat_sources] from
   model_adapter.toml (no table, a preset, stages, an unknown key, a stage whose sources is a string,
-  an empty preset, capitalised values, unknown OKP methods, a preset together with stages, an unknown
+  an empty preset, capitalised values, an unknown OKP method, a preset together with stages, an unknown
   preset). collectKcats / collect_kcats decide kcats with a select stage over custom, database_top,
   dlkcat and database_bottom (the files complete, dlkcat.tsv without rows, no custom.tsv with the
   legacy customKcats.tsv left, isozymes and the standard kcat on) and with the ec_tree_homologs

@@ -4,7 +4,7 @@ description: >-
   Edge cases of the functions that write kcats into ec.kcat and into the S matrix:
   applyKcatConstraints (light-model subsets, an isozyme row without enzymes, re-applying
   after every kcat was set to zero, an empty or unknown update list), setKcatForReactions
-  (default apply, letter case, unknown and base ids), getKcatAcrossIsozymes (NaN and zero
+  (default apply, letter case, unknown and base ids), fillKcatsFromIsozymes (NaN and zero
   siblings, default apply) and applyCustomKcats (empty notes, a blank kcat, letter case,
   protein-only rows, a quoted reaction list, a partial complex, a light model). Each case
   builds its own state, so the verdicts are independent. A raise is a value on both sides.
@@ -12,7 +12,7 @@ description: >-
 entries:
   - applyKcatConstraints
   - setKcatForReactions
-  - getKcatAcrossIsozymes
+  - fillKcatsFromIsozymes
   - applyCustomKcats
 
 # What this scenario compares (seed-independent, confirmed by running both sides). No
@@ -28,7 +28,7 @@ entries:
 #   setKcatForReactions: both sides change S only when asked (apply defaults to false), match
 #     ids without regard to case, ignore an unknown id and match a light-model id with its
 #     prefix as it stands (a base id matches no row).
-#   getKcatAcrossIsozymes: both sides fill only a kcat of 0 from siblings with a kcat above 0,
+#   fillKcatsFromIsozymes: both sides fill only a kcat of 0 from siblings with a kcat above 0,
 #     leave a NaN kcat alone and change S only when asked (apply defaults to false).
 #   applyCustomKcats: both sides skip a blank kcat, append nothing for an empty note, match
 #     protein and reaction ids exactly, read a quoted reaction list without its quotes and

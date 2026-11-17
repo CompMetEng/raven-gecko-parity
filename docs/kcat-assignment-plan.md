@@ -207,7 +207,7 @@ Reports give the line of the file.
 |---|---|---|---|---|
 | `kcatsFromBrenda` | `kcats_from_brenda` | Fuzzy BRENDA matching (engine: `fuzzyKcatMatching`) | Locally, on the BRENDA asset | `aggregation` (`max`, `median`; `p75` once the BRENDA asset has it), `forceWClvl`, `ecRxns` |
 | `kcatsFromDLKcat` | `kcats_from_dlkcat` | DLKcat (engines: `writeDLKcatInput`, `runDLKcat`, `readDLKcatOutput`) | Docker image | `run` (rerun DLKcat, otherwise reuse its existing output), `ecRxns` |
-| `kcatsFromOKP` | `kcats_from_okp` | OpenKineticsPredictor (engines: the submit, fetch and read functions) | Web service with a job queue | `method` (one per call, file `okp_<method>.tsv`; each method keeps its own job and result in `data/OKP_job_<method>.txt` and `data/OKP_output_<method>.csv`), `wait`, `resubmit`, `useStored` |
+| `kcatsFromOKP` | `kcats_from_okp` | OpenKineticsPredictor (engines: the submit, fetch and read functions) | Web service with a job queue | `method` (one per call, file `okp_<method>.tsv`; job and result in `data/OKP_job_<method>.txt` and `data/OKP_output_<method>.csv`), `wait`, `resubmit`, `useStored` |
 | `kcatsFromECTree` | `kcats_from_ec_tree` | EC tree estimate from the BRENDA measurement file | Locally | `k` (shrinkage, default 5) |
 | `kcatsFromHomologs` | `kcats_from_homologs` | Identity-weighted homolog mean | MMseqs2 | identity and coverage limits, number of homologs |
 
@@ -242,7 +242,7 @@ Per-source options go in the TOML:
 aggregation = "median"
 
 [kcat_sources.okp]
-methods = ["CataPro"]
+method = "CataPro"
 ```
 
 A preset sets these as well; explicit `[kcat_sources.*]` values override
@@ -283,7 +283,7 @@ Presets:
 | `brenda_ec_tree` | custom → BRENDA median at origin 1 (organism and substrate, no EC wildcard) → EC tree → DLKcat (reactions without an EC number) | Default |
 | `gecko_median` | custom → BRENDA top (no EC wildcard, origin 1–4) → DLKcat → BRENDA bottom (EC wildcards, and specific activities, origin 5–6), aggregation `median` | |
 | `ec_tree_homologs` | custom → combine(EC tree, homologs) | Option (K4b); with BRENDA-only measurements the homologs add −0.002 (−0.020 to +0.015) over the EC tree |
-| `combined_all` | custom → combine(EC tree, homologs, all OKP methods) | For single kcat values, not recommended for models |
+| `combined_all` | custom → combine(EC tree, homologs, OKP) | For single kcat values, not recommended for models |
 
 The order of `gecko_median` follows the benchmark (development split, K1:
 the enzyme's own measurements and those of sequences at ≥ 95% identity
@@ -346,7 +346,7 @@ and then:
    `ec.notes`;
 2. runs `applyKcatConstraints`.
 
-`mergeKcats`, `assignKcatValues`, `getKcatAcrossIsozymes` and
+`mergeKcats`, `assignKcatValues`, `fillKcatsFromIsozymes` and
 `getStandardKcat` stay callable on their own.
 
 ## 8. Custom kcats
