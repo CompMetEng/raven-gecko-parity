@@ -717,7 +717,7 @@ entries:
       parameters uniprot.id and kegg.id are empty by default on both sides; with an empty uniprot.id and no
       data/uniprot.tsv, loadDatabases stops with loadDatabases:noUniprotID, and geckopy''s make_ec_model and
       calculate_f_factor raise a FileNotFoundError that names [uniprot] id. An empty kegg.id skips KEGG with a
-      warning on both sides. Both read a gene cell of uniprot.tsv with several names as one string by default, so only a model gene equal to the whole cell matches. The option splitGeneCells of loadDatabases and getECfromDatabase (geckopy.load_uniprot_tsv, split_gene_cells) expands such a cell, split on white space, into one row per name that repeats the other columns; an empty cell stays one row, and a repeated Entry across file rows is still a duplicate and raises. The default is false on both sides, and neither reads it from model_adapter.toml.'
+      warning on both sides. Both always split a gene cell of uniprot.tsv with several names (such as YPR080W; YBR118W) on semicolons and white space into one row per name, drop empty pieces and repeat the other columns, so a model gene that is any of the names matches the entry (geckopy.load_uniprot_tsv does the same). An empty cell stays one row with an empty gene, and a repeated Entry across file rows is still a duplicate and raises. There is no option for it.'
   - matlab: loadEcModel
     python: geckopy.load_ec_model
     status: parity
