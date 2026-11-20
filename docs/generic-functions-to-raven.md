@@ -73,7 +73,7 @@ The scenarios that touch the moved code run Python (hash seeds 0, 1 and 2) again
 | `molecular_weight_sequences` | match |
 | `ec_analysis_light_humangem` | match |
 | `ec_fva_ecyeastgem` | running (genome scale) |
-| `ec_proteomics_ecyeastgem` | running (genome scale) |
+| `ec_proteomics_ecyeastgem` | differs in `flexibilize` only (75 values; Python seeds 0, 1 and 2 agree with each other). The parity plan lists the optimal vertex under the proteomics constraints as a documented difference of this scenario. The flux data steps match. |
 
 The scenarios changed for the move: the MATLAB side calls `loadFluxData(path)`, the Python side imports from `raven_toolbox.experiments`, `raven_toolbox.annotation` and `raven_toolbox.utils.solver`, and the evotune scenario uses the experiment-data names. Two further changes in `evotune_edge_cases_ectestgem` follow other changes in the toolboxes: geckopy takes `sigma0_log` inside each source group, and GECKO takes the biomass reaction from `modelAdapter.params.bioRxn` and the group of each source from `kcatGroups`, so the scenario sets both.
 
@@ -81,7 +81,8 @@ The scenarios changed for the move: the MATLAB side calls `loadFluxData(path)`, 
 
 * geckopy's pin on raven-toolbox has to name the first release with `experiments` and the
   moved solver module.
-* `ec_fva_ecyeastgem` and `ec_proteomics_ecyeastgem` have to finish; the table above gets their result.
+* `ec_fva_ecyeastgem` has to finish; the table above gets its result.
+* `ec_proteomics_ecyeastgem` has no run on the code from before the move, so that the `flexibilize` difference is known to be the documented one and not a new one.
 * The seeded evotune run against the stored RMSE trace (`~/ecmodel-runs/b2/full`, seed 0) has
   to give the same result on the moved code.
 * GECKO needs a RAVEN version requirement for the new functions.
