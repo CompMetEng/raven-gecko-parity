@@ -16,9 +16,9 @@ Status values: `done` (implemented and tested on a branch), `in progress`, `plan
 | Function (today) | Target | Python | MATLAB | Note |
 |---|---|---|---|---|
 | Flux data and experiment files: `load_flux_data`, `FluxData` / `loadFluxData` | `raven_toolbox.experiments`, `src/experiments` | done | in progress | The columns are `Condition Ptot grRate <met> (<rxn>) ... weight source`. |
-| `load_experiment_data` / `loadEvotuneData` | `raven_toolbox.experiments`, `src/experiments` as `loadExperimentData` | done | in progress | Takes a folder. Files `fluxData.tsv`, `maxGrowth.tsv`, `zeroFlux.tsv`. |
+| `load_experiment_data` / `loadEvotuneData` | `raven_toolbox.experiments`, `src/experiments` as `loadExperimentData` | done | in progress | Takes a folder. Files `fluxData.tsv` (flux conditions), `maxGrowth.tsv` (maximum-growth conditions), `zeroFlux.tsv` (reactions without flux). |
 | `simulate_conditions` / part of `evotuneScore` | `raven_toolbox.experiments`, `simulateConditions` | done | in progress | The anaerobic switch, the protein-content change and the solver call are function arguments. |
-| `experiment_distance`, `dataset_rmse` / part of `evotuneScore` | `raven_toolbox.experiments`, `experimentDistance`, `datasetRmse` | done | in progress | Constants: biomass carbon 41, infeasible penalty 99. |
+| `experiment_distance`, `dataset_rmse` / part of `evotuneScore` | `raven_toolbox.experiments`, `experimentDistance`, `datasetRmse` | done | in progress | The distance combines the carbon-weighted RMSE of the flux conditions and of the maximum-growth conditions. Constants: biomass carbon 41, infeasible penalty 99. |
 | `compute_carbon_weights` / `fillCarbonNum` (`model.excarbon`) | `raven_toolbox.experiments`, `computeCarbonWeights` | done | in progress | Returns a map keyed by reaction id and does not write a model field. |
 | `apply_flux_data_constraints` / `constrainFluxData` | `raven_toolbox.experiments`, `applyFluxDataConstraints` | done | done | Takes the biomass reaction and carbon source as arguments. GECKO and geckopy keep a wrapper that reads them from the adapter. |
 | `solver_support.py` (`optimize_model`, scipy and HiGHS repair, shadow prices) | `raven_toolbox.utils.solver` | done | not needed | MATLAB uses `solveLP`. |
@@ -52,8 +52,8 @@ Status values: `done` (implemented and tested on a branch), `in progress`, `plan
 * A condition with weight exactly 0 is left out of the simulation and the distance: its result
   has `skipped = true` and `feasible = false` (`ConditionSimResult.skipped` in Python, the
   `skipped` field of the `sims` struct array in MATLAB), its per-condition value is NaN, and the
-  mean runs over the other conditions. A dataset in which every weight is 0 gives NaN and is left
-  out of `experiment_distance` / `experimentDistance`.
+  mean runs over the other conditions. A kind of condition in which every weight is 0 gives NaN and is
+  left out of `experiment_distance` / `experimentDistance`.
 * `getGAM(model, biomassRxn, 'atpMetName', ...)` takes the biomass reaction as a positional
   argument, and `get_gam(model, biomass_rxn=..., atp_met_name=...)` as a keyword. `setGAM` takes
   `'keepOffsetsOf'` and `set_gam` `keep_offsets_of`; both default to none, which sets every term to
