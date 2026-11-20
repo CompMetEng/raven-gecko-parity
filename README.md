@@ -314,6 +314,7 @@ here:
 | Document | What it is |
 |---|---|
 | [docs/matlab_raven_backports.md](docs/matlab_raven_backports.md) | What MATLAB RAVEN still needs from raven-toolbox, and what raven-toolbox deliberately does not have |
+| [docs/generic-functions-to-raven.md](docs/generic-functions-to-raven.md) | Which generic functions of GECKO and geckopy move to RAVEN and raven-toolbox, what stays, and the state of each |
 
 ## Work in progress, documented here rather than on the site
 
