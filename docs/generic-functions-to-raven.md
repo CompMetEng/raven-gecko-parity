@@ -6,6 +6,8 @@ MATLAB and Python sides stand. Both sides get the same function in the same rele
 ledgers (`ledgers/raven.yml`, `ledgers/gecko.yml`) carry the rows once the functions exist,
 because `parity check` fails on a row that names a function that is not there.
 
+The MATLAB functions of the experiments package are in `src/experiments` of RAVEN; the GECKO wrappers (`constrainFluxData`, `loadEvotuneData`, `evotuneScore`) and the removal of `fillCarbonNum` are planned.
+
 Status values: `done` (implemented and tested on a branch), `in progress`, `planned`, `kept`
 (stays where it is, with the reason).
 
@@ -21,8 +23,8 @@ Status values: `done` (implemented and tested on a branch), `in progress`, `plan
 | `apply_flux_data_constraints` / `constrainFluxData` | `raven_toolbox.experiments`, `applyFluxDataConstraints` | done | in progress | Takes the biomass reaction and carbon source as arguments. GECKO and geckopy keep a wrapper that reads them from the adapter. |
 | `solver_support.py` (`optimize_model`, scipy and HiGHS repair, shadow prices) | `raven_toolbox.utils.solver` | in progress | not needed | MATLAB uses `solveLP`. |
 | `calculate_mw`, `find_met_smiles` | raven-toolbox | in progress | to decide | Checked against what raven-toolbox already has. |
-| Maintenance fit (Huber loss, study weights, bootstrap, uptake grid, NGAM from retentostat) | `raven_toolbox.biomass` | in progress | planned | Reuses `set_gam` and `fit_parameters`. yeast-GEM keeps data, ids and a thin wrapper. |
-| `parseGECKOargs` | `parseRAVENargs` | not needed | in progress | RAVEN's function accepts every call form that GECKO's does. GECKO's is removed. |
+| Maintenance fit (Huber loss, study weights, bootstrap, uptake grid, NGAM from retentostat) | `raven_toolbox.biomass` | done | planned | Reuses `set_gam` and `fit_parameters`. yeast-GEM keeps data, ids and a thin wrapper. |
+| `parseGECKOargs` | `parseRAVENargs` | not needed | done | RAVEN's function accepts every call form that GECKO's does. GECKO's is removed. |
 
 ## Stays in GECKO and geckopy
 
@@ -34,6 +36,18 @@ Status values: `done` (implemented and tested on a branch), `in progress`, `plan
 | `buildGECKOdoc` | Legacy m2html build. The documentation is built from `gecko-docs`. Candidate for removal. |
 | Evotune CMA-ES search | The search is generic, its parameters are per-kcat (mask, sigma, tying, source groups). |
 | `gather_kcats`, `get_enzyme_data`, `kcat_tuning`, `ec_model`, the rest of `limit_proteins`, the adapter, `upgrade.py`, OKP, DLKcat and BRENDA readers | Use kcats, enzymes or the protein pool. |
+
+## Differences between the two APIs
+
+* The MATLAB functions work on plain structs with the GECKO field names (`conds`, `Ptot`,
+  `grRate`, `exchFluxes`, `exchMets`, `exchRxnIDs`, `weight`, `source`).
+* `applyFluxDataConstraints(model, fluxData, bioRxnId, ...)` takes the biomass reaction as a
+  positional argument, and its `'condition'` option counts from 1. In Python `bio_rxn_id` is
+  a keyword and the condition counts from 0.
+* `computeCarbonWeights` returns a `containers.Map` and `simulateConditions` a struct array.
+  The hooks return the model, and `optimize` defaults to `solveLP`.
+* A condition is feasible only when the solve is optimal, and a biomass reaction missing from
+  the model raises an error.
 
 ## Ledger rows to add when the functions exist
 
