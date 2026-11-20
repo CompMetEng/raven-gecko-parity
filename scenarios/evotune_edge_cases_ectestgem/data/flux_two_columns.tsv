@@ -1,2 +1,2 @@
-condition	Ptot	grRate	e1 (S1)	e2 (S2)	evotuneRMSEweight
+condition	Ptot	grRate	e1 (S1)	e2 (S2)	weight
 e1	0	20	-10	8	1

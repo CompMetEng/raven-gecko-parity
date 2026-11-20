@@ -8,7 +8,7 @@ function results = flexibilize_concs_ectestgem(ctx)
 % post-loop refinement pass, where both sides settle at the low edge of the growth band.
 %
 % TestGEMAdapter.m's own bioRxn ('R4', "Not relevant") and c_source ('E1', not a real
-% reaction id here) are not used as-is: both loadFluxData/constrainFluxData/
+% reaction id here) are not used as-is: constrainFluxData and
 % flexibilizeEnzConcs resolve these through the adapter rather than taking them as
 % direct arguments, so a *copy* of the adapter (value class, same pattern as
 % kcat_chain_ectestgem's kcatAdapter) carries the corrected values instead.
@@ -35,7 +35,7 @@ end
 % --------------------------------------------------------------------------- %
 
 function out = checkpoint_flux_data(model, adapter, fixAdapter, inputs)
-fluxData = loadFluxData('fluxDataFile', char(inputs.flux_data_path), 'modelAdapter', adapter);
+fluxData = loadFluxData(char(inputs.flux_data_path));
 
 out.parsed.conds = reshape(fluxData.conds, 1, []);
 % num2cell, not reshape alone: jsonencode collapses a 1x1 (single-condition) numeric

@@ -21,7 +21,7 @@ from geckopy import (
     map_rxns_to_conv,
     set_prot_pool_size,
 )
-from geckopy.solver_support import fast_solver_while_building, switch_to_scipy
+from raven_toolbox.utils.solver import fast_solver_while_building, switch_to_scipy
 
 
 def num(x) -> dict:

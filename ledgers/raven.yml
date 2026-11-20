@@ -2355,3 +2355,93 @@ entries:
     status: python-only
     reason: Result type. RAVEN returns several parallel outputs; raven-toolbox returns one dataclass, so this
       has no MATLAB counterpart by design.
+  - matlab: loadFluxData
+    python: raven_toolbox.experiments.load_flux_data
+    status: parity
+    notes: >-
+      Both read a fluxData.tsv (condition, Ptot, grRate, one column per exchange as `<metabolite> (<reaction id>)`, optional weight and source) and raise for a missing file, an empty file, a header with fewer than three columns, a ragged row, the old column evotuneRMSEweight (now weight) and a file without exchange columns. MATLAB returns a struct with the fields conds, Ptot, grRate, exchFluxes, exchMets, exchRxnIDs, weight and source, Python a FluxData with the same content.
+  - matlab: loadExperimentData
+    python: raven_toolbox.experiments.load_experiment_data
+    status: parity
+    notes: >-
+      Both read fluxData.tsv, maxGrowth.tsv and zeroFlux.tsv from a folder; a missing file gives an empty value, not an error. MATLAB returns a struct with the fields fluxData, maxGrowth and zeroFlux, Python an ExperimentData with flux_data, max_growth and zero_flux.
+  - matlab: simulateConditions
+    python: raven_toolbox.experiments.simulate_conditions
+    status: parity
+    notes: >-
+      Both block every condition exchange, open the carbon source of the row (fixed at the measured uptake, or at -1000 for max-growth data), apply the optional anaerobic and protein-content functions and solve with the optional solver function. A condition counts as feasible only when the solve is optimal. MATLAB returns a struct array, Python a list of ConditionSimResult.
+  - matlab: computeCarbonWeights
+    python: raven_toolbox.experiments.compute_carbon_weights
+    status: parity
+    notes: >-
+      Biomass gets 41, every other reaction the carbon count of its single exchanged metabolite, and a count of 0 or a formula that does not parse as plain elements gets 1. MATLAB returns a containers.Map, Python a dict.
+  - matlab: datasetRmse
+    python: raven_toolbox.experiments.dataset_rmse
+    status: parity
+    notes: Carbon-weighted RMSE of the simulated conditions of one dataset against its measurements, with the infeasibility penalty 99.
+  - matlab: experimentDistance
+    python: raven_toolbox.experiments.experiment_distance
+    status: parity
+    notes: Combines the RMSE of the flux data and of the max-growth data, weighted by the max-growth weight.
+  - matlab: applyFluxDataConstraints
+    python: raven_toolbox.experiments.apply_flux_data_constraints
+    status: parity
+    notes: >-
+      Both take the biomass reaction and the carbon source as arguments and set the exchange bounds of one condition in the loose mode or as a percentage band. The condition is counted from 1 in MATLAB and from 0 in Python.
+  - python: raven_toolbox.experiments.FluxData
+    status: python-only
+    reason: Result type of load_flux_data. MATLAB returns a struct with the same content.
+  - python: raven_toolbox.experiments.ExperimentData
+    status: python-only
+    reason: Result type of load_experiment_data. MATLAB returns a struct with the same content.
+  - python: raven_toolbox.experiments.ConditionSimResult
+    status: python-only
+    reason: Result type of simulate_conditions. MATLAB returns a struct array with the same content.
+  - python: raven_toolbox.experiments.BIOMASS_CARBON_EQUIV
+    status: internal
+    reason: Constant of compute_carbon_weights (computeCarbonWeights uses the same value).
+  - python: raven_toolbox.experiments.INFEASIBLE_PENALTY
+    status: internal
+    reason: Constant of dataset_rmse (datasetRmse uses the same value).
+  - python: raven_toolbox.annotation.find_met_smiles
+    status: python-only
+    reason: The MATLAB function is GECKO's findMetSmiles (ledgers/gecko.yml); RAVEN has none.
+  - python: raven_toolbox.annotation.met_smiles
+    status: internal
+    reason: Helper of find_met_smiles that reads the SMILES of a metabolite whatever shape its annotation has.
+  - python: raven_toolbox.biomass.get_gam
+    status: unreviewed
+    reason: Reads the GAM of a model. Not yet decided whether RAVEN needs a MATLAB counterpart of setGAM's reader.
+  - python: raven_toolbox.biomass.fit_maintenance
+    status: unreviewed
+    reason: Fits NGAM and GAM from chemostat and retentostat data (yeast-GEM draft PR 433). Not yet decided whether RAVEN gets a MATLAB version.
+  - python: raven_toolbox.biomass.fit_gam
+    status: internal
+    reason: Step of fit_maintenance, also usable alone.
+  - python: raven_toolbox.biomass.bootstrap_gam
+    status: internal
+    reason: Step of fit_maintenance, also usable alone.
+  - python: raven_toolbox.biomass.uptake_grid
+    status: internal
+    reason: Step of fit_maintenance.
+  - python: raven_toolbox.biomass.min_uptake
+    status: internal
+    reason: Step of fit_maintenance.
+  - python: raven_toolbox.biomass.ngam_from_maintenance_coefficient
+    status: internal
+    reason: Step of fit_maintenance.
+  - python: raven_toolbox.biomass.study_weights
+    status: internal
+    reason: Step of fit_maintenance.
+  - python: raven_toolbox.biomass.huber_loss
+    status: internal
+    reason: Step of fit_maintenance.
+  - python: raven_toolbox.biomass.log_ratio
+    status: internal
+    reason: Step of fit_maintenance.
+  - python: raven_toolbox.biomass.MaintenanceConfig
+    status: internal
+    reason: Settings type of fit_maintenance (reaction ids and metabolite names).
+  - python: raven_toolbox.biomass.MaintenanceFit
+    status: internal
+    reason: Result type of fit_maintenance.

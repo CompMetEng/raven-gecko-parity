@@ -6,7 +6,6 @@ description: >-
   constraints until a target growth rate is reachable.
 
 entries:
-  - loadFluxData
   - constrainFluxData
   - flexibilizeEnzConcs
 
@@ -30,7 +29,7 @@ inputs:
   # TestGEMAdapter.m sets bioRxn='R4' with the comment "%Not relevant", and
   # c_source='E1' -- a metabolite-shaped name, not any real reaction id in this
   # model (S1/S2 are the actual exchanges). Neither is meant to be used as-is; both
-  # loadFluxData/constrainFluxData's own signatures take a modelAdapter, not an
+  # constrainFluxData's own signature takes a modelAdapter, not an
   # explicit bio_rxn/c_source, so the MATLAB side redirects a *copy* of the adapter
   # (value class, same pattern as kcat_chain_ectestgem's kcatAdapter) with corrected
   # values, while apply_flux_data_constraints takes them directly as keyword

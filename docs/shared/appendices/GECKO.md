@@ -26,7 +26,7 @@ Integration branch `develop`; pull requests target it. GECKO runs on top of RAVE
 - Help text is NumPy style with `Parameters`, `Name-Value Arguments`, `Returns`,
   `Examples` and `See also` sections. See `src/change_model/applyKcatConstraints.m`. A new
   script starts with a commented section describing it and its inputs and outputs.
-- Optional arguments are parsed with `parseGECKOargs`, positional or name-value.
+- Optional arguments are parsed with RAVEN's `parseRAVENargs`, positional or name-value.
 - A RAVEN function that GECKO calls must exist on RAVEN `develop`. When RAVEN renames or
   removes a function, GECKO's calls to it break without a compile-time error.
 - Function names are camelCase. CI runs MATLAB R2024b.

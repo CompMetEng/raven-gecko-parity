@@ -21,7 +21,7 @@ from pathlib import Path
 from unittest import mock
 
 from geckopy import ModelAdapter, kcats_from_okp, load_conventional_gem, make_ec_model
-from geckopy.databases.pubchem import find_met_smiles
+from raven_toolbox.annotation import find_met_smiles
 from geckopy.gather_kcats.open_kinetics_predictor import OKPError
 from geckopy.gather_kcats.open_kinetics_predictor import run as okp_run
 
