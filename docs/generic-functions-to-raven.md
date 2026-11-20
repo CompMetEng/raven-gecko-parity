@@ -106,4 +106,7 @@ The scenarios changed for the move: the MATLAB side calls `loadFluxData(path)`, 
 | geckopy | [#98](https://github.com/CompMetEng/geckopy/pull/98) (draft) | the raven-toolbox release, and a raised `raven-toolbox` requirement |
 | GECKO | [#38](https://github.com/CompMetEng/GECKO/pull/38) (draft) | the RAVEN release with `src/experiments` |
 | yeast-GEM | [#433](https://github.com/SysBioChalmers/yeast-GEM/pull/433) (draft) | the raven-toolbox release |
+| raven-gecko-parity | [#158](https://github.com/CompMetEng/raven-gecko-parity/pull/158) (draft) | the four pull requests above |
+| raven-docs | [#131](https://github.com/CompMetEng/raven-docs/pull/131) (draft) | raven-toolbox#204 and RAVEN#28, and the submodule pointers |
+| gecko-docs | [#51](https://github.com/CompMetEng/gecko-docs/pull/51) (draft) | geckopy#98, GECKO#38 and the code pull requests of raven-toolbox and RAVEN, and the submodule pointers |
 
