@@ -31,6 +31,9 @@ end
 if ~isempty(c.ngam_value)
     args = [args, {'ngamValue', double(c.ngam_value)}]; %#ok<AGROW>
 end
+if isfield(c, 'keep_offsets_of') && ~isempty(c.keep_offsets_of)
+    args = [args, {'keepOffsetsOf', char(c.keep_offsets_of)}]; %#ok<AGROW>
+end
 state = warning('off', 'all');
 restoreWarnings = onCleanup(@() warning(state));
 try
@@ -50,6 +53,11 @@ end
 entries = entries(order);
 atpm = strcmp(model.rxns, 'ATPM');
 out = struct('value', value, 'coefficients', {entries}, 'ngam_lb', model.lb(atpm), 'ngam_ub', model.ub(atpm));
+try
+    out.gam = double(getGAM(model, char(c.biomass_rxn)));
+catch
+    % no single ATP term: no value to compare
+end
 end
 
 

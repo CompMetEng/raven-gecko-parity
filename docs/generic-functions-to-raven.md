@@ -24,6 +24,7 @@ Status values: `done` (implemented and tested on a branch), `in progress`, `plan
 | `solver_support.py` (`optimize_model`, scipy and HiGHS repair, shadow prices) | `raven_toolbox.utils.solver` | done | not needed | MATLAB uses `solveLP`. |
 | `calculate_mw`, `find_met_smiles` | raven-toolbox (`utils.protein`, `annotation.smiles`) | done | to decide | raven-toolbox had no equivalent. `find_met_smiles` needs `cache_path`. |
 | Maintenance fit (Huber loss, study weights, bootstrap, uptake grid, NGAM from retentostat) | `raven_toolbox.biomass` | done (yeast-GEM draft PR 433) | planned | Reuses `set_gam` and `fit_parameters`. yeast-GEM keeps data, ids and a thin wrapper. |
+| `set_gam` with `keep_offsets_of`, `get_gam` / `setGAM` with `keepOffsetsOf`, `getGAM` | `raven_toolbox.biomass`, `src/biomass` | done | done | The ATP coefficient becomes the value and the other GAM terms shift by the same amount, so a proton offset stays. The default sets every term to the value, in both languages. Checked on yeast-GEM: both give the same coefficients. |
 | `parseGECKOargs` | `parseRAVENargs` | not needed | done | RAVEN's function accepts every call form that GECKO's does. GECKO's is removed. |
 
 ## Stays in GECKO and geckopy
@@ -48,12 +49,21 @@ Status values: `done` (implemented and tested on a branch), `in progress`, `plan
   The hooks return the model, and `optimize` defaults to `solveLP`.
 * A condition is feasible only when the solve is optimal, and a biomass reaction missing from
   the model raises an error.
+* A condition with weight exactly 0 is left out of the simulation and the distance: its result
+  has `skipped = true` and `feasible = false` (`ConditionSimResult.skipped` in Python, the
+  `skipped` field of the `sims` struct array in MATLAB), its per-condition value is NaN, and the
+  mean runs over the other conditions. A dataset in which every weight is 0 gives NaN and is left
+  out of `experiment_distance` / `experimentDistance`.
+* `getGAM(model, biomassRxn, 'atpMetName', ...)` takes the biomass reaction as a positional
+  argument, and `get_gam(model, biomass_rxn=..., atp_met_name=...)` as a keyword. `setGAM` takes
+  `'keepOffsetsOf'` and `set_gam` `keep_offsets_of`; both default to none, which sets every term to
+  the value.
 
 ## Ledger rows
 
-`parity check` passes for the raven pair (two `unreviewed` warnings: `get_gam` and `fit_maintenance`, until it is decided whether RAVEN gets a MATLAB version) and `parity ledger-audit` is clean for both pairs.
+`parity check` passes for the raven pair (one `unreviewed` warning: `fit_maintenance`, until it is decided whether RAVEN gets a MATLAB version) and `parity ledger-audit` is clean for both pairs.
 
-* `raven.yml`: `loadFluxData`, `loadExperimentData`, `simulateConditions`, `computeCarbonWeights`, `datasetRmse`, `experimentDistance` and `applyFluxDataConstraints` are `parity` rows with the Python names under `raven_toolbox.experiments`. The result types and constants of the package, `find_met_smiles`, `met_smiles` and the maintenance functions are `python-only`, `internal` or `unreviewed` rows.
+* `raven.yml`: `getGAM` is a `parity` row with `get_gam`, and the `setGAM` row notes `keepOffsetsOf`; both are covered by the scenario `set_gam_toy`, which has `keep_offsets_of` cases and reads the GAM back. `loadFluxData`, `loadExperimentData`, `simulateConditions`, `computeCarbonWeights`, `datasetRmse`, `experimentDistance` and `applyFluxDataConstraints` are `parity` rows with the Python names under `raven_toolbox.experiments`. The result types and constants of the package, `find_met_smiles`, `met_smiles` and the maintenance functions are `python-only`, `internal` or `unreviewed` rows.
 * `gecko.yml`: `fillCarbonNum`, `loadFluxData` (the row now names `geckopy.load_flux_data` as `internal`) and `parseGECKOargs` are gone. `evotuneScore` and `loadEvotuneData` are `subsumed` (wrappers of the RAVEN functions; geckopy calls `raven_toolbox.experiments` inside the tuning). `addCarbonNum` and `getcarbonnum` are `matlab-only` stubs. The seven evotune result types and constants of geckopy and the re-exports in `geckopy.databases` are updated. The notes that named `geckopy.solver_support` name `raven_toolbox.utils.solver`.
 * The scenario entries `loadFluxData` are removed from the `gecko` scenarios, because the function belongs to the raven pair.
 

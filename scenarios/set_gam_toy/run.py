@@ -7,7 +7,7 @@ bounds of the maintenance reaction.
 
 import cobra
 
-from raven_toolbox.biomass import set_gam
+from raven_toolbox.biomass import get_gam, set_gam
 
 
 def build_model(mets, reactions):
@@ -32,6 +32,8 @@ def run_one(inputs, case, value):
         kwargs["ngam_rxn"] = str(case["ngam_rxn"])
     if case["ngam_value"] is not None:
         kwargs["ngam_value"] = float(case["ngam_value"])
+    if case.get("keep_offsets_of"):
+        kwargs["keep_offsets_of"] = str(case["keep_offsets_of"])
     try:
         set_gam(model, float(value), **kwargs)
     except (KeyError, ValueError):
@@ -50,12 +52,17 @@ def run_one(inputs, case, value):
         key=lambda e: e["met"],
     )
     ngam = model.reactions.get_by_id("ATPM")
-    return {
+    out = {
         "value": float(value),
         "coefficients": coefficients,
         "ngam_lb": float(ngam.lower_bound),
         "ngam_ub": float(ngam.upper_bound),
     }
+    try:
+        out["gam"] = float(get_gam(model, biomass_rxn=str(case["biomass_rxn"])))
+    except ValueError:
+        pass  # no single ATP term: no value to compare
+    return out
 
 
 def run(ctx):

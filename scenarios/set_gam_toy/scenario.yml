@@ -7,10 +7,14 @@ description: >-
   to a negative value and to zero. Other cases cover a cofactor name in two compartments and a metabolite
   whose name differs only in case, cofactors that the biomass reaction lacks, an empty cofactor list, the
   non-growth maintenance bounds given completely, in part, as a value without a reaction, with an empty reaction id or for a reaction the model lacks, and a biomass
-  reaction the model lacks.
+  reaction the model lacks. Further cases set the GAM with keepOffsetsOf, on a biomass reaction whose proton
+  coefficient is 0.3 above the ATP coefficient (values, with the NGAM bounds, a name that is not a cofactor,
+  a name that the reaction lacks and a name in two compartments). Every successful run also reads the GAM
+  back with getGAM.
 
 entries:
   - setGAM
+  - getGAM
 
 inputs:
   mets: &mets
@@ -33,6 +37,27 @@ inputs:
     - {met: adp_c, coefficient: 90.2}
     - {met: pi_c, coefficient: 90.2}
     - {met: h_c, coefficient: 90.2}
+    - {met: glu_c, coefficient: -0.5}
+    - {met: prot_c, coefficient: 1}
+  - id: ATPM
+    lb: 0
+    ub: 1000
+    stoichiometry:
+    - {met: atp_c, coefficient: -1}
+    - {met: h2o_c, coefficient: -1}
+    - {met: adp_c, coefficient: 1}
+    - {met: pi_c, coefficient: 1}
+    - {met: h_c, coefficient: 1}
+  reactions_offset: &offset
+  - id: BIO
+    lb: 0
+    ub: 1000
+    stoichiometry:
+    - {met: atp_c, coefficient: -90.2}
+    - {met: h2o_c, coefficient: -90.2}
+    - {met: adp_c, coefficient: 90.2}
+    - {met: pi_c, coefficient: 90.2}
+    - {met: h_c, coefficient: 90.5}
     - {met: glu_c, coefficient: -0.5}
     - {met: prot_c, coefficient: 1}
   - id: ATPM
@@ -172,5 +197,45 @@ inputs:
     biomass_rxn: NOPE
     cofactors: *cofactors
     values: [2]
+    ngam_rxn: null
+    ngam_value: null
+  - name: keep_offsets_sweep
+    reactions: *offset
+    biomass_rxn: BIO
+    cofactors: *cofactors
+    keep_offsets_of: ATP
+    values: [0.1, 3.209889, 46.5, 90.2, 120, 0]
+    ngam_rxn: null
+    ngam_value: null
+  - name: keep_offsets_ngam
+    reactions: *offset
+    biomass_rxn: BIO
+    cofactors: *cofactors
+    keep_offsets_of: ATP
+    values: [45]
+    ngam_rxn: ATPM
+    ngam_value: 1.5
+  - name: keep_offsets_not_a_cofactor
+    reactions: *offset
+    biomass_rxn: BIO
+    cofactors: [ADP, H2O]
+    keep_offsets_of: ATP
+    values: [45]
+    ngam_rxn: null
+    ngam_value: null
+  - name: keep_offsets_absent_name
+    reactions: *offset
+    biomass_rxn: BIO
+    cofactors: [ATP, nothing]
+    keep_offsets_of: nothing
+    values: [45]
+    ngam_rxn: null
+    ngam_value: null
+  - name: keep_offsets_two_compartments
+    reactions: *compartments
+    biomass_rxn: BIO
+    cofactors: [ATP, ADP]
+    keep_offsets_of: ATP
+    values: [45]
     ngam_rxn: null
     ngam_value: null

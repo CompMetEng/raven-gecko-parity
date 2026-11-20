@@ -1644,8 +1644,11 @@ entries:
       vs. Python''s add_metabolites delta, cobra''s sparse dict already excluding zero-coefficient entries). NGAM
       handling matches: both fix the bounds of the reaction to (value, value) when the id and the value are given,
       leave them when only the id is given (the id must exist in the model) and raise when a value comes without an
-      id; an empty id counts as not given. A missing biomassRxn errors explicitly on both sides. Only difference is calling
-      convention (Python''s extra arguments are keyword-only).'
+      id; an empty id counts as not given. A missing biomassRxn errors explicitly on both sides. With keepOffsetsOf /
+      keep_offsets_of the coefficient of the metabolite of that name becomes the value and the other cofactors shift by
+      the same amount in the direction of their sign, so a proton offset stays; the name must be one of the cofactor
+      names and name exactly one metabolite of the biomass reaction, and both sides raise before changing the model.
+      Only difference is calling convention (Python''s extra arguments are keyword-only).'
   - matlab: setParam
     python: raven_toolbox.manipulation.set_variance_bounds
     status: parity
@@ -2409,9 +2412,12 @@ entries:
   - python: raven_toolbox.annotation.met_smiles
     status: internal
     reason: Helper of find_met_smiles that reads the SMILES of a metabolite whatever shape its annotation has.
-  - python: raven_toolbox.biomass.get_gam
-    status: unreviewed
-    reason: Reads the GAM of a model. Not yet decided whether RAVEN needs a MATLAB counterpart of setGAM's reader.
+  - matlab: getGAM
+    python: raven_toolbox.biomass.get_gam
+    status: parity
+    scenarios:
+      - set_gam_toy
+    notes: 'Both return the size of the ATP coefficient of the biomass reaction and raise when the reaction is not in the model or has no, or more than one, metabolite of that name. The name defaults to ATP (atpMetName / atp_met_name). Python''s biomass reaction is a keyword, MATLAB''s a positional argument.'
   - python: raven_toolbox.biomass.fit_maintenance
     status: unreviewed
     reason: Fits NGAM and GAM from chemostat and retentostat data (yeast-GEM draft PR 433). Not yet decided whether RAVEN gets a MATLAB version.
