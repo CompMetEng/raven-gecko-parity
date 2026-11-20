@@ -21,7 +21,7 @@ Status values: `done` (implemented and tested on a branch), `in progress`, `plan
 | `experiment_distance`, `dataset_rmse` / part of `evotuneScore` | `raven_toolbox.experiments`, `experimentDistance`, `datasetRmse` | done | in progress | Constants: biomass carbon 41, infeasible penalty 99. |
 | `compute_carbon_weights` / `fillCarbonNum` (`model.excarbon`) | `raven_toolbox.experiments`, `computeCarbonWeights` | done | in progress | Returns a map keyed by reaction id and does not write a model field. |
 | `apply_flux_data_constraints` / `constrainFluxData` | `raven_toolbox.experiments`, `applyFluxDataConstraints` | done | in progress | Takes the biomass reaction and carbon source as arguments. GECKO and geckopy keep a wrapper that reads them from the adapter. |
-| `solver_support.py` (`optimize_model`, scipy and HiGHS repair, shadow prices) | `raven_toolbox.utils.solver` | in progress | not needed | MATLAB uses `solveLP`. |
+| `solver_support.py` (`optimize_model`, scipy and HiGHS repair, shadow prices) | `raven_toolbox.utils.solver` | done | not needed | MATLAB uses `solveLP`. |
 | `calculate_mw`, `find_met_smiles` | raven-toolbox | in progress | to decide | Checked against what raven-toolbox already has. |
 | Maintenance fit (Huber loss, study weights, bootstrap, uptake grid, NGAM from retentostat) | `raven_toolbox.biomass` | done | planned | Reuses `set_gam` and `fit_parameters`. yeast-GEM keeps data, ids and a thin wrapper. |
 | `parseGECKOargs` | `parseRAVENargs` | not needed | done | RAVEN's function accepts every call form that GECKO's does. GECKO's is removed. |
