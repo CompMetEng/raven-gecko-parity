@@ -54,6 +54,22 @@ Status values: `done` (implemented and tested on a branch), `in progress`, `plan
   `skipped` field of the `sims` struct array in MATLAB), its per-condition value is NaN, and the
   mean runs over the other conditions. A kind of condition in which every weight is 0 gives NaN and is
   left out of `experiment_distance` / `experimentDistance`.
+* The distance functions (`datasetRmse` and `experimentDistance`, `dataset_rmse` and
+  `experiment_distance`) take no biomass reaction: the growth rate comes from the simulation. The
+  simulation reads the growth rate from the flux of the biomass reaction and solves with the
+  objective of the model, which has to be the maximisation of the growth.
+* `simulateConditions` and `simulate_conditions` raise before any solve when the biomass reaction,
+  an exchange reaction of the data or a reaction of the zero-flux list is not in the model, with
+  the same message.
+* `computeCarbonWeights` and `compute_carbon_weights` give the same weight for a shared list of
+  formulas: element symbols with an integer or decimal count, a charge sign and `*` between parts
+  are ignored, and parentheses, an empty formula or an unknown element give 1.
+* `find_met_smiles` takes `skip_prefixes` (none by default; geckopy passes `("prot_",)`) and does
+  not cache a failed request. GECKO's `findMetSmiles` skips the `prot_` metabolites and writes an
+  HTTP 400, 404 or 500 answer as no match, so the two differ for a status 500 (no scenario covers
+  it).
+* The column `evotuneRMSEweight` is checked by `loadEvotuneData` in GECKO and by the tuning
+  functions in geckopy, not by the loaders of RAVEN and raven-toolbox.
 * `getGAM(model, biomassRxn, 'atpMetName', ...)` takes the biomass reaction as a positional
   argument, and `get_gam(model, biomass_rxn=..., atp_met_name=...)` as a keyword. `setGAM` takes
   `'keepOffsetsOf'` and `set_gam` `keep_offsets_of`; both default to none, which sets every term to
@@ -71,7 +87,9 @@ Eight findings of `parity check` for the gecko pair are not related to this move
 
 ## Parity runs on the moved code
 
-The scenarios that touch the moved code run Python (hash seeds 0, 1 and 2) against MATLAB, with RAVEN `feat/experiments` (e431f96a) and GECKO `refactor/parse-raven-args` (f84240c1) on the MATLAB side, and geckopy `feat/experiment-data` with raven-toolbox `feat/experiments` on the Python side. The results are in `/cephyr/NOBACKUP/groups/compmeteng/eduardk/pw/out/20261120` (`status/<id>.txt`, `logs/<id>.log`).
+The scenarios that touch the moved code run Python (hash seeds 0, 1 and 2) against MATLAB, with RAVEN `feat/experiments` (fdabe1df) and GECKO `refactor/parse-raven-args` (f891e10e) on the MATLAB side, and geckopy `feat/experiment-data` with raven-toolbox `feat/experiments` on the Python side. The results are in `/cephyr/NOBACKUP/groups/compmeteng/eduardk/pw/out/20261120` (`status/<id>.txt`, `logs/<id>.log`).
+
+After the change of the distance functions (no biomass argument), the missing-reaction errors, the carbon formula parser and `skip_prefixes`, `flexibilize_concs_ectestgem`, `flux_data_edge_cases_ectestgem`, `evotune_edge_cases_ectestgem`, `okp_kcat_ectestgem` and `kcat_io_edge_cases_ectestgem` were run again and match. The other rows of the table are from the earlier commits.
 
 | Scenario | Result |
 |---|---|

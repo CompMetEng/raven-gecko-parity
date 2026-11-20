@@ -2362,7 +2362,7 @@ entries:
     python: raven_toolbox.experiments.load_flux_data
     status: parity
     notes: >-
-      Both read a fluxData.tsv (condition, Ptot, grRate, one column per exchange as `<metabolite> (<reaction id>)`, optional weight and source) and raise for a missing file, an empty file, a header with fewer than three columns, a ragged row, the old column evotuneRMSEweight (now weight) and a file without exchange columns. MATLAB returns a struct with the fields conds, Ptot, grRate, exchFluxes, exchMets, exchRxnIDs, weight and source, Python a FluxData with the same content.
+      Both read a fluxData.tsv (condition, Ptot, grRate, one column per exchange as `<metabolite> (<reaction id>)`, optional weight and source) and raise for a missing file, an empty file, a header with fewer than three columns, a ragged row and a file without exchange columns; an exchange column header without the form `<metabolite> (<reaction id>)` is used as both the metabolite name and the reaction id, with a warning (loadFluxData:headerForm in MATLAB, a logged warning in Python). MATLAB returns a struct with the fields conds, Ptot, grRate, exchFluxes, exchMets, exchRxnIDs, weight and source, Python a FluxData with the same content.
   - matlab: loadExperimentData
     python: raven_toolbox.experiments.load_experiment_data
     status: parity
@@ -2372,20 +2372,20 @@ entries:
     python: raven_toolbox.experiments.simulate_conditions
     status: parity
     notes: >-
-      Both block every condition exchange, open the carbon source of the row (fixed at the measured uptake, or at -1000 for max-growth data), apply the optional anaerobic and protein-content functions and solve with the optional solver function. A condition counts as feasible only when the solve is optimal. MATLAB returns a struct array, Python a list of ConditionSimResult.
+      Both block every condition exchange, open the carbon source of the row (fixed at the measured uptake, or at -1000 for max-growth data), apply the optional anaerobic and protein-content functions and solve with the optional solver function. A condition counts as feasible only when the solve is optimal. A condition with weight 0 is not simulated (skipped = true, feasible = false). Both raise before any solve when the biomass reaction, an exchange reaction of the data or a reaction of the zero-flux list is not in the model. Both solve with the objective of the model, which has to be the maximisation of the growth. MATLAB returns a struct array, Python a list of ConditionSimResult.
   - matlab: computeCarbonWeights
     python: raven_toolbox.experiments.compute_carbon_weights
     status: parity
     notes: >-
-      Biomass gets 41, every other reaction the carbon count of its single exchanged metabolite, and a count of 0 or a formula that does not parse as plain elements gets 1. MATLAB returns a containers.Map, Python a dict.
+      Biomass gets 41, every other reaction the carbon count of its single exchanged metabolite, and a count of 0, a missing formula or a formula that cannot be read gets 1. Both read element symbols with an integer or decimal count, ignore a charge sign and a `*` between parts, and cannot read parentheses, an empty formula or an unknown element (the same list of formulas is tested on both sides). MATLAB returns a containers.Map, Python a dict.
   - matlab: datasetRmse
     python: raven_toolbox.experiments.dataset_rmse
     status: parity
-    notes: Carbon-weighted RMSE of the simulated conditions of one dataset against its measurements, with the infeasibility penalty 99.
+    notes: Carbon-weighted RMSE of the simulated conditions of one dataset against its measurements, with the infeasibility penalty 99. Neither takes the biomass reaction, the growth rate comes from the simulation. A condition with weight 0 has NaN and is left out of the mean; a dataset with only weight 0 gives NaN.
   - matlab: experimentDistance
     python: raven_toolbox.experiments.experiment_distance
     status: parity
-    notes: Combines the RMSE of the flux data and of the max-growth data, weighted by the max-growth weight.
+    notes: Combines the RMSE of the flux data and of the max-growth data, weighted by the max-growth weight. Neither takes the biomass reaction. A dataset in which every weight is 0 is left out of the combination, and the distance is NaN when nothing is left.
   - matlab: applyFluxDataConstraints
     python: raven_toolbox.experiments.apply_flux_data_constraints
     status: parity
@@ -2408,7 +2408,7 @@ entries:
     reason: Constant of dataset_rmse (datasetRmse uses the same value).
   - python: raven_toolbox.annotation.find_met_smiles
     status: python-only
-    reason: The MATLAB function is GECKO's findMetSmiles (ledgers/gecko.yml); RAVEN has none.
+    reason: The MATLAB function is GECKO's findMetSmiles (ledgers/gecko.yml); RAVEN has none. It takes skip_prefixes (none by default), and a failed request (network error, a status other than 400 and 404) is not written to the cache file.
   - python: raven_toolbox.annotation.met_smiles
     status: internal
     reason: Helper of find_met_smiles that reads the SMILES of a metabolite whatever shape its annotation has.

@@ -498,7 +498,7 @@ entries:
       - kcat_io_edge_cases_ectestgem
     differs: []
     notes: >-
-      Both take the last row of a name that is duplicated in smilesDB.tsv, and skip a metabolite without a name with a warning (MATLAB id findMetSmiles:emptyName, geckopy a logged warning), so it gets no SMILES (kcat_io_edge_cases_ectestgem). Neither queries PubChem for an empty name, also when smilesDB.tsv exists.
+      Both take the last row of a name that is duplicated in smilesDB.tsv, and skip a metabolite without a name with a warning (MATLAB id findMetSmiles:emptyName, geckopy a logged warning), so it gets no SMILES (kcat_io_edge_cases_ectestgem). Neither queries PubChem for an empty name, also when smilesDB.tsv exists. Both skip the enzyme metabolites (`prot_<id>`): MATLAB always, geckopy through skip_prefixes=("prot_",), the default of its wrapper. A request that fails is handled differently and no scenario covers it: MATLAB retries 10 times, then raises, and writes the answer of a HTTP 400, 404 or 500 as no match to smilesDB.tsv; geckopy does not write a failed request (a network error, a status other than 400 and 404) to the cache.
   - matlab: flexibilizeEnzConcs
     python: geckopy.flexibilize_enz_concs
     status: parity
@@ -1238,6 +1238,3 @@ entries:
   - python: geckopy.databases.calculate_mw
     status: internal
     reason: Re-export of raven_toolbox.utils.protein.calculate_mw, also exported as geckopy.calculate_mw.
-  - python: geckopy.databases.find_met_smiles
-    status: internal
-    reason: Re-export of raven_toolbox.annotation.find_met_smiles, also exported as geckopy.find_met_smiles.
