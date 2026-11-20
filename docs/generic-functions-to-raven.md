@@ -85,3 +85,14 @@ The scenarios changed for the move: the MATLAB side calls `loadFluxData(path)`, 
 * The seeded evotune run against the stored RMSE trace (`~/ecmodel-runs/b2/full`, seed 0) has
   to give the same result on the moved code.
 * GECKO needs a RAVEN version requirement for the new functions.
+
+## Pull requests
+
+| Repository | Pull request | Waits for |
+|---|---|---|
+| raven-toolbox | [#204](https://github.com/CompMetEng/raven-toolbox/pull/204) (draft) | |
+| RAVEN | [#28](https://github.com/CompMetEng/RAVEN/pull/28) (draft) | |
+| geckopy | [#98](https://github.com/CompMetEng/geckopy/pull/98) (draft) | the raven-toolbox release, and a raised `raven-toolbox` requirement |
+| GECKO | [#38](https://github.com/CompMetEng/GECKO/pull/38) (draft) | the RAVEN release with `src/experiments` |
+| yeast-GEM | [#433](https://github.com/SysBioChalmers/yeast-GEM/pull/433) (draft) | the raven-toolbox release |
+
