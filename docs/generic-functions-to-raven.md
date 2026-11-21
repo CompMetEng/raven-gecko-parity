@@ -93,9 +93,7 @@ Eight findings of `parity check` for the gecko pair are not related to this move
 
 ## Parity runs on the moved code
 
-The scenarios that touch the moved code run Python (hash seeds 0, 1 and 2) against MATLAB, with RAVEN `feat/experiments` (fdabe1df) and GECKO `refactor/parse-raven-args` (f891e10e) on the MATLAB side, and geckopy `feat/experiment-data` with raven-toolbox `feat/experiments` on the Python side. The results are in `/cephyr/NOBACKUP/groups/compmeteng/eduardk/pw/out/20261120` (`status/<id>.txt`, `logs/<id>.log`).
-
-After the change of the distance functions (no biomass argument), the missing-reaction errors, the carbon formula parser and `skip_prefixes`, `flexibilize_concs_ectestgem`, `flux_data_edge_cases_ectestgem`, `evotune_edge_cases_ectestgem`, `okp_kcat_ectestgem` and `kcat_io_edge_cases_ectestgem` were run again and match. The other rows of the table are from the earlier commits.
+The scenarios that touch the moved code run Python (hash seeds 0, 1 and 2) against MATLAB, with RAVEN `feat/experiments` (62407ccd) and GECKO `refactor/parse-raven-args` (f0ac461d) on the MATLAB side, and geckopy `feat/experiment-data` (f3848c2) with raven-toolbox `feat/experiments` (0958ca9) on the Python side. All of the rows below were run on these commits.
 
 | Scenario | Result |
 |---|---|
@@ -106,16 +104,22 @@ After the change of the distance functions (no biomass argument), the missing-re
 | `kcat_io_edge_cases_ectestgem` | match |
 | `molecular_weight_sequences` | match |
 | `ec_analysis_light_humangem` | match |
-| `ec_fva_ecyeastgem` | Python seeds 0 and 2 match MATLAB and each other. The run of seed 1 was terminated before it wrote a result (job 10747404, after 54 minutes of 6 hours), so the scenario status is ERROR and seed 1 is not compared. |
-| `ec_proteomics_ecyeastgem` | differs in `flexibilize` only (75 values; Python seeds 0, 1 and 2 agree with each other). The parity plan lists the optimal vertex under the proteomics constraints as a documented difference of this scenario. The flux data steps match. |
+| `ec_fva_ecyeastgem` | match for Python seeds 0, 1 and 2 |
+| `ec_tuning_ecyeastgem` | match |
+| `sensitivity_tuning_ectestgem` | match |
+| `sensitivity_tuning_edge_cases_ectestgem` | match |
+| `sigma_fitter_edge_cases_ectestgem` | match |
+| `set_gam_toy` | match |
+| `ec_proteomics_ecyeastgem` | differs in `flexibilize` only (50 values; Python seeds 0, 1 and 2 agree with each other). The parity plan lists the optimal vertex under the proteomics constraints as a documented difference of this scenario. The flux data steps match. |
 
 The scenarios changed for the move: the MATLAB side calls `loadFluxData(path)`, the Python side imports from `raven_toolbox.experiments`, `raven_toolbox.annotation` and `raven_toolbox.utils.solver`, and the evotune scenario uses the experiment-data names. Two further changes in `evotune_edge_cases_ectestgem` follow other changes in the toolboxes: geckopy takes `sigma0_log` inside each source group, and GECKO takes the biomass reaction from `modelAdapter.params.bioRxn` and the group of each source from `kcatGroups`, so the scenario sets both.
+
+`parity check` passes for the raven pair (one entry, `fit_maintenance`, is still `unreviewed`). The gecko pair reports eight entries without a ledger entry (`fillKcatsFromIsozymes`, `showAdapterParams`, `format_adapter_params`, `resolve_gr_exp`, `KcatEvidence`, `kcat_evidence`, `kcats_for_reactions`, `show_adapter_params`); none of them belongs to the moved code.
 
 ## Open points
 
 * geckopy's pin on raven-toolbox has to name the first release with `experiments` and the
   moved solver module.
-* `ec_fva_ecyeastgem` has to be rerun for seed 1.
 * `ec_proteomics_ecyeastgem` has no run on the code from before the move, so that the `flexibilize` difference is known to be the documented one and not a new one.
 * The seeded evotune run against the stored RMSE trace (`~/ecmodel-runs/b2/full`, seed 0) has
   to give the same result on the moved code.
