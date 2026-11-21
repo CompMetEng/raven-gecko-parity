@@ -2408,7 +2408,7 @@ entries:
     reason: Constant of dataset_rmse (datasetRmse uses the same value).
   - python: raven_toolbox.annotation.find_met_smiles
     status: python-only
-    reason: The MATLAB function is GECKO's findMetSmiles (ledgers/gecko.yml); RAVEN has none. It takes skip_prefixes (none by default), and a failed request (network error, a status other than 400 and 404) is not written to the cache file.
+    reason: The MATLAB function is GECKO's findMetSmiles (ledgers/gecko.yml); RAVEN has none. It takes skip_prefixes (none by default), and a failed request (network error, a status other than 400 and 404) is not written to the cache file. GECKO's findMetSmiles does the same.
   - python: raven_toolbox.annotation.met_smiles
     status: internal
     reason: Helper of find_met_smiles that reads the SMILES of a metabolite whatever shape its annotation has.

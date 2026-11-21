@@ -64,10 +64,16 @@ Status values: `done` (implemented and tested on a branch), `in progress`, `plan
 * `computeCarbonWeights` and `compute_carbon_weights` give the same weight for a shared list of
   formulas: element symbols with an integer or decimal count, a charge sign and `*` between parts
   are ignored, and parentheses, an empty formula or an unknown element give 1.
-* `find_met_smiles` takes `skip_prefixes` (none by default; geckopy passes `("prot_",)`) and does
-  not cache a failed request. GECKO's `findMetSmiles` skips the `prot_` metabolites and writes an
-  HTTP 400, 404 or 500 answer as no match, so the two differ for a status 500 (no scenario covers
-  it).
+* `find_met_smiles` takes `skip_prefixes` (none by default; geckopy passes `("prot_",)`) and
+  GECKO's `findMetSmiles` skips the `prot_` metabolites. Both write an HTTP 404 or 400 answer as no
+  match (an empty SMILES) to the cache and write no request that got no answer (HTTP 500, a
+  timeout, no network): the name is asked for again by a later call, with a warning
+  (`findMetSmiles:requestFailed`, a logged warning in Python). No scenario covers it.
+* The scoring of the tuning (`evotuneScore`, the scoring of `cmaes_kcat_tuning`) simulates the
+  conditions with the growth reaction of the adapter as objective, whatever objective the model
+  has, and leaves the objective of the model unchanged. `simulateConditions` and
+  `simulate_conditions` use the objective of the model and warn once per call when it is not the
+  maximisation of the growth reaction.
 * The column `evotuneRMSEweight` is checked by `loadEvotuneData` in GECKO and by the tuning
   functions in geckopy, not by the loaders of RAVEN and raven-toolbox.
 * `getGAM(model, biomassRxn, 'atpMetName', ...)` takes the biomass reaction as a positional
