@@ -33,7 +33,7 @@ from geckopy import (
     make_ec_model,
     set_prot_pool_size,
 )
-from geckopy.databases.flux_data import load_flux_data
+from raven_toolbox.experiments import load_flux_data
 
 
 def _adapter(inputs: dict) -> ModelAdapter:

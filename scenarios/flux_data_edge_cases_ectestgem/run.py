@@ -13,7 +13,7 @@ from pathlib import Path
 import cobra
 
 from geckopy import apply_flux_data_constraints
-from geckopy.databases.flux_data import load_flux_data
+from raven_toolbox.experiments import load_flux_data
 import importlib.util
 import math
 import sys

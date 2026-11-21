@@ -11,6 +11,7 @@ from pathlib import Path
 
 import cobra
 import numpy as np
+from raven_toolbox.experiments import ExperimentData, load_flux_data
 
 from geckopy import (
     ModelAdapter,
@@ -21,9 +22,7 @@ from geckopy import (
     set_prot_pool_size,
 )
 from geckopy.adapter.params import EvotuneParams, SourceGroupRule
-from geckopy.databases.flux_data import load_flux_data
 from geckopy.kcat_tuning.evotune import (
-    EvotuneData,
     cmaes_kcat_tuning,
     screen_kcat_leverage,
     select_tunable_mask,
@@ -87,9 +86,9 @@ def _model(adapter, conv, inputs: dict, sources: dict):
 def _params(inputs: dict, max_growth_weight: float) -> EvotuneParams:
     ev = inputs["evotune"]
     groups = list(ev["source_groups"])
+    sigmas = [float(s) for s in ev["sigma0_log_source"]]
     return EvotuneParams(
-        source_groups={g: SourceGroupRule(sources=[g]) for g in groups},
-        sigma0_log_source=dict(zip(groups, [float(s) for s in ev["sigma0_log_source"]])),
+        source_groups={g: SourceGroupRule(sources=[g], sigma0_log=s) for g, s in zip(groups, sigmas)},
         sigma0_log_default=float(ev["sigma0_log_default"]),
         max_growth_weight=float(max_growth_weight),
         max_generations=int(ev["max_generations"]),
@@ -99,10 +98,10 @@ def _params(inputs: dict, max_growth_weight: float) -> EvotuneParams:
     )
 
 
-def _data(inputs: dict, flux_file: str, zero_flux: list) -> EvotuneData:
-    return EvotuneData(
+def _data(inputs: dict, flux_file: str, zero_flux: list) -> ExperimentData:
+    return ExperimentData(
         flux_data=load_flux_data(inputs[flux_file]),
-        max_grate=load_flux_data(inputs["max_growth_file"]),
+        max_growth=load_flux_data(inputs["max_growth_file"]),
         zero_flux=[str(r) for r in zero_flux],
     )
 
@@ -132,7 +131,7 @@ def _screen(adapter, conv, inputs, sources, params, data):
     model = _model(adapter, conv, inputs, sources)
     try:
         screen = screen_kcat_leverage(
-            model, params=params, evotune_data=data, bio_rxn=str(inputs["bio_rxn"]), n_proc=1,
+            model, params=params, experiment_data=data, bio_rxn=str(inputs["bio_rxn"]), n_proc=1,
         )
     except Exception:
         return {"raised": True}, model, None
@@ -212,7 +211,7 @@ def run(ctx):
     results = {}
     control, model, screen = _screen(adapter, conv, inputs, inputs["control_sources"], params, data)
     results["screen_control"] = control
-    # The model has no metabolite formulas; compute_excarbon warns and gives every exchange a carbon weight of 1.
+    # The model has no metabolite formulas; compute_carbon_weights warns and gives every exchange a carbon weight of 1.
     results["screen_no_formulas"] = control
     results["screen_source_suffix"] = _screen(adapter, conv, inputs, inputs["suffix_sources"], params, data)[0]
     results["screen_max_growth_weight"] = _screen(adapter, conv, inputs, inputs["control_sources"], heavy, data)[0]
@@ -231,7 +230,7 @@ def run(ctx):
     mask = np.array([str(r) in set(inputs["flat_mask"]) for r in flat.ec.rxns], dtype=bool)
     try:
         tuned = cmaes_kcat_tuning(
-            flat, params=params, evotune_data=data, bio_rxn=str(inputs["bio_rxn"]),
+            flat, params=params, experiment_data=data, bio_rxn=str(inputs["bio_rxn"]),
             tunable_mask=mask, seed=int(inputs["seed"]), n_proc=1, verbose=False,
         )
         results["cmaes_flat"] = {

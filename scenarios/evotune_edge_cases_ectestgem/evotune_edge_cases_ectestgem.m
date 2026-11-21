@@ -11,9 +11,9 @@ model = loadConventionalGEM('modelAdapter', adapter);
 inputs = ctx.inputs;
 ev = inputs.evotune;
 
-params = evotune_adapter(adapter, ev, ev.max_growth_weight);
-heavy = evotune_adapter(adapter, ev, ev.heavy_max_growth_weight);
-data = evo_data(inputs, 'flux_two_columns_file', {}, params);
+params = evotune_adapter(adapter, ev, ev.max_growth_weight, inputs.bio_rxn);
+heavy = evotune_adapter(adapter, ev, ev.heavy_max_growth_weight, inputs.bio_rxn);
+data = experiment_data(inputs, 'flux_two_columns_file', {});
 
 results = struct();
 [results.screen_control, ecModel, screen] = screen_case(model, adapter, inputs, inputs.control_sources, params, data);
@@ -24,7 +24,7 @@ results.screen_max_growth_weight = screen_case(model, adapter, inputs, inputs.co
 zeroNames = {'known', 'unknown'};
 zeroLists = {inputs.zero_flux_known, inputs.zero_flux_unknown};
 for i = 1:numel(zeroNames)
-    zeroData = evo_data(inputs, 'flux_one_column_file', zeroLists{i}, params);
+    zeroData = experiment_data(inputs, 'flux_one_column_file', zeroLists{i});
     results.(['screen_zero_flux_' zeroNames{i}]) = screen_case(model, adapter, inputs, inputs.control_sources, params, zeroData);
 end
 
@@ -38,7 +38,7 @@ end
 flatModel = build_model(model, adapter, inputs, inputs.control_sources, true);
 flatMask = ismember(flatModel.ec.rxns, cellstr(inputs.flat_mask));
 try
-    [~, tuned] = cmaesKcatTuning(flatModel, 'modelAdapter', params, 'evoData', data, ...
+    [~, tuned] = cmaesKcatTuning(flatModel, 'modelAdapter', params, 'experimentData', data, ...
         'tunableMask', flatMask, 'seed', double(inputs.seed), 'verbose', false);
     flat.raised = false;
     flat.rxns = reshape(sort(tuned.rxns), 1, []);
@@ -54,9 +54,13 @@ results.helpers = helpers(inputs);
 end
 
 
-function adapter = evotune_adapter(adapter, ev, maxGrowthWeight)
+function adapter = evotune_adapter(adapter, ev, maxGrowthWeight, bioRxn)
+% The evotune functions take the biomass reaction from the adapter, whose own bioRxn
+% (TestGEMAdapter, R4) is not the growth reaction of this model.
+adapter.params.bioRxn = char(bioRxn);
 adapter.params.evotune = struct( ...
     'kcatSources', {reshape(cellstr(ev.source_groups), 1, [])}, ...
+    'kcatGroups', {reshape(cellstr(ev.source_groups), 1, [])}, ...
     'sigma0logSource', reshape(double(ev.sigma0_log_source), [], 1), ...
     'sigma0logDefault', double(ev.sigma0_log_default), ...
     'tieIsozymes', false, ...
@@ -67,14 +71,12 @@ adapter.params.evotune = struct( ...
 end
 
 
-function evoData = evo_data(inputs, fluxFileField, zeroFlux, adapter)
-evoData.fluxData = loadFluxData(inputs.(fluxFileField), adapter);
-evoData.fluxData.biomass = char(inputs.bio_rxn);
-evoData.maxGrate = loadFluxData(inputs.max_growth_file, adapter);
-evoData.maxGrate.biomass = char(inputs.bio_rxn);
-evoData.zeroFlux = reshape(cellstr(zeroFlux), [], 1);
+function experimentData = experiment_data(inputs, fluxFileField, zeroFlux)
+experimentData.fluxData = loadFluxData(inputs.(fluxFileField));
+experimentData.maxGrowth = loadFluxData(inputs.max_growth_file);
+experimentData.zeroFlux = reshape(cellstr(zeroFlux), [], 1);
 if isempty(zeroFlux)
-    evoData.zeroFlux = {};
+    experimentData.zeroFlux = {};
 end
 end
 
@@ -101,7 +103,7 @@ for i = 1:numel(sourceRxns)
 end
 
 if withFormulas
-    % fillCarbonNum reads model.metFormulas, which ecTestGEM does not have; empty formulas give every exchange a carbon weight of 1.
+    % computeCarbonWeights reads model.metFormulas, which ecTestGEM does not have; empty formulas give every exchange a carbon weight of 1.
     ecModel.metFormulas = repmat({''}, numel(ecModel.mets), 1);
 end
 ecModel.c = double(strcmp(ecModel.rxns, char(inputs.bio_rxn)));
@@ -118,7 +120,7 @@ end
 ecModel = build_model(model, adapter, inputs, sources, withFormulas);
 screen = [];
 try
-    screen = screenKcatLeverage(ecModel, 'modelAdapter', params, 'evoData', data);
+    screen = screenKcatLeverage(ecModel, 'modelAdapter', params, 'experimentData', data);
 catch
     out = struct('raised', true);
     return

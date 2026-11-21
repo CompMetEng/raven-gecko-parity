@@ -13,7 +13,7 @@ inputs = ctx.inputs;
 adapter = ModelAdapterManager.getAdapter(inputs.adapter_matlab);
 conv = loadConventionalGEM('modelAdapter', adapter);
 
-fluxData = loadFluxData('fluxDataFile', char(inputs.flux_data_file), 'modelAdapter', adapter);
+fluxData = loadFluxData(char(inputs.flux_data_file));
 fluxData.grRate(1) = double(inputs.growth_rate);
 
 ecModel = loadEcModel(char(inputs.model_file), adapter);

@@ -139,7 +139,7 @@ end
 
 
 function out = flux_data_cases(inputs, adapter)
-data = loadFluxData('fluxDataFile', char(inputs.flux_data_file), 'modelAdapter', adapter);
+data = loadFluxData(char(inputs.flux_data_file));
 n = size(data.exchFluxes, 1);
 fluxes = cell(1, n);
 for k = 1:n
@@ -180,7 +180,7 @@ end
 
 function out = pipeline_case(inputs, adapter)
 prot = loadProtData(3, 'protDataFile', char(inputs.prot_data_file), 'modelAdapter', adapter);
-data = loadFluxData('fluxDataFile', char(inputs.flux_data_file), 'modelAdapter', adapter);
+data = loadFluxData(char(inputs.flux_data_file));
 model = fresh(inputs, adapter);
 model = fillEnzConcs(model, prot);
 model = constrainEnzConcs(model);

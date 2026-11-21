@@ -24,13 +24,7 @@ end
 
 
 function out = load_case(ctx, name)
-adapter = ModelAdapterManager.getAdapter(ctx.inputs.adapter_matlab);
-fluxData = loadFluxData('fluxDataFile', fullfile(char(ctx.inputs.data_dir), name), 'modelAdapter', adapter);
-if isempty(fluxData)
-    % loadFluxData warns and returns [] for a file it cannot read.
-    out = struct('loaded', false);
-    return
-end
+fluxData = loadFluxData(fullfile(char(ctx.inputs.data_dir), name));
 n = size(fluxData.exchFluxes, 1);
 rows = cell(1, n);
 for k = 1:n
@@ -45,8 +39,7 @@ end
 
 
 function out = constrain_case(ctx, name, condition, maxMinGrowth)
-adapter = ModelAdapterManager.getAdapter(ctx.inputs.adapter_matlab);
-fluxData = loadFluxData('fluxDataFile', fullfile(char(ctx.inputs.data_dir), name), 'modelAdapter', adapter);
+fluxData = loadFluxData(fullfile(char(ctx.inputs.data_dir), name));
 [m, ~, fixAdapter] = build_model(ctx, false);
 m = constrainFluxData(m, 'fluxData', fluxData, 'condition', condition, ...
     'maxMinGrowth', maxMinGrowth, 'looseStrictFlux', 'loose', 'modelAdapter', fixAdapter);

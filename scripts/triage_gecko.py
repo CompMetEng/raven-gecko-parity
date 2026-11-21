@@ -138,9 +138,6 @@ INTERNAL: dict[str, str] = {
         "Regenerates MATLAB Toolbox doc metadata. Python docs are docstring-driven, so there "
         "is nothing equivalent to regenerate."
     ),
-    "parseGECKOargs": (
-        "MATLAB varargin parsing glue. Python uses ordinary keyword arguments."
-    ),
 }
 
 # --------------------------------------------------------------------------------------
